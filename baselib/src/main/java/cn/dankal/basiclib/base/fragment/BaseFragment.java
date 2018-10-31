@@ -54,7 +54,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        initComponents();
+        initComponents(view);
         obtainData();
     }
 
@@ -105,6 +105,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
      * 初始化组件
      */
     protected abstract void initComponents();
+    protected abstract void initComponents(View view);
 
 
     @Override

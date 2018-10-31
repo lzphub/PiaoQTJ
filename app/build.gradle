@@ -71,6 +71,7 @@ dependencies {
     annotationProcessor deps.butterknife.butterknife_compiler
     annotationProcessor deps.alibaba.arouter_compiler
     api project(':module-user')
+    api project(':module-home')
     api project(':baselib')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

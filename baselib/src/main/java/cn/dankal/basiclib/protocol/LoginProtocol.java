@@ -1,11 +1,5 @@
 package cn.dankal.basiclib.protocol;
 
-/**
- * Created by fred
- * Date: 2018/9/28.
- * Time: 17:32
- * classDescription:
- */
 public interface LoginProtocol extends BaseRouteProtocol {
     String PART = "/login/";
 
@@ -15,7 +9,7 @@ public interface LoginProtocol extends BaseRouteProtocol {
 
     String REGISTERENTEREMSIL=PART+"registr";
 
-    String REGISTERVECODE=PART+"VECODE";
+    String REGISTERVECODE=PART+"vecode";
 
     String SETPWD=PART+"setpwd";
 

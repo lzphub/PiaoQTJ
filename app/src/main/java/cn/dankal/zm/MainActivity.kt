@@ -14,5 +14,6 @@ class MainActivity : BaseActivity() {
     override fun initComponents() {
             ARouter.getInstance().build(LoginProtocol.USERSLOGIN)
                     .navigation()
+                finish()
     }
 }

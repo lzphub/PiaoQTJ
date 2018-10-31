@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.LoginProtocol;
 import cn.dankal.user.R;
 
@@ -56,6 +57,12 @@ public class EnterpriseLoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ARouter.getInstance().build(LoginProtocol.FORGETPWD).navigation();
+            }
+        });
+        btLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build(HomeProtocol.HOMEACTIVITY).navigation();
             }
         });
     }
