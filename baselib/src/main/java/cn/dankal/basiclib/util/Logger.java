@@ -6,7 +6,7 @@ package cn.dankal.basiclib.util;
 public class Logger {
     protected static final String TAG = "YD";
 
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
 
     private Logger() {
     }

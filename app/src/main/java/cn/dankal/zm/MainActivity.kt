@@ -12,9 +12,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initComponents() {
-        tv_login.setOnClickListener {
-            ARouter.getInstance().build(LoginProtocol.LOGIN)
+            ARouter.getInstance().build(LoginProtocol.USERSLOGIN)
                     .navigation()
-        }
     }
 }

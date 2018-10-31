@@ -3,21 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorFF"
-    android:layout_marginTop="20dp">
+    android:background="@color/colorFF">
 
     <TextView
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="57dp"
         android:text="SIGN IN"
         android:textColor="@color/color14"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <TextView
         android:id="@+id/tv_phone_num"
@@ -114,7 +115,7 @@
         android:layout_marginLeft="19dp"
         android:layout_marginRight="19dp"
         android:layout_marginTop="25dp"
-        android:background="@color/login_btn_bg"
+        android:background="@drawable/login_btn_bg"
         android:text="LOGIN"
         android:textStyle="bold"
         android:textColor="@color/colorFF"
@@ -123,17 +124,34 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider_passwd" />
 
-    <TextView
-        android:id="@+id/enterprise_login"
+    <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ENTERPRISE LANDING(工程师登录)"
         app:layout_constraintTop_toBottomOf="@id/bt_login"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/login_btn_bg"
-        android:textSize="14sp"/>
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/enterprise_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ENTERPRISE LANDING(工程师登录)"
+            android:autoLink="all"
+            android:textColor="@color/login_btn_bg"
+            android:layout_centerHorizontal="true"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2sp"
+            android:background="@color/login_btn_bg"
+            android:layout_below="@id/enterprise_login"
+            android:layout_alignLeft="@id/enterprise_login"
+            android:layout_alignRight="@id/enterprise_login"></View>
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/or"
@@ -143,7 +161,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/color33"
-        app:layout_constraintTop_toBottomOf="@id/enterprise_login"
+        app:layout_constraintTop_toBottomOf="@id/rl"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="43dp"/>
@@ -153,7 +171,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="REGISTER AN ACCOUNT"
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:textColor="@color/color66"
         app:layout_constraintTop_toBottomOf="@id/or"
@@ -166,7 +184,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="FORGET THE PASSWORD?"
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:textColor="@color/color66"
         app:layout_constraintTop_toBottomOf="@id/register"
