@@ -12,13 +12,13 @@ kapt {
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 27
     lintOptions {
         abortOnError false
     }
     defaultConfig {
         minSdkVersion build_versions.min_sdk
-        targetSdkVersion 28
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
 
@@ -51,7 +51,10 @@ android {
         sourceCompatibility 1.8
     }
 }
-
+//指定编译的编码
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+}
 dependencies {
     testImplementation deps.test.junit
     androidTestImplementation deps.atsl.runner

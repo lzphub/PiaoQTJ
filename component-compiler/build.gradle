@@ -6,7 +6,10 @@ dependencies {
     implementation 'com.squareup:javapoet:1.10.0'
     implementation project(path: ':component-annotations')
 }
-
+//指定编译的编码
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+}
 compileJava {
 
     //noinspection GroovyAccessibility

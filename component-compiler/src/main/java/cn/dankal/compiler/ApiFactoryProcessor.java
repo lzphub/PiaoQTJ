@@ -56,7 +56,7 @@ public class ApiFactoryProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
 
-        // 使用了@ApiFactory 这个注解的类的集合
+//         使用了@ApiFactory 这个注解的类的集合
         Set<TypeElement> elements = ElementFilter.typesIn(roundEnvironment.getElementsAnnotatedWith(ApiFactory.class));
 
         if (elements.size() > 0) {

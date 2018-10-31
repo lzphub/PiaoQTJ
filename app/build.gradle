@@ -1,10 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
 android {
-
-    compileSdkVersion build_versions.compile_sdk
-
+    compileSdkVersion 27
     defaultConfig {
 //        multiDexEnabled true
 
@@ -30,49 +29,48 @@ android {
         ]
 
     }
-
-    signingConfigs {
-        Properties properties = new Properties()
-        if (rootProject.file("local.properties").exists()) {
-            properties.load(rootProject.file("local.properties").newDataInputStream())
-        }
-
-        jenkins {
-            storeFile file(System.getProperty('StoreFilePath') ?: properties.get("STOREFILE"))
-            storePassword System.getProperty('StorePassword') ?: properties.get("STOREPASSWORD")
-            keyAlias System.getProperty('KeyAlias') ?: properties.get("KEYALIAS")
-            keyPassword System.getProperty('KeyPassword') ?: properties.get("KEYPASSWORD")
-        }
-
-    }
-
+//
+//    signingConfigs {
+//        Properties properties = new Properties()
+//        if (rootProject.file("local.properties").exists()) {
+//            properties.load(rootProject.file("local.properties").newDataInputStream())
+//        }
+//
+//        jenkins {
+////            storeFile file(System.getProperty('StoreFilePath') ?: properties.get("STOREFILE"))
+//            storePassword System.getProperty('StorePassword') ?: properties.get("STOREPASSWORD")
+//            keyAlias System.getProperty('KeyAlias') ?: properties.get("KEYALIAS")
+//            keyPassword System.getProperty('KeyPassword') ?: properties.get("KEYPASSWORD")
+//        }
+//
+//    }
     buildTypes {
         debug {
             zipAlignEnabled true
 //            minifyEnabled true
 //            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.jenkins
+//            signingConfig signingConfigs.jenkins
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '27.0.3'
 }
-
+//指定编译的编码
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+}
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-//    api deps.support.multidex
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //    api deps.support.multidex
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     annotationProcessor deps.glide.compiler
     annotationProcessor deps.butterknife.butterknife_compiler
     annotationProcessor deps.alibaba.arouter_compiler
     api project(':module-user')
     api project(':baselib')
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
