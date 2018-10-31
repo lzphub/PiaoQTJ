@@ -1,4 +1,4 @@
-package cn.dankal.templates
+package cn.dankal.zm
 
 import cn.dankal.basiclib.base.activity.BaseActivity
 import cn.dankal.basiclib.protocol.LoginProtocol

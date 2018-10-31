@@ -50,9 +50,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         }
     }
     protected void initStatusBar() {
-//        TitleBarUtils.compat(this, getResources().getColor(R.color.white));
+        TitleBarUtils.compat(this, getResources().getColor(R.color.colorFF));
         QMUIStatusBarHelper.setStatusBarLightMode(this);
-//        QMUIStatusBarHelper.translucent(this);
+        QMUIStatusBarHelper.translucent(this);
     }
 
 
