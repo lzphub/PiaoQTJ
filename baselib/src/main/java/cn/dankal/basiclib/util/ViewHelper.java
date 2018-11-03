@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author cginechen
  * @date 2016-03-17
  */
-public class ViewHelper {
+public class  ViewHelper {
 
     // copy from View.generateViewId for API <= 16
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);

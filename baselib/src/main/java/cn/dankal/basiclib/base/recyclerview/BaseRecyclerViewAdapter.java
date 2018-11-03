@@ -67,6 +67,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 //        holder.itemView.setTag(R.id.recycler_view_tag, data);
             holder.onBindData(data, position);
         }
+
     }
 
     protected void setUpItemEvent(final BaseRecyclerViewHolder holder) {

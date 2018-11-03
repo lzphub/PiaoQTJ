@@ -1,0 +1,15 @@
+apply from: '../module.gradle'
+android {
+
+    defaultConfig {
+        if (!assembleApp.toBoolean()) {
+            applicationId 'cn.dankal.address'
+        }
+    }
+
+}
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation "com.zhihu.android:matisse:0.5.2-beta3"
+}

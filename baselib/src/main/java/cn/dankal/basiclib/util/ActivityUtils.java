@@ -777,7 +777,7 @@ public class ActivityUtils {
     }
 
     /**
-     * 结束 Activity
+     * 结束 指定Activity
      *
      * @param clz Activity 类
      */

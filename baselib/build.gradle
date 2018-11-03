@@ -108,6 +108,7 @@ dependencies {
     implementation files('libs/qiniu-android-sdk-7.3.12.jar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation deps.kotlin.anko
+    implementation "com.zhihu.android:matisse:0.5.2-beta3"
     kapt deps.alibaba.arouter_compiler
 
 }

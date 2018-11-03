@@ -63,6 +63,7 @@ public class EnterpriseLoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ARouter.getInstance().build(HomeProtocol.HOMEACTIVITY).navigation();
+                finish();
             }
         });
     }

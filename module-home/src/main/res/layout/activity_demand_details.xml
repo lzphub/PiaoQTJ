@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.dankal.home.activity.DemandDetailsActivity">
+
+    <Button
+        android:id="@+id/claim_btn"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@color/login_btn_bg"
+        android:layout_alignParentBottom="true"
+        android:text="认领"
+        android:textColor="@color/colorFF"
+        android:textSize="18sp"/>
+
+    <ImageView
+        android:id="@+id/back_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="38dp"
+        android:src="@mipmap/ic_my_worklist_return" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="需求详情"
+        android:textColor="@color/color33"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_above="@id/claim_btn"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/back_img">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/demand_title"
+                android:layout_width="327dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="27dp"
+                android:text="大型工厂照明需求解决，急需定600led 暖黄色光源"
+                android:textColor="@color/color33"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="329dp"
+                android:layout_height="66dp"
+                android:layout_marginTop="16dp"
+                android:background="@mipmap/pic_home_details_background"
+                app:layout_constraintTop_toBottomOf="@id/demand_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:id="@+id/demand_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="9dp"
+                    android:text="定制价格：$260,000内"
+                    android:textColor="@color/colorFF"
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/demand_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="7dp"
+                    android:text="交付工期：2018-08-09~2018-10-09"
+                    android:textColor="@color/colorFF"
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/demand_price" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/demand_data"
+                android:layout_width="329dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="98dp"
+                android:lineSpacingExtra="5dp"
+                android:text="新艺工厂，建筑面积600m2，现需要定制一套照明系统，大概600套，商丘信华国际酒店－酒店照明设计案例 两丘信华国际大酒店位于睢阳区神火大道与华商大道交汇处西南角，商丘信华国际大酒店按照标准五星级酒店的规 划设计建造，打這“规划设计一流，建筑装饰设计一流、设备设施和用品一流、人性化性能配置一流＂的高品质酒店。 商丘信华国际大酒店酒店照明设计方案主要是灯光是酒店风格的有机组成部分，而灯具部分考虑外观与建筑空间的 协调、与装潢风格要统一。灯具的造型、材质、色泽都要与空间的风格一致，同时也影可着空司的风格。独特的灯 具往往成为室内空间的表征。"
+                android:textColor="@color/color66"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/demand_title" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginLeft="24dp"
+                app:layout_constraintTop_toBottomOf="@id/demand_data"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"></android.support.v7.widget.RecyclerView>
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

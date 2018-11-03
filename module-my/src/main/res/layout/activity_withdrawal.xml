@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFF"
+    tools:context="cn.dankal.my.activity.WithdrawalActivity">
+
+    <ImageView
+        android:id="@+id/back_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_my_worklist_return"
+        android:layout_marginTop="38dp"
+        android:layout_marginLeft="23dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提现"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/color33"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"/>
+
+    <RelativeLayout
+        android:id="@+id/add_card"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginTop="17dp"
+        app:layout_constraintTop_toBottomOf="@id/back_img">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加银行卡"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="76dp"
+            android:textColor="@color/color33"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_profit_putforward_getinto"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="23dp"/>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/colorF5"
+        app:layout_constraintTop_toBottomOf="@id/add_card"></View>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提现金额"
+        android:layout_marginTop="17dp"
+        android:layout_marginLeft="24dp"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="16sp"
+        android:textColor="@color/color14"/>
+
+    <TextView
+        android:id="@+id/rmb_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="56dp"
+        android:layout_marginLeft="25dp"
+        android:textColor="@color/color14"
+        android:textSize="15sp"/>
+    
+    <EditText
+        android:id="@+id/moeny_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="请填写您的提现金额"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintLeft_toLeftOf="@id/rmb_logo"
+        android:layout_marginTop="56dp"
+        android:layout_marginLeft="15dp"
+        android:textColorHint="@color/colorCF"
+        android:textSize="15sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/moeny_et"
+        android:layout_marginTop="22dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="23dp"
+        android:background="@color/colorCF"></View>
+
+    <TextView
+        android:id="@+id/available_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="可用余额 224.00元"
+        app:layout_constraintTop_toBottomOf="@id/moeny_et"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="25dp"
+        android:textSize="12sp"
+        android:textColor="@color/color66"/>
+
+    <TextView
+        android:id="@+id/all_with"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="全部提现"
+        android:textColor="@color/color528e1a"
+        android:textSize="14sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        android:layout_marginTop="106dp"
+        android:layout_marginRight="25dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorF5"
+        app:layout_constraintTop_toBottomOf="@id/available_balance"
+        android:layout_marginTop="7dp"></View>
+
+    <Button
+        android:id="@+id/with_btn"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:layout_constraintTop_toBottomOf="@id/available_balance"
+        android:background="@drawable/login_btn_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="42dp"
+        android:text="提现"
+        android:textColor="@color/colorFF"
+        android:textSize="16sp"/>
+</android.support.constraint.ConstraintLayout>

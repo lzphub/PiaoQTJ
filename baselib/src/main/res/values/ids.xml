@@ -4,7 +4,7 @@
     <item name="view_can_not_cache_tag" type="id"/>
     <item name="tab_segment_item_id" type="id"/>
 
-    <!--TipsDialog-->
+    <!--GenDialog-->
     <item name="dialog_loading" type="id"/>
     <item name="dialog_icon" type="id"/>
     <item name="dialog_text" type="id"/>

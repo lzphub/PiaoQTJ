@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.dankal.home.activity.SubmitIdeaActivity">
+
+    <ImageView
+        android:id="@+id/back_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_my_worklist_return"
+        android:layout_marginTop="36dp"
+        android:layout_marginLeft="23dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/pic_release_result"
+        android:layout_marginTop="83dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back_img"/>
+
+    <TextView
+        android:id="@+id/return_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已提交该idea\n请等待后台审核"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/color66"
+        android:layout_marginTop="34dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img"/>
+
+    <RelativeLayout
+        android:id="@+id/toHome_Rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/return_text">
+
+        <TextView
+            android:id="@+id/toHome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="回到首页"
+            android:textSize="15sp"
+            android:textColor="@color/home_green"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:background="@color/home_green"
+            android:layout_below="@id/toHome_text"
+            android:layout_alignLeft="@id/toHome_text"
+            android:layout_alignRight="@id/toHome_text"></View>
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>
