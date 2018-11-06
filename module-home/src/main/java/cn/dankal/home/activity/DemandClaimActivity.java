@@ -98,7 +98,7 @@ public class DemandClaimActivity extends BaseActivity {
         submitBtn = (Button) findViewById(R.id.submit_btn);
         backImg = (ImageView) findViewById(R.id.back_img);
         demandPrice = (TextView) findViewById(R.id.demand_price);
-        releaseTime = (TextView) findViewById(R.id.release_time);
+        releaseTime = (TextView) findViewById(R.id.re_date);
         demandTitle = (TextView) findViewById(R.id.demand_title);
         addImg = (ImageView) findViewById(R.id.add_img);
         imgList = (RecyclerView) findViewById(R.id.img_list);

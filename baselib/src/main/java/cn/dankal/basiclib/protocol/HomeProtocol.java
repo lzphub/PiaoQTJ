@@ -16,4 +16,6 @@ public interface HomeProtocol extends BaseRouteProtocol {
     String DEMANDDETA=PART+"demanddate";
 
     String CLAIMDEMAND=PART+"claimdemand";
+
+    String USERHOME=PART+"userhome";
 }

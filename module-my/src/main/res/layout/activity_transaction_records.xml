@@ -36,6 +36,7 @@
         android:layout_marginTop="25dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:overScrollMode="never"
         app:layout_constraintTop_toBottomOf="@id/back_img"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"></android.support.v7.widget.RecyclerView>

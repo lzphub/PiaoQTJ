@@ -73,6 +73,7 @@ dependencies {
     api project(':module-user')
     api project(':module-home')
     api project(':module-my')
+    api project(':module-product')
     api project(':baselib')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

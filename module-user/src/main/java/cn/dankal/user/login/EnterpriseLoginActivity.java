@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.LoginProtocol;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.user.R;
 
 import static cn.dankal.basiclib.protocol.LoginProtocol.ENTERPRISELOGIN;
@@ -63,6 +64,7 @@ public class EnterpriseLoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ARouter.getInstance().build(HomeProtocol.HOMEACTIVITY).navigation();
+                SharedPreferencesUtils.saveString(EnterpriseLoginActivity.this,"identity","enterprise");
                 finish();
             }
         });

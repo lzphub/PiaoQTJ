@@ -28,4 +28,12 @@ public interface MyProtocol extends BaseRouteProtocol {
     String SETWITHPEDCODE=PART+"setwithpwdcode";
 
     String SETWITHPWD=PART+"setwithpwd";
+
+    String COMPROB=PART+"comprob";
+
+    String COMPORDATA=PART+"comprodata";
+
+    String BINDCARD=PART+"bindcard";
+
+    String CHECKCARD=PART+"checkcrad";
 }

@@ -25,6 +25,7 @@ import java.util.List;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.util.image.CheckImage;
 import cn.dankal.basiclib.util.image.MygildeEngine;
@@ -52,6 +53,12 @@ public class PersonalDataActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+        if(StringUtil.isValid(getIntent().getStringExtra("name"))){
+            nameText.setText(getIntent().getStringExtra("name"));
+        }
+        if(StringUtil.isValid(getIntent().getStringExtra("skills"))){
+            skillsText.setText(getIntent().getStringExtra("skills"));
+        }
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

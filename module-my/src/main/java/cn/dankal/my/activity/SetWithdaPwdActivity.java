@@ -13,8 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
+import cn.dankal.basiclib.ResultCode;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.ActivityUtils;
 import cn.dankal.basiclib.widget.GenDialog;
 import cn.dankal.setting.R;
@@ -40,6 +43,7 @@ public class SetWithdaPwdActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+        int code=getIntent().getIntExtra("type",0);
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +63,9 @@ public class SetWithdaPwdActivity extends BaseActivity {
                         dialog1.dismiss();
                         ActivityUtils.finishActivity(SetPwdCodeActivity.class);
                         ActivityUtils.finishActivity(SetWithdaPwdActivity.class);
+                        if(code== ResultCode.myEarCode){
+                            ARouter.getInstance().build(MyProtocol.WITHDRAWAL).navigation();
+                        }
                     }
                 });
                 dialog1.show();

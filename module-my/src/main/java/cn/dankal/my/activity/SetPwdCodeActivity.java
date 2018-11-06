@@ -36,6 +36,7 @@ public class SetPwdCodeActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+        int code=getIntent().getIntExtra("type",0);
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +46,7 @@ public class SetPwdCodeActivity extends BaseActivity {
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.SETWITHPWD).navigation();
+                ARouter.getInstance().build(MyProtocol.SETWITHPWD).withInt("type",code).navigation();
             }
         });
     }

@@ -21,4 +21,6 @@
     <string name="setWithPwd">设置提现密码</string>
     <string name="submit">确定</string>
     <string name="withPwdSetOk">提现密码设置成功</string>
+    <string name="Commonproblems">常见问题</string>
+    <style name="productTab1">LIGHT\nFIXTURES</style>
 </resources>

@@ -18,8 +18,12 @@
         <activity android:name="cn.dankal.my.activity.WithdrawalActivity" />
         <activity android:name="cn.dankal.my.activity.AboutUsActivity" />
         <activity android:name="cn.dankal.my.activity.FeedBackActivity" />
-        <activity android:name="cn.dankal.my.activity.SetWithdaPwdActivity"></activity>
-        <activity android:name="cn.dankal.my.activity.SetPwdCodeActivity"/>
+        <activity android:name="cn.dankal.my.activity.SetWithdaPwdActivity" />
+        <activity android:name="cn.dankal.my.activity.SetPwdCodeActivity" />
+        <activity android:name="cn.dankal.my.activity.ComProbActivity" />
+        <activity android:name="cn.dankal.my.activity.ComPorDataActivity" />
+        <activity android:name="cn.dankal.my.activity.BankCardActivity" />
+        <activity android:name="cn.dankal.my.activity.CheckBankCardActivity"></activity>
     </application>
 
 </manifest>

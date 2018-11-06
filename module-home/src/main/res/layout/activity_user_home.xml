@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.dankal.home.activity.UserHomeActivity">
+
+    <RadioGroup
+        android:id="@+id/tab_rg"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:elevation="4dp"
+        android:layout_alignParentBottom="true">
+
+        <RadioButton
+            android:id="@+id/home_rbtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/home_user_tab_selector"
+            android:text="HOME"
+            android:gravity="center"
+            android:textSize="11sp"
+            android:drawablePadding="3dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="4dp"
+            android:checked="true"
+            android:textColor="@drawable/tab_home_textcolor_selector"/>
+
+        <TextView
+            android:id="@+id/product_rbtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="PRODUCT"
+            android:drawableTop="@mipmap/ic_tab_product_dark"
+            android:gravity="center"
+            android:textSize="11sp"
+            android:drawablePadding="3dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/color66"/>
+
+        <TextView
+            android:id="@+id/release_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="PUBLISH"
+            android:drawableTop="@mipmap/ic_tab_release_dark"
+            android:gravity="center"
+            android:textSize="11sp"
+            android:drawablePadding="3dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/color66"/>
+        <RadioButton
+            android:id="@+id/my_rbtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/home_tab_wd_selector"
+            android:text="MINE"
+            android:gravity="center"
+            android:textSize="11sp"
+            android:drawablePadding="3dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="@drawable/tab_home_textcolor_selector"/>
+
+    </RadioGroup>
+    <FrameLayout
+        android:id="@+id/home_fra"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tab_rg"></FrameLayout>
+
+</RelativeLayout>

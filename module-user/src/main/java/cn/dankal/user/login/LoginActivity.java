@@ -18,7 +18,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.LoginProtocol;
+import cn.dankal.basiclib.util.PreferenceUtil;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.SpannableStringUtils;
 import cn.dankal.user.R;
 
@@ -52,7 +55,15 @@ public class LoginActivity extends BaseActivity {
         enterpriseLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
+                ARouter.getInstance().build(LoginProtocol.USERSLOGIN).navigation();
+                finish();
+            }
+        });
+        btLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
+                SharedPreferencesUtils.saveString(LoginActivity.this,"identity","user");
                 finish();
             }
         });

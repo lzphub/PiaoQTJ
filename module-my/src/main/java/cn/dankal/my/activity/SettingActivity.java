@@ -16,7 +16,13 @@ import cn.dankal.basiclib.base.activity.BaseRecyclerViewActivity;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.common.OnFinishLoadDataListener;
+import cn.dankal.basiclib.common.cache.CacheManager;
+import cn.dankal.basiclib.common.cache.SDCacheDir;
+import cn.dankal.basiclib.protocol.HomeProtocol;
+import cn.dankal.basiclib.protocol.LoginProtocol;
 import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.util.ActivityUtils;
+import cn.dankal.basiclib.util.Logger;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.SETTING;
@@ -62,6 +68,27 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ARouter.getInstance().build(MyProtocol.SETWITHPEDCODE).navigation();
+            }
+        });
+        loginOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
+                ActivityUtils.finishAllActivities();
+            }
+        });
+        problem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build(MyProtocol.COMPROB).navigation();
+            }
+        });
+        clearCache.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Long l=CacheManager.cleanCache(SettingActivity.this,SDCacheDir.getInstance(SettingActivity.this).cachepath);
+                Logger.d("long",l+"");
             }
         });
     }

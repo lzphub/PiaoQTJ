@@ -6,6 +6,8 @@ import android.content.Context;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.stetho.Stetho;
 
+import cn.dankal.basiclib.common.cache.SDCacheDir;
+import cn.dankal.basiclib.common.cache.SDCacheDirCompat;
 import cn.dankal.basiclib.util.AppUtils;
 import cn.dankal.basiclib.util.DensityAdaptationUtils;
 import cn.dankal.basiclib.util.StringUtil;
@@ -34,9 +36,11 @@ public class DankalApplication extends Application {
         initARouter();
         initStetho();
         initLoadSir();
+        initSDCache();
         //适配方案
         DensityAdaptationUtils.setDensity(context, 375);
         AppUtils.init(context);
+
     }
     /**
      * 初始化阿里路由
@@ -57,6 +61,11 @@ public class DankalApplication extends Application {
                 .addCallback(new LoadingCallback())
 //                .setDefaultCallback(LoadingCallback.class)
                 .commit();
+    }
+
+    private void initSDCache(){
+        SDCacheDirCompat.getInstance().setRootCacheFile(
+                new SDCacheDir(getContext()).filesDir);
     }
 
     public static Context getContext() {

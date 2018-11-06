@@ -2,6 +2,7 @@ package cn.dankal.my.activity;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.support.annotation.ArrayRes;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -16,8 +17,10 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import cn.dankal.basiclib.ResultCode;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.widget.GenDialog;
 import cn.dankal.setting.R;
 
@@ -34,6 +37,20 @@ public class MyEarningsActivity extends BaseActivity {
     private android.support.v7.widget.RecyclerView rankOnetothreeList;
     private android.support.v7.widget.RecyclerView rankFourtotenList;
     private android.widget.LinearLayout withdrawalLl;
+
+    private String cardNum = "0";
+    private String bankUUID = "0";
+    private String cashMoney = "0";
+
+    private String kBean;
+    private String poundage;
+    private double leftMoney;
+
+    //提现手续费
+    public static double withdrawalChargeRate;
+
+    //提现门槛
+    public static double threshold=0;
 
     @Override
     protected int getLayoutId() {
@@ -63,7 +80,7 @@ public class MyEarningsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(true){
-                    ARouter.getInstance().build(MyProtocol.WITHDRAWAL).navigation();
+                    ARouter.getInstance().build(MyProtocol.WITHDRAWAL).withString("balance",balanceText.getText().toString().trim().substring(1,balanceText.getText().toString().trim().length()-1)).navigation();
                 }else{
                     GenDialog.CustomBuilder customBuilder = new GenDialog.CustomBuilder(MyEarningsActivity.this);
                     customBuilder.setContent(R.layout.unsetpwd_layout);
@@ -80,6 +97,7 @@ public class MyEarningsActivity extends BaseActivity {
                         @Override
                         public void onClick(View v) {
                             dialog1.dismiss();
+                            ARouter.getInstance().build(MyProtocol.SETWITHPEDCODE).withInt("type", ResultCode.myEarCode).navigation();
                         }
                     });
                     dialog1.show();
@@ -88,6 +106,8 @@ public class MyEarningsActivity extends BaseActivity {
             }
         });
     }
+
+
 
     private void initView() {
         backImg = (ImageView) findViewById(R.id.back_img);

@@ -1,5 +1,9 @@
 package cn.dankal.basiclib;
 
 public interface ResultCode {
+    //图片选择
     int CheckImageCode=2305;
+
+    //我的收益跳转设置密码code
+    int myEarCode=11;
 }

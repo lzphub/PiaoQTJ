@@ -12,6 +12,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.util.ActivityUtils;
 import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.setting.R;
@@ -48,7 +49,13 @@ public class EditDataActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(StringUtil.isValid(etName.getText().toString().trim())){
-
+                    if(type==1){
+                        ARouter.getInstance().build(MyProtocol.PERSONALDATA).withString("name",etName.getText().toString().trim()).navigation();
+                    }else{
+                        ARouter.getInstance().build(MyProtocol.PERSONALDATA).withString("skills",etName.getText().toString().trim()).navigation();
+                    }
+                    finish();
+                    ActivityUtils.finishActivity(PersonalDataActivity.class);
                 }else{
                     if(type==1){
                         ToastUtils.showShort("姓名不能为空");

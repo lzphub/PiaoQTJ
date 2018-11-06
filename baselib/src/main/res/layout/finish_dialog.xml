@@ -42,6 +42,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <ImageView
+        android:id="@+id/image_title"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@mipmap/pic_profit_recharge_success"
