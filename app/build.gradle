@@ -47,10 +47,10 @@ android {
     buildTypes {
         debug {
             zipAlignEnabled true
-//            minifyEnabled true
-//            shrinkResources true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.jenkins
+//          signingConfig signingConfigs.jenkins
         }
     }
     compileOptions {
