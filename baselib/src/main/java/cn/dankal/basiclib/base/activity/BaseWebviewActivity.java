@@ -103,7 +103,6 @@ public abstract class BaseWebviewActivity extends BaseActivity {
     }
 
     public void setTitleFromWebView(String title) {
-
     }
 
     @Override

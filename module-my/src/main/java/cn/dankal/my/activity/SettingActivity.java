@@ -23,6 +23,7 @@ import cn.dankal.basiclib.protocol.LoginProtocol;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.ActivityUtils;
 import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.SETTING;
@@ -37,6 +38,12 @@ public class SettingActivity extends BaseActivity {
     private android.widget.RelativeLayout opinion;
     private android.widget.RelativeLayout setPwd;
     private android.widget.RelativeLayout loginOut;
+    private String type;
+    private TextView aboutText;
+    private TextView clearText;
+    private TextView opinionText;
+    private TextView outText;
+    private TextView problemText;
 
     @Override
     protected int getLayoutId() {
@@ -86,9 +93,7 @@ public class SettingActivity extends BaseActivity {
         clearCache.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Long l=CacheManager.cleanCache(SettingActivity.this,SDCacheDir.getInstance(SettingActivity.this).cachepath);
-                Logger.d("long",l+"");
             }
         });
     }
@@ -101,6 +106,20 @@ public class SettingActivity extends BaseActivity {
         opinion = (RelativeLayout) findViewById(R.id.opinion);
         setPwd = (RelativeLayout) findViewById(R.id.set_pwd);
         loginOut = (RelativeLayout) findViewById(R.id.login_out);
+        problemText = (TextView) findViewById(R.id.problem_text);
+        aboutText = (TextView) findViewById(R.id.about_text);
+        clearText = (TextView) findViewById(R.id.clear_text);
+        opinionText = (TextView) findViewById(R.id.opinion_text);
+        outText = (TextView) findViewById(R.id.out_text);
+        type= SharedPreferencesUtils.getString(this,"identity","");
+        if(type.equals("user")){
+            problemText.setText("FAQ");
+            aboutText.setText("ABOUT US");
+            clearText.setText("CLEAR CACHE");
+            opinionText.setText("HELP AND FEEDBACK");
+            outText.setText("LOG OUT");
+            setPwd.setVisibility(View.GONE);
+        }
     }
 
 }

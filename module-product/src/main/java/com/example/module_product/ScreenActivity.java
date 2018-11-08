@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import cn.dankal.basiclib.adapter.ProductTabRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.ProductListBean;
+import cn.dankal.basiclib.protocol.ProductProtocol;
 
 import static cn.dankal.basiclib.protocol.ProductProtocol.SCREEN;
 
@@ -76,6 +78,12 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
                 if(!pageProductRv.canScrollVertically(1)){
                     productScreenRvAdapter.addMore(productListBeanList);
                 }
+            }
+        });
+        productScreenRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductListBean>() {
+            @Override
+            public void onItemClick(View v, int position, ProductListBean data) {
+                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).navigation();
             }
         });
     }

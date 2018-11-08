@@ -1,15 +1,12 @@
 package cn.dankal.home.fragment;
 
-import android.content.ComponentName;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -19,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -27,9 +23,6 @@ import com.bumptech.glide.Glide;
 import com.xuezj.cardbanner.CardBanner;
 import com.xuezj.cardbanner.ImageData;
 import com.xuezj.cardbanner.imageloader.CardImageLoader;
-import com.yanzhenjie.permission.Action;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Permission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,19 +31,15 @@ import cn.dankal.address.R;
 import cn.dankal.basiclib.adapter.DemandRvAdapter;
 import cn.dankal.basiclib.adapter.ProductRvAdapter;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
-import cn.dankal.basiclib.base.fragment.BaseRecyclerViewFragment;
-import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
-import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.DemandListbean;
 import cn.dankal.basiclib.bean.ProductListBean;
-import cn.dankal.basiclib.common.OnFinishLoadDataListener;
 import cn.dankal.basiclib.protocol.HomeProtocol;
-import cn.dankal.basiclib.util.AppUtils;
+import cn.dankal.basiclib.protocol.ProductProtocol;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.ToastUtils;
-import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeLoadMoreFooterLayout;
+import cn.dankal.basiclib.widget.GenDialog;
 
 public class Home_fragment extends BaseFragment {
     private android.widget.ImageView logoImg;
@@ -68,7 +57,7 @@ public class Home_fragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout;
+        return R.layout.fragment_home;
     }
 
     @Override
@@ -92,9 +81,10 @@ public class Home_fragment extends BaseFragment {
             spannableString.setSpan(colorSpan, 0, 6, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             resText.setText("PUBLISH A REQUEST");
             ViewGroup.LayoutParams layoutParams = releaseLl.getLayoutParams();
-            layoutParams.width = 470;
+            layoutParams.width = 485;
             releaseLl.setLayoutParams(layoutParams);
             loadMore.setVisibility(View.GONE);
+            logoImg.setImageResource(R.mipmap.pic_logo_english);
         }
         newDemand.setText(spannableString);
 
@@ -113,13 +103,19 @@ public class Home_fragment extends BaseFragment {
         releaseLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(HomeProtocol.HOMERELEASE).navigation();
+                if (identity.equals("enterprise")) {
+                    ARouter.getInstance().build(HomeProtocol.HOMERELEASE).navigation();
+                }else{
+                    ARouter.getInstance().build(HomeProtocol.POSTREQUEST).navigation();
+                }
             }
         });
 
         initBanner();
 
     }
+
+
 
     private void initView(View view) {
         logoImg = (ImageView) view.findViewById(R.id.logo_img);
@@ -168,7 +164,7 @@ public class Home_fragment extends BaseFragment {
             productRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductListBean>() {
                 @Override
                 public void onItemClick(View v, int position, ProductListBean data) {
-                    ToastUtils.showShort(productRvAdapter.getDatas().get(position).getName()+"   "+position);
+                    ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).navigation();
                 }
             });
             scroll.setOnScrollChangeListener(new View.OnScrollChangeListener() {

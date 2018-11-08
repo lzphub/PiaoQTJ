@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.dankal.home.activity.EnterIntentionActivity">
+
+    <LinearLayout
+        android:id="@+id/title_ll"
+        android:layout_width="match_parent"
+        android:layout_height="69dp">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="38dp"
+            android:src="@mipmap/ic_my_worklist_return" />
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/submit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@color/login_btn_bg"
+        android:text="SUBMIT"
+        android:textStyle="bold"
+        android:textColor="@color/colorFF"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true"/>
+    
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_ll"
+        android:layout_above="@id/submit_btn">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="POST REQUEST"
+                android:textSize="25sp"
+                android:textColor="@color/color33"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONTACTS"
+                android:textStyle="bold"
+                android:textColor="@color/color33"
+                android:textSize="20sp"
+                android:layout_marginTop="36dp"
+                android:layout_marginLeft="23dp"/>
+
+            <EditText
+                android:id="@+id/contacts_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:background="@null"
+                android:text="JAY HHH"
+                android:textSize="20sp"
+                android:textColor="@color/color33"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONTACT NUMBER"
+                android:textStyle="bold"
+                android:textColor="@color/color33"
+                android:textSize="20sp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginTop="50dp"/>
+
+            <EditText
+                android:id="@+id/number_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="PLEASE FILL OUT YOUR CONTACT NUMBER"
+                android:textSize="20sp"
+                android:textColor="@color/color33"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONTACT VIA MAIL"
+                android:textStyle="bold"
+                android:textColor="@color/color33"
+                android:textSize="20sp"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="23dp"/>
+
+            <EditText
+                android:id="@+id/email_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="PLEASE FILL IN THE EMAIL"
+                android:textSize="20sp"
+                android:textColor="@color/color33"
+                android:textStyle="bold"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DETAILED INTENTION"
+                android:textStyle="bold"
+                android:textColor="@color/color33"
+                android:textSize="20sp"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="23dp"/>
+
+            <EditText
+                android:id="@+id/intention_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PLEASE ENTER DETAILED INTENTION"
+                android:textSize="20sp"
+                android:textColor="@color/color33"
+                android:textStyle="bold"
+                android:background="@null"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

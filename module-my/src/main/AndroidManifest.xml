@@ -23,7 +23,14 @@
         <activity android:name="cn.dankal.my.activity.ComProbActivity" />
         <activity android:name="cn.dankal.my.activity.ComPorDataActivity" />
         <activity android:name="cn.dankal.my.activity.BankCardActivity" />
-        <activity android:name="cn.dankal.my.activity.CheckBankCardActivity"></activity>
-    </application>
+        <activity android:name="cn.dankal.my.activity.CheckBankCardActivity" />
+        <activity android:name="cn.dankal.my.activity.PersonalData_EnActivity" />
+        <activity android:name="cn.dankal.my.activity.MyIntentionActivity" />
+        <activity android:name="cn.dankal.my.activity.MyFavoriteActivity" />
+        <activity android:name="cn.dankal.my.activity.MyRequestActivity" />
+        <activity android:name="cn.dankal.my.activity.PickCountriesActivity" />
+        <activity android:name="cn.dankal.my.activity.MyIntentionDetailsActivity" />
+        <activity android:name="cn.dankal.my.activity.MyRequestDetaActivity"/>
+        <activity android:name="cn.dankal.my.activity.EditDataEnActivity"/>    </application>
 
 </manifest>

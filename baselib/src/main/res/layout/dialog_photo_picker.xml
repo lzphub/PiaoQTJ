@@ -3,20 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
     android:background="@android:color/transparent"
-    android:orientation="vertical"
-    android:paddingBottom="10dp">
+    android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/photodialog_btn_take"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/rect_white_l4t4"
+        android:background="@color/colorFF"
         android:gravity="center"
-        android:text="拍照"
-        android:textColor="#323232" />
+        android:text="PHOTOGRAPH"
+        android:textColor="@color/color33"
+        android:textSize="14sp" />
 
     <View
         android:layout_width="match_parent"
@@ -28,14 +26,15 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:background="@drawable/rect_white_b4r4"
+        android:background="@color/colorFF"
         android:gravity="center"
-        android:text="相册"
-        android:textColor="#323232" />
+        android:text="SELECT FROM ALBUM"
+        android:textColor="@color/color33"
+        android:textSize="14sp"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="5dp"
         android:layout_gravity="center"
         android:background="@android:color/transparent"
         android:gravity="center" />
@@ -45,9 +44,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:background="@drawable/rect_white_4dc"
+        android:background="@color/colorFF"
         android:gravity="center"
-        android:text="取消"
-        android:textColor="@color/colorAccent" />
+        android:text="CANCEL"
+        android:textColor="@color/color33"
+        android:textSize="14sp" />
 
 </android.support.v7.widget.LinearLayoutCompat>

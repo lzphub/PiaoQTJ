@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/intention_info"
+    android:layout_height="115dp">
+    
+    <ImageView
+        android:id="@+id/intention_img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/bg_colorf8"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="23dp"/>
+
+    <TextView
+        android:id="@+id/intention_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BRUSHED"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@color/color33"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@id/intention_img"
+        android:layout_alignTop="@id/intention_img"/>
+
+    <TextView
+        android:id="@+id/intention_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$388"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@color/login_btn_bg"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@id/intention_img"
+        android:layout_below="@id/intention_name"/>
+
+    <TextView
+        android:id="@+id/intention_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SUBMITTED"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:textColor="@color/colorCF"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@id/intention_img"
+        android:layout_below="@id/intention_price"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_my_request_entrance"
+        android:layout_marginRight="23dp"
+        android:layout_marginBottom="7dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/intention_img"/>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorE5"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

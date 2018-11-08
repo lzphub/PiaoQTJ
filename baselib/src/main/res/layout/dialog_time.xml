@@ -15,7 +15,8 @@
             android:gravity="center"
             android:paddingLeft="19dp"
             android:paddingRight="19dp"
-            android:text="取消"
+            android:text="CANCEL"
+            android:textStyle="bold"
             android:textColor="#4A4A4A"
             android:textSize="14sp" />
 
@@ -24,7 +25,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="选择时间"
+            android:text="SELECTION TIME"
+            android:textStyle="bold"
             android:textColor="@color/color14"
             android:textSize="18sp" />
 
@@ -35,8 +37,9 @@
             android:gravity="center"
             android:paddingLeft="19dp"
             android:paddingRight="19dp"
-            android:text="完成"
-            android:textColor="@color/colorAccent"
+            android:text="OK"
+            android:textStyle="bold"
+            android:textColor="@color/login_btn_bg"
             android:textSize="14sp" />
     </LinearLayout>
 

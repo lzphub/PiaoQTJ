@@ -14,7 +14,11 @@
         <activity android:name="cn.dankal.home.activity.SubmitIdeaActivity" />
         <activity android:name="cn.dankal.home.activity.DemandDetailsActivity" />
         <activity android:name="cn.dankal.home.activity.DemandClaimActivity" />
-        <activity android:name="cn.dankal.home.activity.UserHomeActivity"></activity>
+        <activity android:name="cn.dankal.home.activity.UserHomeActivity" />
+        <activity android:name="cn.dankal.home.activity.PostRequstActivity" />
+        <activity android:name="cn.dankal.home.activity.EnterIntentionActivity" />
+        <activity android:name="cn.dankal.home.activity.SubmitIntentionActivity" />
+        <activity android:name="cn.dankal.home.activity.ServiceActivity"></activity>
     </application>
 
 </manifest>

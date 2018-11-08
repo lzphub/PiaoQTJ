@@ -31,6 +31,7 @@
     <color name="color14">#141414</color>
     <color name="color00">#000000</color>
     <color name="colorF6">#F6F6F6</color>
+    <color name="colorD8">#D8D8D8</color>
 
 
     <color name="colorAE">#AEAEAE</color>
@@ -40,4 +41,5 @@
     <color name="colorf5a623">#F5A623</color>
     
     <color name="colored5855">#ed5855</color>
+    <color name="colorfff8dc">#FFF8DC</color>
 </resources>

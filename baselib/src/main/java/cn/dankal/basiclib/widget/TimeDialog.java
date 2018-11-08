@@ -163,7 +163,7 @@ public class TimeDialog extends DialogFragment {
 
     }
 
-    public String getTime() {
+    private String getTime() {
         StringBuffer sb = new StringBuffer();
         sb.append((wvYear.getCurrentItem() + START_YEAR)).append("-")
                 .append((wvMonth.getCurrentItem() + 1)).append("-")

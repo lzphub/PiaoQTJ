@@ -31,20 +31,20 @@
             android:checked="true"
             android:textColor="@drawable/tab_home_textcolor_selector"/>
 
-        <TextView
+        <RadioButton
             android:id="@+id/product_rbtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:text="PRODUCT"
-            android:drawableTop="@mipmap/ic_tab_product_dark"
+            android:drawableTop="@drawable/home_product_tab_selector"
             android:gravity="center"
             android:textSize="11sp"
             android:drawablePadding="3dp"
             android:layout_marginTop="9dp"
             android:layout_marginBottom="4dp"
-            android:textColor="@color/color66"/>
+            android:textColor="@drawable/tab_home_textcolor_selector"/>
 
         <TextView
             android:id="@+id/release_text"
