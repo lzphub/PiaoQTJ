@@ -110,4 +110,8 @@ dependencies {
     implementation deps.kotlin.anko
     implementation "com.zhihu.android:matisse:0.5.2-beta3"
 
+
+    api deps.push.jgsdk_jpush
+    api deps.push.jgsdk_jcore
+
 }
