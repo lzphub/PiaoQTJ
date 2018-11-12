@@ -39,7 +39,6 @@ public class OnlyImgRvAdapter extends BaseRecyclerViewAdapter<String> {
 
         @Override
         public void onBindData(String url, int position) {
-            Logger.d("urllllll",url);
             Glide.with(context).load(url).into(contentImg);
         }
     }

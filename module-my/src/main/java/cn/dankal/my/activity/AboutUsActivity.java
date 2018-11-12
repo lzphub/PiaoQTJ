@@ -9,7 +9,10 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 
+import api.MyServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.bean.AboutUsBean;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.ABOUTUS;
@@ -35,11 +38,21 @@ public class AboutUsActivity extends BaseActivity {
                 finish();
             }
         });
+        getData();
+    }
+
+    private void getData(){
+        MyServiceFactory.getAboutUs().safeSubscribe(new AbstractDialogSubscriber<AboutUsBean>(this) {
+            @Override
+            public void onNext(AboutUsBean aboutUsBean) {
+                usContent.setText(aboutUsBean.getValue());
+            }
+        });
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        usContent = (TextView) findViewById(R.id.us_content);
-        imageRv = (RecyclerView) findViewById(R.id.image_rv);
+        backImg = findViewById(R.id.back_img);
+        usContent = findViewById(R.id.us_content);
+        imageRv = findViewById(R.id.image_rv);
     }
 }

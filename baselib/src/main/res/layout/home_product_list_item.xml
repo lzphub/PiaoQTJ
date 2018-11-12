@@ -4,6 +4,7 @@
     android:layout_height="365dp"
     android:orientation="vertical"
     android:layout_marginBottom="17dp"
+    android:layout_marginLeft="24dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorF8"
     android:gravity="center">

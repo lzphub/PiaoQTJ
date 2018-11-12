@@ -26,33 +26,33 @@ public interface UserService {
 
     /**
      * 获取验证码 scalar
-     * 找回密码:pass 设置支付密码: set_pay 绑定银行卡 bindcard
+     * 找回密码:pass 设置支付密码: set_pay 绑定银行卡 bindcard 注册：sign_up
      */
-    @GET("partner/Send")
-    Observable<String> obtainVerifyCode(@Query("mobile") String moblie, @Query("send_type") String type);
+    @GET("customer/login/getcode")
+    Observable<String> obtainVerifyCode(@Query("email") String moblie, @Query("type") String type);
 
     /**
      * 检查验证码 key
      */
-    @POST("partner/Send/checkCode")
+    @POST("engineer/login/checkcode")
     @FormUrlEncoded
-    Observable<CheckCode> verifyCode(@Field("mobile") String mobile,
-                                     @Field("code") String code,
-                                     @Field("send_type") String send_type);
+    Observable<CheckCode> verifyCode(@Field("email") String email,
+                                     @Field("type") String type,
+                                     @Field("code") String code);
 
     /**
      * 设置密码 scalar
      */
-    @POST("partner/User/resetPassword")
+    @POST("customerlogin/signUp")
     @FormUrlEncoded
-    Observable<String> resetPassword(@Field("mobile") String mobile, @Field("key") String key, @Field("password") String password);
+    Observable<String> resetPassword(@Field("email") String email,  @Field("password") String password);
 
     /**
      * 登录
      */
-    @POST("partner/User/login")
+    @POST("customer/login/login")
     @FormUrlEncoded
-    Observable<UserResponseBody> login(@Field("account") String account, @Field("password") String password);
+    Observable<UserResponseBody> login(@Field("email") String email, @Field("password") String password);
 
     /**
      * 获取用户信息

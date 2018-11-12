@@ -68,6 +68,8 @@ public class PersonalData_EnActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+
+        backImg.setOnClickListener(v -> finish());
         Glide.with(this)
                 .load("http://cdn.duitang.com/uploads/item/201408/28/20140828142218_PS4fi.thumb.700_0.png")
                 .into(headPic);
@@ -108,7 +110,7 @@ public class PersonalData_EnActivity extends BaseActivity {
         /*
         * 没有裁剪！！
         * */
-        changeAvatar.checkPermission(new CameraHandler(this));
+        changeAvatar.checkPermission(new CameraHandler(this),null);
 
     }
 

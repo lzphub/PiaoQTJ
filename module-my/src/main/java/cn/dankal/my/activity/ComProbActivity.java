@@ -13,20 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.dankal.basiclib.adapter.TextRvAdapter;
+import cn.dankal.basiclib.base.BaseRvActivity;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
+import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.ToastUtils;
+import cn.dankal.my.presenter.ComProbPersenter;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.COMPROB;
 
 @Route(path = COMPROB)
-public class ComProbActivity extends BaseActivity {
+public class ComProbActivity extends BaseRvActivity<String> {
     private android.widget.ImageView backImg;
     private android.widget.TextView titleText;
-    private android.support.v7.widget.RecyclerView recordsList;
-    private List<String> stringList=new ArrayList<>();
+    private TextRvAdapter textRvAdapter;
+    private String type;
 
     @Override
     protected int getLayoutId() {
@@ -34,34 +39,35 @@ public class ComProbActivity extends BaseActivity {
     }
 
     @Override
-    protected void initComponents() {
+    public void initComponents() {
+        super.initComponents();
         initView();
-        for(int i=0;i<10;i++){
-            stringList.add("常见问题"+i);
+        backImg.setOnClickListener(v -> finish());
+        type= SharedPreferencesUtils.getString(this,"identity","user");
+        if(type.equals("user")){
+            titleText.setText("FAQ");
         }
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recordsList.setLayoutManager(linearLayoutManager);
-        TextRvAdapter textRvAdapter=new TextRvAdapter();
-        textRvAdapter.addMore(stringList);
-        recordsList.setAdapter(textRvAdapter);
+    }
+
+    private void initView() {
+        backImg = (ImageView) findViewById(R.id.back_img);
+        titleText = (TextView) findViewById(R.id.title_text);
+    }
+
+    @Override
+    public BaseRecyclerViewPresenter<String> getPresenter() {
+        return new ComProbPersenter();
+    }
+
+    @Override
+    public BaseRecyclerViewAdapter<String> getAdapter() {
+        textRvAdapter=new TextRvAdapter();
         textRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<String>() {
             @Override
             public void onItemClick(View v, int position, String data) {
                 ARouter.getInstance().build(MyProtocol.COMPORDATA).navigation();
             }
         });
-    }
-
-    private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
-        recordsList = (RecyclerView) findViewById(R.id.records_list);
+        return textRvAdapter;
     }
 }

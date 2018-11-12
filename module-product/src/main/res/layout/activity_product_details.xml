@@ -11,8 +11,8 @@
         android:id="@+id/title_rl"
         android:layout_width="match_parent"
         android:layout_height="69dp"
-        android:background="#00000000">
-
+        android:background="#ffffff"
+        android:elevation="25dp">
         <ImageView
             android:id="@+id/back_img"
             android:layout_width="wrap_content"
@@ -21,14 +21,15 @@
             android:layout_marginTop="20dp"
             android:src="@mipmap/ic_my_worklist_return" />
 
-        <ImageView
+        <RadioButton
             android:id="@+id/coll_img"
-            android:layout_width="wrap_content"
-            android:layout_height="49dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="23dp"
-            android:layout_marginTop="20dp"
-            android:src="@mipmap/ic_home_details_like_unclicked" />
+            android:layout_marginTop="35dp"
+            android:button="@null"
+            android:background="@drawable/collection_selectior"/>
 
         <TextView
             android:id="@+id/title"
@@ -39,11 +40,14 @@
             android:layout_marginBottom="11dp"
             android:layout_marginTop="20dp"
             android:text="PRODUCT DETAILS"
-            android:textColor="@color/color33"
+            android:textColor="#00333333"
             android:textSize="20sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
+
+
+
 
     <LinearLayout
         android:id="@+id/btn_ll"
@@ -77,8 +81,8 @@
     </LinearLayout>
 
     <!--<android.support.design.widget.CoordinatorLayout-->
-        <!--android:layout_width=""-->
-        <!--android:layout_height=""></android.support.design.widget.CoordinatorLayout>-->
+    <!--android:layout_width=""-->
+    <!--android:layout_height=""></android.support.design.widget.CoordinatorLayout>-->
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/content_scroll"
         android:layout_width="match_parent"
@@ -154,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
-                android:src="@mipmap/pic_shop_title"/>
+                android:src="@mipmap/pic_shop_title" />
 
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
                 android:id="@+id/product_video"
@@ -167,9 +171,13 @@
                 android:id="@+id/content_img_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="10dp"-->
+        <!--android:background="@drawable/view_gradient_btn_bg"-->
+        <!--android:layout_below="@id/title_rl"/>-->
 </RelativeLayout>

@@ -29,7 +29,7 @@ public abstract class BaseStateActivity extends BaseActivity implements BaseStat
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (contentView() != null) {
-            loadService = LoadSir.getDefault().register(contentView(), new Callback.OnReloadListener() {
+          /*  loadService = LoadSir.getDefault().register(contentView(), new Callback.OnReloadListener() {
                 @Override
                 public void onReload(View v) {
                     loadService.showCallback(LoadingCallback.class);
@@ -37,7 +37,8 @@ public abstract class BaseStateActivity extends BaseActivity implements BaseStat
                     //callback
                     obtainData();
                 }
-            });
+            });*/
+            obtainData();
         }
     }
 

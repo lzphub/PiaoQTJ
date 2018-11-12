@@ -1,13 +1,10 @@
 package cn.dankal.my.activity;
 
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
@@ -19,7 +16,6 @@ import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
 import cn.dankal.my.entity.TabEntity;
 import cn.dankal.my.fragment.MyIntentionAllFragment;
-import cn.dankal.my.fragment.MyIntentionAllFragment2;
 import cn.dankal.my.fragment.MyIntentionFinishsFragment;
 import cn.dankal.my.fragment.MyIntentionProgressFragment;
 import cn.dankal.my.fragment.MyIntentionSubmittedFragment;
@@ -38,7 +34,7 @@ public class MyIntentionActivity extends BaseActivity {
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private List<BaseFragment> fragmentList;
     private MyIntentionVpAdapter myIntentionVpAdapter;
-    private MyIntentionAllFragment2 myIntentionAllFragment;
+    private MyIntentionAllFragment myIntentionAllFragment;
     private MyIntentionSubmittedFragment myIntentionSubmittedFragment;
     private MyIntentionProgressFragment myIntentionProgressFragment;
     private MyIntentionFinishsFragment myIntentionFinishsFragment;
@@ -51,6 +47,8 @@ public class MyIntentionActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+
+        backImg.setOnClickListener(v -> finish());
         titleText.setText("MY INTENTION");
         for(int i=0;i<tab_titel2.length;i++){
             mTabEntities.add(new TabEntity(tab_titel2[i]) {
@@ -99,7 +97,7 @@ public class MyIntentionActivity extends BaseActivity {
         }
 
         if(null  == myIntentionAllFragment){
-            myIntentionAllFragment = new MyIntentionAllFragment2();
+            myIntentionAllFragment = new MyIntentionAllFragment();
             fragmentList.add(myIntentionAllFragment);
         }
 

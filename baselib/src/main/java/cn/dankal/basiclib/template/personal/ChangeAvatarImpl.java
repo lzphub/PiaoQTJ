@@ -5,15 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
+import java.net.URI;
 import java.text.DecimalFormat;
+import java.util.List;
 
 import api.UserServiceFactory;
+import cn.dankal.basiclib.adapter.ServiceRvAdapter;
 import cn.dankal.basiclib.base.BaseView;
+import cn.dankal.basiclib.base.callback.DKCallBack;
+import cn.dankal.basiclib.bean.ServiceTextBean;
 import cn.dankal.basiclib.common.camera.CamerImageBean;
 import cn.dankal.basiclib.common.camera.CameraHandler;
 import cn.dankal.basiclib.common.camera.RequestCodes;
@@ -48,7 +54,7 @@ public class ChangeAvatarImpl implements ChangeAvatar {
     }
 
     @Override
-    public void checkPermission(CameraHandler cameraHandler) {
+    public void checkPermission(CameraHandler cameraHandler, DKCallBack agreePermission) {
         new RxPermissions(cameraHandler.getActivity())
                 .request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.CAMERA)
@@ -56,7 +62,11 @@ public class ChangeAvatarImpl implements ChangeAvatar {
                     if (!granted) {
                         ToastUtils.showShort("请开启相关权限，否则无法上传图片哦~");
                     } else {
-                        cameraHandler.beginCameraDialog();
+                        if (agreePermission!=null){
+                            agreePermission.action();
+                        }else {
+                            cameraHandler.beginCameraDialog();
+                        }
                     }
                 });
     }
@@ -75,6 +85,29 @@ public class ChangeAvatarImpl implements ChangeAvatar {
             default:
         }
     }
+
+    @Override
+    public void onChatPickPhoto(RecyclerView recyclerView, ServiceRvAdapter serviceRvAdapter, List<ServiceTextBean> serviceTextBeanList, int requestCode, int resultCode, Intent data) {
+        ServiceTextBean serviceTextBean=new ServiceTextBean();
+        switch (requestCode) {
+            case RequestCodes.TAKE_PHOTO:
+                Uri takePath = CamerImageBean.getInstance().getPath();
+                serviceTextBean.setSend_img(takePath);
+                serviceTextBean.setType(3);
+                break;
+            case RequestCodes.PICK_PHOTO:
+                Uri pickpath = Uri.parse(ImagePathUtil.getImageAbsolutePath(context, data.getData()));
+                serviceTextBean.setSend_img(pickpath);
+                serviceTextBean.setType(3);
+                break;
+            default:
+        }
+        serviceTextBeanList.add(serviceTextBean);
+        serviceRvAdapter.update(serviceTextBeanList);
+        recyclerView.scrollToPosition(serviceTextBeanList.size()-1);
+    }
+
+
 
     private void uploadPic(Uri photoUris) {
         final File tempFile = new File(photoUris.getPath());

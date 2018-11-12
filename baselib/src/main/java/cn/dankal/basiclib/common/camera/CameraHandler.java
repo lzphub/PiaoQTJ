@@ -43,8 +43,7 @@ public class CameraHandler implements View.OnClickListener {
         return activity;
     }
 
-
-    public final void beginCameraDialog() {
+    public void beginCameraDialog() {
         DIALOG.show();
         final Window window = DIALOG.getWindow();
         if (window != null) {

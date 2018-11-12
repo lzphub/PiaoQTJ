@@ -2,6 +2,7 @@ package cn.dankal.basiclib;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.stetho.Stetho;
@@ -82,7 +83,7 @@ public class DankalApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-//      MultiDex.install(this);
+        MultiDex.install(this);
     }
 
     private static boolean login;

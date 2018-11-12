@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 
 import cn.dankal.address.R;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
+import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.widget.CircleImageView;
@@ -59,58 +60,39 @@ public class My_fragment extends BaseFragment {
                 .load("http://cdn.duitang.com/uploads/item/201408/28/20140828142218_PS4fi.thumb.700_0.png")
                 .into(headPic);
 
-        myWorklist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(type.equals("user")){
-                    ARouter.getInstance().build(MyProtocol.MYREQUEST).navigation();
-                }else{
-                    ARouter.getInstance().build(MyProtocol.MYWORKLIST).navigation();
-                }
+        myWorklist.setOnClickListener(v -> {
+            if(type.equals("user")){
+                ARouter.getInstance().build(MyProtocol.MYREQUEST).navigation();
+            }else{
+                ARouter.getInstance().build(MyProtocol.MYWORKLIST).navigation();
             }
         });
-        myIdea.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(type.equals("user")){
-                    ARouter.getInstance().build(MyProtocol.MYINTENTION).navigation();
-                }else{
-                    ARouter.getInstance().build(MyProtocol.MYIDEA).navigation();
-                }
+        myIdea.setOnClickListener(v -> {
+            if(type.equals("user")){
+                ARouter.getInstance().build(MyProtocol.MYINTENTION).navigation();
+            }else{
+                ARouter.getInstance().build(MyProtocol.MYIDEA).navigation();
             }
         });
-        myProfit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(type.equals("user")){
-                    ARouter.getInstance().build(MyProtocol.MYFAVORITE).navigation();
-                }else{
-                    ARouter.getInstance().build(MyProtocol.MYEARNING).navigation();
-                }
+        myProfit.setOnClickListener(v -> {
+            if(type.equals("user")){
+                ARouter.getInstance().build(MyProtocol.MYFAVORITE).navigation();
+            }else{
+                ARouter.getInstance().build(MyProtocol.MYEARNING).navigation();
             }
         });
-        setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.SETTING).navigation();
+        setting.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.SETTING).navigation());
+        myNews.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.SYSTEMNEWS).navigation());
+        headPic.setOnClickListener(v -> {
+            if(type.equals("user")){
+                ARouter.getInstance().build(MyProtocol.PERSONALDATAEN).navigation();
+            }else{
+                ARouter.getInstance().build(MyProtocol.PERSONALDATA).navigation();
             }
         });
-        myNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    ARouter.getInstance().build(MyProtocol.SYSTEMNEWS).navigation();
-            }
-        });
-        headPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(type.equals("user")){
-                    ARouter.getInstance().build(MyProtocol.PERSONALDATAEN).navigation();
-                }else{
-                    ARouter.getInstance().build(MyProtocol.PERSONALDATA).navigation();
-                }
-            }
-        });
+
+        customer.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.SERVICE).navigation());
+
     }
 
     private void initView(View view) {

@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.LoginProtocol;
 import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.user.R;
 
 import static cn.dankal.basiclib.protocol.LoginProtocol.REGISTERENTEREMSIL;
@@ -39,7 +40,7 @@ public class RegistrActivity extends BaseActivity {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!etPhoneNum.getText().toString().trim().isEmpty()){
+                if(StringUtil.checkEmail(etPhoneNum.getText().toString())){
                     ARouter.getInstance().build(LoginProtocol.REGISTERVECODE).withString("emailAccount",etPhoneNum.getText().toString().trim()).navigation();
                 }else{
                     Toast.makeText(RegistrActivity.this, "请填写正确的邮箱账号", Toast.LENGTH_SHORT).show();

@@ -137,6 +137,8 @@ public class Home_fragment extends BaseFragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         demandList.setLayoutManager(linearLayoutManager);
+        demandList.setNestedScrollingEnabled(false);
+        demandList.setHasFixedSize(true);
         if(identity.equals("enterprise")){
             for (int i = 0; i < 3; i++) {
                 DemandListbean demandListbean = new DemandListbean();
