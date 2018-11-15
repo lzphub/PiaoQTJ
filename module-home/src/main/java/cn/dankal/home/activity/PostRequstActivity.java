@@ -21,13 +21,19 @@ import com.zhihu.matisse.Matisse;
 import java.util.ArrayList;
 import java.util.List;
 
+import api.HomeServiceFactory;
 import cn.dankal.address.R;
 import cn.dankal.basiclib.ResultCode;
 import cn.dankal.basiclib.adapter.ImageRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.callback.DKCallBackObject;
+import cn.dankal.basiclib.bean.PostRequestBean;
+import cn.dankal.basiclib.util.StringUtil;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.util.image.CheckImage;
 import cn.dankal.basiclib.widget.TimeDialog;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 import static cn.dankal.basiclib.protocol.HomeProtocol.POSTREQUEST;
 
@@ -35,7 +41,7 @@ import static cn.dankal.basiclib.protocol.HomeProtocol.POSTREQUEST;
 public class PostRequstActivity extends BaseActivity {
     private android.widget.Button submitBtn;
     private android.widget.ImageView colseImg;
-    private android.widget.TextView titleThe ;
+    private android.widget.TextView titleThe;
     private android.widget.TextView titleSize;
     private android.widget.EditText titleEt;
     private android.widget.ImageView addImg;
@@ -49,8 +55,8 @@ public class PostRequstActivity extends BaseActivity {
     private android.widget.LinearLayout priceMaxLl;
     private android.widget.EditText priceMax;
     private android.widget.EditText contentEt;
-    private int size=3;
-    private List<Uri> result=new ArrayList<>();
+    private int size = 3;
+    private List<Uri> result = new ArrayList<>();
     private ImageRvAdapter imageRvAdapter;
 
     @Override
@@ -71,14 +77,14 @@ public class PostRequstActivity extends BaseActivity {
         periodStart.setInputType(InputType.TYPE_NULL);
 
         periodStart.setOnFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus){
+            if (hasFocus) {
                 TimeDialog timeDialog = new TimeDialog();
                 timeDialog.show(getSupportFragmentManager(), "timeDialog");
                 timeDialog.setListener(time -> periodStart.setText(time));
             }
         });
         periodEnd.setOnFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus){
+            if (hasFocus) {
                 TimeDialog timeDialog = new TimeDialog();
                 timeDialog.show(getSupportFragmentManager(), "timeDialog");
                 timeDialog.setListener(time -> periodStart.setText(time));
@@ -98,12 +104,59 @@ public class PostRequstActivity extends BaseActivity {
         addImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckImage.takePhotoPicker(PostRequstActivity.this,size-result.size());
+                CheckImage.takePhotoPicker(PostRequstActivity.this, size - result.size());
             }
         });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         addImgRv.setLayoutManager(linearLayoutManager);
+
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = titleEt.getText().toString().trim();
+                String content = contentEt.getText().toString().trim();
+                String start_price = priceMin.getText().toString().trim();
+                String end_price = priceMax.getText().toString().trim();
+                String start_date = periodStart.getText().toString().trim();
+                String end_date = periodEnd.getText().toString().trim();
+                if (title == null) {
+                    ToastUtils.showShort("Title is mandatory");
+                } else if (content.length() < 15) {
+                    ToastUtils.showShort("The length of description cannot be less than 15");
+                } else {
+                    PostRequestBean postRequestBean = new PostRequestBean();
+                    postRequestBean.setTitle(title);
+                    postRequestBean.setDescription(content);
+                    postRequestBean.setStart_date(start_date);
+                    postRequestBean.setEnd_date(end_date);
+                    postRequestBean.setStart_price(start_price);
+                    postRequestBean.setEnd_price(end_price);
+                    HomeServiceFactory.postRequest(postRequestBean).safeSubscribe(new Observer<String>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(String s) {
+                            ToastUtils.showShort("Release success");
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            ToastUtils.showShort(e + "");
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override
@@ -111,13 +164,13 @@ public class PostRequstActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ResultCode.CheckImageCode) {
             if (data != null) {
-                for(int i = 0; i< Matisse.obtainPathResult(data).size(); i++){
-                    result .add( Matisse.obtainResult(data).get(i));
+                for (int i = 0; i < Matisse.obtainPathResult(data).size(); i++) {
+                    result.add(Matisse.obtainResult(data).get(i));
                 }
-                if(result.size()==size){
+                if (result.size() == size) {
                     addImg.setVisibility(View.INVISIBLE);
                 }
-                imageRvAdapter=new ImageRvAdapter(this,result);
+                imageRvAdapter = new ImageRvAdapter(this, result);
                 addImgRv.setAdapter(imageRvAdapter);
                 imageRvAdapter.setOnClickListener(new ImageRvAdapter.OnClickListener() {
                     @Override
@@ -134,7 +187,7 @@ public class PostRequstActivity extends BaseActivity {
     private void initView() {
         submitBtn = findViewById(R.id.submit_btn);
         colseImg = findViewById(R.id.colse_img);
-        titleThe=findViewById(R.id.title_the);
+        titleThe = findViewById(R.id.title_the);
         titleSize = findViewById(R.id.title_size);
         titleEt = findViewById(R.id.title_et);
         addImg = findViewById(R.id.add_img);

@@ -12,6 +12,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import api.UserServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.LoginProtocol;
+import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.user.R;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -29,6 +31,7 @@ public class UserSetPwdActivity extends BaseActivity {
     private EditText etPasswd;
     private Button bt_next;
     private TextView titleText;
+    private String type="";
 
     @Override
     protected int getLayoutId() {
@@ -38,6 +41,7 @@ public class UserSetPwdActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+        type=getIntent().getStringExtra("type");
         titleText.setText("FAST REGISTEATION");
         tvPhoneNum.setText("PASSWORD");
         etPhoneNum.setHint("PLEASE WNTER YOUR PASSWORD");
@@ -46,11 +50,42 @@ public class UserSetPwdActivity extends BaseActivity {
         bt_next.setText("CONTINUE");
         backImg.setOnClickListener(v -> finish());
         bt_next.setOnClickListener(v -> {
-            if(etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())){
-                setPasswd(getIntent().getStringExtra("emailAccount"),etPhoneNum.getText().toString().trim());
+            if(etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())&& StringUtil.isValid(etPhoneNum.getText().toString().trim())){
+                if(type.equals("change_pwd")){
+                    changePwd(getIntent().getStringExtra("emailAccount"),etPhoneNum.getText().toString().trim());
+                }else{
+                    setPasswd(getIntent().getStringExtra("emailAccount"),etPhoneNum.getText().toString().trim());
+                }
             }
         });
     }
+
+    private void changePwd(String email,String pwd){
+        UserServiceFactory.changePwd(email,pwd).safeSubscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                Toast.makeText(UserSetPwdActivity.this, "REGISTERED SUCCESSFULLY", Toast.LENGTH_SHORT).show();
+                ARouter.getInstance().build(LoginProtocol.USERSLOGIN).navigation();
+                finishAllActivities();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Logger.d("changepwd",e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
 
     private void setPasswd(String email,String pwd){
         UserServiceFactory.resetPassword(email,pwd)
@@ -69,7 +104,7 @@ public class UserSetPwdActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-
+                Logger.d("setpwd","e");
             }
 
             @Override

@@ -2,15 +2,25 @@ package cn.dankal.home.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.EditText;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 
+import api.ProductServiceFactory;
 import cn.dankal.address.R;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.bean.ProductListBean;
+import cn.dankal.basiclib.bean.ServiceTextBean;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
+import cn.dankal.basiclib.util.StringUtil;
+import cn.dankal.basiclib.util.ToastUtils;
 
 import static cn.dankal.basiclib.protocol.HomeProtocol.HOMESEARCH;
 
@@ -23,6 +33,8 @@ public class HomeSearchActivity extends BaseActivity {
     private android.widget.ImageView deleteEliminate;
     private android.support.v7.widget.RecyclerView searchList;
     private ImageView search_delete;
+    private String identity;
+    private android.widget.TextView title;
 
     @Override
     protected int getLayoutId() {
@@ -32,34 +44,38 @@ public class HomeSearchActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        searchFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-     etSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-         @Override
-         public void onFocusChange(View v, boolean hasFocus) {
-             searchLogo.setVisibility(View.GONE);
-             search_delete.setVisibility(View.VISIBLE);
-         }
+        identity= SharedPreferencesUtils.getString(this,"identity","");
+        if(identity.equals("user")){
+            title.setText("SEARCH");
+            etSearch.setHint("PLEASE SEARCH FOR PRODUCTS");
+        }
+        searchFinish.setOnClickListener(v -> finish());
+     etSearch.setOnFocusChangeListener((v, hasFocus) -> {
+         searchLogo.setVisibility(View.GONE);
+         search_delete.setVisibility(View.VISIBLE);
      });
-     search_delete.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-             etSearch.setText("");
+     search_delete.setOnClickListener(v -> etSearch.setText(""));
+     etSearch.setOnKeyListener((v, keyCode, event) -> {
+         if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){
+             ProductServiceFactory.getProductlist(etSearch.getText().toString().trim(),"").safeSubscribe(new AbstractDialogSubscriber<ProductListBean>(HomeSearchActivity.this) {
+                 @Override
+                 public void onNext(ProductListBean productListBean) {
+                     Logger.d("onnext",productListBean.getData().get(0).getName());
+                 }
+             });
          }
+         return false;
      });
     }
 
     private void initView() {
-        searchFinish = (ImageView) findViewById(R.id.search_finish);
-        searchLogo = (ImageView) findViewById(R.id.search_logo);
-        etSearch = (EditText) findViewById(R.id.et_search);
-        deleteEliminate = (ImageView) findViewById(R.id.delete_eliminate);
-        searchList = (RecyclerView) findViewById(R.id.search_list);
+        searchFinish = findViewById(R.id.search_finish);
+        searchLogo = findViewById(R.id.search_logo);
+        etSearch = findViewById(R.id.et_search);
+        deleteEliminate = findViewById(R.id.delete_eliminate);
+        searchList = findViewById(R.id.search_list);
         search_delete=findViewById(R.id.search_delete);
+        title = findViewById(R.id.title);
     }
 
 }

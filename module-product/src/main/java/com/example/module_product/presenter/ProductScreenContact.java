@@ -13,6 +13,6 @@ public interface ProductScreenContact {
     }
 
     interface psPresenter extends BasePresenter<psView>{
-        void getData(String uuid);
+        void getData(String keyword,String uuid);
     }
 }

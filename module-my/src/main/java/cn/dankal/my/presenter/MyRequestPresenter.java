@@ -1,29 +1,65 @@
 package cn.dankal.my.presenter;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import api.MyServiceFactory;
 import api.UserServiceFactory;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.bean.MyRequestBean;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 
-public class MyRequestPresenter extends BaseRecyclerViewPresenter<MyRequestBean> {
+public class MyRequestPresenter implements RequestContact.idPresenter {
 
-    private List<MyRequestBean> requestBeans=new ArrayList<>();
-    private List<MyRequestBean.urli> urliList=new ArrayList<>();
-    @Override
-    public void requestData(String pageIndex) {
-        for(int x=0;x<3;x++){
-            MyRequestBean.urli urli=new MyRequestBean.urli();
-            urli.setImgurl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541421297535&di=7ada3a21db141cb769f8bce9d407686b&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2Fdbfb6a5c4276ef323c6b140f40b688363f7c52dd.jpg");
-            urliList.add(urli);
+    private RequestContact.RequestView requestView;
+    private static MyRequestPresenter myRequestPresenter = null;
+    private MyRequestBean myRequestBean=null;
+
+    public static synchronized MyRequestPresenter getPSPresenter() {
+        if (myRequestPresenter == null) {
+            myRequestPresenter = new MyRequestPresenter();
         }
-        for(int i=0;i<4;i++){
-            MyRequestBean myRequestBean=new MyRequestBean();
-            myRequestBean.setUrlString(urliList);
-            requestBeans.add(myRequestBean);
-        }
-        view.render(requestBeans);
+        return myRequestPresenter;
     }
 
+    @Override
+    public void getData(int page_index,int page_size) {
+        MyServiceFactory.getMyRequest(page_index,page_size).safeSubscribe(new AbstractDialogSubscriber<MyRequestBean>(requestView) {
+            @Override
+            public void onNext(MyRequestBean myRequestBean) {
+                requestView.getDataSuccess(myRequestBean);
+            }
+        });
+    }
+
+    @Override
+    public void delete(String demand_id) {
+        MyServiceFactory.deleteMyRequest(demand_id).safeSubscribe(new AbstractDialogSubscriber<String>(requestView) {
+            @Override
+            public void onNext(String s) {
+                upData(1,10);
+            }
+        });
+    }
+
+    private void upData(int page_index,int page_size){
+        MyServiceFactory.getMyRequest(page_index,page_size).safeSubscribe(new AbstractDialogSubscriber<MyRequestBean>(requestView) {
+            @Override
+            public void onNext(MyRequestBean myRequestBean) {
+               requestView.updata(myRequestBean);
+            }
+        });
+    }
+
+    @Override
+    public void attachView(@NonNull RequestContact.RequestView view) {
+        requestView = view;
+    }
+
+    @Override
+    public void detachView() {
+        requestView = null;
+    }
 }

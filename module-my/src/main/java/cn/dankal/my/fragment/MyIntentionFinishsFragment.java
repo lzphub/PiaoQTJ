@@ -14,7 +14,7 @@ import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.my.presenter.MyIntentPresenter;
 import cn.dankal.setting.R;
 
-public class MyIntentionFinishsFragment extends BaseRvFragmentImp<MyIntentionBean> {
+public class MyIntentionFinishsFragment extends BaseRvFragmentImp<MyIntentionBean.DataBean> {
 
     @Override
     protected int getLayoutId() {
@@ -27,17 +27,19 @@ public class MyIntentionFinishsFragment extends BaseRvFragmentImp<MyIntentionBea
     }
 
     @Override
-    public BaseRecyclerViewPresenter<MyIntentionBean> getPresenter() {
-        return new MyIntentPresenter();
+    public BaseRecyclerViewPresenter<MyIntentionBean.DataBean> getPresenter() {
+        MyIntentPresenter myIntentPresenter=new MyIntentPresenter();
+        myIntentPresenter.requestData("5");
+        return myIntentPresenter;
     }
 
     @Override
-    public BaseRecyclerViewAdapter<MyIntentionBean> getAdapter() {
+    public BaseRecyclerViewAdapter<MyIntentionBean.DataBean> getAdapter() {
         MyIntentionRvAdapter myIntentionRvAdapter = new MyIntentionRvAdapter();
-        myIntentionRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<MyIntentionBean>() {
+        myIntentionRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<MyIntentionBean.DataBean>() {
             @Override
-            public void onItemClick(View v, int position, MyIntentionBean data) {
-                ARouter.getInstance().build(MyProtocol.MYINTENTIONDETA).navigation();
+            public void onItemClick(View v, int position, MyIntentionBean.DataBean data) {
+                ARouter.getInstance().build(MyProtocol.MYINTENTIONDETA).withString("intention_id",data.getIntention_id()).navigation();
             }
         });
         return myIntentionRvAdapter;

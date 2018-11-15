@@ -56,7 +56,7 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
         stringArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
         stringArrayAdapter.addAll(itemList);
         spinner.setAdapter(stringArrayAdapter);
-        productScreenPresenter.getData("");
+        productScreenPresenter.getData("","");
     }
 
     private void initView() {
@@ -86,7 +86,6 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onItemClick(View v, int position, ProductListBean data) {
                 ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",productListBeanList.get(position).getData().get(0).getUuid()).navigation();
-                Logger.d("uuid",productListBeanList.get(position).getData().get(0).getUuid());
             }
         });
     }

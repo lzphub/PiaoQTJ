@@ -69,7 +69,7 @@ public class Home_fragment extends BaseFragment {
     protected void initComponents(View view) {
         initView(view);
         identity = SharedPreferencesUtils.getString(getContext(), "identity", "enterprise");
-        initRv();
+//        initRv();
         SpannableString spannableString = null;
         if (identity.equals("enterprise")) {
             spannableString = new SpannableString("最新需求");
@@ -88,26 +88,13 @@ public class Home_fragment extends BaseFragment {
         }
         newDemand.setText(spannableString);
 
-        loadMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(HomeProtocol.HOMEDEMANDLIST).navigation();
-            }
-        });
-        searchImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(HomeProtocol.HOMESEARCH).navigation();
-            }
-        });
-        releaseLl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (identity.equals("enterprise")) {
-                    ARouter.getInstance().build(HomeProtocol.HOMERELEASE).navigation();
-                }else{
-                    ARouter.getInstance().build(HomeProtocol.POSTREQUEST).navigation();
-                }
+        loadMore.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.HOMEDEMANDLIST).navigation());
+        searchImg.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.HOMESEARCH).navigation());
+        releaseLl.setOnClickListener(v -> {
+            if (identity.equals("enterprise")) {
+                ARouter.getInstance().build(HomeProtocol.HOMERELEASE).navigation();
+            }else{
+                ARouter.getInstance().build(HomeProtocol.POSTREQUEST).navigation();
             }
         });
 
@@ -126,7 +113,6 @@ public class Home_fragment extends BaseFragment {
         loadMore = (TextView) view.findViewById(R.id.load_more);
         banner = (CardBanner) view.findViewById(R.id.banner);
         resText = (TextView) view.findViewById(R.id.res_text);
-        scroll = (NestedScrollView) view.findViewById(R.id.scroll);
     }
 
     /*
@@ -154,31 +140,31 @@ public class Home_fragment extends BaseFragment {
                 }
             });
         }else{
-            for(int i=0;i<10;i++){
-                ProductListBean productListBean=new ProductListBean();
-                productListBeanList.add(productListBean);
-            }
-            ProductRvAdapter productRvAdapter=new ProductRvAdapter();
-            productRvAdapter.addMore(productListBeanList);
-            demandList.setAdapter(productRvAdapter);
-            demandList.setNestedScrollingEnabled(false);
-            demandList.setHasFixedSize(true);
-            productRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductListBean>() {
-                @Override
-                public void onItemClick(View v, int position, ProductListBean data) {
-                    ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).navigation();
-                }
-            });
-            scroll.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    Logger.d("recv",scroll.canScrollVertically(1)+"");
-                    if(!scroll.canScrollVertically(1)){
-                        productRvAdapter.addMore(productListBeanList);
-                    }
-
-                }
-            });
+//            for(int i=0;i<10;i++){
+//                ProductListBean productListBean=new ProductListBean();
+//                productListBeanList.add(productListBean);
+//            }
+//            ProductRvAdapter productRvAdapter=new ProductRvAdapter();
+//            productRvAdapter.addMore(productListBeanList);
+//            demandList.setAdapter(productRvAdapter);
+//            demandList.setNestedScrollingEnabled(false);
+//            demandList.setHasFixedSize(true);
+//            productRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductListBean>() {
+//                @Override
+//                public void onItemClick(View v, int position, ProductListBean data) {
+//                    ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).navigation();
+//                }
+//            });
+//            scroll.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//                @Override
+//                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                    Logger.d("recv",scroll.canScrollVertically(1)+"");
+//                    if(!scroll.canScrollVertically(1)){
+//                        productRvAdapter.addMore(productListBeanList);
+//                    }
+//
+//                }
+//            });
         }
 
     }

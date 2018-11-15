@@ -32,12 +32,7 @@ public class AboutUsActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        backImg.setOnClickListener(v -> finish());
         getData();
     }
 

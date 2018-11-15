@@ -17,6 +17,6 @@ public class DemandListPersenter extends BaseRecyclerViewPresenter<DemandListbea
             DemandListbean demandListbean = new DemandListbean();
             demandListbeanList.add(demandListbean);
         }
-        view.render(demandListbeanList);
+        mView.render(demandListbeanList);
     }
 }

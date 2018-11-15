@@ -28,6 +28,7 @@ public class UserRegistrActivity extends BaseActivity {
     private TextView tvPhoneNum;
     private EditText etEmailNum;
     private Button btNext;
+    private String type="";
 
     @Override
     protected int getLayoutId() {
@@ -41,10 +42,11 @@ public class UserRegistrActivity extends BaseActivity {
         tvPhoneNum.setText("EMAIL ACCOUNTS");
         etEmailNum.setHint("PLEASE FILL OUT YOUR EMAIL ACCOUNT");
         btNext.setText("COUNTINUE");
+        type=getIntent().getStringExtra("type");
         backImg.setOnClickListener(v -> finish());
         btNext.setOnClickListener(v -> {
             if(StringUtil.checkEmail(etEmailNum.getText().toString())){
-                ARouter.getInstance().build(LoginProtocol.USERREGISTERVECODE).withString("emailAccount",etEmailNum.getText().toString().trim()).navigation();
+                ARouter.getInstance().build(LoginProtocol.USERREGISTERVECODE).withString("emailAccount",etEmailNum.getText().toString().trim()).withString("type",type).navigation();
                 finish();
             }else{
                 Toast.makeText(UserRegistrActivity.this, "Please fill in the correct email account", Toast.LENGTH_SHORT).show();

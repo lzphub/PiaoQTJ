@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.activity.BaseRecyclerViewActivity;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
@@ -53,64 +54,39 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        aboutUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.ABOUTUS).navigation();
-            }
-        });
-        opinion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.OPINION).navigation();
-            }
-        });
-        setPwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.SETWITHPEDCODE).navigation();
-            }
-        });
-        loginOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        backImg.setOnClickListener(v -> finish());
+        aboutUs.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.ABOUTUS).navigation());
+        opinion.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.OPINION).navigation());
+        setPwd.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.SETWITHPEDCODE).navigation());
+        loginOut.setOnClickListener(v -> {
+            DKUserManager.resetToken();
+            DKUserManager.resetUserInfo();
+            if(type.equals("user")){
+                ARouter.getInstance().build(LoginProtocol.USERSLOGIN).navigation();
+            }else{
                 ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
-                ActivityUtils.finishAllActivities();
             }
+            ActivityUtils.finishAllActivities();
         });
-        problem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.COMPROB).navigation();
-            }
-        });
-        clearCache.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Long l=CacheManager.cleanCache(SettingActivity.this,SDCacheDir.getInstance(SettingActivity.this).cachepath);
-            }
+        problem.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.COMPROB).navigation());
+        clearCache.setOnClickListener(v -> {
+            Long l=CacheManager.cleanCache(SettingActivity.this,SDCacheDir.getInstance(SettingActivity.this).cachepath);
         });
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        problem = (RelativeLayout) findViewById(R.id.problem);
-        aboutUs = (RelativeLayout) findViewById(R.id.about_us);
-        clearCache = (RelativeLayout) findViewById(R.id.clear_cache);
-        opinion = (RelativeLayout) findViewById(R.id.opinion);
-        setPwd = (RelativeLayout) findViewById(R.id.set_pwd);
-        loginOut = (RelativeLayout) findViewById(R.id.login_out);
-        problemText = (TextView) findViewById(R.id.problem_text);
-        aboutText = (TextView) findViewById(R.id.about_text);
-        clearText = (TextView) findViewById(R.id.clear_text);
-        opinionText = (TextView) findViewById(R.id.opinion_text);
-        outText = (TextView) findViewById(R.id.out_text);
+        backImg = findViewById(R.id.back_img);
+        problem = findViewById(R.id.problem);
+        aboutUs = findViewById(R.id.about_us);
+        clearCache = findViewById(R.id.clear_cache);
+        opinion = findViewById(R.id.opinion);
+        setPwd = findViewById(R.id.set_pwd);
+        loginOut = findViewById(R.id.login_out);
+        problemText = findViewById(R.id.problem_text);
+        aboutText = findViewById(R.id.about_text);
+        clearText = findViewById(R.id.clear_text);
+        opinionText = findViewById(R.id.opinion_text);
+        outText = findViewById(R.id.out_text);
         type= SharedPreferencesUtils.getString(this,"identity","");
         if(type.equals("user")){
             problemText.setText("FAQ");

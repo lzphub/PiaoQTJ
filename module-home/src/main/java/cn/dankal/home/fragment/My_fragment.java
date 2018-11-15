@@ -7,10 +7,14 @@ import android.widget.ImageView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 
+import api.MyServiceFactory;
 import cn.dankal.address.R;
+import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
+import cn.dankal.basiclib.bean.PersonalData_EnBean;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.widget.CircleImageView;
 
@@ -47,6 +51,7 @@ public class My_fragment extends BaseFragment {
         initView(view);
         type= SharedPreferencesUtils.getString(getContext(),"identity","user");
         if(type.equals("user")){
+            getData();
             menuText.setText("MY \nREQUEST");
             menuText2.setText("MY \nINTENTION");
             menuText3.setText("MY \nFAVORITE");
@@ -111,5 +116,16 @@ public class My_fragment extends BaseFragment {
         menuText3 = view.findViewById(R.id.menu_text3);
         menuText4 = view.findViewById(R.id.menu_text4);
         menuText5 = view.findViewById(R.id.menu_text5);
+    }
+
+    //获取信息
+    private void getData(){
+        MyServiceFactory.getUserData().safeSubscribe(new AbstractDialogSubscriber<PersonalData_EnBean>(this) {
+            @Override
+            public void onNext(PersonalData_EnBean personalData_enBean) {
+                myName.setText(personalData_enBean.getName());
+            }
+        });
+//        myName.setText(DKUserManager.getUserInfo().getName());
     }
 }

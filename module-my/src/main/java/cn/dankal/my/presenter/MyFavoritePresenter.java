@@ -1,20 +1,52 @@
 package cn.dankal.my.presenter;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import api.MyServiceFactory;
+import api.ProductServiceFactory;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.bean.ProductListBean;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 
-public class MyFavoritePresenter extends BaseRecyclerViewPresenter<ProductListBean> {
+public class MyFavoritePresenter implements MyFavoriteContact.fcPersenter {
 
-    private List<ProductListBean> productListBeanList=new ArrayList<>();
+    private MyFavoriteContact.fcView fcView;
+
     @Override
-    public void requestData(String pageIndex) {
-        for(int i=0;i<10;i++){
-            ProductListBean productListBean=new ProductListBean();
-            productListBeanList.add(productListBean);
-        }
-        view.render(productListBeanList);
+    public void getData(int page,int size) {
+        MyServiceFactory.getFavouriteList(page,size).safeSubscribe(new AbstractDialogSubscriber<ProductListBean>(fcView) {
+            @Override
+            public void onNext(ProductListBean productListBean) {
+                fcView.getDataSuccess(productListBean);
+            }
+        });
+    }
+
+    @Override
+    public void delete(String uuid) {
+        ProductServiceFactory.deleteColl(uuid).safeSubscribe(new AbstractDialogSubscriber<String>(fcView) {
+            @Override
+            public void onNext(String s) {
+                MyServiceFactory.getFavouriteList(1,10).safeSubscribe(new AbstractDialogSubscriber<ProductListBean>(fcView) {
+                    @Override
+                    public void onNext(ProductListBean productListBean) {
+                        fcView.updata(productListBean);
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    public void attachView(@NonNull MyFavoriteContact.fcView view) {
+        fcView=view;
+    }
+
+    @Override
+    public void detachView() {
+        fcView=null;
     }
 }

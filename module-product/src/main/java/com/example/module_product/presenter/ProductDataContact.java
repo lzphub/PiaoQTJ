@@ -14,5 +14,6 @@ public interface ProductDataContact {
     interface pdPresenter extends BasePresenter<pdView>{
         void getData(String uuid);
         void addCollection(String uuid);
+        void deleteCollection(String uuid);
     }
 }

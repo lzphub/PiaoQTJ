@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -52,7 +53,7 @@ import static cn.dankal.basiclib.protocol.ProductProtocol.PRODUCTDETA;
 public class ProductDetailsActivity extends BaseActivity implements ProductDataContact.pdView {
 
     private android.widget.ImageView backImg;
-    private RadioButton collImg;
+    private CheckBox collImg;
     private android.widget.Button serviceBtn;
     private android.widget.Button purchaseBtn;
     private com.xuezj.cardbanner.CardBanner banner;
@@ -82,12 +83,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
         uuid=getIntent().getStringExtra("uuid");
         productDataPresenter.attachView(this);
         productDataPresenter.getData(uuid);
-        purchaseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(HomeProtocol.ENTERINTEN).navigation();
-            }
-        });
+        purchaseBtn.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.ENTERINTEN).withString("uuid",uuid).navigation());
         productVideo.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
                 JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "产品视频");
         Glide.with(this)
@@ -104,7 +100,11 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
+                    collImg.setBackgroundResource(R.mipmap.ic_home_details_like_click);
                     productDataPresenter.addCollection(uuid);
+                }else{
+                    collImg.setBackgroundResource(R.mipmap.ic_home_details_like_unclicked);
+                    productDataPresenter.deleteCollection(uuid);
                 }
             }
         });

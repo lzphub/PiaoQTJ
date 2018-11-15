@@ -38,6 +38,7 @@ public class UserRegistrCodeActivity extends BaseActivity {
     private TextView titleText;
 
     private SmsCode smsCode;
+    private String type="";
 
     @Override
     protected int getLayoutId() {
@@ -54,6 +55,7 @@ public class UserRegistrCodeActivity extends BaseActivity {
         btNext.setText("COUNTINUE");
         etEmailNum.setHint("PLEASE INPUT THE PASSWORD");
         tips.setText("PLEASE ENTER THE VERIFICATION CODE RECEIVED BY "+getIntent().getStringExtra("emailAccount"));
+        type=getIntent().getStringExtra("type");
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,13 +65,14 @@ public class UserRegistrCodeActivity extends BaseActivity {
         getVeCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smsCode.getCode(getIntent().getStringExtra("emailAccount"),getVeCode,"sign_up");
+                smsCode.getCode(getIntent().getStringExtra("emailAccount"),getVeCode,type);
             }
         });
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkCode(getIntent().getStringExtra("emailAccount"),"sign_up",etEmailNum.getText().toString().trim());
+                    checkCode(getIntent().getStringExtra("emailAccount"),type,etEmailNum.getText().toString().trim());
+
             }
         });
     }
@@ -84,14 +87,14 @@ public class UserRegistrCodeActivity extends BaseActivity {
 
                 @Override
                 public void onNext(CheckCode checkCode) {
-                    ARouter.getInstance().build(LoginProtocol.SETPWD).withString("emailAccount",getIntent().getStringExtra("emailAccount")).navigation();
+                    ARouter.getInstance().build(LoginProtocol.SETPWD).withString("emailAccount",getIntent().getStringExtra("emailAccount")).withString("type",type).navigation();
                     finish();
                 }
 
                 @Override
                 public void onError(Throwable e) {
 //                    ToastUtils.showShort(e.toString());
-                    ARouter.getInstance().build(LoginProtocol.SETPWD).withString("emailAccount",getIntent().getStringExtra("emailAccount")).navigation();
+                    ARouter.getInstance().build(LoginProtocol.USERSETPWD).withString("emailAccount",getIntent().getStringExtra("emailAccount")).withString("type",type).navigation();
                     finish();
                 }
 

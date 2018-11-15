@@ -50,13 +50,13 @@ public class SetPwdActivity extends BaseActivity {
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        tvPhoneNum = (TextView) findViewById(R.id.tv_phone_num);
-        etPhoneNum = (EditText) findViewById(R.id.et_phone_num);
-        dividerPhone = (View) findViewById(R.id.divider_phone);
-        passwd = (TextView) findViewById(R.id.passwd);
-        etPasswd = (EditText) findViewById(R.id.et_passwd);
-        dividerPasswd = (View) findViewById(R.id.divider_passwd);
-        bt_next = (Button) findViewById(R.id.bt_next);
+        backImg = findViewById(R.id.back_img);
+        tvPhoneNum = findViewById(R.id.tv_phone_num);
+        etPhoneNum = findViewById(R.id.et_phone_num);
+        dividerPhone = findViewById(R.id.divider_phone);
+        passwd = findViewById(R.id.passwd);
+        etPasswd = findViewById(R.id.et_passwd);
+        dividerPasswd = findViewById(R.id.divider_passwd);
+        bt_next = findViewById(R.id.bt_next);
     }
 }

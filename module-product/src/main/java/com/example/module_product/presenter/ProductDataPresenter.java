@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import api.ProductServiceFactory;
 import cn.dankal.basiclib.bean.ProductDataBean;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.ToastUtils;
 
 public class ProductDataPresenter implements ProductDataContact.pdPresenter {
@@ -39,7 +40,21 @@ public class ProductDataPresenter implements ProductDataContact.pdPresenter {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                ToastUtils.showShort(e+"");
+            }
+        });
+    }
+
+    @Override
+    public void deleteCollection(String uuid) {
+        ProductServiceFactory.deleteColl(uuid).safeSubscribe(new AbstractDialogSubscriber<String>(pdView) {
+            @Override
+            public void onNext(String s) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
             }
         });
     }

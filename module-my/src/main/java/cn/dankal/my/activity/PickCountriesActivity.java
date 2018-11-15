@@ -1,5 +1,6 @@
 package cn.dankal.my.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -47,21 +48,18 @@ public class PickCountriesActivity extends BaseActivity {
     }
 
     private void initView() {
-        lvContact = (ListView) findViewById(R.id.lv_contact);
-        sidrbar = (SideBar) findViewById(R.id.sidrbar);
-        backImg = (ImageView) findViewById(R.id.back_img);
+        lvContact = findViewById(R.id.lv_contact);
+        sidrbar = findViewById(R.id.sidrbar);
+        backImg = findViewById(R.id.back_img);
     }
 
     private void initEvents() {
         //设置右侧触摸监听
-        sidrbar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
-            @Override
-            public void onTouchingLetterChanged(String s) {
-                //该字母首次出现的位置
-                int position = adapter.getPositionForSection(s.charAt(0));
-                if (position != -1) {
-                    lvContact.setSelection(position);
-                }
+        sidrbar.setOnTouchingLetterChangedListener(s -> {
+            //该字母首次出现的位置
+            int position = adapter.getPositionForSection(s.charAt(0));
+            if (position != -1) {
+                lvContact.setSelection(position);
             }
         });
 
@@ -69,11 +67,12 @@ public class PickCountriesActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ToastUtils.showShort(((ContactSortModel) adapter.getItem(position)).getName());
+                Intent intent=new Intent();
+                intent.putExtra("countries",((ContactSortModel) adapter.getItem(position)).getName());
+                setResult(2,intent);
+                finish();
             }
         });
-
-
-
     }
 
     private void setAdapter() {

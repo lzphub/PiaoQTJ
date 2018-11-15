@@ -20,10 +20,13 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import api.MyServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.bean.PersonalData_EnBean;
 import cn.dankal.basiclib.common.camera.CameraHandler;
 import cn.dankal.basiclib.common.camera.RequestCodes;
 import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.template.personal.ChangeAvatar;
 import cn.dankal.basiclib.template.personal.ChangeAvatarImpl;
 import cn.dankal.basiclib.util.Logger;
@@ -56,9 +59,10 @@ public class PersonalData_EnActivity extends BaseActivity {
     private android.widget.TextView positionText;
     private String[] positions = {"IMPORTER", "WHOLESALERS", "RETAILERS", "DESIGNER", "PERSONAL", "OTHER"};
     private List<String> positionList = new ArrayList<>();
-    private int itemcount = 0;
+    private int ageitemcount = 0, positioncount = 0;
     private Uri imguri;
     private ChangeAvatar changeAvatar;
+    private PersonalData_EnBean personalDataEnBean;
 
     @Override
     protected int getLayoutId() {
@@ -69,18 +73,18 @@ public class PersonalData_EnActivity extends BaseActivity {
     protected void initComponents() {
         initView();
 
+       getData();
+
         backImg.setOnClickListener(v -> finish());
-        Glide.with(this)
-                .load("http://cdn.duitang.com/uploads/item/201408/28/20140828142218_PS4fi.thumb.700_0.png")
-                .into(headPic);
+
         picRl.setOnClickListener(v -> initBottomDialog());
         positionRl.setOnClickListener(v -> initPositionDialog());
         ageRl.setOnClickListener(v -> initAgeDialog());
-        countryRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.PICKCOUNTRIES).navigation());
-        nameRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data","name").navigation());
-        contactRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data","number").navigation());
-        eMailRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data","email").navigation());
-        companyRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data","company").navigation());
+        countryRl.setOnClickListener(v -> startActivityForResult(new Intent(PersonalData_EnActivity.this, PickCountriesActivity.class), 2));
+        nameRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "name").withSerializable("bean",personalDataEnBean).navigation());
+        contactRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "number").withSerializable("bean",personalDataEnBean).navigation());
+        eMailRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "email").withSerializable("bean",personalDataEnBean).navigation());
+        companyRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "company").withSerializable("bean",personalDataEnBean).navigation());
 
         changeAvatar = new ChangeAvatarImpl(this, this);
         changeAvatar.setIvHead(headPic);
@@ -108,9 +112,9 @@ public class PersonalData_EnActivity extends BaseActivity {
 
     private void initBottomDialog() {
         /*
-        * 没有裁剪！！
-        * */
-        changeAvatar.checkPermission(new CameraHandler(this),null);
+         * 没有裁剪！！
+         * */
+        changeAvatar.checkPermission(new CameraHandler(this), null);
 
     }
 
@@ -118,8 +122,20 @@ public class PersonalData_EnActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            changeAvatar.onActivityResult(requestCode, resultCode, data);
+            changeAvatar.onActivityResult(requestCode, resultCode, data,personalDataEnBean);
+        } else if (resultCode == 2) {
+            if (requestCode == 2) {
+                countryText.setText(data.getStringExtra("countries"));
+                personalDataEnBean.setCountry(data.getStringExtra("countries"));
+                updata();
+            }
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getData();
     }
 
     private void initPositionDialog() {
@@ -139,7 +155,7 @@ public class PersonalData_EnActivity extends BaseActivity {
         WheelPicker position = sheetDialog.getDelegate().findViewById(R.id.postion_wheel);
         position.setData(positionList);
         TextView save = sheetDialog.getDelegate().findViewById(R.id.tv_save);
-        position.setSelectedItemPosition(itemcount);
+        position.setSelectedItemPosition(positioncount);
         position.setOnWheelChangeListener(new WheelPicker.OnWheelChangeListener() {
             @Override
             public void onWheelScrolled(int offset) {
@@ -147,7 +163,7 @@ public class PersonalData_EnActivity extends BaseActivity {
 
             @Override
             public void onWheelSelected(int position) {
-                itemcount = position;
+                positioncount = position;
             }
 
             @Override
@@ -155,8 +171,25 @@ public class PersonalData_EnActivity extends BaseActivity {
             }
         });
         save.setOnClickListener(v -> {
-            positionText.setText(positionList.get(itemcount));
+            positionText.setText(positionList.get(positioncount));
+            personalDataEnBean.setPosition(positions[positioncount]);
+            updata();
             sheetDialog.dismiss();
+        });
+    }
+
+    //上传数据
+    private void updata() {
+        MyServiceFactory.updateInfo(personalDataEnBean).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
+            @Override
+            public void onNext(String s) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
         });
     }
 
@@ -179,7 +212,7 @@ public class PersonalData_EnActivity extends BaseActivity {
         WheelPicker position = sheetDialog.getDelegate().findViewById(R.id.postion_wheel);
         position.setData(positionList);
         TextView save = sheetDialog.getDelegate().findViewById(R.id.tv_save);
-        position.setSelectedItemPosition(itemcount);
+        position.setSelectedItemPosition(ageitemcount);
         position.setOnWheelChangeListener(new WheelPicker.OnWheelChangeListener() {
             @Override
             public void onWheelScrolled(int offset) {
@@ -187,7 +220,7 @@ public class PersonalData_EnActivity extends BaseActivity {
 
             @Override
             public void onWheelSelected(int position) {
-                itemcount = position;
+                ageitemcount = position;
             }
 
             @Override
@@ -195,8 +228,40 @@ public class PersonalData_EnActivity extends BaseActivity {
             }
         });
         save.setOnClickListener(v -> {
-            ageText.setText(positionList.get(itemcount));
+            ageText.setText(positionList.get(ageitemcount));
+            personalDataEnBean.setAge(Integer.valueOf(positionList.get(ageitemcount)));
+            updata();
             sheetDialog.dismiss();
+        });
+    }
+
+    //获取信息
+    private void getData(){
+        MyServiceFactory.getUserData().safeSubscribe(new AbstractDialogSubscriber<PersonalData_EnBean>(this) {
+            @Override
+            public void onNext(PersonalData_EnBean personalData_enBean) {
+                Glide.with(PersonalData_EnActivity.this)
+                        .load(personalData_enBean.getAtavar())
+                        .into(headPic);
+                nameText.setText(personalData_enBean.getName());
+                ageText.setText(personalData_enBean.getAge() + "");
+                contactText.setText(personalData_enBean.getContact());
+                eMailText.setText(personalData_enBean.getEmail());
+                companyText.setText(personalData_enBean.getCompany());
+                countryText.setText(personalData_enBean.getCountry());
+                positionText.setText(personalData_enBean.getPosition());
+
+                personalDataEnBean = personalData_enBean;
+
+                ageitemcount = personalData_enBean.getAge();
+
+                for (int i = 0; i < positions.length; i++) {
+                    if (personalData_enBean.getPosition().equals(positions[i])) {
+                        positioncount = i;
+                        return;
+                    }
+                }
+            }
         });
     }
 }
