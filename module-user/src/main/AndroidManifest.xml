@@ -9,10 +9,13 @@
         <activity android:name=".login.EnterpriseLoginActivity" />
         <activity android:name=".login.RegistrActivity" />
         <activity android:name=".login.RegistrCodeActivity" />
-        <activity android:name=".login.SetPwdActivity"></activity>
-        <activity android:name=".login.ForgetPwdSetActivity"></activity>
-        <activity android:name=".login.ForgetPwdActivity"></activity>
-        <activity android:name=".login.ForgetPwdCodeActivity"></activity>
+        <activity android:name=".login.SetPwdActivity"/>
+        <activity android:name=".login.ForgetPwdSetActivity"/>
+        <activity android:name=".login.ForgetPwdActivity"/>
+        <activity android:name=".login.ForgetPwdCodeActivity"/>
+        <activity android:name=".login.UserRegistrActivity"/>
+        <activity android:name=".login.UserRegistrCodeActivity"/>
+        <activity android:name=".login.UserSetPwdActivity"/>
     </application>
 
 </manifest>

@@ -10,9 +10,10 @@ import com.bumptech.glide.Glide;
 import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
+import cn.dankal.basiclib.bean.ProductClassifyBean;
 import cn.dankal.basiclib.bean.ProductTabBean;
 
-public class ProductTabRvAdapter extends BaseRecyclerViewAdapter<ProductTabBean> {
+public class ProductTabRvAdapter extends BaseRecyclerViewAdapter<ProductClassifyBean.RootBean.ChildrenBean> {
     private ImageView productImg;
     private TextView productName;
 
@@ -26,7 +27,7 @@ public class ProductTabRvAdapter extends BaseRecyclerViewAdapter<ProductTabBean>
         return new MyViewHolder(rootView);
     }
 
-    class MyViewHolder extends BaseRecyclerViewHolder<ProductTabBean> {
+    class MyViewHolder extends BaseRecyclerViewHolder<ProductClassifyBean.RootBean.ChildrenBean> {
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -35,8 +36,8 @@ public class ProductTabRvAdapter extends BaseRecyclerViewAdapter<ProductTabBean>
         }
 
         @Override
-        public void onBindData(ProductTabBean data, int position) {
-            Glide.with(context).load(data.getImageurl()).into(productImg);
+        public void onBindData(ProductClassifyBean.RootBean.ChildrenBean data, int position) {
+            Glide.with(context).load(data.getImage()).into(productImg);
             productName.setText(data.getName());
         }
     }

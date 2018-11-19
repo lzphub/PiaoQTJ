@@ -43,9 +43,9 @@ public class ProductScreenRvAdapter extends BaseRecyclerViewAdapter<ProductListB
 
         @Override
         public void onBindData(ProductListBean data, int position) {
-            Glide.with(context).load(data.getImgurl()).into(productImg);
-            productPrice.setText(data.getPrice());
-            productName.setText(data.getName());
+            Glide.with(context).load(data.getData().get(position).getImages().get(0)).into(productImg);
+            productPrice.setText("$"+data.getData().get(position).getPrice());
+            productName.setText(data.getData().get(position).getName());
         }
     }
 }

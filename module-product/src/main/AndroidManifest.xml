@@ -2,11 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.module_product">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application>
         <activity
             android:name=".ScreenActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ProductDetailsActivity"></activity>
+        <activity android:name=".ProductDetailsActivity" />
     </application>
 
 </manifest>

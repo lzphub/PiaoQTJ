@@ -1,5 +1,6 @@
 package cn.dankal.user.login;
 
+import api.UserServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.LoginProtocol;
 import cn.dankal.user.R;
@@ -21,6 +22,7 @@ public class ForgetPwdCodeActivity extends BaseActivity {
     private android.view.View dividerPhone;
     private android.widget.Button btNext;
     private TextView titleText;
+    private String type;
 
     @Override
     protected int getLayoutId() {
@@ -32,6 +34,7 @@ public class ForgetPwdCodeActivity extends BaseActivity {
         initView();
         titleText.setText(getResources().getString(R.string.forgetpwd));
         tips.append(getIntent().getStringExtra("emailAccount")+getResources().getString(R.string.DVerificationCode));
+        type=getIntent().getStringExtra("type");
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,6 +45,11 @@ public class ForgetPwdCodeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ARouter.getInstance().build(LoginProtocol.FORGETPWDSET).navigation();
+            }
+        });
+        getVeCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
 

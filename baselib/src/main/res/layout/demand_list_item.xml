@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="115dp"
     android:layout_marginBottom="21dp"
+    android:layout_marginLeft="24dp"
+    android:layout_marginRight="24dp"
     android:background="@drawable/demand_item_bg"
     android:elevation="1dp">
 

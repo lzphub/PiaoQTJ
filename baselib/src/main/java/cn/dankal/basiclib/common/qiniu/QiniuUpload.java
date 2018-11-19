@@ -40,7 +40,7 @@ public class QiniuUpload {
 
 
          String user_id = String.valueOf(DKUserManager.getUserInfo().getUuid());
-        String key = "cheesto_"+ String.valueOf(System.currentTimeMillis())+ user_id+".png";
+        String key = "zm_"+ String.valueOf(System.currentTimeMillis())+ user_id+".png";
         normaluploadManager.put(path, key, token, new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo info, JSONObject response) {

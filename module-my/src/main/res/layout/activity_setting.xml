@@ -43,6 +43,7 @@
             android:layout_height="49dp">
 
             <TextView
+                android:id="@+id/problem_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -77,6 +78,7 @@
             android:layout_height="49dp">
 
             <TextView
+                android:id="@+id/about_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -110,6 +112,7 @@
             android:layout_height="49dp">
 
             <TextView
+                android:id="@+id/clear_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -143,6 +146,7 @@
             android:layout_height="49dp">
 
             <TextView
+                android:id="@+id/opinion_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -209,6 +213,7 @@
             android:layout_height="49dp">
 
             <TextView
+                android:id="@+id/out_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

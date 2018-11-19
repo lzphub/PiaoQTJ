@@ -27,83 +27,69 @@ import cn.dankal.basiclib.bean.DemandListbean;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.ToastUtils;
+import cn.dankal.home.persenter.DemandListPersenter;
 
 import static cn.dankal.basiclib.protocol.HomeProtocol.HOMEDEMANDLIST;
 
 @Route(path = HOMEDEMANDLIST)
-public class DemandListActivity extends BaseRvActivity {
+public class DemandListActivity extends BaseRvActivity<DemandListbean> {
 
-    @BindView(R2.id.back_img)
-    ImageView backImg;
-    @BindView(R2.id.title_text)
-    TextView titleText;
-    @BindView(R2.id.demand_list)
-    RecyclerView demandList;
     private List<DemandListbean> demandListbeanList = new ArrayList<>();
+    private DemandRvAdapter demandRvAdapter;
+    private ImageView backImg;
+    private TextView titleText;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_demand_list;
     }
 
-    @Override
-    public void initComponents() {
-        for (int i = 0; i < 10; i++) {
-            DemandListbean demandListbean = new DemandListbean();
-            demandListbeanList.add(demandListbean);
-        }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        demandList.setLayoutManager(linearLayoutManager);
-        DemandRvAdapter demandRvAdapter = new DemandRvAdapter();
-        demandRvAdapter.addMore(demandListbeanList);
-        demandList.setAdapter(demandRvAdapter);
-        demandRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<DemandListbean>() {
-            @Override
-            public void onItemClick(View v, int position, DemandListbean data) {
-                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).navigation();
-            }
-        });
-        demandList.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if(!demandList.canScrollVertically(1)){
-                    demandRvAdapter.addMore(demandListbeanList);
-                }
-                Logger.d("rec",demandList.canScrollVertically(1)+"");
-
-            }
-        });
-    }
+//    @Override
+//    public void initComponents() {
+//        initView();
+//        backImg.setOnClickListener(v -> finish());
+//        for (int i = 0; i < 10; i++) {
+//            DemandListbean demandListbean = new DemandListbean();
+//            demandListbeanList.add(demandListbean);
+//        }
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        demandList.setLayoutManager(linearLayoutManager);
+//        demandRvAdapter.addMore(demandListbeanList);
+//        demandList.setAdapter(demandRvAdapter);
+//        demandRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<DemandListbean>() {
+//            @Override
+//            public void onItemClick(View v, int position, DemandListbean data) {
+//                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).navigation();
+//            }
+//        });
+//        demandList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                if(!demandList.canScrollVertically(1)){
+//                    demandRvAdapter.addMore(demandListbeanList);
+//                }
+//                Logger.d("rec",demandList.canScrollVertically(1)+"");
+//
+//            }
+//        });
+//    }
 
     @Override
     public BaseRecyclerViewPresenter getPresenter() {
-        return null;
+        return new DemandListPersenter();
     }
 
     @Override
     public BaseRecyclerViewAdapter getAdapter() {
-        return null;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+        demandRvAdapter = new DemandRvAdapter();
+        return demandRvAdapter;
     }
 
 
-    @OnClick({R2.id.back_img, R2.id.title_text})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R2.id.back_img:
-                finish();
-                break;
-            case R2.id.title_text:
-                break;
-        }
+    private void initView() {
+        backImg = (ImageView) findViewById(R.id.back_img);
+        titleText = (TextView) findViewById(R.id.title_text);
     }
-
 }

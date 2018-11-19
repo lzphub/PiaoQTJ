@@ -10,6 +10,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.module_product.presenter.ProductScreenContact;
+import com.example.module_product.presenter.ProductScreenPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +23,13 @@ import cn.dankal.basiclib.adapter.ProductTabRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.ProductListBean;
+import cn.dankal.basiclib.protocol.ProductProtocol;
+import cn.dankal.basiclib.util.Logger;
 
 import static cn.dankal.basiclib.protocol.ProductProtocol.SCREEN;
 
 @Route(path = SCREEN)
-public class ScreenActivity extends BaseActivity implements View.OnClickListener {
+public class ScreenActivity extends BaseActivity implements View.OnClickListener,ProductScreenContact.psView {
     private List<String> itemList = new ArrayList<>();
     private ImageView backImg;
     private TextView titleText;
@@ -32,6 +37,7 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
     private Spinner spinner;
     private RecyclerView pageProductRv;
     private List<ProductListBean> productListBeanList=new ArrayList<>();
+    private ProductScreenPresenter productScreenPresenter=ProductScreenPresenter.getPSPresenter();
 
     @Override
     protected int getLayoutId() {
@@ -41,7 +47,7 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void initComponents() {
         initView();
-        initRv();
+        productScreenPresenter.attachView(this);
         backImg.setOnClickListener(this);
         for (int i = 0; i < 5; i++) {
             itemList.add("item" + i);
@@ -50,40 +56,37 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
         stringArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
         stringArrayAdapter.addAll(itemList);
         spinner.setAdapter(stringArrayAdapter);
+        productScreenPresenter.getData("","");
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
-        serachImg = (ImageView) findViewById(R.id.serach_img);
-        spinner = (Spinner) findViewById(R.id.spinner);
-        pageProductRv = (RecyclerView) findViewById(R.id.page_product_rv);
+        backImg = findViewById(R.id.back_img);
+        titleText = findViewById(R.id.title_text);
+        serachImg = findViewById(R.id.serach_img);
+        spinner = findViewById(R.id.spinner);
+        pageProductRv = findViewById(R.id.page_product_rv);
     }
 
-    private void initRv(){
-        pageProductRv.setLayoutManager(new GridLayoutManager(this,2));
-        for(int i=0;i<10;i++){
-            ProductListBean productListBean=new ProductListBean();
-            productListBeanList.add(productListBean);
-        }
-        ProductScreenRvAdapter productScreenRvAdapter=new ProductScreenRvAdapter();
-        productScreenRvAdapter.addMore(productListBeanList);
-        pageProductRv.setAdapter(productScreenRvAdapter);
-        pageProductRv.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(!pageProductRv.canScrollVertically(1)){
-                    productScreenRvAdapter.addMore(productListBeanList);
-                }
-            }
-        });
-    }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.back_img) {
             finish();
         }
+    }
+
+    @Override
+    public void getDataSuccess(ProductListBean productListBean) {
+        pageProductRv.setLayoutManager(new GridLayoutManager(this,2));
+        ProductScreenRvAdapter productScreenRvAdapter=new ProductScreenRvAdapter();
+        productListBeanList.add(productListBean);
+        productScreenRvAdapter.addMore(productListBeanList);
+        pageProductRv.setAdapter(productScreenRvAdapter);
+        productScreenRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductListBean>() {
+            @Override
+            public void onItemClick(View v, int position, ProductListBean data) {
+                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",productListBeanList.get(position).getData().get(0).getProduct_uuid()).navigation();
+            }
+        });
     }
 }

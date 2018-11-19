@@ -75,4 +75,9 @@ public class SmsCodeImpl implements SmsCode {
         if (mDisposable != null) mDisposable.dispose();
     }
 
+    @Override
+    public void engGetCode(String phone, Button mBtCode, String type) {
+
+    }
+
 }

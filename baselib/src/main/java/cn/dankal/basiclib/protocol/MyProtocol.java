@@ -17,7 +17,11 @@ public interface MyProtocol extends BaseRouteProtocol {
 
     String PERSONALDATA=PART+"personaldata";
 
+    String PERSONALDATAEN=PART+"personaldataen";
+
     String EDITDATA=PART+"editdata";
+
+    String EDITDATAEN=PART+"editdataen";
 
     String WITHDRAWAL=PART+"withdrawal";
 
@@ -36,4 +40,16 @@ public interface MyProtocol extends BaseRouteProtocol {
     String BINDCARD=PART+"bindcard";
 
     String CHECKCARD=PART+"checkcrad";
+
+    String MYFAVORITE=PART+"myfavorite";
+
+    String MYINTENTION=PART+"myintention";
+
+    String MYREQUEST=PART+"myrequest";
+
+    String PICKCOUNTRIES=PART+"pickcountries";
+
+    String MYINTENTIONDETA=PART+"myintentiondeta";
+
+    String MYREQUESTDETA=PART+"myrequestdeta";
 }

@@ -28,12 +28,15 @@ import cn.dankal.address.R2;
 import cn.dankal.basiclib.adapter.ProductTabRvAdapter;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
+import cn.dankal.basiclib.bean.ProductClassifyBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.ProductTabBean;
 import cn.dankal.basiclib.protocol.ProductProtocol;
 import cn.dankal.basiclib.util.ToastUtils;
+import cn.dankal.home.persenter.ProductClassifyContact;
+import cn.dankal.home.persenter.ProductClassifyPresenter;
 
-public class Product_fragment extends BaseFragment {
+public class Product_fragment extends BaseFragment implements ProductClassifyContact.pcview{
     @BindView(R2.id.logo_img)
     ImageView logoImg;
     @BindView(R2.id.search_img)
@@ -66,8 +69,10 @@ public class Product_fragment extends BaseFragment {
     TextView li2stTitle;
     @BindView(R2.id.product_list)
     RecyclerView productList;
-    Unbinder unbinder;
     private List<ProductTabBean> productTabBeanList=new ArrayList<>();
+    private ProductClassifyBean productClassBean;
+    private ProductTabRvAdapter productTabRvAdapter;
+    private ProductClassifyPresenter productClassifyPresenter=ProductClassifyPresenter.getPresenter();
 
     @Override
     protected int getLayoutId() {
@@ -81,11 +86,14 @@ public class Product_fragment extends BaseFragment {
 
     @Override
     protected void initComponents(View view) {
+        productClassifyPresenter.attachView(this);
+        productClassifyPresenter.getData();
         lightBulbs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("LIGHT BULBS");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(2).getChildren());
                 }
             }
         });
@@ -94,6 +102,7 @@ public class Product_fragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("LED BULBS");
+                    productTabRvAdapter.updateData(productClassBean.getRoot().get(1).getChildren());
                 }
             }
         });
@@ -102,6 +111,7 @@ public class Product_fragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("LIGHT FIXTURES");
+                    productTabRvAdapter.updateData(productClassBean.getRoot().get(0).getChildren());
                 }
             }
         });
@@ -110,6 +120,7 @@ public class Product_fragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("CHRISTMAS");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(3).getChildren());
                 }
             }
         });
@@ -118,6 +129,7 @@ public class Product_fragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("DRIVERS AND CONTROLLER");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(4).getChildren());
                 }
             }
         });
@@ -126,6 +138,7 @@ public class Product_fragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("ELECTRICAL");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(5).getChildren());
                 }
             }
         });
@@ -134,6 +147,7 @@ public class Product_fragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("ROPE AND TAPE LIGHT");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(6).getChildren());
                 }
             }
         });
@@ -142,6 +156,7 @@ public class Product_fragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("EXIT AND EMERGENCY");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(7).getChildren());
                 }
             }
         });
@@ -150,43 +165,18 @@ public class Product_fragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("SPECIALTY ITEMS");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(8).getChildren());
                 }
             }
         });
 
-        initRv();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
-    private void initRv(){
-        productList.setLayoutManager(new GridLayoutManager(getContext(),2));
-        for(int i=0;i<4;i++){
-            ProductTabBean productTabBean=new ProductTabBean();
-            productTabBeanList.add(productTabBean);
-        }
-        ProductTabRvAdapter productTabRvAdapter=new ProductTabRvAdapter();
-        productTabRvAdapter.addMore(productTabBeanList);
-        productList.setAdapter(productTabRvAdapter);
-        productTabRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductTabBean>() {
-            @Override
-            public void onItemClick(View v, int position, ProductTabBean data) {
-                ARouter.getInstance().build(ProductProtocol.SCREEN).navigation();
-            }
-        });
-    }
 
     @OnClick({R2.id.search_img, R2.id.need_ll})
     public void onViewClicked(View view) {
@@ -196,4 +186,18 @@ public class Product_fragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void getDataSuccess(ProductClassifyBean productClassifyBean) {
+        productList.setLayoutManager(new GridLayoutManager(getContext(),2));
+        productTabRvAdapter=new ProductTabRvAdapter();
+        productClassBean=productClassifyBean;
+        productTabRvAdapter.addMore(productClassifyBean.getRoot().get(0).getChildren());
+        productList.setAdapter(productTabRvAdapter);
+        productTabRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductClassifyBean.RootBean.ChildrenBean>() {
+            @Override
+            public void onItemClick(View v, int position, ProductClassifyBean.RootBean.ChildrenBean data) {
+                ARouter.getInstance().build(ProductProtocol.SCREEN).navigation();
+            }
+        });
+    }
 }

@@ -12,5 +12,7 @@ android {
 
 dependencies {
 
+    implementation 'com.xuezj.cardbanner:cardbanner:2.0.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'fm.jiecao:jiecaovideoplayer:5.5.2'
 }

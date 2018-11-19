@@ -12,7 +12,8 @@
         android:layout_height="49dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:elevation="4dp"
+        android:elevation="12dp"
+        android:background="@color/colorFF"
         android:layout_alignParentBottom="true">
 
         <RadioButton

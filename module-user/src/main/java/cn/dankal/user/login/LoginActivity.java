@@ -1,11 +1,5 @@
 package cn.dankal.user.login;
 
-import android.graphics.Paint;
-import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.StyleSpan;
-import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,36 +7,33 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.fastjson.JSON;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import api.UserServiceFactory;
+import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.pojo.UserResponseBody;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.LoginProtocol;
-import cn.dankal.basiclib.util.PreferenceUtil;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
-import cn.dankal.basiclib.util.SpannableStringUtils;
+import cn.dankal.basiclib.util.StringUtil;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.user.R;
 
-import static cn.dankal.basiclib.protocol.LoginProtocol.ENTERPRISELOGIN;
 import static cn.dankal.basiclib.protocol.LoginProtocol.USERSLOGIN;
 
 @Route(path = USERSLOGIN)
 public class LoginActivity extends BaseActivity {
 
-    private TextView login;
-    private TextView tvPhoneNum;
     private EditText etPhoneNum;
-    private View dividerPhone;
-    private TextView passwd;
     private EditText etPasswd;
-    private View dividerPasswd;
     private Button btLogin;
     private TextView enterpriseLogin;
     private TextView or;
     private TextView register;
     private TextView forgetPassword;
+    private String email,pwd;
 
     @Override
     protected int getLayoutId() {
@@ -52,35 +43,91 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        enterpriseLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(LoginProtocol.USERSLOGIN).navigation();
+        //自动登录
+        if(SharedPreferencesUtils.getString(this,"identity","user").equals("user")){
+            if(DKUserManager.isLogined()){
+                refreshToken();
+                ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
+                SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "user");
                 finish();
             }
-        });
-        btLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
-                SharedPreferencesUtils.saveString(LoginActivity.this,"identity","user");
+        }else{
+            if(DKUserManager.isLogined()){
+                engRefreshToken();
+                ARouter.getInstance().build(HomeProtocol.HOMEACTIVITY).navigation();
+                SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "enterprise");
                 finish();
+            }
+        }
+
+        enterpriseLogin.setOnClickListener(v -> {
+            ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
+            finish();
+        });
+        btLogin.setOnClickListener(v -> {
+           email=etPhoneNum.getText().toString().trim();
+           if(!StringUtil.checkEmail(email)){
+               ToastUtils.showShort("Wrong account number or password");
+               return;
+           }
+           pwd=etPasswd.getText().toString().trim();
+           if(pwd==null){
+               ToastUtils.showShort("Wrong account number or password");
+               return;
+           }
+           userLogin(email,pwd);
+        });
+        register.setOnClickListener(v -> ARouter.getInstance().build(LoginProtocol.REGISTERUSER).withString("type","sign_up").navigation());
+        forgetPassword.setOnClickListener(v -> ARouter.getInstance().build(LoginProtocol.REGISTERUSER).withString("type","change_pwd").navigation());
+    }
+
+    /**
+     * 登录
+     * @param email
+     * @param pwd
+     */
+    private void userLogin(String email, String pwd) {
+
+      UserServiceFactory.login(email,pwd).safeSubscribe(new AbstractDialogSubscriber<UserResponseBody>(this) {
+          @Override
+          public void onNext(UserResponseBody userResponseBody) {
+              DKUserManager.resetUserInfo();
+              DKUserManager.saveUserInfo(userResponseBody);
+
+              ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
+              SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "user");
+              finish();
+          }
+      });
+    }
+
+    /**
+     * 刷新token
+     */
+    private void refreshToken(){
+        UserServiceFactory.refreshtoken(DKUserManager.getUserToken().getRefreshToken()).safeSubscribe(new AbstractDialogSubscriber<UserResponseBody.TokenBean>(this) {
+            @Override
+            public void onNext(UserResponseBody.TokenBean tokenBean) {
+                DKUserManager.updateUserToken(tokenBean);
+            }
+        });
+    }
+    private void engRefreshToken(){
+        UserServiceFactory.engineerRefreshtoken(DKUserManager.getUserToken().getRefreshToken()).safeSubscribe(new AbstractDialogSubscriber<UserResponseBody.TokenBean>(this) {
+            @Override
+            public void onNext(UserResponseBody.TokenBean tokenBean) {
+                DKUserManager.updateUserToken(tokenBean);
             }
         });
     }
 
     private void initView() {
-        login = (TextView) findViewById(R.id.login);
-        tvPhoneNum = (TextView) findViewById(R.id.tv_phone_num);
-        etPhoneNum = (EditText) findViewById(R.id.et_phone_num);
-        dividerPhone = (View) findViewById(R.id.divider_phone);
-        passwd = (TextView) findViewById(R.id.passwd);
-        etPasswd = (EditText) findViewById(R.id.et_passwd);
-        dividerPasswd = (View) findViewById(R.id.divider_passwd);
-        btLogin = (Button) findViewById(R.id.bt_login);
-        enterpriseLogin = (TextView) findViewById(R.id.enterprise_login);
-        or = (TextView) findViewById(R.id.or);
-        register = (TextView) findViewById(R.id.register);
-        forgetPassword = (TextView) findViewById(R.id.forget_password);
+        etPhoneNum = findViewById(R.id.et_phone_num);
+        etPasswd = findViewById(R.id.et_passwd);
+        btLogin = findViewById(R.id.bt_login);
+        enterpriseLogin = findViewById(R.id.enterprise_login);
+        or = findViewById(R.id.or);
+        register = findViewById(R.id.register);
+        forgetPassword = findViewById(R.id.forget_password);
     }
 }

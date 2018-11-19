@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 27
     defaultConfig {
-//        multiDexEnabled true
+        multiDexEnabled true
 
         applicationId "cn.dankal.dankalktsample"
         minSdkVersion build_versions.min_sdk
@@ -76,4 +76,5 @@ dependencies {
     api project(':module-product')
     api project(':baselib')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 }

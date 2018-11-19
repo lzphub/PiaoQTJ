@@ -20,6 +20,7 @@ public class ForgetPwdActivity extends BaseActivity {
     private android.widget.EditText etEmailNum;
     private android.view.View dividerPhone;
     private android.widget.Button btNext;
+    private String type;
 
     @Override
     protected int getLayoutId() {
@@ -30,6 +31,7 @@ public class ForgetPwdActivity extends BaseActivity {
     protected void initComponents() {
         initView();
         titleText.setText(getResources().getString(R.string.forgetpwd));
+        type=getIntent().getStringExtra("type");
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +42,7 @@ public class ForgetPwdActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (!etEmailNum.getText().toString().trim().isEmpty()) {
-                    ARouter.getInstance().build(LoginProtocol.FORGETPWDCODE).withString("emailAccount",etEmailNum.getText().toString().trim()).navigation();
+                    ARouter.getInstance().build(LoginProtocol.REGISTERVECODE).withString("type",type).withString("emailAccount",etEmailNum.getText().toString().trim()).navigation();
                 } else {
                     Toast.makeText(ForgetPwdActivity.this, "请输入正确的邮箱账号", Toast.LENGTH_SHORT).show();
                 }

@@ -1,11 +1,17 @@
 package cn.dankal.home.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -20,6 +26,8 @@ import cn.dankal.address.R;
 import cn.dankal.address.R2;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.HomeProtocol;
+import cn.dankal.basiclib.widget.GenDialog;
+import cn.dankal.basiclib.widget.TimeDialog;
 import cn.dankal.home.fragment.Home_fragment;
 import cn.dankal.home.fragment.My_fragment;
 import cn.dankal.home.fragment.Product_fragment;
@@ -88,13 +96,6 @@ public class UserHomeActivity extends BaseActivity {
                 transaction.replace(R.id.home_fra,product_fragment).commit();
             }
         });
-        releaseText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(HomeProtocol.HOMERELEASE).navigation();
-            }
-        });
-
     }
 
     @Override
@@ -108,6 +109,8 @@ public class UserHomeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         int i = view.getId();
         if (i == R.id.release_text) {
+            ARouter.getInstance().build(HomeProtocol.POSTREQUEST).navigation();
         }
     }
+
 }

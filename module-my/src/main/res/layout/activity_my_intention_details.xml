@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFF"
+    android:orientation="vertical"
+    tools:context="cn.dankal.my.activity.MyIntentionDetailsActivity">
+
+    <ImageView
+        android:id="@+id/back_img"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/ic_my_worklist_return" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="PURCHASE \n INTENTION DETAILS"
+                android:textColor="@color/color33"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <include
+                android:id="@+id/intention_info"
+                layout="@layout/my_intention_item"
+                android:layout_width="match_parent"
+                android:layout_height="115dp"
+                android:layout_marginTop="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="30dp"
+                android:text="CONTACTS"
+                android:textColor="@color/color33"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contacts_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="JAY HHH"
+                android:textSize="20sp"
+                android:textColor="@color/color99"
+                android:textStyle="bold"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="30dp"
+                android:text="CONTACTS NUMBER"
+                android:textColor="@color/color33"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contacts_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="138 8808 9898"
+                android:textSize="20sp"
+                android:textColor="@color/color99"
+                android:textStyle="bold"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="30dp"
+                android:text="CONTACTS VIA MAIL"
+                android:textColor="@color/color33"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contacts_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123456677@QQ.COM"
+                android:textSize="20sp"
+                android:textColor="@color/color99"
+                android:textStyle="bold"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="30dp"
+                android:text="DETAILED INTENTION"
+                android:textColor="@color/color33"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/intention_deta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xinyi factory, with a building area of 600m2, now needs to customize a lighting system, about 600 sets"
+                android:textSize="20sp"
+                android:textColor="@color/color99"
+                android:textStyle="bold"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

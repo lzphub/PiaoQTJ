@@ -9,7 +9,11 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 
+import api.MyServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.bean.AboutUsBean;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.ABOUTUS;
@@ -20,6 +24,7 @@ public class AboutUsActivity extends BaseActivity {
     private android.widget.ImageView backImg;
     private android.widget.TextView usContent;
     private android.support.v7.widget.RecyclerView imageRv;
+    private String type;
 
     @Override
     protected int getLayoutId() {
@@ -29,17 +34,40 @@ public class AboutUsActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        backImg.setOnClickListener(new View.OnClickListener() {
+        type= SharedPreferencesUtils.getString(this,"identity","user");
+        backImg.setOnClickListener(v -> finish());
+        if(type.equals("user")){
+            getData();
+        }else{
+            engGetData();
+        }
+    }
+
+    //用户端获取数据
+    private void getData(){
+        MyServiceFactory.getAboutUs().safeSubscribe(new AbstractDialogSubscriber<AboutUsBean>(this) {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onNext(AboutUsBean aboutUsBean) {
+                usContent.setText(aboutUsBean.getValue());
             }
         });
     }
 
+    //工程师端获取数据
+    private void engGetData(){
+        MyServiceFactory.engGetAboutus().safeSubscribe(new AbstractDialogSubscriber<AboutUsBean>(this) {
+            @Override
+            public void onNext(AboutUsBean aboutUsBean) {
+                usContent.setText(aboutUsBean.getValue());
+            }
+        });
+    }
+
+
+
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        usContent = (TextView) findViewById(R.id.us_content);
-        imageRv = (RecyclerView) findViewById(R.id.image_rv);
+        backImg = findViewById(R.id.back_img);
+        usContent = findViewById(R.id.us_content);
+        imageRv = findViewById(R.id.image_rv);
     }
 }

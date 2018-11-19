@@ -10,8 +10,9 @@ import android.widget.TextView;
 import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
+import cn.dankal.basiclib.bean.ComProbBean;
 
-public class TextRvAdapter extends BaseRecyclerViewAdapter<String> {
+public class TextRvAdapter extends BaseRecyclerViewAdapter<ComProbBean.DataBean> {
 
     @Override
     protected int getLayoutResId(int viewType) {
@@ -23,7 +24,7 @@ public class TextRvAdapter extends BaseRecyclerViewAdapter<String> {
         return new MyViewHolder(rootView,viewType);
     }
 
-    class MyViewHolder extends BaseRecyclerViewHolder<String> {
+    class MyViewHolder extends BaseRecyclerViewHolder<ComProbBean.DataBean> {
 
         TextView title;
 
@@ -33,8 +34,8 @@ public class TextRvAdapter extends BaseRecyclerViewAdapter<String> {
         }
 
         @Override
-        public void onBindData(String data, int position) {
-            title.setText(data);
+        public void onBindData(ComProbBean.DataBean data, int position) {
+            title.setText(data.getQuestion());
         }
     }
 }

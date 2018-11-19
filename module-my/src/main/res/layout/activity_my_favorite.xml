@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="69dp">
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="37dp"
+            android:src="@mipmap/ic_my_worklist_return"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="MY FAVORITE"
+            android:textColor="@color/color33"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swipe_toload_layout">
+
+        <include
+            android:id="@+id/swipe_refresh_header"
+            layout="@layout/layout_classic_header" />
+
+
+        <cn.dankal.basiclib.base.recyclerview.del.DeleteRecyclerView
+            android:id="@+id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <include
+            android:id="@id/swipe_load_more_footer"
+            layout="@layout/layout_classic_footer" />
+    </cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout>
+
+</LinearLayout>

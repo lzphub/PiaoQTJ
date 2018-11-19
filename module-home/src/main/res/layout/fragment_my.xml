@@ -20,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
-        <ImageView
+        <cn.dankal.basiclib.widget.CircleImageView
             android:id="@+id/head_pic"
             android:layout_width="76dp"
             android:layout_height="76dp"

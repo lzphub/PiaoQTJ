@@ -18,4 +18,10 @@ public interface LoginProtocol extends BaseRouteProtocol {
     String FORGETPWDCODE=PART+"forgetPwdCode";
 
     String FORGETPWDSET=PART+"forgetPwdSet";
+
+    String REGISTERUSER=PART+"registeruser";
+
+    String USERREGISTERVECODE=PART+"usercode";
+
+    String USERSETPWD=PART+"usersetpwd";
 }

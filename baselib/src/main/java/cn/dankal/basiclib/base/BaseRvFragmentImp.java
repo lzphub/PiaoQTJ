@@ -23,7 +23,7 @@ public abstract class BaseRvFragmentImp<M> extends BaseRecyclerViewFragment<M> i
         swipeToLoadLayout = mContentView.findViewById(R.id.swipe_toload_layout);
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
-    }
+}
 
     @Override
     public void onRefresh() {
@@ -53,6 +53,6 @@ public abstract class BaseRvFragmentImp<M> extends BaseRecyclerViewFragment<M> i
     @Override
     public void onResume() {
         super.onResume();
-        checkLoad();
+//        checkLoad();
     }
 }

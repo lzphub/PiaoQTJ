@@ -211,7 +211,13 @@ public class DeleteRecyclerView extends RecyclerView {
 
     @Override
     protected void onDetachedFromWindow() {
-        mVelocityTracker.recycle();
+        try {
+            if (mVelocityTracker!=null){
+                mVelocityTracker.recycle();
+            }
+        }catch (Error error){
+
+        }
         super.onDetachedFromWindow();
     }
 

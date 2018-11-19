@@ -1,13 +1,18 @@
 package cn.dankal.user.login;
 
+import android.content.pm.PackageManager;
 import android.widget.*;
 import android.view.*;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import api.UserServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.LoginProtocol;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.StringUtil;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.user.R;
 
 import static cn.dankal.basiclib.protocol.LoginProtocol.SETPWD;
@@ -24,6 +29,8 @@ public class SetPwdActivity extends BaseActivity {
     private android.widget.EditText etPasswd;
     private android.view.View dividerPasswd;
     private android.widget.Button bt_next;
+    private String type;
+
 
     @Override
     protected int getLayoutId() {
@@ -33,6 +40,7 @@ public class SetPwdActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+        type=getIntent().getStringExtra("type");
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,21 +50,46 @@ public class SetPwdActivity extends BaseActivity {
         bt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SetPwdActivity.this, getResources().getString(R.string.setpwdOk), Toast.LENGTH_SHORT).show();
-                finishAllActivities();
-                ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
+                String email=getIntent().getStringExtra("emailAccount");
+                String pwd=etPhoneNum.getText().toString().trim();
+                String pwd2=etPasswd.getText().toString().trim();
+                if(!pwd2.equals(pwd)){
+                    ToastUtils.showShort("两次输入的密码不一致");
+                    return;
+                }
+                if(type.equals("sign_up")){
+                    UserServiceFactory.engResetPassword(email, pwd).safeSubscribe(new AbstractDialogSubscriber<String>(SetPwdActivity.this) {
+                        @Override
+                        public void onNext(String s) {
+                            Toast.makeText(SetPwdActivity.this, getResources().getString(R.string.setpwdOk), Toast.LENGTH_SHORT).show();
+                            finishAllActivities();
+                            ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
+                        }
+                    });
+                }else{
+                    UserServiceFactory.engChangePwd(email,pwd).safeSubscribe(new AbstractDialogSubscriber<String>(SetPwdActivity.this) {
+                        @Override
+                        public void onNext(String s) {
+                            Toast.makeText(SetPwdActivity.this, getResources().getString(R.string.setpwdOk), Toast.LENGTH_SHORT).show();
+                            finishAllActivities();
+                            ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
+                        }
+                    });
+                }
+
+
             }
         });
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        tvPhoneNum = (TextView) findViewById(R.id.tv_phone_num);
-        etPhoneNum = (EditText) findViewById(R.id.et_phone_num);
-        dividerPhone = (View) findViewById(R.id.divider_phone);
-        passwd = (TextView) findViewById(R.id.passwd);
-        etPasswd = (EditText) findViewById(R.id.et_passwd);
-        dividerPasswd = (View) findViewById(R.id.divider_passwd);
-        bt_next = (Button) findViewById(R.id.bt_next);
+        backImg = findViewById(R.id.back_img);
+        tvPhoneNum = findViewById(R.id.tv_phone_num);
+        etPhoneNum = findViewById(R.id.et_phone_num);
+        dividerPhone = findViewById(R.id.divider_phone);
+        passwd = findViewById(R.id.passwd);
+        etPasswd = findViewById(R.id.et_passwd);
+        dividerPasswd = findViewById(R.id.divider_passwd);
+        bt_next = findViewById(R.id.bt_next);
     }
 }

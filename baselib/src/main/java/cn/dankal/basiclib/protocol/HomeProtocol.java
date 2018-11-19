@@ -18,4 +18,12 @@ public interface HomeProtocol extends BaseRouteProtocol {
     String CLAIMDEMAND=PART+"claimdemand";
 
     String USERHOME=PART+"userhome";
+
+    String POSTREQUEST=PART+"postrequest";
+
+    String ENTERINTEN=PART+"enterinten";
+
+    String SUBMITINTENTION=PART+"submitintention";
+
+    String SERVICE=PART+"service";
 }

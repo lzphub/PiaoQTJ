@@ -22,10 +22,7 @@ import static cn.dankal.basiclib.DankalApplication.isDev;
  */
 
 public class BaseApi {
-    public static final String BASE_URL = isDev?"https://api-cheerstoka-dev.dankal.cn/v1/"
-            :"https://api.cheersto.cn/v1/";
-    public static final String CODE_URL= isDev?"https://qianse.dankal.cn/share?partner_uuid="
-            :"https://m.cheersto.cn/share?partner_uuid=";
+    public static final String BASE_URL = "https://api-lighting-dev.dankal.cn/v1/";
 
     public static Retrofit getRetrofit() {
         return new Retrofit.Builder().addConverterFactory(FastJsonConverterFactory.create())
@@ -36,7 +33,7 @@ public class BaseApi {
     }
 
     public static Retrofit getRetrofit(String baseurl) {
-        return new Retrofit.Builder()
+        return new Retrofit. Builder()
                 //.addConverterFactory(FastJsonConverterFactory.create())
 //                .addConverterFactory(GsonConverterFactory.create(getGson()))
                 .addConverterFactory(FastJsonConverterFactory.create())
