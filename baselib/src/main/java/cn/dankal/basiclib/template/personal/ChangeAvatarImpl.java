@@ -1,9 +1,13 @@
 package cn.dankal.basiclib.template.personal;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
@@ -34,6 +38,7 @@ import cn.dankal.basiclib.util.UriUtils;
 import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.basiclib.widget.TipDialog;
 
+import static cn.dankal.basiclib.common.camera.RequestCodes.PICTURE_CUT;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
 
 /**
@@ -45,6 +50,7 @@ import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
  */
 public class ChangeAvatarImpl implements ChangeAvatar {
 
+    private String tempFilePath;
     private Context context;
     private TipDialog loadingDialog;
     private ImageView mIvHead;
@@ -53,6 +59,16 @@ public class ChangeAvatarImpl implements ChangeAvatar {
     public ChangeAvatarImpl(Context context, BaseView view) {
         this.context = context;
         this.view = view;
+
+        String rootPath = Environment.getExternalStorageDirectory().toString() +
+                "/" + "Android/data/" + context.getPackageName() + "/files/"
+                + "temp";
+        File file = new File(rootPath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        tempFilePath = rootPath + "/temp.jpg";
+
     }
 
     @Override
@@ -64,9 +80,9 @@ public class ChangeAvatarImpl implements ChangeAvatar {
                     if (!granted) {
                         ToastUtils.showShort("请开启相关权限，否则无法上传图片哦~");
                     } else {
-                        if (agreePermission!=null){
+                        if (agreePermission != null) {
                             agreePermission.action();
-                        }else {
+                        } else {
                             cameraHandler.beginCameraDialog();
                         }
                     }
@@ -75,22 +91,56 @@ public class ChangeAvatarImpl implements ChangeAvatar {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data, PersonalData_EnBean personalData_enBean) {
+        Uri uri;
         switch (requestCode) {
             case RequestCodes.TAKE_PHOTO:
-                Uri takePath = CamerImageBean.getInstance().getPath();
-                uploadPic(takePath ,personalData_enBean);
+                uri = CamerImageBean.getInstance().getPath();
+                startPhotoZoom(uri, 400, 400);
                 break;
             case RequestCodes.PICK_PHOTO:
-                Uri pickpath = Uri.parse(ImagePathUtil.getImageAbsolutePath(context, data.getData()));
-                uploadPic(pickpath ,personalData_enBean);
+
+                File file = new File(ImagePathUtil.getImageAbsolutePath(context, data.getData()));
+                Uri temUri = Uri.fromFile(file);
+                startPhotoZoom(temUri, 400, 400);
                 break;
+            case RequestCodes.PICTURE_CUT:
+//                if (data.getData() == null) {
+//                    uri = CamerImageBean.getInstance().getPath();
+//                } else {
+//                    uri = Uri.parse(ImagePathUtil.getImageAbsolutePath(context, data.getData()));
+//                }
+                uploadPic(Uri.parse(tempFilePath), personalData_enBean);
             default:
         }
     }
 
+
+    //裁剪图片
+    private void startPhotoZoom(Uri uri, int width, int height) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", width);
+        intent.putExtra("outputY", height);
+        intent.putExtra("scale", true);
+        intent.putExtra("return-data", true);
+        //intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        File file = new File(tempFilePath);
+        Uri temUri = Uri.fromFile(file);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, temUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true);
+        if (context instanceof Activity) {
+            ((Activity) context).startActivityForResult(intent, PICTURE_CUT);
+        }
+        // TODO: 2018-11-19 context
+    }
+
     @Override
     public void onChatPickPhoto(RecyclerView recyclerView, ServiceRvAdapter serviceRvAdapter, List<ServiceTextBean> serviceTextBeanList, int requestCode, int resultCode, Intent data) {
-        ServiceTextBean serviceTextBean=new ServiceTextBean();
+        ServiceTextBean serviceTextBean = new ServiceTextBean();
         switch (requestCode) {
             case RequestCodes.TAKE_PHOTO:
                 Uri takePath = CamerImageBean.getInstance().getPath();
@@ -106,9 +156,8 @@ public class ChangeAvatarImpl implements ChangeAvatar {
         }
         serviceTextBeanList.add(serviceTextBean);
         serviceRvAdapter.update(serviceTextBeanList);
-        recyclerView.scrollToPosition(serviceTextBeanList.size()-1);
+        recyclerView.scrollToPosition(serviceTextBeanList.size() - 1);
     }
-
 
 
     private void uploadPic(Uri photoUris, PersonalData_EnBean personalData_enBean) {
@@ -171,7 +220,7 @@ public class ChangeAvatarImpl implements ChangeAvatar {
         MyServiceFactory.updateInfo(personalData_enBean).safeSubscribe(new AbstractDialogSubscriber<String>(view) {
             @Override
             public void onNext(String s) {
-                PicUtils.loadAvatar(personalData_enBean.getAvatar(),mIvHead);
+                PicUtils.loadAvatar(personalData_enBean.getAvatar(), mIvHead);
                 ToastUtils.showShort("Uploaded successfully");
             }
         });

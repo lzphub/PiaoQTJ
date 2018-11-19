@@ -44,7 +44,7 @@ public class LoginActivity extends BaseActivity {
     protected void initComponents() {
         initView();
         //自动登录
-        if(SharedPreferencesUtils.getString(this,"identity","user").equals("user")){
+        if("user".equals(SharedPreferencesUtils.getString(this, "identity", "user"))){
             if(DKUserManager.isLogined()){
                 refreshToken();
                 ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();

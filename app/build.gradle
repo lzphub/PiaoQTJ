@@ -7,7 +7,7 @@ android {
     defaultConfig {
         multiDexEnabled true
 
-        applicationId "cn.dankal.dankalktsample"
+        applicationId 'cn.dankal.zm'
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1
@@ -19,8 +19,8 @@ android {
         }
         manifestPlaceholders = [
                 //MTA
-                MTA_APPKEY   : "xx",
-                MTA_CHANNEL  : "xx",
+//                MTA_APPKEY   : "xx",
+//                MTA_CHANNEL  : "xx",
 
                 //极光推送
                 JPUSH_PKGNAME: applicationId,
@@ -46,9 +46,9 @@ android {
 //    }
     buildTypes {
         debug {
-            zipAlignEnabled true
-            minifyEnabled true
-            shrinkResources true
+//            zipAlignEnabled true
+//            minifyEnabled true
+//            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //          signingConfig signingConfigs.jenkins
         }
@@ -58,6 +58,8 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildToolsVersion '27.0.3'
+    productFlavors {
+    }
 }
 //指定编译的编码
 tasks.withType(JavaCompile){
@@ -76,5 +78,4 @@ dependencies {
     api project(':module-product')
     api project(':baselib')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
 }
