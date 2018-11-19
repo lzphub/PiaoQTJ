@@ -25,8 +25,8 @@ public class PicUtils {
     private static final String HTTP_PREFIX = "http://";
     private static final String HTTPS_PREFIX = "https://";
 
-    //private static final String QINIU_DEBUG_DOMAIN = "http://pcq1362qq.bkt.clouddn.com/";
-    private static final String QINIU_DEBUG_DOMAIN = "https://img.cheersto.cn/";
+    //private static final String QINIU_DEBUG_DOMAIN = "http://phpzt6pty.bkt.clouddn.com/";
+    private static final String QINIU_DEBUG_DOMAIN = "http://phpzt6pty.bkt.clouddn.com/";
     public static final String QINIU_DOMAIN = QINIU_DEBUG_DOMAIN;
 
     /**

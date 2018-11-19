@@ -34,14 +34,20 @@ import cn.dankal.basiclib.base.fragment.BaseFragment;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.DemandListbean;
 import cn.dankal.basiclib.bean.ProductListBean;
+import cn.dankal.basiclib.bean.UserHomeBannerBean;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.ProductProtocol;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.widget.GenDialog;
+import cn.dankal.basiclib.widget.swipetoloadlayout.OnLoadMoreListener;
+import cn.dankal.basiclib.widget.swipetoloadlayout.OnRefreshListener;
+import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
+import cn.dankal.home.persenter.ProductHomeContact;
+import cn.dankal.home.persenter.ProductHomePresenter;
 
-public class Home_fragment extends BaseFragment {
+public class Home_fragment extends BaseFragment implements ProductHomeContact.phview{
     private android.widget.ImageView logoImg;
     private android.widget.ImageView searchImg;
     private android.widget.LinearLayout releaseLl;
@@ -54,6 +60,11 @@ public class Home_fragment extends BaseFragment {
     private TextView resText;
     private String identity;
     private android.support.v4.widget.NestedScrollView scroll;
+    private int page=1;
+    private boolean isRefresh = true;
+    private ProductHomePresenter productHomePresenter;
+    private cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout swipeToloadLayout;
+    private ProductRvAdapter productRvAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -69,7 +80,7 @@ public class Home_fragment extends BaseFragment {
     protected void initComponents(View view) {
         initView(view);
         identity = SharedPreferencesUtils.getString(getContext(), "identity", "enterprise");
-//        initRv();
+        initRv();
         SpannableString spannableString = null;
         if (identity.equals("enterprise")) {
             spannableString = new SpannableString("最新需求");
@@ -98,8 +109,6 @@ public class Home_fragment extends BaseFragment {
             }
         });
 
-        initBanner();
-
     }
 
 
@@ -113,12 +122,12 @@ public class Home_fragment extends BaseFragment {
         loadMore = (TextView) view.findViewById(R.id.load_more);
         banner = (CardBanner) view.findViewById(R.id.banner);
         resText = (TextView) view.findViewById(R.id.res_text);
+        swipeToloadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipe_toload_layout);
     }
 
     /*
      * 初始化RecyclerView
      * */
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void initRv() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -140,59 +149,60 @@ public class Home_fragment extends BaseFragment {
                 }
             });
         }else{
-//            for(int i=0;i<10;i++){
-//                ProductListBean productListBean=new ProductListBean();
-//                productListBeanList.add(productListBean);
-//            }
-//            ProductRvAdapter productRvAdapter=new ProductRvAdapter();
-//            productRvAdapter.addMore(productListBeanList);
-//            demandList.setAdapter(productRvAdapter);
-//            demandList.setNestedScrollingEnabled(false);
-//            demandList.setHasFixedSize(true);
-//            productRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductListBean>() {
-//                @Override
-//                public void onItemClick(View v, int position, ProductListBean data) {
-//                    ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).navigation();
-//                }
-//            });
-//            scroll.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-//                @Override
-//                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                    Logger.d("recv",scroll.canScrollVertically(1)+"");
-//                    if(!scroll.canScrollVertically(1)){
-//                        productRvAdapter.addMore(productListBeanList);
-//                    }
-//
-//                }
-//            });
+            productRvAdapter=new ProductRvAdapter();
+            productHomePresenter=ProductHomePresenter.getPresenter();
+            productHomePresenter.attachView(this);
+            productHomePresenter.getData(page,10);
+            productHomePresenter.getBanner();
+
+            swipeToloadLayout.setOnRefreshListener(() -> {
+                page=1;
+                isRefresh=true;
+                productHomePresenter.getData(page,10);
+            });
+            swipeToloadLayout.setOnLoadMoreListener(() -> {
+                page++;
+                isRefresh=false;
+                productHomePresenter.getData(page,10);
+            });
         }
 
     }
 
-    /*
-     * 初始化轮播图
-     * */
-    private void initBanner() {
-        List<ImageData> imgurl = new ArrayList<>();
-        ImageData img1 = new ImageData();
-        img1.setImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541421297535&di=7ada3a21db141cb769f8bce9d407686b&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2Fdbfb6a5c4276ef323c6b140f40b688363f7c52dd.jpg");
-        imgurl.add(img1);
-        imgurl.add(img1);
-        imgurl.add(img1);
-        banner.setDatas(imgurl).setCardImageLoader(new CardImageLoader() {
+    @Override
+    public void getDataSuccess(ProductListBean productListBean) {
+
+        if (isRefresh) {
+            productRvAdapter.clearData();
+            swipeToloadLayout.setRefreshing(false);
+        } else {
+            swipeToloadLayout.setLoadingMore(false);
+        }
+        productRvAdapter.addMore(productListBean.getData());
+        demandList.setAdapter(productRvAdapter);
+        demandList.setNestedScrollingEnabled(false);
+        demandList.setHasFixedSize(true);
+        productRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductListBean.DataBean>() {
             @Override
-            public void load(Context context, ImageView imageView, Object path) {
-                Glide.with(context).load(path).into(imageView);
-            }
-        }).start();
-        banner.setOnItemClickListener(new CardBanner.OnItemClickListener() {
-            @Override
-            public void onItem(int position) {
-                Uri uri = Uri.parse("https://www.baidu.com");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+            public void onItemClick(View v, int position, ProductListBean.DataBean data) {
+                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",data.getProduct_uuid()).navigation();
             }
         });
     }
 
+    @Override
+    public void getBannerSuccess(UserHomeBannerBean userHomeBannerBean) {
+        List<ImageData> imgurl = new ArrayList<>();
+        for(int i=0;i<userHomeBannerBean.getCarousels().size();i++){
+            ImageData img1 = new ImageData();
+            img1.setImage(userHomeBannerBean.getCarousels().get(i).getImage());
+            imgurl.add(img1);
+        }
+        banner.setDatas(imgurl).setCardImageLoader((context, imageView, path) -> Glide.with(context).load(path).into(imageView)).start();
+        banner.setOnItemClickListener(position -> {
+            Uri uri = Uri.parse("http://"+userHomeBannerBean.getCarousels().get(position).getJump_url());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        });
+    }
 }

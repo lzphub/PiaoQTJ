@@ -6,6 +6,7 @@ import cn.dankal.basiclib.base.BaseResult;
 import cn.dankal.basiclib.bean.ProductDataBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -19,15 +20,13 @@ import retrofit2.http.Query;
 public interface ProductService {
 
     /**
-     * 分类商品列表
-     *
+     * 商品列表
      */
     @GET("customer/product")
-    Observable<ProductListBean> getProductlist(@Query("category_uuid") String category_uuid);
+    Observable<ProductListBean> getProductlist(@Query("keyword")String keyword,@Query("category_uuid") String category_uuid);
 
     /**
      * 商品详情
-     *
      */
     @GET("customer/product/{product_uuid}")
     Observable<ProductDataBean> getProductData(@Path("product_uuid")String product_uuid);
@@ -39,4 +38,17 @@ public interface ProductService {
     @POST("customer/product/addFavourite")
     @FormUrlEncoded
     Observable<String> addcollection(@Field("product_uuid")String product_uuid);
+
+    /**
+     * 取消收藏
+     */
+    @DELETE("customer/me/deletefavourite/{product_uuid}")
+    Observable<String> deleteColl(@Path("product_uuid") String product_uuid);
+
+    /**
+     * 提交意向
+     */
+    @POST("customer/product/purchase/{product_uuid}")
+    @FormUrlEncoded
+    Observable<String> postPurchase(@Path("product_uuid")String product_uuid,@Field("contact_name")String contact_name,@Field("contact_phone")String contact_phone,@Field("email")String email,@Field("extra_info")String extra_info);
 }

@@ -22,6 +22,7 @@ public class RegistrActivity extends BaseActivity {
     private android.widget.EditText etPhoneNum;
     private android.view.View dividerPhone;
     private Button next_btn;
+    private String type;
 
     @Override
     protected int getLayoutId() {
@@ -31,6 +32,7 @@ public class RegistrActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+        type=getIntent().getStringExtra("type");
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +43,7 @@ public class RegistrActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(StringUtil.checkEmail(etPhoneNum.getText().toString())){
-                    ARouter.getInstance().build(LoginProtocol.REGISTERVECODE).withString("emailAccount",etPhoneNum.getText().toString().trim()).navigation();
+                    ARouter.getInstance().build(LoginProtocol.REGISTERVECODE).withString("type",type).withString("emailAccount",etPhoneNum.getText().toString().trim()).navigation();
                 }else{
                     Toast.makeText(RegistrActivity.this, "请填写正确的邮箱账号", Toast.LENGTH_SHORT).show();
                 }

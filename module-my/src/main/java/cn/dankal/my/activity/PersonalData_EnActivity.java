@@ -30,6 +30,7 @@ import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.template.personal.ChangeAvatar;
 import cn.dankal.basiclib.template.personal.ChangeAvatarImpl;
 import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.basiclib.widget.CircleImageView;
 import cn.dankal.basiclib.widget.wheelview.WheelView;
 import cn.dankal.basiclib.widget.wheelview.adapters.ArrayWheelAdapter;
@@ -60,7 +61,6 @@ public class PersonalData_EnActivity extends BaseActivity {
     private String[] positions = {"IMPORTER", "WHOLESALERS", "RETAILERS", "DESIGNER", "PERSONAL", "OTHER"};
     private List<String> positionList = new ArrayList<>();
     private int ageitemcount = 0, positioncount = 0;
-    private Uri imguri;
     private ChangeAvatar changeAvatar;
     private PersonalData_EnBean personalDataEnBean;
 
@@ -73,18 +73,17 @@ public class PersonalData_EnActivity extends BaseActivity {
     protected void initComponents() {
         initView();
 
-       getData();
+        getData();
 
         backImg.setOnClickListener(v -> finish());
-
         picRl.setOnClickListener(v -> initBottomDialog());
         positionRl.setOnClickListener(v -> initPositionDialog());
         ageRl.setOnClickListener(v -> initAgeDialog());
         countryRl.setOnClickListener(v -> startActivityForResult(new Intent(PersonalData_EnActivity.this, PickCountriesActivity.class), 2));
-        nameRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "name").withSerializable("bean",personalDataEnBean).navigation());
-        contactRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "number").withSerializable("bean",personalDataEnBean).navigation());
-        eMailRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "email").withSerializable("bean",personalDataEnBean).navigation());
-        companyRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "company").withSerializable("bean",personalDataEnBean).navigation());
+        nameRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "name").withSerializable("bean", personalDataEnBean).navigation());
+        contactRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "number").withSerializable("bean", personalDataEnBean).navigation());
+        eMailRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "email").withSerializable("bean", personalDataEnBean).navigation());
+        companyRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "company").withSerializable("bean", personalDataEnBean).navigation());
 
         changeAvatar = new ChangeAvatarImpl(this, this);
         changeAvatar.setIvHead(headPic);
@@ -111,9 +110,9 @@ public class PersonalData_EnActivity extends BaseActivity {
     }
 
     private void initBottomDialog() {
-        /*
+        /**
          * 没有裁剪！！
-         * */
+         */
         changeAvatar.checkPermission(new CameraHandler(this), null);
 
     }
@@ -122,8 +121,8 @@ public class PersonalData_EnActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            changeAvatar.onActivityResult(requestCode, resultCode, data,personalDataEnBean);
-        } else if (resultCode == 2) {
+            changeAvatar.onActivityResult(requestCode, resultCode, data, personalDataEnBean);
+         } else if (resultCode == 2) {
             if (requestCode == 2) {
                 countryText.setText(data.getStringExtra("countries"));
                 personalDataEnBean.setCountry(data.getStringExtra("countries"));
@@ -183,12 +182,13 @@ public class PersonalData_EnActivity extends BaseActivity {
         MyServiceFactory.updateInfo(personalDataEnBean).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
             @Override
             public void onNext(String s) {
-
+                getData();
             }
 
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
+                Logger.d(e+"");
             }
         });
     }
@@ -236,13 +236,11 @@ public class PersonalData_EnActivity extends BaseActivity {
     }
 
     //获取信息
-    private void getData(){
+    private void getData() {
         MyServiceFactory.getUserData().safeSubscribe(new AbstractDialogSubscriber<PersonalData_EnBean>(this) {
             @Override
             public void onNext(PersonalData_EnBean personalData_enBean) {
-                Glide.with(PersonalData_EnActivity.this)
-                        .load(personalData_enBean.getAtavar())
-                        .into(headPic);
+                PicUtils.loadAvatar(personalData_enBean.getAvatar(),headPic);
                 nameText.setText(personalData_enBean.getName());
                 ageText.setText(personalData_enBean.getAge() + "");
                 contactText.setText(personalData_enBean.getContact());

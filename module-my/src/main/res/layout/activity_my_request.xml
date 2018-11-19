@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F7F8FB">
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="69dp">
+        android:layout_height="69dp"
+        android:background="@color/colorFF">
 
         <ImageView
             android:id="@+id/back_img"
@@ -38,7 +40,7 @@
         android:id="@+id/tab_title"
         android:layout_width="wrap_content"
         android:layout_height="38dp"
-        android:layout_marginTop="14dp"
+        android:background="@color/colorFF"
         app:layout_constraintTop_toBottomOf="@id/back_img"
         app:tl_indicator_color="@color/login_btn_bg"
         app:tl_indicator_corner_radius="1dp"
@@ -54,7 +56,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/tab_viewpager"
         android:layout_width="1dp"
-        android:layout_height="1dp"></android.support.v4.view.ViewPager>
+        android:layout_height="1dp"/>
 
     <cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout
         android:layout_width="match_parent"

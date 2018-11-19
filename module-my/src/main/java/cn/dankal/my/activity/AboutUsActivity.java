@@ -13,6 +13,7 @@ import api.MyServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.AboutUsBean;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.ABOUTUS;
@@ -23,6 +24,7 @@ public class AboutUsActivity extends BaseActivity {
     private android.widget.ImageView backImg;
     private android.widget.TextView usContent;
     private android.support.v7.widget.RecyclerView imageRv;
+    private String type;
 
     @Override
     protected int getLayoutId() {
@@ -32,10 +34,16 @@ public class AboutUsActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+        type= SharedPreferencesUtils.getString(this,"identity","user");
         backImg.setOnClickListener(v -> finish());
-        getData();
+        if(type.equals("user")){
+            getData();
+        }else{
+            engGetData();
+        }
     }
 
+    //用户端获取数据
     private void getData(){
         MyServiceFactory.getAboutUs().safeSubscribe(new AbstractDialogSubscriber<AboutUsBean>(this) {
             @Override
@@ -44,6 +52,18 @@ public class AboutUsActivity extends BaseActivity {
             }
         });
     }
+
+    //工程师端获取数据
+    private void engGetData(){
+        MyServiceFactory.engGetAboutus().safeSubscribe(new AbstractDialogSubscriber<AboutUsBean>(this) {
+            @Override
+            public void onNext(AboutUsBean aboutUsBean) {
+                usContent.setText(aboutUsBean.getValue());
+            }
+        });
+    }
+
+
 
     private void initView() {
         backImg = findViewById(R.id.back_img);

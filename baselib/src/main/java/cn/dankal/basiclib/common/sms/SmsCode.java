@@ -13,4 +13,5 @@ public interface SmsCode {
     void getCode(String phone, Button mBtCode, String type);
     void sendCodeSuccess(Button mBtCode);
     void onDestory();
+    void engGetCode(String phone, Button mBtCode, String type);
 }

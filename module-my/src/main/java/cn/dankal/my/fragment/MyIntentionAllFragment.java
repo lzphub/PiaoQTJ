@@ -39,7 +39,7 @@ public class MyIntentionAllFragment extends BaseRvFragmentImp<MyIntentionBean.Da
         myIntentionRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<MyIntentionBean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, MyIntentionBean.DataBean data) {
-                ARouter.getInstance().build(MyProtocol.MYINTENTIONDETA).navigation();
+                ARouter.getInstance().build(MyProtocol.MYINTENTIONDETA).withString("intention_id",data.getIntention_id()).navigation();
             }
         });
         return myIntentionRvAdapter;

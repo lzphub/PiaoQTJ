@@ -2,6 +2,7 @@ package cn.dankal.my.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,13 +10,18 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 
+import cn.dankal.basiclib.adapter.InternalImgRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.bean.MyRequestBean;
+import cn.dankal.basiclib.bean.RequestDataBean;
+import cn.dankal.my.presenter.MyRequestPresenter;
+import cn.dankal.my.presenter.RequestContact;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYREQUESTDETA;
 
 @Route(path = MYREQUESTDETA)
-public class MyRequestDetaActivity extends BaseActivity {
+public class MyRequestDetaActivity extends BaseActivity implements RequestContact.RequestView {
 
     private android.widget.ImageView backImg;
     private android.widget.TextView requestTitle;
@@ -23,6 +29,9 @@ public class MyRequestDetaActivity extends BaseActivity {
     private android.widget.TextView requestPeriod;
     private android.support.v7.widget.RecyclerView addImgRv;
     private android.widget.TextView requestContent;
+    private MyRequestPresenter myRequestPresenter=MyRequestPresenter.getPSPresenter();
+    private String demandid;
+    private InternalImgRvAdapter internalImgRvAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -33,14 +42,40 @@ public class MyRequestDetaActivity extends BaseActivity {
     protected void initComponents() {
         initView();
         backImg.setOnClickListener(v -> finish());
+        demandid=getIntent().getStringExtra("demand_id");
+        myRequestPresenter.attachView(this);
+        myRequestPresenter.getRequestData(demandid);
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        requestTitle = (TextView) findViewById(R.id.request_title);
-        requestPrice = (TextView) findViewById(R.id.request_price);
-        requestPeriod = (TextView) findViewById(R.id.request_period);
-        addImgRv = (RecyclerView) findViewById(R.id.add_img_rv);
-        requestContent = (TextView) findViewById(R.id.request_content);
+        backImg = findViewById(R.id.back_img);
+        requestTitle = findViewById(R.id.request_title);
+        requestPrice = findViewById(R.id.request_price);
+        requestPeriod = findViewById(R.id.request_period);
+        addImgRv = findViewById(R.id.add_img_rv);
+        requestContent = findViewById(R.id.request_content);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        addImgRv.setLayoutManager(linearLayoutManager);
+    }
+
+    @Override
+    public void getDataSuccess(MyRequestBean myRequestBean) {
+
+    }
+
+    @Override
+    public void updata(MyRequestBean myRequestBean) {
+
+    }
+
+    @Override
+    public void getRequestDataSuccess(RequestDataBean databean) {
+        requestTitle.setText(databean.getTitle());
+        requestPrice.setText("$"+databean.getStart_price()+"~"+databean.getEnd_price());
+        requestPeriod.setText(databean.getStart_date()+"~"+databean.getEnd_date());
+        internalImgRvAdapter =new InternalImgRvAdapter();
+        addImgRv.setAdapter(internalImgRvAdapter);
+        internalImgRvAdapter.updateData(databean.getImages());
     }
 }

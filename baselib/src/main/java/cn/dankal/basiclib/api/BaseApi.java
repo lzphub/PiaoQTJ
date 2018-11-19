@@ -22,7 +22,7 @@ import static cn.dankal.basiclib.DankalApplication.isDev;
  */
 
 public class BaseApi {
-    public static final String BASE_URL = "http://api-lighting-dev.dankal.cn/v1/";
+    public static final String BASE_URL = "https://api-lighting-dev.dankal.cn/v1/";
 
     public static Retrofit getRetrofit() {
         return new Retrofit.Builder().addConverterFactory(FastJsonConverterFactory.create())

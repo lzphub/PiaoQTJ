@@ -60,6 +60,7 @@
                 android:layout_marginLeft="10dp"
                 android:background="@null"
                 android:hint="请搜索需求"
+                android:gravity="center_horizontal"
                 android:textStyle="bold"
                 android:imeOptions="actionSearch"
                 android:singleLine="true"
@@ -81,6 +82,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/jilu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
@@ -106,7 +108,9 @@
         android:id="@+id/search_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="7dp"
+        android:scrollbars="none"
+        android:overScrollMode="never"
         app:layout_constraintTop_toBottomOf="@id/delete_eliminate"></android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>

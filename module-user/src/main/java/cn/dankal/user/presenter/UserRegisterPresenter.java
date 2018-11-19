@@ -60,6 +60,17 @@ public class UserRegisterPresenter implements SmsCode {
         if (mDisposable != null) mDisposable.dispose();
     }
 
+    @Override
+    public void engGetCode(String phone, Button mBtCode, String type) {
+            if(StringUtil.checkEmail(phone)){
+                UserServiceFactory.getCode(phone,type).safeSubscribe(new AbstractDialogSubscriber<String>(baseView) {
+                    @Override
+                    public void onNext(String s) {
+                        sendCodeSuccess(mBtCode);
+                    }
+                });
+            }
+    }
 
 
 }

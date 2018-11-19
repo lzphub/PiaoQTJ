@@ -18,6 +18,7 @@ import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
+import cn.dankal.basiclib.bean.ComProbBean;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.ToastUtils;
@@ -27,7 +28,7 @@ import cn.dankal.setting.R;
 import static cn.dankal.basiclib.protocol.MyProtocol.COMPROB;
 
 @Route(path = COMPROB)
-public class ComProbActivity extends BaseRvActivity<String> {
+public class ComProbActivity extends BaseRvActivity<ComProbBean.DataBean> {
     private android.widget.ImageView backImg;
     private android.widget.TextView titleText;
     private TextRvAdapter textRvAdapter;
@@ -55,16 +56,16 @@ public class ComProbActivity extends BaseRvActivity<String> {
     }
 
     @Override
-    public BaseRecyclerViewPresenter<String> getPresenter() {
+    public BaseRecyclerViewPresenter<ComProbBean.DataBean> getPresenter() {
         return new ComProbPersenter();
     }
 
     @Override
-    public BaseRecyclerViewAdapter<String> getAdapter() {
+    public BaseRecyclerViewAdapter<ComProbBean.DataBean> getAdapter() {
         textRvAdapter=new TextRvAdapter();
-        textRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<String>() {
+        textRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ComProbBean.DataBean>() {
             @Override
-            public void onItemClick(View v, int position, String data) {
+            public void onItemClick(View v, int position, ComProbBean.DataBean data) {
                 ARouter.getInstance().build(MyProtocol.COMPORDATA).navigation();
             }
         });

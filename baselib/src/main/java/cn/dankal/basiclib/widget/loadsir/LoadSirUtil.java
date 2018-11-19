@@ -3,6 +3,7 @@ package cn.dankal.basiclib.widget.loadsir;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Looper;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,7 +26,7 @@ public class LoadSirUtil {
             View view = (View) target;
             contentParent = (ViewGroup) (view.getParent());
             context = view.getContext();
-        } else {
+        }else {
             throw new IllegalArgumentException("The target must be within Activity, Fragment, View.");
         }
         int childIndex = 0;

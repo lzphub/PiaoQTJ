@@ -9,6 +9,7 @@ import api.MyServiceFactory;
 import api.UserServiceFactory;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.bean.MyRequestBean;
+import cn.dankal.basiclib.bean.RequestDataBean;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 
 public class MyRequestPresenter implements RequestContact.idPresenter {
@@ -40,6 +41,16 @@ public class MyRequestPresenter implements RequestContact.idPresenter {
             @Override
             public void onNext(String s) {
                 upData(1,10);
+            }
+        });
+    }
+
+    @Override
+    public void getRequestData(String demand_id) {
+        MyServiceFactory.getMyRequestData(demand_id).safeSubscribe(new AbstractDialogSubscriber<RequestDataBean>(requestView) {
+            @Override
+            public void onNext(RequestDataBean requestDataBean) {
+                requestView.getRequestDataSuccess(requestDataBean);
             }
         });
     }

@@ -14,7 +14,7 @@ import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.MyIntentionBean;
 
-public class MyIntentionRvAdapter extends BaseRecyclerViewAdapter<MyIntentionBean> {
+public class MyIntentionRvAdapter extends BaseRecyclerViewAdapter<MyIntentionBean.DataBean> {
 
 
 
@@ -28,7 +28,7 @@ public class MyIntentionRvAdapter extends BaseRecyclerViewAdapter<MyIntentionBea
         return new MyViewHolder(rootView);
     }
 
-    class MyViewHolder extends BaseRecyclerViewHolder<MyIntentionBean> {
+    class MyViewHolder extends BaseRecyclerViewHolder<MyIntentionBean.DataBean> {
         @BindView(R2.id.intention_img)
         ImageView intentionImg;
         @BindView(R2.id.intention_name)
@@ -42,11 +42,11 @@ public class MyIntentionRvAdapter extends BaseRecyclerViewAdapter<MyIntentionBea
         }
 
         @Override
-        public void onBindData(MyIntentionBean data, int position) {
-            Glide.with(context).load(data.getImgurl()).into(intentionImg);
-            intentionName.setText(data.getName());
-            intentionPrice.setText(data.getPrice());
-            intentionState.setText(data.getState());
+        public void onBindData(MyIntentionBean.DataBean data, int position) {
+            Glide.with(context).load(data.getImages().get(0)).into(intentionImg);
+            intentionName.setText(data.getProduct_name());
+            intentionPrice.setText("$"+data.getProduct_price());
+            intentionState.setText(data.getStatus()+"");
         }
     }
 }

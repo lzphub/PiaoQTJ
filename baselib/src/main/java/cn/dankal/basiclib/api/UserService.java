@@ -9,6 +9,7 @@ import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -32,6 +33,12 @@ public interface UserService {
     Observable<String> obtainVerifyCode(@Query("email") String moblie, @Query("type") String type);
 
     /**
+     * 工程师端获取验证码
+     */
+    @GET("engineer/login/getcode")
+    Observable<String> getCode(@Query("email") String moblie, @Query("type") String type);
+
+    /**
      * 检查验证码 key
      */
     @POST("engineer/login/checkcode")
@@ -43,9 +50,31 @@ public interface UserService {
     /**
      * 设置密码 scalar
      */
-    @POST("customerlogin/signUp")
+    @POST("customer/login/signUp")
     @FormUrlEncoded
     Observable<String> resetPassword(@Field("email") String email,  @Field("password") String password);
+
+    /**
+     * 工程师端注册
+     */
+    @POST("engineer/login/signUp")
+    @FormUrlEncoded
+    Observable<String> engResetPassword(@Field("email") String email,  @Field("password") String password);
+    /**
+     * 修改密码
+     */
+
+    @POST("customer/login/changePwd")
+    @FormUrlEncoded
+    Observable<String> changePwd(@Field("email") String emasil,@Field("password")String password);
+
+    /**
+     * 工程师端修改密码
+     */
+    @POST("engineer/login/changePwd")
+    @FormUrlEncoded
+    Observable<String> engChangePwd(@Field("email") String emasil,@Field("password")String password);
+
 
     /**
      * 登录
@@ -55,68 +84,35 @@ public interface UserService {
     Observable<UserResponseBody> login(@Field("email") String email, @Field("password") String password);
 
     /**
-     * 获取用户信息
-     *
-     * @return
+     * 工程师端登录
      */
-    @GET("partner/User")
-    Observable<BaseResult<UserInfoBean>> getUserInfo();
-
+    @POST("engineer/login/login")
+    @FormUrlEncoded
+    Observable<UserResponseBody> engineerLogin(@Field("email") String email, @Field("password") String password);
+    /**
+     * 更新TOKEN
+     */
+    @POST("customer/login/refreshtoken")
+    @FormUrlEncoded
+    Observable<UserResponseBody.TokenBean> refreshtoken(@Field("refresh_token")String refresh_token);
 
     /**
-     * 修改负责区域
-     *
-     * @param region
-     * @return
+     * 工程师端更新TOKEN
      */
-    @POST("partner/User/updateRegion")
+    @POST("engineer/login/refreshtoken")
     @FormUrlEncoded
-    Observable<String> updateRegion(@Field("region") String region);
+    Observable<UserResponseBody.TokenBean> engineerRefreshtoken(@Field("refresh_token")String refresh_token);
 
-    /**
-     * 修改性别
-     *
-     * @param gender
-     * @return
-     */
-    @POST("partner/User/updateGender")
-    @FormUrlEncoded
-    Observable<String> updateGender(@Field("gender") String gender);
-
-    /**
-     * 修改姓名
-     *
-     * @param name
-     * @return
-     */
-    @POST("partner/User/updateName")
-    @FormUrlEncoded
-    Observable<String> updateName(@Field("name") String name);
 
     /**
      * 修改头像
      * @param avatar 头像相对地址
      * @return
      */
-    @POST("partner/User/updateAvatar")
+    @POST("customer/me/updateinfo")
     @FormUrlEncoded
     Observable<String> updateAvatar(@Field("avatar") String avatar);
 
-    /**
-     * 更新token
-     * @param token
-     * @return
-     */
-    @POST("partner/User/updateToken")
-    @FormUrlEncoded
-    Observable<UserResponseBody.TokenBean> updateToken(@Field("refresh_token") String token);
 
-
-    /**
-     * 退出登录
-     * @return
-     */
-    @GET("app/User/logout")
-    Observable<String> logout();
 
 }

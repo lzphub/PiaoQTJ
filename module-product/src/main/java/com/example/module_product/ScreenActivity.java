@@ -60,11 +60,11 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
-        serachImg = (ImageView) findViewById(R.id.serach_img);
-        spinner = (Spinner) findViewById(R.id.spinner);
-        pageProductRv = (RecyclerView) findViewById(R.id.page_product_rv);
+        backImg = findViewById(R.id.back_img);
+        titleText = findViewById(R.id.title_text);
+        serachImg = findViewById(R.id.serach_img);
+        spinner = findViewById(R.id.spinner);
+        pageProductRv = findViewById(R.id.page_product_rv);
     }
 
 
@@ -85,7 +85,7 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
         productScreenRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductListBean>() {
             @Override
             public void onItemClick(View v, int position, ProductListBean data) {
-                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",productListBeanList.get(position).getData().get(0).getUuid()).navigation();
+                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",productListBeanList.get(position).getData().get(0).getProduct_uuid()).navigation();
             }
         });
     }

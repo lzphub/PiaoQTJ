@@ -10,12 +10,20 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import api.UserServiceFactory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.common.sms.SmsCode;
+import cn.dankal.basiclib.pojo.CheckCode;
 import cn.dankal.basiclib.protocol.LoginProtocol;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.user.R;
+import cn.dankal.user.presenter.UserRegisterPresenter;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 import static cn.dankal.basiclib.protocol.LoginProtocol.REGISTERVECODE;
 
@@ -30,6 +38,9 @@ public class RegistrCodeActivity extends BaseActivity {
     private EditText etEmailNum;
     private View dividerPhone;
     private Button btNext;
+    private SmsCode smsCode;
+    private String type;
+    private TextView titleText;
 
     @Override
     protected int getLayoutId() {
@@ -39,25 +50,22 @@ public class RegistrCodeActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+        smsCode=new UserRegisterPresenter(this);
         String s=getResources().getString(R.string.DVerificationCode);
         tips.append(getIntent().getStringExtra("emailAccount")+s);
-        backImg.setOnClickListener(new View.OnClickListener() {
+        type=getIntent().getStringExtra("type");
+        if(type.equals("change_pwd")){
+            titleText.setText("忘记密码");
+        }
+        backImg.setOnClickListener(v -> finish());
+        getVeCode.setOnClickListener(v ->
+                smsCode.engGetCode(getIntent().getStringExtra("emailAccount"),getVeCode,type));
+        btNext.setOnClickListener(v -> UserServiceFactory.verifyCode(getIntent().getStringExtra("emailAccount"),type,etEmailNum.getText().toString().trim()).safeSubscribe(new AbstractDialogSubscriber<CheckCode>(this) {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onNext(CheckCode checkCode) {
+                ARouter.getInstance().build(LoginProtocol.SETPWD).withString("type",type).withString("emailAccount",getIntent().getStringExtra("emailAccount")).navigation();
             }
-        });
-        getVeCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-        btNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(LoginProtocol.SETPWD).navigation();
-            }
-        });
+        }));
     }
 
     private void initView() {
@@ -68,5 +76,6 @@ public class RegistrCodeActivity extends BaseActivity {
         etEmailNum = (EditText) findViewById(R.id.et_email_num);
         dividerPhone = (View) findViewById(R.id.divider_phone);
         btNext = (Button) findViewById(R.id.bt_next);
+        titleText = (TextView) findViewById(R.id.title_text);
     }
 }

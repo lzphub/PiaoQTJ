@@ -11,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,8 @@ import cn.dankal.basiclib.base.activity.BaseStateActivity;
 import cn.dankal.basiclib.base.recyclerview.del.DeleteRecyclerView;
 import cn.dankal.basiclib.base.recyclerview.del.OnDelItemClickListener;
 import cn.dankal.basiclib.bean.MyRequestBean;
+import cn.dankal.basiclib.bean.RequestDataBean;
+import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.widget.swipetoloadlayout.OnLoadMoreListener;
 import cn.dankal.basiclib.widget.swipetoloadlayout.OnRefreshListener;
@@ -67,18 +71,29 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
         }
         tabViewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),mFragments,tab_titel2));
         tabTitle.setViewPager(tabViewpager);
+        tabTitle.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+
+            }
+        });
 
         swipeTarget.setLayoutManager(new LinearLayoutManager(this));
         swipeTarget.setAdapter(myRequestRvAdapter);
         swipeTarget.setDelOnItemClickListener(new OnDelItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                ToastUtils.showShort(position + " 2");
+                ARouter.getInstance().build(MyProtocol.MYREQUESTDETA).withString("demand_id",myRequestRvAdapter.getDatas().get(position).getDemand_id()).navigation();
             }
 
             @Override
             public void onDeleteClick(int position) {
-                myRequestPresenter.delete(myRequestBeans.get(position).getDemand_id());
+                myRequestPresenter.delete(myRequestRvAdapter.getDatas().get(position).getDemand_id());
             }
         });
         swipeToloadLayout.setOnLoadMoreListener(() -> {
@@ -146,6 +161,11 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
         }
         myRequestBeans.addAll(myRequestBean.getData());
         myRequestRvAdapter.updateData(myRequestBeans);
+    }
+
+    @Override
+    public void getRequestDataSuccess(RequestDataBean databean) {
+
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {

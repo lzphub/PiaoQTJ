@@ -15,10 +15,12 @@ import java.net.URI;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import api.MyServiceFactory;
 import api.UserServiceFactory;
 import cn.dankal.basiclib.adapter.ServiceRvAdapter;
 import cn.dankal.basiclib.base.BaseView;
 import cn.dankal.basiclib.base.callback.DKCallBack;
+import cn.dankal.basiclib.bean.PersonalData_EnBean;
 import cn.dankal.basiclib.bean.ServiceTextBean;
 import cn.dankal.basiclib.common.camera.CamerImageBean;
 import cn.dankal.basiclib.common.camera.CameraHandler;
@@ -72,15 +74,15 @@ public class ChangeAvatarImpl implements ChangeAvatar {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data, PersonalData_EnBean personalData_enBean) {
         switch (requestCode) {
             case RequestCodes.TAKE_PHOTO:
                 Uri takePath = CamerImageBean.getInstance().getPath();
-                uploadPic(takePath);
+                uploadPic(takePath ,personalData_enBean);
                 break;
             case RequestCodes.PICK_PHOTO:
                 Uri pickpath = Uri.parse(ImagePathUtil.getImageAbsolutePath(context, data.getData()));
-                uploadPic(pickpath);
+                uploadPic(pickpath ,personalData_enBean);
                 break;
             default:
         }
@@ -109,7 +111,7 @@ public class ChangeAvatarImpl implements ChangeAvatar {
 
 
 
-    private void uploadPic(Uri photoUris) {
+    private void uploadPic(Uri photoUris, PersonalData_EnBean personalData_enBean) {
         final File tempFile = new File(photoUris.getPath());
 
         TipDialog.Builder builder = new TipDialog.Builder(context);
@@ -120,42 +122,43 @@ public class ChangeAvatarImpl implements ChangeAvatar {
 
         boolean b = UriUtils.getPath(context, photoUris) == null;
 
-//        new UploadHelper().uploadQiniuPic(new QiniuUpload.UploadListener() {
-//            @Override
-//            public void onSucess(String localPath, String key) {
-//                loadingDialog.dismiss();
-//                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
-//                        .setTipWord("上传成功,请等待审核")
-//                        .create(2000);
-//                dialog.show();
-//                dialog.dismiss();
-//
-////                String path = PicUtil.getUrl(key);
-////                Uri uri = Uri.fromFile(tempFile);
-////                getIvHead().setImageURI(uri);
-//                setAvatar(key);
-//            }
-//
-//            @Override
-//            public void onUpload(double percent) {
-//                DecimalFormat df = new DecimalFormat("#0.00");
-//                builder.setTipWord(df.format(percent * 100) + "%").showProgress();
-//            }
-//
-//            @Override
-//            public void onError(String string) {
-//                ToastUtils.showLong(string);
-//                loadingDialog.dismiss();
-//                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL)
-//                        .setTipWord("上传失败")
-//                        .create(2000);
-//                dialog.show();
-//                dialog.dismiss();
-//            }
-//        }, b ? photoUris.getPath() : UriUtils.getPath(context, photoUris));
+        new UploadHelper().uploadQiniuPic(new QiniuUpload.UploadListener() {
+            @Override
+            public void onSucess(String localPath, String key) {
+                loadingDialog.dismiss();
+                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
+                        .setTipWord("上传成功,请等待审核")
+                        .create(2000);
+                dialog.show();
+                dialog.dismiss();
 
-        Uri uri = Uri.fromFile(tempFile);
-        mIvHead.setImageURI(uri);
+//                String path = PicUtil.getUrl(key);
+//                Uri uri = Uri.fromFile(tempFile);
+//                getIvHead().setImageURI(uri);
+                personalData_enBean.setAvatar(key);
+                setAvatar(personalData_enBean);
+            }
+
+            @Override
+            public void onUpload(double percent) {
+                DecimalFormat df = new DecimalFormat("#0.00");
+                builder.setTipWord(df.format(percent * 100) + "%").showProgress();
+            }
+
+            @Override
+            public void onError(String string) {
+                ToastUtils.showLong(string);
+                loadingDialog.dismiss();
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL)
+                        .setTipWord("上传失败")
+                        .create(2000);
+                dialog.show();
+                dialog.dismiss();
+            }
+        }, b ? photoUris.getPath() : UriUtils.getPath(context, photoUris));
+
+//        Uri uri = Uri.fromFile(tempFile);
+//        mIvHead.setImageURI(uri);
     }
 
 
@@ -164,18 +167,13 @@ public class ChangeAvatarImpl implements ChangeAvatar {
         this.mIvHead = mIvHead;
     }
 
-    private void setAvatar(String path) {
-        UserServiceFactory.updateAvatar(path)
-                .subscribe(new AbstractDialogSubscriber<String>(view) {
-                    @Override
-                    public void onNext(String s) {
-                        ToastUtils.showShort("上传成功");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                    }
-                });
+    private void setAvatar(PersonalData_EnBean personalData_enBean) {
+        MyServiceFactory.updateInfo(personalData_enBean).safeSubscribe(new AbstractDialogSubscriber<String>(view) {
+            @Override
+            public void onNext(String s) {
+                PicUtils.loadAvatar(personalData_enBean.getAvatar(),mIvHead);
+                ToastUtils.showShort("Uploaded successfully");
+            }
+        });
     }
 }

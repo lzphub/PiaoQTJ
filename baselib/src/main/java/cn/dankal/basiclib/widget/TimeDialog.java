@@ -43,6 +43,7 @@ public class TimeDialog extends DialogFragment {
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        START_YEAR=calendar.get(Calendar.YEAR);
         initDateTimePicker(year, month, day);
         return view;
     }

@@ -2,13 +2,13 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlin-kapt'
 
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
-    }
-}
+//kapt {
+//    arguments {
+//        arg("AROUTER_MODULE_NAME", project.getName())
+//    }
+//}
 
 
 android {
@@ -89,10 +89,10 @@ dependencies {
     annotationProcessor project(':component-compiler')
     annotationProcessor deps.alibaba.arouter_compiler
 
-    kapt deps.glide.compiler
-    kapt deps.butterknife.butterknife_compiler
-    kapt project(':component-compiler')
-    kapt deps.alibaba.arouter_compiler
+//    kapt deps.glide.compiler
+//    kapt deps.butterknife.butterknife_compiler
+//    kapt project(':component-compiler')
+//    kapt deps.alibaba.arouter_compiler
 
     //mta 3.4.7 稳定版
     //mid jar包 必须添加

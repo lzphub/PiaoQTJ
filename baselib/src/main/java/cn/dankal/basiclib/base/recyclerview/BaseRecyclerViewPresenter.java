@@ -7,16 +7,16 @@ import android.support.annotation.NonNull;
  */
 public abstract class BaseRecyclerViewPresenter<M> implements BaseRecyclerViewContract.RecyclerViewPresenter {
 
-    public BaseRecyclerViewContract.RecyclerViewView<M> view;
+    public BaseRecyclerViewContract.RecyclerViewView<M> mView;
 
     @Override
     public void attachView(@NonNull BaseRecyclerViewContract.RecyclerViewView view) {
-        this.view = view;
+        this.mView = view;
     }
 
     @Override
     public void detachView() {
-        view = null;
+        mView = null;
     }
 
 

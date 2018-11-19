@@ -1,5 +1,6 @@
 package cn.dankal.home.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,11 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.zhihu.matisse.Matisse;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import api.HomeServiceFactory;
@@ -28,14 +33,21 @@ import cn.dankal.basiclib.adapter.ImageRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.callback.DKCallBackObject;
 import cn.dankal.basiclib.bean.PostRequestBean;
+import cn.dankal.basiclib.common.qiniu.QiniuUpload;
+import cn.dankal.basiclib.common.qiniu.UploadHelper;
+import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.ToastUtils;
+import cn.dankal.basiclib.util.UriUtils;
 import cn.dankal.basiclib.util.image.CheckImage;
+import cn.dankal.basiclib.util.image.ImagePathUtil;
 import cn.dankal.basiclib.widget.TimeDialog;
+import cn.dankal.basiclib.widget.TipDialog;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 import static cn.dankal.basiclib.protocol.HomeProtocol.POSTREQUEST;
+import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
 
 @Route(path = POSTREQUEST)
 public class PostRequstActivity extends BaseActivity {
@@ -58,6 +70,7 @@ public class PostRequstActivity extends BaseActivity {
     private int size = 3;
     private List<Uri> result = new ArrayList<>();
     private ImageRvAdapter imageRvAdapter;
+    private static List<String> images=new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -87,7 +100,13 @@ public class PostRequstActivity extends BaseActivity {
             if (hasFocus) {
                 TimeDialog timeDialog = new TimeDialog();
                 timeDialog.show(getSupportFragmentManager(), "timeDialog");
-                timeDialog.setListener(time -> periodStart.setText(time));
+                timeDialog.setListener(time -> {
+                    if(getTimeCompareSize(periodStart.getText().toString(),time)==1){
+                        ToastUtils.showShort("The end time should not be earlier than the start time");
+                    }else{
+                        periodEnd.setText(time);
+                    }
+                });
             }
         });
         periodStart.setOnClickListener(v -> {
@@ -98,65 +117,89 @@ public class PostRequstActivity extends BaseActivity {
         periodEnd.setOnClickListener(v -> {
             TimeDialog timeDialog = new TimeDialog();
             timeDialog.show(getSupportFragmentManager(), "timeDialog");
-            timeDialog.setListener(time -> periodEnd.setText(time));
+            timeDialog.setListener(time -> {
+                        if(getTimeCompareSize(periodStart.getText().toString(),time)==1){
+                            ToastUtils.showShort("The end time should not be earlier than the start time");
+                        }else{
+                            periodEnd.setText(time);
+                        }
+                    });
         });
 
-        addImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CheckImage.takePhotoPicker(PostRequstActivity.this, size - result.size());
-            }
-        });
+        addImg.setOnClickListener(v -> CheckImage.takePhotoPicker(PostRequstActivity.this, size - result.size()));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         addImgRv.setLayoutManager(linearLayoutManager);
 
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title = titleEt.getText().toString().trim();
-                String content = contentEt.getText().toString().trim();
-                String start_price = priceMin.getText().toString().trim();
-                String end_price = priceMax.getText().toString().trim();
-                String start_date = periodStart.getText().toString().trim();
-                String end_date = periodEnd.getText().toString().trim();
-                if (title == null) {
-                    ToastUtils.showShort("Title is mandatory");
-                } else if (content.length() < 15) {
-                    ToastUtils.showShort("The length of description cannot be less than 15");
-                } else {
-                    PostRequestBean postRequestBean = new PostRequestBean();
-                    postRequestBean.setTitle(title);
-                    postRequestBean.setDescription(content);
-                    postRequestBean.setStart_date(start_date);
-                    postRequestBean.setEnd_date(end_date);
-                    postRequestBean.setStart_price(start_price);
-                    postRequestBean.setEnd_price(end_price);
-                    HomeServiceFactory.postRequest(postRequestBean).safeSubscribe(new Observer<String>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(String s) {
-                            ToastUtils.showShort("Release success");
-                            finish();
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            ToastUtils.showShort(e + "");
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    });
-                }
-            }
+        submitBtn.setOnClickListener(v -> {
+            post();
         });
+    }
+
+    private void post(){
+        String title = titleEt.getText().toString().trim();
+        String content = contentEt.getText().toString().trim();
+        String start_price = priceMin.getText().toString().trim();
+        String end_price = priceMax.getText().toString().trim();
+        String start_date = periodStart.getText().toString().trim();
+        String end_date = periodEnd.getText().toString().trim();
+        if (title == null) {
+            ToastUtils.showShort("Title is mandatory");
+        } else if (content.length() < 15) {
+            ToastUtils.showShort("The length of description cannot be less than 15");
+        } else {
+            PostRequestBean postRequestBean = new PostRequestBean();
+            postRequestBean.setTitle(title);
+            postRequestBean.setDescription(content);
+            postRequestBean.setStart_date(start_date);
+            postRequestBean.setEnd_date(end_date);
+            postRequestBean.setStart_price(start_price);
+            postRequestBean.setEnd_price(end_price);
+            postRequestBean.setImages(images);
+            HomeServiceFactory.postRequest(postRequestBean).safeSubscribe(new Observer<String>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+
+                }
+
+                @Override
+                public void onNext(String s) {
+                    ToastUtils.showShort("Release success");
+                    finish();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    ToastUtils.showShort(e + "");
+                }
+
+                @Override
+                public void onComplete() {
+
+                }
+            });
+        }
+    }
+
+    public static int getTimeCompareSize(String startTime, String endTime) {
+        int i = 0;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//年-月-日
+        try {
+            Date date1 = dateFormat.parse(startTime);//开始时间
+            Date date2 = dateFormat.parse(endTime);//结束时间
+            // 1 结束时间小于开始时间 2 开始时间与结束时间相同 3 结束时间大于开始时间
+            if (date2.getTime() < date1.getTime()) {
+                i = 1;
+            } else if (date2.getTime() == date1.getTime()) {
+                i = 2;
+            } else if (date2.getTime() > date1.getTime()) {
+                //正常情况下的逻辑操作.
+                i = 3;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return i;
     }
 
     @Override
@@ -170,15 +213,17 @@ public class PostRequstActivity extends BaseActivity {
                 if (result.size() == size) {
                     addImg.setVisibility(View.INVISIBLE);
                 }
+                images=new ArrayList<>();
+                for(int i=0;i<result.size();i++){
+                    uploadQiniu(result.get(i),this);
+                }
                 imageRvAdapter = new ImageRvAdapter(this, result);
                 addImgRv.setAdapter(imageRvAdapter);
-                imageRvAdapter.setOnClickListener(new ImageRvAdapter.OnClickListener() {
-                    @Override
-                    public void OnClick(int pos) {
-                        result.remove(pos);
-                        imageRvAdapter.UpData(result);
-                        addImg.setVisibility(View.VISIBLE);
-                    }
+                imageRvAdapter.setOnClickListener(pos -> {
+                    result.remove(pos);
+                    images.remove(pos);
+                    imageRvAdapter.UpData(result);
+                    addImg.setVisibility(View.VISIBLE);
                 });
             }
         }
@@ -201,5 +246,50 @@ public class PostRequstActivity extends BaseActivity {
         priceMaxLl = findViewById(R.id.price_max_ll);
         priceMax = findViewById(R.id.price_max);
         contentEt = findViewById(R.id.content_et);
+    }
+
+    //图片上传至七牛
+    public static void uploadQiniu(Uri uri,Context context){
+        final String[] path = {null};
+        TipDialog loadingDialog;
+//        final File tempFile = new File(uri.getPath());
+
+        TipDialog.Builder builder = new TipDialog.Builder(context);
+        loadingDialog = builder
+                .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("uploading").create();
+        loadingDialog.show();
+
+        boolean b = UriUtils.getPath(context, uri) == null;
+
+        new UploadHelper().uploadQiniuPic(new QiniuUpload.UploadListener() {
+            @Override
+            public void onSucess(String localPath, String key) {
+                loadingDialog.dismiss();
+                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
+                        .setTipWord("Uploaded successfully")
+                        .create(2000);
+                dialog.show();
+                dialog.dismiss();
+                images.add(key);
+            }
+
+            @Override
+            public void onUpload(double percent) {
+                DecimalFormat df = new DecimalFormat("#0.00");
+                builder.setTipWord(df.format(percent * 100) + "%").showProgress();
+            }
+
+            @Override
+            public void onError(String string) {
+                ToastUtils.showLong(string);
+                loadingDialog.dismiss();
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL)
+                        .setTipWord("上传失败")
+                        .create(2000);
+                dialog.show();
+                dialog.dismiss();
+            }
+        }, b ? uri.getPath() : UriUtils.getPath(context, uri));
     }
 }

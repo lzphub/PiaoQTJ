@@ -63,6 +63,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/swipe_toload_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

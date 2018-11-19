@@ -67,12 +67,12 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
         swipeTarget.setDelOnItemClickListener(new OnDelItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",dataBeanList.get(position).getUuid()).navigation();
+                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",dataBeanList.get(position).getProduct_uuid()).navigation();
             }
 
             @Override
             public void onDeleteClick(int position) {
-                myFavoritePresenter.delete(dataBeanList.get(position).getUuid());
+                myFavoritePresenter.delete(dataBeanList.get(position).getProduct_uuid());
             }
         });
 

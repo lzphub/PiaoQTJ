@@ -13,8 +13,9 @@ import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.MyRequestBean;
 import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.image.PicUtils;
 
-public class InternalImgRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.urli> {
+public class InternalImgRvAdapter extends BaseRecyclerViewAdapter<String> {
 
 
     @Override
@@ -27,7 +28,7 @@ public class InternalImgRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.
         return new MyViewHolder(rootView);
     }
 
-    class MyViewHolder extends BaseRecyclerViewHolder<MyRequestBean.urli> {
+    class MyViewHolder extends BaseRecyclerViewHolder<String> {
         @BindView(R2.id.content_img)
         ImageView contentImg;
 
@@ -37,8 +38,8 @@ public class InternalImgRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.
 
 
         @Override
-        public void onBindData(MyRequestBean.urli url, int position) {
-            Glide.with(context).load(url.getImgurl()).into(contentImg);
+        public void onBindData(String url, int position) {
+            PicUtils.loadNormal(url,contentImg);
         }
     }
 }

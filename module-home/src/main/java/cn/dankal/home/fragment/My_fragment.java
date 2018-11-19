@@ -1,6 +1,11 @@
 package cn.dankal.home.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ImageView;
 
@@ -12,10 +17,12 @@ import cn.dankal.address.R;
 import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
+import cn.dankal.basiclib.bean.PersonalData_EngineerBean;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
+import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.basiclib.widget.CircleImageView;
 
 public class My_fragment extends BaseFragment {
@@ -59,6 +66,8 @@ public class My_fragment extends BaseFragment {
             menuText5.setText("SET");
             iconImg2.setImageResource(R.mipmap.ic_my_purchase);
             myPostion.setVisibility(View.INVISIBLE);
+        }else{
+            getEngineerData();
         }
 
         Glide.with(getContext())
@@ -124,8 +133,29 @@ public class My_fragment extends BaseFragment {
             @Override
             public void onNext(PersonalData_EnBean personalData_enBean) {
                 myName.setText(personalData_enBean.getName());
+                PicUtils.loadAvatar(personalData_enBean.getAvatar(),headPic);
             }
         });
 //        myName.setText(DKUserManager.getUserInfo().getName());
+    }
+    private void getEngineerData(){
+        MyServiceFactory.getEngineerData().safeSubscribe(new AbstractDialogSubscriber<PersonalData_EngineerBean>(this) {
+            @Override
+            public void onNext(PersonalData_EngineerBean personalData_engineerBean) {
+                myName.setText(personalData_engineerBean.getName());
+                PicUtils.loadAvatar(personalData_engineerBean.getAvatar(),headPic);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(type.equals("user")){
+            getData();
+        }else{
+            getEngineerData();
+        }
     }
 }

@@ -70,6 +70,8 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
     @BindView(R2.id.product_list)
     RecyclerView productList;
     private List<ProductTabBean> productTabBeanList=new ArrayList<>();
+    private ProductClassifyBean productClassBean;
+    private ProductTabRvAdapter productTabRvAdapter;
     private ProductClassifyPresenter productClassifyPresenter=ProductClassifyPresenter.getPresenter();
 
     @Override
@@ -91,6 +93,7 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("LIGHT BULBS");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(2).getChildren());
                 }
             }
         });
@@ -99,6 +102,7 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("LED BULBS");
+                    productTabRvAdapter.updateData(productClassBean.getRoot().get(1).getChildren());
                 }
             }
         });
@@ -107,6 +111,7 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("LIGHT FIXTURES");
+                    productTabRvAdapter.updateData(productClassBean.getRoot().get(0).getChildren());
                 }
             }
         });
@@ -115,6 +120,7 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("CHRISTMAS");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(3).getChildren());
                 }
             }
         });
@@ -123,6 +129,7 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("DRIVERS AND CONTROLLER");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(4).getChildren());
                 }
             }
         });
@@ -131,6 +138,7 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("ELECTRICAL");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(5).getChildren());
                 }
             }
         });
@@ -139,6 +147,7 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("ROPE AND TAPE LIGHT");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(6).getChildren());
                 }
             }
         });
@@ -147,6 +156,7 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("EXIT AND EMERGENCY");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(7).getChildren());
                 }
             }
         });
@@ -155,6 +165,7 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     li2stTitle.setText("SPECIALTY ITEMS");
+//                    productTabRvAdapter.updateData(productClassBean.getRoot().get(8).getChildren());
                 }
             }
         });
@@ -178,7 +189,8 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
     @Override
     public void getDataSuccess(ProductClassifyBean productClassifyBean) {
         productList.setLayoutManager(new GridLayoutManager(getContext(),2));
-        ProductTabRvAdapter productTabRvAdapter=new ProductTabRvAdapter();
+        productTabRvAdapter=new ProductTabRvAdapter();
+        productClassBean=productClassifyBean;
         productTabRvAdapter.addMore(productClassifyBean.getRoot().get(0).getChildren());
         productList.setAdapter(productTabRvAdapter);
         productTabRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductClassifyBean.RootBean.ChildrenBean>() {

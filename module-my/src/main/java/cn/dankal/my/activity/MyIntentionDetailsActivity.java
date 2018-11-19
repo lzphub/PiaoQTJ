@@ -15,6 +15,7 @@ import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.IntentionDateBean;
 import cn.dankal.basiclib.protocol.ProductProtocol;
 import cn.dankal.my.presenter.IntentionDetailsContact;
+import cn.dankal.my.presenter.MyIntentionDetailsPresenter;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYINTENTIONDETA;
@@ -33,6 +34,7 @@ public class MyIntentionDetailsActivity extends BaseActivity implements Intentio
     private TextView intentionDeta;
     private RelativeLayout intentionInfo;
     private String intention_id;
+    private MyIntentionDetailsPresenter myIntentionDetailsPresenter=MyIntentionDetailsPresenter.getPSPresenter();
 
     @Override
     protected int getLayoutId() {
@@ -42,6 +44,9 @@ public class MyIntentionDetailsActivity extends BaseActivity implements Intentio
     @Override
     protected void initComponents() {
         initView();
+        intention_id=getIntent().getStringExtra("intention_id");
+        myIntentionDetailsPresenter.attachView(this);
+        myIntentionDetailsPresenter.getData(intention_id);
         backImg.setOnClickListener(v -> finish());
         intentionInfo.setOnClickListener(new View.OnClickListener() {
             @Override

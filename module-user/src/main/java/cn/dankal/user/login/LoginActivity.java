@@ -44,12 +44,22 @@ public class LoginActivity extends BaseActivity {
     protected void initComponents() {
         initView();
         //自动登录
-        if(DKUserManager.isLogined()){
-            refreshToken();
-            ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
-            SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "user");
-            finish();
+        if(SharedPreferencesUtils.getString(this,"identity","user").equals("user")){
+            if(DKUserManager.isLogined()){
+                refreshToken();
+                ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
+                SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "user");
+                finish();
+            }
+        }else{
+            if(DKUserManager.isLogined()){
+                engRefreshToken();
+                ARouter.getInstance().build(HomeProtocol.HOMEACTIVITY).navigation();
+                SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "enterprise");
+                finish();
+            }
         }
+
         enterpriseLogin.setOnClickListener(v -> {
             ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
             finish();
@@ -96,6 +106,14 @@ public class LoginActivity extends BaseActivity {
      */
     private void refreshToken(){
         UserServiceFactory.refreshtoken(DKUserManager.getUserToken().getRefreshToken()).safeSubscribe(new AbstractDialogSubscriber<UserResponseBody.TokenBean>(this) {
+            @Override
+            public void onNext(UserResponseBody.TokenBean tokenBean) {
+                DKUserManager.updateUserToken(tokenBean);
+            }
+        });
+    }
+    private void engRefreshToken(){
+        UserServiceFactory.engineerRefreshtoken(DKUserManager.getUserToken().getRefreshToken()).safeSubscribe(new AbstractDialogSubscriber<UserResponseBody.TokenBean>(this) {
             @Override
             public void onNext(UserResponseBody.TokenBean tokenBean) {
                 DKUserManager.updateUserToken(tokenBean);

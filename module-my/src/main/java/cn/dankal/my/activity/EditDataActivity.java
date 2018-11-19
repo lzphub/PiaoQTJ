@@ -35,7 +35,7 @@ public class EditDataActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        type=getIntent().getIntExtra("type",1);
+        type=getIntent().getIntExtra("datatype",1);
         if(type==2){
             etName.setHint(R.string.hiht);
         }
