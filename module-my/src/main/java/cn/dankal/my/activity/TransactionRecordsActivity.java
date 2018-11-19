@@ -30,16 +30,11 @@ public class TransactionRecordsActivity extends BaseRvActivity<String> {
     @Override
     public void initComponents() {
         initView();
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        backImg.setOnClickListener(v -> finish());
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
+        backImg = findViewById(R.id.back_img);
     }
 
     @Override

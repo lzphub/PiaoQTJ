@@ -6,6 +6,7 @@ import cn.dankal.basiclib.bean.AboutUsBean;
 import cn.dankal.basiclib.bean.AddressBean;
 import cn.dankal.basiclib.bean.ComProbBean;
 import cn.dankal.basiclib.bean.IntentionDateBean;
+import cn.dankal.basiclib.bean.MyEarBean;
 import cn.dankal.basiclib.bean.MyIntentionBean;
 import cn.dankal.basiclib.bean.MyRequestBean;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
@@ -121,4 +122,10 @@ public interface MyService {
      */
     @GET("common/getGeoInfo")
     Observable<AddressBean> getGeoInfo();
+
+    /**
+     * 我的收益
+     */
+    @GET("engineer/myprofit")
+    Observable<MyEarBean> getMyEar();
 }
