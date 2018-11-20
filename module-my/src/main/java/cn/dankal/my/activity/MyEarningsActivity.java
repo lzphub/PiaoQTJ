@@ -50,6 +50,7 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
     private MyEarAdapter myEarAdapter;
     private MyEar2Adapter myEar2Adapter;
     private MyEarPersenter myEarPersenter=MyEarPersenter.getPersenter();
+    private int issetpwd;
 
     //提现门槛
     public static double threshold = 0;
@@ -83,7 +84,7 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
         withdrawalLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (true) {
+                if (issetpwd==1) {
                     ARouter.getInstance().build(MyProtocol.WITHDRAWAL).withString("balance", balanceText.getText().toString().trim().substring(1, balanceText.getText().toString().trim().length() - 1)).navigation();
                 } else {
                     GenDialog.CustomBuilder customBuilder = new GenDialog.CustomBuilder(MyEarningsActivity.this);
@@ -101,6 +102,7 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
                         @Override
                         public void onClick(View v) {
                             dialog1.dismiss();
+
                             ARouter.getInstance().build(MyProtocol.SETWITHPEDCODE).withInt("type", ResultCode.myEarCode).navigation();
                         }
                     });
@@ -111,6 +113,11 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
         });
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        myEarPersenter.getData();
+    }
 
     private void initView() {
         backImg = (ImageView) findViewById(R.id.back_img);
@@ -127,7 +134,14 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
     public void getDataSuccess(MyEarBean myEarBean) {
         balanceText.setText("$" + myEarBean.getSelf().getBalance());
         rankingText.setText(myEarBean.getSelf().getRank()+"");
+        issetpwd=myEarBean.getSelf().getHas_withdrawal_pwd();
         MyEarBean.ChartBean bean;
+        if(myEarBeansTop3!=null){
+            myEarBeansTop3.clear();
+        }
+        if(myEarBeans4to10!=null){
+            myEarBeans4to10.clear();
+        }
         for (int i = 0; i < resize(myEarBean); i++) {
             bean = new MyEarBean.ChartBean();
             bean = myEarBean.getChart().get(i);

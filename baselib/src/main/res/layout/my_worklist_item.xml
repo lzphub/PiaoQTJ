@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="157dp"
+    android:layout_marginBottom="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="工单状态"
+        android:textColor="@color/color33"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="工单已认领，审核中"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/color14"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="8dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorE5"
+        android:layout_below="@id/status_text"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="23dp"
+        android:layout_marginLeft="23dp"/>
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="title"
+        android:textColor="@color/color33"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_below="@id/status_text"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginRight="23dp"/>
+
+    <TextView
+        android:id="@+id/content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="content"
+        android:textSize="13sp"
+        android:textColor="@color/color66"
+        android:layout_below="@id/title_tv"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginRight="23dp"
+        android:maxLines="2"
+        android:ellipsize="end"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorE5"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="23dp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginBottom="43dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="预计价格"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="23dp"
+        android:layout_marginBottom="13dp"
+        android:textColor="@color/color33"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/price_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$200000~200001"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="23dp"
+        android:layout_marginBottom="12dp"
+        android:textSize="15sp"
+        android:textColor="@color/color528e1a"
+        android:textStyle="bold"/>
+
+</RelativeLayout>

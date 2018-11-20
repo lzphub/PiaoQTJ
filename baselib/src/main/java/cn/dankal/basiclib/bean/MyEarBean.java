@@ -44,6 +44,15 @@ public class MyEarBean {
         private String balance;
         private String total_commission;
         private int rank;
+        private int has_withdrawal_pwd;
+
+        public int getHas_withdrawal_pwd() {
+            return has_withdrawal_pwd;
+        }
+
+        public void setHas_withdrawal_pwd(int has_withdrawal_pwd) {
+            this.has_withdrawal_pwd = has_withdrawal_pwd;
+        }
 
         public String getUuid() {
             return uuid;

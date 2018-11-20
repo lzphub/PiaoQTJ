@@ -15,10 +15,13 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import api.MyServiceFactory;
 import cn.dankal.basiclib.ResultCode;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.ActivityUtils;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.widget.GenDialog;
 import cn.dankal.setting.R;
 
@@ -34,6 +37,8 @@ public class SetWithdaPwdActivity extends BaseActivity {
     private android.widget.TextView passwd;
     private android.widget.EditText etPasswd;
     private android.widget.Button btNext;
+    private String email;
+    private int code;
 
     @Override
     protected int getLayoutId() {
@@ -43,7 +48,8 @@ public class SetWithdaPwdActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        int code=getIntent().getIntExtra("type",0);
+        code=getIntent().getIntExtra("type",0);
+        email=getIntent().getStringExtra("email");
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +59,20 @@ public class SetWithdaPwdActivity extends BaseActivity {
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())){
+                    setPwd(etPasswd.getText().toString().trim());
+                }else{
+                    ToastUtils.showShort("两次输入不一致");
+                }
+
+            }
+        });
+    }
+
+    private void setPwd(String pwd){
+        MyServiceFactory.setWithPwd(pwd).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
+            @Override
+            public void onNext(String s) {
                 GenDialog.CustomBuilder2 customBuilder2 = new GenDialog.CustomBuilder2(SetWithdaPwdActivity.this);
                 customBuilder2.setContent(R.layout.finish_dialog);
                 Dialog dialog1 = customBuilder2.create();

@@ -4,6 +4,7 @@ package cn.dankal.basiclib.api;
 import cn.dankal.annotations.ApiFactory;
 import cn.dankal.basiclib.bean.AboutUsBean;
 import cn.dankal.basiclib.bean.AddressBean;
+import cn.dankal.basiclib.bean.BankCardListBean;
 import cn.dankal.basiclib.bean.ComProbBean;
 import cn.dankal.basiclib.bean.IntentionDateBean;
 import cn.dankal.basiclib.bean.MyEarBean;
@@ -128,4 +129,43 @@ public interface MyService {
      */
     @GET("engineer/myprofit")
     Observable<MyEarBean> getMyEar();
+
+    /**
+     * 绑定银行卡获取验证码
+     */
+    @GET("engineer/myprofit/getcode")
+    Observable<String> bankCardCode(@Query("mobile") String phone);
+
+    /**
+     * 绑定银行卡
+     */
+    @POST("engineer/myprofit/addbankcard")
+    @FormUrlEncoded
+    Observable<String> bindBankCard(@Field("card_number")String card_number,@Field("cardholder")String cardholder,@Field("id_card_number")String id_card_number,@Field("reserved_mobile")String reserved_mobile,@Field("bank_name")String bank_name,@Field("code")String code);
+
+    /**
+     * 银行卡列表
+     */
+    @GET("engineer/myprofit/getbankcardlist")
+    Observable<BankCardListBean> getBankCardList();
+
+    /**
+     * 删除银行卡
+     */
+    @DELETE("engineer/myprofit/deletebankcard/{bank_card_number}")
+    Observable<String> deletBankCard(@Path("bank_card_number")String bank_card_number);
+
+    /**
+     * 设置支付密码
+     */
+    @POST("engineer/me/setwithdrawalpwd")
+    @FormUrlEncoded
+    Observable<String> setWithPwd(@Field("withdrawal_password")String withdrawal_password);
+
+    /**
+     * 提现
+     */
+    @POST("engineer/myprofit/withdrawal")
+    @FormUrlEncoded
+    Observable<String> withdrawal(@Field("withdrawal_password")String withdrawal_password,@Field("withdrawal_money")String withdrawal_money,@Field("bank_card_number")String bank_card_number);
 }

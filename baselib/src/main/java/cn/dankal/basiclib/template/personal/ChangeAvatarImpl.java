@@ -21,6 +21,7 @@ import cn.dankal.basiclib.adapter.ServiceRvAdapter;
 import cn.dankal.basiclib.base.BaseView;
 import cn.dankal.basiclib.base.callback.DKCallBack;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
+import cn.dankal.basiclib.bean.PersonalData_EngineerPostBean;
 import cn.dankal.basiclib.bean.ServiceTextBean;
 import cn.dankal.basiclib.common.camera.CamerImageBean;
 import cn.dankal.basiclib.common.camera.CameraHandler;
@@ -83,6 +84,21 @@ public class ChangeAvatarImpl implements ChangeAvatar {
             case RequestCodes.PICK_PHOTO:
                 Uri pickpath = Uri.parse(ImagePathUtil.getImageAbsolutePath(context, data.getData()));
                 uploadPic(pickpath ,personalData_enBean);
+                break;
+            default:
+        }
+    }
+
+    @Override
+    public void onActivityResult2(int requestCode, int resultCode, Intent data, PersonalData_EngineerPostBean personalData_engineerPostBean) {
+        switch (requestCode) {
+            case RequestCodes.TAKE_PHOTO:
+                Uri takePath = CamerImageBean.getInstance().getPath();
+                uploadPic2(takePath ,personalData_engineerPostBean);
+                break;
+            case RequestCodes.PICK_PHOTO:
+                Uri pickpath = Uri.parse(ImagePathUtil.getImageAbsolutePath(context, data.getData()));
+                uploadPic2(pickpath ,personalData_engineerPostBean);
                 break;
             default:
         }
@@ -161,6 +177,55 @@ public class ChangeAvatarImpl implements ChangeAvatar {
 //        mIvHead.setImageURI(uri);
     }
 
+    private void uploadPic2(Uri photoUris, PersonalData_EngineerPostBean personalData_engineerPostBean) {
+        final File tempFile = new File(photoUris.getPath());
+
+        TipDialog.Builder builder = new TipDialog.Builder(context);
+        loadingDialog = builder
+                .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在上传").create();
+        loadingDialog.show();
+
+        boolean b = UriUtils.getPath(context, photoUris) == null;
+
+        new UploadHelper().uploadQiniuPic(new QiniuUpload.UploadListener() {
+            @Override
+            public void onSucess(String localPath, String key) {
+                loadingDialog.dismiss();
+                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
+                        .setTipWord("上传成功,请等待审核")
+                        .create(2000);
+                dialog.show();
+                dialog.dismiss();
+
+//                String path = PicUtil.getUrl(key);
+//                Uri uri = Uri.fromFile(tempFile);
+//                getIvHead().setImageURI(uri);
+                personalData_engineerPostBean.setAvatar(key);
+                setAvatar2(personalData_engineerPostBean);
+            }
+
+            @Override
+            public void onUpload(double percent) {
+                DecimalFormat df = new DecimalFormat("#0.00");
+                builder.setTipWord(df.format(percent * 100) + "%").showProgress();
+            }
+
+            @Override
+            public void onError(String string) {
+                ToastUtils.showLong(string);
+                loadingDialog.dismiss();
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL)
+                        .setTipWord("上传失败")
+                        .create(2000);
+                dialog.show();
+                dialog.dismiss();
+            }
+        }, b ? photoUris.getPath() : UriUtils.getPath(context, photoUris));
+
+//        Uri uri = Uri.fromFile(tempFile);
+//        mIvHead.setImageURI(uri);
+    }
 
     @Override
     public void setIvHead(@NonNull ImageView mIvHead) {
@@ -173,6 +238,15 @@ public class ChangeAvatarImpl implements ChangeAvatar {
             public void onNext(String s) {
                 PicUtils.loadAvatar(personalData_enBean.getAvatar(),mIvHead);
                 ToastUtils.showShort("Uploaded successfully");
+            }
+        });
+    }
+    private void setAvatar2(PersonalData_EngineerPostBean personalData_engineerPostBean) {
+        MyServiceFactory.engineerUpdateInfo(personalData_engineerPostBean).safeSubscribe(new AbstractDialogSubscriber<String>(view) {
+            @Override
+            public void onNext(String s) {
+                PicUtils.loadAvatar(personalData_engineerPostBean.getAvatar(),mIvHead);
+                ToastUtils.showShort("上传成功");
             }
         });
     }

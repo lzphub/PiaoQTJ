@@ -59,6 +59,25 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="23dp"/>
+
+        <TextView
+            android:id="@+id/card_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/color3B"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/crad_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_name"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="4dp"
+            android:textSize="13sp"
+            android:textColor="@color/colorA8"/>
     </RelativeLayout>
 
     <View

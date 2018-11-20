@@ -36,7 +36,7 @@
 
     <com.flyco.tablayout.CommonTabLayout
         android:id="@+id/tab_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="38dp"
         android:layout_marginTop="14dp"
         app:layout_constraintTop_toBottomOf="@id/back_img"
@@ -45,7 +45,6 @@
         app:tl_indicator_height="2dp"
         app:tl_indicator_width="20dp"
         app:tl_tab_space_equal="true"
-        app:tl_tab_width="93dp"
         app:tl_textBold="BOTH"
         app:tl_textSelectColor="@color/color33"
         app:tl_textUnselectColor="@color/color99"
@@ -61,7 +60,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/tab_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:overScrollMode="never"
         app:layout_constraintTop_toBottomOf="@id/view" />
 

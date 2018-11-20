@@ -80,4 +80,9 @@ public class SmsCodeImpl implements SmsCode {
 
     }
 
+    @Override
+    public void bankCardCode(String phone, Button mBtCode, String type) {
+
+    }
+
 }

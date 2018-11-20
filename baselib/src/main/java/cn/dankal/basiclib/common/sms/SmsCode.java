@@ -14,4 +14,5 @@ public interface SmsCode {
     void sendCodeSuccess(Button mBtCode);
     void onDestory();
     void engGetCode(String phone, Button mBtCode, String type);
+    void bankCardCode(String phone, Button mBtCode, String type);
 }

@@ -1,11 +1,7 @@
 package cn.dankal.my.activity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,13 +10,6 @@ import android.widget.TextView;
 import com.aigestudio.wheelpicker.WheelPicker;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.yanzhenjie.permission.Action;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Permission;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +19,13 @@ import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.AddressBean;
 import cn.dankal.basiclib.bean.PersonalData_EngineerBean;
 import cn.dankal.basiclib.bean.PersonalData_EngineerPostBean;
+import cn.dankal.basiclib.common.camera.CameraHandler;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
-import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.template.personal.ChangeAvatar;
+import cn.dankal.basiclib.template.personal.ChangeAvatarImpl;
 import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.ToastUtils;
-import cn.dankal.basiclib.util.image.CheckImage;
-import cn.dankal.basiclib.util.image.MygildeEngine;
 import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.setting.R;
 
@@ -60,6 +49,7 @@ public class PersonalDataActivity extends BaseActivity {
     private List<String> province_list=new ArrayList<>(),city_list=new ArrayList<>();
     private int provinceCount=0,cityCount=0;
     private PersonalData_EngineerPostBean personalData_engineerPostBean=new PersonalData_EngineerPostBean();
+    private ChangeAvatar changeAvatar;
 
     @Override
     protected int getLayoutId() {
@@ -85,19 +75,29 @@ public class PersonalDataActivity extends BaseActivity {
         nameRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 1).navigation();
+                ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 1).withSerializable("data",personalData_engineerPostBean).navigation();
             }
         });
         skillsRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 2).navigation();
+                ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 2).withSerializable("data",personalData_engineerPostBean).navigation();
+            }
+        });
+        phoneRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 3).withSerializable("data",personalData_engineerPostBean).navigation();
             }
         });
         headPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckImage.takePhotoPicker(PersonalDataActivity.this, 1);
+                /**
+                 * 没有裁剪！！
+                 */
+                changeAvatar.checkPermission(new CameraHandler(PersonalDataActivity.this), null);
+
             }
         });
         addressRl.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +106,8 @@ public class PersonalDataActivity extends BaseActivity {
                 initAddressDialog();
             }
         });
+        changeAvatar = new ChangeAvatarImpl(this, this);
+        changeAvatar.setIvHead(headPic);
     }
 
     private void initView() {
@@ -229,8 +231,15 @@ public class PersonalDataActivity extends BaseActivity {
                 personalData_engineerPostBean.setCompetence(personalData_engineerBean.getCompetence());
                 personalData_engineerPostBean.setName(personalData_engineerBean.getName());
                 personalData_engineerPostBean.setAvatar(personalData_engineerBean.getAvatar());
+                personalData_engineerPostBean.setProvince(personalData_engineerBean.getArea());
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getEngineerData();
     }
 
     //更新个人信息
@@ -246,10 +255,8 @@ public class PersonalDataActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2305) {
-            if (data != null) {
-                List<Uri> result = Matisse.obtainResult(data);
-            }
+        if (resultCode == RESULT_OK) {
+            changeAvatar.onActivityResult2(requestCode, resultCode, data, personalData_engineerPostBean);
         }
     }
 }

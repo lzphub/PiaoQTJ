@@ -44,37 +44,12 @@ public class DemandListActivity extends BaseRvActivity<DemandListbean> {
         return R.layout.activity_demand_list;
     }
 
-//    @Override
-//    public void initComponents() {
-//        initView();
-//        backImg.setOnClickListener(v -> finish());
-//        for (int i = 0; i < 10; i++) {
-//            DemandListbean demandListbean = new DemandListbean();
-//            demandListbeanList.add(demandListbean);
-//        }
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        demandList.setLayoutManager(linearLayoutManager);
-//        demandRvAdapter.addMore(demandListbeanList);
-//        demandList.setAdapter(demandRvAdapter);
-//        demandRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<DemandListbean>() {
-//            @Override
-//            public void onItemClick(View v, int position, DemandListbean data) {
-//                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).navigation();
-//            }
-//        });
-//        demandList.setOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                if(!demandList.canScrollVertically(1)){
-//                    demandRvAdapter.addMore(demandListbeanList);
-//                }
-//                Logger.d("rec",demandList.canScrollVertically(1)+"");
-//
-//            }
-//        });
-//    }
+    @Override
+    public void initComponents() {
+        super.initComponents();
+        initView();
+        backImg.setOnClickListener(v -> finish());
+    }
 
     @Override
     public BaseRecyclerViewPresenter getPresenter() {
@@ -89,7 +64,7 @@ public class DemandListActivity extends BaseRvActivity<DemandListbean> {
 
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
+        backImg = findViewById(R.id.back_img);
+        titleText = findViewById(R.id.title_text);
     }
 }

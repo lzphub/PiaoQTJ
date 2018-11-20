@@ -2,6 +2,8 @@ package cn.dankal.basiclib.api;
 
 
 
+import cn.dankal.basiclib.bean.DemandListbean;
+import cn.dankal.basiclib.bean.MyWorkListBean;
 import cn.dankal.basiclib.bean.ProductClassifyBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.UserHomeBannerBean;
@@ -43,4 +45,10 @@ public interface HomeService {
      */
     @GET("customer/home/getcarousel")
     Observable<UserHomeBannerBean> getBanner();
+
+    /**
+     * 工单列表
+     */
+    @GET("engineer/me/getprojectlist")
+    Observable<MyWorkListBean> getWorkList(@Query("page_index")String page_index, @Query("page_size")String page_size, @Query("status")String status);
 }

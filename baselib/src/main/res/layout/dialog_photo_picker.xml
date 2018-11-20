@@ -12,7 +12,7 @@
         android:layout_height="50dp"
         android:background="@color/colorFF"
         android:gravity="center"
-        android:text="PHOTOGRAPH"
+        android:text="@string/takephoto"
         android:textColor="@color/color33"
         android:textSize="14sp" />
 
@@ -28,7 +28,7 @@
         android:layout_gravity="center"
         android:background="@color/colorFF"
         android:gravity="center"
-        android:text="SELECT FROM ALBUM"
+        android:text="@string/pickphoto"
         android:textColor="@color/color33"
         android:textSize="14sp"/>
 
@@ -46,7 +46,7 @@
         android:layout_gravity="center"
         android:background="@color/colorFF"
         android:gravity="center"
-        android:text="CANCEL"
+        android:text="@string/cancel"
         android:textColor="@color/color33"
         android:textSize="14sp" />
 
