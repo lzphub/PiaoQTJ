@@ -53,6 +53,6 @@ public abstract class BaseRvFragmentImp<M> extends BaseRecyclerViewFragment<M> i
     @Override
     public void onResume() {
         super.onResume();
-//        checkLoad();
+        checkLoad();
     }
 }

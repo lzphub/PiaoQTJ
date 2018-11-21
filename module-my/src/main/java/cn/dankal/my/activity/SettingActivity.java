@@ -25,6 +25,7 @@ import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.ActivityUtils;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.SETTING;
@@ -61,16 +62,24 @@ public class SettingActivity extends BaseActivity {
         loginOut.setOnClickListener(v -> {
             DKUserManager.resetToken();
             DKUserManager.resetUserInfo();
-            if(type.equals("user")){
+            if (type.equals("user")) {
                 ARouter.getInstance().build(LoginProtocol.USERSLOGIN).navigation();
-            }else{
+            } else {
                 ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
             }
             ActivityUtils.finishAllActivities();
         });
         problem.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.COMPROB).navigation());
         clearCache.setOnClickListener(v -> {
-            Long l=CacheManager.cleanCache(SettingActivity.this,SDCacheDir.getInstance(SettingActivity.this).cachepath);
+            CacheManager.cleanCache(SettingActivity.this, SDCacheDir.getInstance(SettingActivity.this).cachepath);
+            CacheManager.cleanCache(SettingActivity.this, SDCacheDir.getInstance(SettingActivity.this).cachepath2);
+            CacheManager.cleanCache(SettingActivity.this, SDCacheDir.getInstance(SettingActivity.this).filesDir);
+            CacheManager.cleanCache(SettingActivity.this, SDCacheDir.getInstance(SettingActivity.this).filesDir2);
+            if(type.equals("user")){
+                ToastUtils.showShort("Clean Up");
+            }else{
+                ToastUtils.showShort("清理完成");
+            }
         });
     }
 
@@ -87,8 +96,8 @@ public class SettingActivity extends BaseActivity {
         clearText = findViewById(R.id.clear_text);
         opinionText = findViewById(R.id.opinion_text);
         outText = findViewById(R.id.out_text);
-        type= SharedPreferencesUtils.getString(this,"identity","");
-        if(type.equals("user")){
+        type = SharedPreferencesUtils.getString(this, "identity", "");
+        if (type.equals("user")) {
             problemText.setText("FAQ");
             aboutText.setText("ABOUT US");
             clearText.setText("CLEAR CACHE");

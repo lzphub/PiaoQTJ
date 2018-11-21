@@ -3,6 +3,7 @@ package cn.dankal.home.persenter;
 import android.support.annotation.NonNull;
 
 import api.HomeServiceFactory;
+import cn.dankal.basiclib.bean.DemandListbean;
 import cn.dankal.basiclib.bean.ProductClassifyBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.UserHomeBannerBean;
@@ -37,6 +38,26 @@ public class ProductHomePresenter implements ProductHomeContact.productHomePrese
             @Override
             public void onNext(UserHomeBannerBean userHomeBannerBean) {
                 phview.getBannerSuccess(userHomeBannerBean);
+            }
+        });
+    }
+
+    @Override
+    public void getEngBanner() {
+        HomeServiceFactory.getEngBanner().safeSubscribe(new AbstractDialogSubscriber<UserHomeBannerBean>(phview) {
+            @Override
+            public void onNext(UserHomeBannerBean userHomeBannerBean) {
+                phview.getBannerSuccess(userHomeBannerBean);
+            }
+        });
+    }
+
+    @Override
+    public void getEngData(int page, int size) {
+        HomeServiceFactory.getDemandList(page,size).safeSubscribe(new AbstractDialogSubscriber<DemandListbean>(phview) {
+            @Override
+            public void onNext(DemandListbean demandListbean) {
+                phview.getEngDataSuccess(demandListbean);
             }
         });
     }

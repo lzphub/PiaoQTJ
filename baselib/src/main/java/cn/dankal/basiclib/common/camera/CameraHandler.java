@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v7.widget.AppCompatButton;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -19,6 +20,7 @@ import java.io.File;
 
 import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.util.FileUtil;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 
 
 /**
@@ -29,6 +31,8 @@ public class CameraHandler implements View.OnClickListener {
     private final AlertDialog DIALOG;
     private Context context;
     private Activity activity;
+
+    private String type;
 
     public static final int TAKE_PHOTO = 4;
     public static final int PICK_PHOTO = 5;
@@ -46,6 +50,7 @@ public class CameraHandler implements View.OnClickListener {
     public void beginCameraDialog() {
         DIALOG.show();
         final Window window = DIALOG.getWindow();
+        type = SharedPreferencesUtils.getString(getActivity(), "identity", "user");
         if (window != null) {
             window.setContentView(R.layout.dialog_photo_picker);
             window.setGravity(Gravity.BOTTOM);
@@ -59,9 +64,19 @@ public class CameraHandler implements View.OnClickListener {
             params.dimAmount = 0.5f;
             window.setAttributes(params);
 
-            window.findViewById(R.id.photodialog_btn_cancel).setOnClickListener(this);
-            window.findViewById(R.id.photodialog_btn_take).setOnClickListener(this);
-            window.findViewById(R.id.photodialog_btn_native).setOnClickListener(this);
+            AppCompatButton appCompatButton = window.findViewById(R.id.photodialog_btn_cancel);
+            AppCompatButton appCompatButton1 = window.findViewById(R.id.photodialog_btn_take);
+            AppCompatButton appCompatButton2 = window.findViewById(R.id.photodialog_btn_native);
+
+            if (type.equals("user")) {
+                appCompatButton1.setText("PHOTOGRAPH");
+                appCompatButton2.setText("SELECT FROM ALBUM");
+                appCompatButton.setText("CANCEL");
+            }
+
+            appCompatButton.setOnClickListener(this);
+            appCompatButton1.setOnClickListener(this);
+            appCompatButton2.setOnClickListener(this);
         }
     }
 

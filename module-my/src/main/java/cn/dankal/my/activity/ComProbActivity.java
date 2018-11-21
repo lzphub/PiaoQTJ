@@ -22,6 +22,7 @@ import cn.dankal.basiclib.bean.ComProbBean;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.ToastUtils;
+import cn.dankal.my.presenter.ComProbEngPersenter;
 import cn.dankal.my.presenter.ComProbPersenter;
 import cn.dankal.setting.R;
 
@@ -36,6 +37,7 @@ public class ComProbActivity extends BaseRvActivity<ComProbBean.DataBean> {
 
     @Override
     protected int getLayoutId() {
+        type= SharedPreferencesUtils.getString(this,"identity","user");
         return R.layout.activity_transaction_records;
     }
 
@@ -44,9 +46,10 @@ public class ComProbActivity extends BaseRvActivity<ComProbBean.DataBean> {
         super.initComponents();
         initView();
         backImg.setOnClickListener(v -> finish());
-        type= SharedPreferencesUtils.getString(this,"identity","user");
         if(type.equals("user")){
             titleText.setText("FAQ");
+        }else{
+            titleText.setText("常见问题");
         }
     }
 
@@ -57,7 +60,11 @@ public class ComProbActivity extends BaseRvActivity<ComProbBean.DataBean> {
 
     @Override
     public BaseRecyclerViewPresenter<ComProbBean.DataBean> getPresenter() {
-        return new ComProbPersenter();
+        if(type.equals("user")){
+            return new ComProbPersenter();
+        }else{
+            return new ComProbEngPersenter();
+        }
     }
 
     @Override

@@ -105,17 +105,23 @@ public class FeedBackActivity extends BaseActivity {
         imgList.setLayoutManager(linearLayoutManager);
 
         submitBtn.setOnClickListener(v -> {
-            String[] image=new String[images.size()];
-            for(int i=0;i<images.size();i++){
-                image[i]=images.get(i);
+            if(identity.equals("user")){
+                MyServiceFactory.postFeedBack(etOpinion.getText().toString().trim(),images).safeSubscribe(new AbstractDialogSubscriber<String>(FeedBackActivity.this) {
+                    @Override
+                    public void onNext(String s) {
+                        ARouter.getInstance().build(HomeProtocol.SUBMITINTENTION).withString("feedback","feedback").navigation();
+                        finish();
+                    }
+                });
+            }else{
+                MyServiceFactory.engPostFeedBack(etOpinion.getText().toString().trim(),images).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
+                    @Override
+                    public void onNext(String s) {
+                        ARouter.getInstance().build(HomeProtocol.SUBMITINTENTION).withString("feedback","feedback").navigation();
+                        finish();
+                    }
+                });
             }
-            MyServiceFactory.postFeedBack(etOpinion.getText().toString().trim(),image).safeSubscribe(new AbstractDialogSubscriber<String>(FeedBackActivity.this) {
-                @Override
-                public void onNext(String s) {
-                    ARouter.getInstance().build(HomeProtocol.SUBMITINTENTION).withString("feedback","feedback").navigation();
-                    finish();
-                }
-            });
         });
     }
 

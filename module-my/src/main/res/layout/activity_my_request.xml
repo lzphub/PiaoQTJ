@@ -38,7 +38,7 @@
 
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/tab_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="38dp"
         android:background="@color/colorFF"
         app:layout_constraintTop_toBottomOf="@id/back_img"
@@ -46,9 +46,8 @@
         app:tl_indicator_corner_radius="1dp"
         app:tl_indicator_height="2dp"
         app:tl_indicator_width="20dp"
-        app:tl_tab_space_equal="true"
-        app:tl_tab_width="93dp"
         app:tl_textBold="BOTH"
+        app:tl_indicator_width_equal_title="true"
         app:tl_textSelectColor="@color/color33"
         app:tl_textUnselectColor="@color/color99"
         app:tl_textsize="14sp" />

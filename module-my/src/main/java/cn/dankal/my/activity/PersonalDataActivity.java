@@ -226,12 +226,13 @@ public class PersonalDataActivity extends BaseActivity {
             public void onNext(PersonalData_EngineerBean personalData_engineerBean) {
                 nameText.setText(personalData_engineerBean.getName());
                 skillsText.setText(personalData_engineerBean.getCompetence());
-                addressText.setText(personalData_engineerBean.getArea());
+                addressText.setText(personalData_engineerBean.getProvince()+personalData_engineerBean.getCity());
                 PicUtils.loadAvatar(personalData_engineerBean.getAvatar(),headPic);
                 personalData_engineerPostBean.setCompetence(personalData_engineerBean.getCompetence());
                 personalData_engineerPostBean.setName(personalData_engineerBean.getName());
                 personalData_engineerPostBean.setAvatar(personalData_engineerBean.getAvatar());
-                personalData_engineerPostBean.setProvince(personalData_engineerBean.getArea());
+                personalData_engineerPostBean.setProvince(personalData_engineerBean.getProvince());
+                personalData_engineerPostBean.setCity(personalData_engineerBean.getCity());
             }
         });
     }

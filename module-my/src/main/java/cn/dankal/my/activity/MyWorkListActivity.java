@@ -2,6 +2,8 @@ package cn.dankal.my.activity;
 
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.CommonTabLayout ;
+import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
@@ -24,6 +27,7 @@ import java.util.List;
 import cn.dankal.basiclib.adapter.MyIntentionVpAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
+import cn.dankal.basiclib.util.Logger;
 import cn.dankal.my.entity.TabEntity;
 import cn.dankal.my.fragment.MyWorkListAllFragment;
 import cn.dankal.my.fragment.MyWorkListProcessingFragment;
@@ -36,7 +40,7 @@ import static cn.dankal.basiclib.protocol.MyProtocol.MYWORKLIST;
 public class MyWorkListActivity extends BaseActivity {
 
     private android.widget.ImageView backImg;
-    private CommonTabLayout  tabTitle;
+    private SlidingTabLayout  tabTitle;
     private android.support.v4.view.ViewPager tabViewpager;
     private String[] tab_titel={"全部","进行中","已完成"};
     private MyIntentionVpAdapter myIntentionVpAdapter;
@@ -49,21 +53,18 @@ public class MyWorkListActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_my_work_list;
+        return R.layout.activity_my_work_list2;
     }
 
     @Override
     protected void initComponents() {
         initView();
-        initViewPager();
-//        tabTitle.setViewPager(tabViewpager,tab_titel);
-        backImg.setOnClickListener(v -> finish());
         for(int i=0;i<tab_titel.length;i++){
             mTabEntities.add(new TabEntity(tab_titel[i]) {
             });
         }
-        tabTitle.setTabData(mTabEntities);
-
+        backImg.setOnClickListener(v -> finish());
+        initViewPager();
         tabTitle.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
@@ -75,10 +76,10 @@ public class MyWorkListActivity extends BaseActivity {
 
             }
         });
+        tabViewpager.setCurrentItem(0);
         tabViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -95,7 +96,7 @@ public class MyWorkListActivity extends BaseActivity {
 
     private void initView() {
         backImg = (ImageView) findViewById(R.id.back_img);
-        tabTitle = (CommonTabLayout ) findViewById(R.id.tab_title);
+        tabTitle = (SlidingTabLayout) findViewById(R.id.tab_title);
         tabViewpager = (ViewPager) findViewById(R.id.tab_viewpager);
     }
 
@@ -108,19 +109,47 @@ public class MyWorkListActivity extends BaseActivity {
             myWorkListAllFragment=new MyWorkListAllFragment();
             fragmentList.add(myWorkListAllFragment);
         }
-        if(null  == myWorkListProcessingFragment){
-            myWorkListProcessingFragment = new MyWorkListProcessingFragment();
-            fragmentList.add(myWorkListProcessingFragment);
-        }
         if(null  == myWorkListcompletedFragment){
             myWorkListcompletedFragment = new MyWorkListcompletedFragment();
             fragmentList.add(myWorkListcompletedFragment);
         }
+        if(null  == myWorkListProcessingFragment){
+            myWorkListProcessingFragment = new MyWorkListProcessingFragment();
+            fragmentList.add(myWorkListProcessingFragment);
+        }
 
-        myIntentionVpAdapter = new MyIntentionVpAdapter(getSupportFragmentManager(),fragmentList);
-        tabViewpager.setAdapter(myIntentionVpAdapter);
+        tabViewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), (ArrayList<BaseFragment>) fragmentList,tab_titel));
+        tabTitle.setViewPager(tabViewpager);
 
+        tabViewpager.setOffscreenPageLimit(3);
 
     }
 
+    public class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private ArrayList<BaseFragment> mFragments;
+        private String[] mTitles;
+
+        public ViewPagerAdapter(FragmentManager fm, ArrayList<BaseFragment> mFragments, String[] mTitles) {
+            super(fm);
+            this.mFragments=mFragments;
+            this.mTitles=mTitles;
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitles[position];
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+    }
 }

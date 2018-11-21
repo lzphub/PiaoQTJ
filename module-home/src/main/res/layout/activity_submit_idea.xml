@@ -30,7 +30,7 @@
         android:id="@+id/return_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="已提交该idea\n请等待后台审核"
+        android:text="已提交该创意\n请等待后台审核"
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"

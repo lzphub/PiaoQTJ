@@ -15,6 +15,7 @@ import cn.dankal.basiclib.pojo.UserResponseBody;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.LoginProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.ActivityUtils;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.ToastUtils;
@@ -38,7 +39,7 @@ public class EnterpriseLoginActivity extends BaseActivity {
     private android.widget.TextView or;
     private android.widget.TextView register;
     private android.widget.TextView forgetPassword;
-    private String email,pwd;
+    private String email, pwd;
 
     @Override
     protected int getLayoutId() {
@@ -58,41 +59,41 @@ public class EnterpriseLoginActivity extends BaseActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(LoginProtocol.REGISTERENTEREMSIL).withString("type","sign_up").navigation();
+                ARouter.getInstance().build(LoginProtocol.REGISTERENTEREMSIL).withString("type", "sign_up").navigation();
             }
         });
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(LoginProtocol.FORGETPWD).withString("type","change_pwd").navigation();
+                ARouter.getInstance().build(LoginProtocol.FORGETPWD).withString("type", "change_pwd").navigation();
             }
         });
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email=etPhoneNum.getText().toString().trim();
-                if(!StringUtil.checkEmail(email)){
+                email = etPhoneNum.getText().toString().trim();
+                if (!StringUtil.checkEmail(email)) {
                     ToastUtils.showShort("账号或密码有误");
                     return;
                 }
-                pwd=etPasswd.getText().toString().trim();
-                if(pwd==null){
+                pwd = etPasswd.getText().toString().trim();
+                if (pwd == null) {
                     ToastUtils.showShort("账号或密码有误");
                     return;
                 }
-                Login(email,pwd);
+                Login(email, pwd);
             }
         });
     }
 
     private void Login(String email, String pwd) {
-        UserServiceFactory.engineerLogin(email,pwd).safeSubscribe(new AbstractDialogSubscriber<UserResponseBody>(this) {
+        UserServiceFactory.engineerLogin(email, pwd).safeSubscribe(new AbstractDialogSubscriber<UserResponseBody>(this) {
             @Override
             public void onNext(UserResponseBody userResponseBody) {
                 DKUserManager.resetUserInfo();
                 DKUserManager.saveUserInfo(userResponseBody);
                 ARouter.getInstance().build(HomeProtocol.HOMEACTIVITY).navigation();
-                SharedPreferencesUtils.saveString(EnterpriseLoginActivity.this,"identity","enterprise");
+                SharedPreferencesUtils.saveString(EnterpriseLoginActivity.this, "identity", "enterprise");
                 finish();
             }
         });

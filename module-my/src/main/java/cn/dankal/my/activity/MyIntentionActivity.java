@@ -1,5 +1,8 @@
 package cn.dankal.my.activity;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,7 +31,7 @@ public class MyIntentionActivity extends BaseActivity {
 
     private ImageView backImg;
     private TextView titleText;
-    private com.flyco.tablayout.CommonTabLayout tabTitle;
+    private com.flyco.tablayout.SlidingTabLayout tabTitle;
     private android.support.v4.view.ViewPager tabViewpager;
     private String[] tab_titel2={"ALL","SUBMITTED","IN PROGRESS","FINISH"};
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
@@ -116,11 +119,35 @@ public class MyIntentionActivity extends BaseActivity {
             fragmentList.add(myIntentionFinishsFragment);
         }
 
-        myIntentionVpAdapter = new MyIntentionVpAdapter(getSupportFragmentManager(),fragmentList);
-        tabViewpager.setAdapter(myIntentionVpAdapter);
-        tabTitle.setTabData(mTabEntities);
+        tabViewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), (ArrayList<BaseFragment>) fragmentList,tab_titel2));
+        tabTitle.setViewPager(tabViewpager);
+    }
 
-        tabViewpager.setOffscreenPageLimit(3);
+    public class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private ArrayList<BaseFragment> mFragments;
+        private String[] mTitles;
+
+        public ViewPagerAdapter(FragmentManager fm, ArrayList<BaseFragment> mFragments, String[] mTitles) {
+            super(fm);
+            this.mFragments=mFragments;
+            this.mTitles=mTitles;
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitles[position];
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
 
     }
 }

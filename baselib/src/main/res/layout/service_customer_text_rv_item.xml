@@ -24,6 +24,7 @@
         android:text="Customer send"
         android:textColor="@color/color33"
         android:textStyle="bold"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:background="@drawable/pic_customer_service_dialog_box_2"/>
 
 </android.support.constraint.ConstraintLayout>

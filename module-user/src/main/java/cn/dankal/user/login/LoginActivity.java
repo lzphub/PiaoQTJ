@@ -16,6 +16,8 @@ import cn.dankal.basiclib.pojo.UserResponseBody;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.LoginProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.ActivityUtils;
+import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.ToastUtils;
@@ -45,6 +47,7 @@ public class LoginActivity extends BaseActivity {
         initView();
         //自动登录
         if("user".equals(SharedPreferencesUtils.getString(this, "identity", "user"))){
+            Logger.d("tokento",DKUserManager.getUserToken().getAccessToken());
             if(DKUserManager.isLogined()){
                 refreshToken();
                 ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
@@ -52,8 +55,9 @@ public class LoginActivity extends BaseActivity {
                 finish();
             }
         }else{
+            Logger.d("tokento",DKUserManager.getUserToken().getAccessToken());
             if(DKUserManager.isLogined()){
-                engRefreshToken();
+//                engRefreshToken();
                 ARouter.getInstance().build(HomeProtocol.HOMEACTIVITY).navigation();
                 SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "enterprise");
                 finish();
@@ -93,7 +97,6 @@ public class LoginActivity extends BaseActivity {
           public void onNext(UserResponseBody userResponseBody) {
               DKUserManager.resetUserInfo();
               DKUserManager.saveUserInfo(userResponseBody);
-
               ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
               SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "user");
               finish();

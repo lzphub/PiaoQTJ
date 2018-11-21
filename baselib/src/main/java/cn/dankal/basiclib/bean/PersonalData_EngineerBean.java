@@ -2,13 +2,16 @@ package cn.dankal.basiclib.bean;
 
 public class PersonalData_EngineerBean {
 
+
     /**
-     * name : ccc
-     * email : maigebaoer@qq.com
-     * avatar : 头像
-     * competence : 码代码
+     * name : Zzzz
+     * email : 425570976@qq.com
+     * avatar : zm_1542610946677.png
+     * competence : 混吃等死
      * level : 1
-     * area : 广东省深圳市
+     * mobile : null
+     * province : 北京
+     * city : 北京市
      */
 
     private String name;
@@ -16,7 +19,9 @@ public class PersonalData_EngineerBean {
     private String avatar;
     private String competence;
     private int level;
-    private String area;
+    private Object mobile;
+    private String province;
+    private String city;
 
     public String getName() {
         return name;
@@ -58,11 +63,27 @@ public class PersonalData_EngineerBean {
         this.level = level;
     }
 
-    public String getArea() {
-        return area;
+    public Object getMobile() {
+        return mobile;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setMobile(Object mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

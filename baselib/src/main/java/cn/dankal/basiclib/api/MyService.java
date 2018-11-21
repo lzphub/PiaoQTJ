@@ -1,6 +1,8 @@
 package cn.dankal.basiclib.api;
 
 
+import java.util.List;
+
 import cn.dankal.annotations.ApiFactory;
 import cn.dankal.basiclib.bean.AboutUsBean;
 import cn.dankal.basiclib.bean.AddressBean;
@@ -15,6 +17,7 @@ import cn.dankal.basiclib.bean.PersonalData_EngineerBean;
 import cn.dankal.basiclib.bean.PersonalData_EngineerPostBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.RequestDataBean;
+import cn.dankal.basiclib.bean.TransactionBean;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -45,14 +48,27 @@ public interface MyService {
      * 常见问题
      */
     @GET("customer/me/getFaqList")
-    Observable<ComProbBean> getUserFaqList(@Query("page_index")int page_index,@Query(" page_size")int  page_size);
+    Observable<ComProbBean> getUserFaqList(@Query("page_index") int page_index, @Query(" page_size") int page_size);
+
+    /**
+     *工程师端常见问题
+     */
+    @GET("engineer/me/getFaqList")
+    Observable<ComProbBean> getEngFaqList(@Query("page_index") int page_index, @Query(" page_size") int page_size);
 
     /**
      * 意见反馈
      */
     @POST("customer/me/postfeedback")
     @FormUrlEncoded
-    Observable<String> postFeedBack(@Field("content")String content, @Field("images")String[] images);
+    Observable<String> postFeedBack(@Field("content") String content, @Field("images[]") List<String> images);
+
+    /**
+     * 工程师端意见反馈
+     */
+    @POST("engineer/me/postfeedback")
+    @FormUrlEncoded
+    Observable<String> engPostFeedBack(@Field("content") String content, @Field("images[]") List<String> images);
 
     /**
      * 用户个人信息
@@ -86,25 +102,25 @@ public interface MyService {
      */
     @POST("customer/me/getIntentionList")
     @FormUrlEncoded
-    Observable<MyIntentionBean> getIntentionList(@Field("status")String status);
+    Observable<MyIntentionBean> getIntentionList(@Field("status") String status);
 
     /**
      * 意向详情
      */
     @GET("customer/me/getIntentionDetail/{intention_id}")
-    Observable<IntentionDateBean> getIntentionInfo(@Path("intention_id")String intention_id);
+    Observable<IntentionDateBean> getIntentionInfo(@Path("intention_id") String intention_id);
 
     /**
      * 我的收藏
      */
     @GET("customer/me/getFavouriteList")
-    Observable<ProductListBean> getFavouriteList(@Query("page_index")int page_index,@Query(" page_size")int  page_size);
+    Observable<ProductListBean> getFavouriteList(@Query("page_index") int page_index, @Query(" page_size") int page_size);
 
     /**
      * 需求列表
      */
     @GET("customer/demand")
-    Observable<MyRequestBean> getMyRequest(@Query("page_index")int page_index,@Query(" page_size")int  page_size);
+    Observable<MyRequestBean> getMyRequest(@Query("page_index") int page_index, @Query(" page_size") int page_size);
 
     /**
      * 删除需求
@@ -116,7 +132,7 @@ public interface MyService {
      * 需求详情
      */
     @GET("customer/demand/{demand_id}")
-    Observable<RequestDataBean> getMyRequestData(@Path("demand_id")String demand_id);
+    Observable<RequestDataBean> getMyRequestData(@Path("demand_id") String demand_id);
 
     /**
      * 地理信息
@@ -141,7 +157,7 @@ public interface MyService {
      */
     @POST("engineer/myprofit/addbankcard")
     @FormUrlEncoded
-    Observable<String> bindBankCard(@Field("card_number")String card_number,@Field("cardholder")String cardholder,@Field("id_card_number")String id_card_number,@Field("reserved_mobile")String reserved_mobile,@Field("bank_name")String bank_name,@Field("code")String code);
+    Observable<String> bindBankCard(@Field("card_number") String card_number, @Field("cardholder") String cardholder, @Field("id_card_number") String id_card_number, @Field("reserved_mobile") String reserved_mobile, @Field("bank_name") String bank_name, @Field("code") String code);
 
     /**
      * 银行卡列表
@@ -153,19 +169,25 @@ public interface MyService {
      * 删除银行卡
      */
     @DELETE("engineer/myprofit/deletebankcard/{bank_card_number}")
-    Observable<String> deletBankCard(@Path("bank_card_number")String bank_card_number);
+    Observable<String> deletBankCard(@Path("bank_card_number") String bank_card_number);
 
     /**
      * 设置支付密码
      */
     @POST("engineer/me/setwithdrawalpwd")
     @FormUrlEncoded
-    Observable<String> setWithPwd(@Field("withdrawal_password")String withdrawal_password);
+    Observable<String> setWithPwd(@Field("withdrawal_password") String withdrawal_password);
 
     /**
      * 提现
      */
     @POST("engineer/myprofit/withdrawal")
     @FormUrlEncoded
-    Observable<String> withdrawal(@Field("withdrawal_password")String withdrawal_password,@Field("withdrawal_money")String withdrawal_money,@Field("bank_card_number")String bank_card_number);
+    Observable<String> withdrawal(@Field("withdrawal_password") String withdrawal_password, @Field("withdrawal_money") String withdrawal_money, @Field("bank_card_number") String bank_card_number);
+
+    /**
+     * 交易记录
+     */
+    @GET("engineer/myprofit/gettransactionlist")
+    Observable<TransactionBean> getTransactionList(@Query("page_index") int page_index, @Query("page_size") int page_size);
 }

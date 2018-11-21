@@ -2,6 +2,8 @@ package cn.dankal.basiclib.api;
 
 
 
+import java.util.List;
+
 import cn.dankal.basiclib.bean.DemandListbean;
 import cn.dankal.basiclib.bean.MyWorkListBean;
 import cn.dankal.basiclib.bean.ProductClassifyBean;
@@ -47,8 +49,28 @@ public interface HomeService {
     Observable<UserHomeBannerBean> getBanner();
 
     /**
+     * 工程师端轮播图
+     */
+    @GET("engineer/home/getcarousel")
+    Observable<UserHomeBannerBean> getEngBanner();
+
+    /**
+     * 首页需求
+     */
+    @GET("engineer/home/getproject")
+    Observable<DemandListbean> getDemandList(@Query("page_index")int page_index,@Query(" page_size")int  page_size);
+
+
+    /**
      * 工单列表
      */
     @GET("engineer/me/getprojectlist")
     Observable<MyWorkListBean> getWorkList(@Query("page_index")String page_index, @Query("page_size")String page_size, @Query("status")String status);
+
+    /**
+     * 认领需求
+     */
+    @POST("engineer/home/postplan")
+    @FormUrlEncoded
+    Observable<String> postplan(@Field("project_uuid")String project_uuid, @Field("plan_detail")String plan_detail, @Field("plan_images[]")List<String> plan_images);
 }

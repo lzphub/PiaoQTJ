@@ -4,16 +4,23 @@ import android.support.annotation.NonNull;
 
 import api.HomeServiceFactory;
 import api.MyServiceFactory;
+import cn.dankal.basiclib.base.BaseRvFragmentImp;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.bean.DemandListbean;
 import cn.dankal.basiclib.bean.MyIntentionBean;
 import cn.dankal.basiclib.bean.MyWorkListBean;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.Logger;
+import io.reactivex.disposables.Disposable;
 
-public class MyWorklistPresenter implements MyWorkListContact.mwPersenter{
+public class MyWorklistPresenter extends BaseRecyclerViewPresenter<MyWorkListBean.DataBean> {
 
-    private MyWorkListContact.mwView mwView;
     private static MyWorklistPresenter worklistPresenter=null;
+    private String status;
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public static synchronized MyWorklistPresenter getWorklistPresenter(){
         if(worklistPresenter==null){
@@ -23,22 +30,22 @@ public class MyWorklistPresenter implements MyWorkListContact.mwPersenter{
     }
 
     @Override
-    public void getData(String page, String size, String status) {
-        HomeServiceFactory.getWorkList(page, size, status).safeSubscribe(new AbstractDialogSubscriber<MyWorkListBean>(mwView) {
+    public void requestData(String pageIndex) {
+        Logger.d("fragment",status);
+        HomeServiceFactory.getWorkList(pageIndex, "10", status).safeSubscribe(new AbstractDialogSubscriber<MyWorkListBean>(mView) {
             @Override
             public void onNext(MyWorkListBean myWorkListBean) {
-                mwView.getDataSuccess(myWorkListBean);
+                mView.render(myWorkListBean.getData());
+                Logger.d("fragmentOnnext",status);
             }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                Logger.d("fragmenterror",status);
+            }
+
+
         });
-    }
-
-    @Override
-    public void attachView(@NonNull MyWorkListContact.mwView view) {
-        mwView=view;
-    }
-
-    @Override
-    public void detachView() {
-        mwView=null;
     }
 }

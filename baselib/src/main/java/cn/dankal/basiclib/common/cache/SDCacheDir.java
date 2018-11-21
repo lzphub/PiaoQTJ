@@ -14,13 +14,17 @@ public class SDCacheDir {
     private String sdpath;
     public String cachepath;
     public String filesDir;
+    public String cachepath2;
+    public String filesDir2;
 
     public SDCacheDir(Context context) {
         sdpath = Environment.getExternalStorageDirectory().toString();
-//        cachepath = sdpath + "/" + "Android/data/" + DKApp.getContext().getPackageName() + "/cache/";
-//        filesDir = sdpath + "/" + "Android/data/" + DKApp.getContext().getPackageName() + "/files/";
-        cachepath=context.getCacheDir().getPath()+ File.separator;
-        filesDir=context.getFilesDir().getPath()+ File.separator;
+        //手机外置缓存路径
+        cachepath = sdpath + "/" + "Android/data/" + context.getPackageName() + "/cache/";
+        filesDir = sdpath + "/" + "Android/data/" + context.getPackageName() + "/files/";
+        //手机SD缓存路径
+        cachepath2=context.getCacheDir().getPath()+ File.separator;
+        filesDir2=context.getFilesDir().getPath()+ File.separator;
     }
 
 

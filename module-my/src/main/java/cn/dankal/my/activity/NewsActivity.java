@@ -13,6 +13,7 @@ import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.bean.NewsBean;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.SYSTEMNEWS;
@@ -23,6 +24,7 @@ public class NewsActivity extends BaseRvActivity<NewsBean> {
     private ImageView backImg;
     private TextView titleText;
     private RecyclerView recordsList;
+    private String type;
 
     @Override
     protected int getLayoutId() {
@@ -32,13 +34,18 @@ public class NewsActivity extends BaseRvActivity<NewsBean> {
     @Override
     public void initComponents() {
         initView();
+        type= SharedPreferencesUtils.getString(this,"identity","user");
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        titleText.setText("系统消息");
+        if(type.equals("user")){
+            titleText.setText("SYSTEM MESSAGES");
+        }else{
+            titleText.setText("系统消息");
+        }
     }
 
     private void initView() {

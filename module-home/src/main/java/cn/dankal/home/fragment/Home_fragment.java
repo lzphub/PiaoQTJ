@@ -47,7 +47,7 @@ import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
 import cn.dankal.home.persenter.ProductHomeContact;
 import cn.dankal.home.persenter.ProductHomePresenter;
 
-public class Home_fragment extends BaseFragment implements ProductHomeContact.phview{
+public class Home_fragment extends BaseFragment implements ProductHomeContact.phview {
     private android.widget.ImageView logoImg;
     private android.widget.ImageView searchImg;
     private android.widget.LinearLayout releaseLl;
@@ -56,15 +56,16 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
     private android.widget.TextView loadMore;
     private com.xuezj.cardbanner.CardBanner banner;
     private List<DemandListbean> demandListbeanList = new ArrayList<>();
-    private List<ProductListBean> productListBeanList=new ArrayList<>();
+    private List<ProductListBean> productListBeanList = new ArrayList<>();
     private TextView resText;
     private String identity;
     private android.support.v4.widget.NestedScrollView scroll;
-    private int page=1;
+    private int page = 1;
     private boolean isRefresh = true;
     private ProductHomePresenter productHomePresenter;
     private cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout swipeToloadLayout;
     private ProductRvAdapter productRvAdapter;
+    private DemandRvAdapter demandRvAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -104,13 +105,12 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         releaseLl.setOnClickListener(v -> {
             if (identity.equals("enterprise")) {
                 ARouter.getInstance().build(HomeProtocol.HOMERELEASE).navigation();
-            }else{
+            } else {
                 ARouter.getInstance().build(HomeProtocol.POSTREQUEST).navigation();
             }
         });
 
     }
-
 
 
     private void initView(View view) {
@@ -134,39 +134,27 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         demandList.setLayoutManager(linearLayoutManager);
         demandList.setNestedScrollingEnabled(false);
         demandList.setHasFixedSize(true);
-        if(identity.equals("enterprise")){
-            for (int i = 0; i < 3; i++) {
-                DemandListbean demandListbean = new DemandListbean();
-                demandListbeanList.add(demandListbean);
-            }
-            DemandRvAdapter demandRvAdapter = new DemandRvAdapter();
-            demandRvAdapter.addMore(demandListbeanList);
-            demandList.setAdapter(demandRvAdapter);
-            demandRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<DemandListbean>() {
-                @Override
-                public void onItemClick(View v, int position, DemandListbean data) {
-                    ARouter.getInstance().build(HomeProtocol.DEMANDDETA).navigation();
-                }
-            });
-        }else{
-            productRvAdapter=new ProductRvAdapter();
-            productHomePresenter=ProductHomePresenter.getPresenter();
-            productHomePresenter.attachView(this);
-            productHomePresenter.getData(page,10);
+        productHomePresenter = ProductHomePresenter.getPresenter();
+        productHomePresenter.attachView(this);
+        if (identity.equals("enterprise")) {
+            productHomePresenter.getEngData(1,3);
+            productHomePresenter.getEngBanner();
+        } else {
+            productRvAdapter = new ProductRvAdapter();
+            productHomePresenter.getData(page, 10);
             productHomePresenter.getBanner();
 
             swipeToloadLayout.setOnRefreshListener(() -> {
-                page=1;
-                isRefresh=true;
-                productHomePresenter.getData(page,10);
+                page = 1;
+                isRefresh = true;
+                productHomePresenter.getData(page, 10);
             });
             swipeToloadLayout.setOnLoadMoreListener(() -> {
                 page++;
-                isRefresh=false;
-                productHomePresenter.getData(page,10);
+                isRefresh = false;
+                productHomePresenter.getData(page, 10);
             });
         }
-
     }
 
     @Override
@@ -185,7 +173,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         productRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductListBean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, ProductListBean.DataBean data) {
-                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",data.getProduct_uuid()).navigation();
+                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid", data.getProduct_uuid()).navigation();
             }
         });
     }
@@ -193,16 +181,32 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
     @Override
     public void getBannerSuccess(UserHomeBannerBean userHomeBannerBean) {
         List<ImageData> imgurl = new ArrayList<>();
-        for(int i=0;i<userHomeBannerBean.getCarousels().size();i++){
+        for (int i = 0; i < userHomeBannerBean.getCarousels().size(); i++) {
             ImageData img1 = new ImageData();
             img1.setImage(userHomeBannerBean.getCarousels().get(i).getImage());
             imgurl.add(img1);
         }
         banner.setDatas(imgurl).setCardImageLoader((context, imageView, path) -> Glide.with(context).load(path).into(imageView)).start();
         banner.setOnItemClickListener(position -> {
-            Uri uri = Uri.parse("http://"+userHomeBannerBean.getCarousels().get(position).getJump_url());
+            Uri uri = Uri.parse("http://" + userHomeBannerBean.getCarousels().get(position).getJump_url());
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         });
     }
+
+    @Override
+    public void getEngDataSuccess(DemandListbean demandListbean) {
+        demandRvAdapter = new DemandRvAdapter();
+        demandRvAdapter.addMore(demandListbean.getData());
+        demandList.setAdapter(demandRvAdapter);
+        demandList.setNestedScrollingEnabled(false);
+        demandList.setHasFixedSize(true);
+        demandRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<DemandListbean.DataBean>() {
+            @Override
+            public void onItemClick(View v, int position, DemandListbean.DataBean data) {
+                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withSerializable("demandData",data).navigation();
+            }
+        });
+    }
+
 }

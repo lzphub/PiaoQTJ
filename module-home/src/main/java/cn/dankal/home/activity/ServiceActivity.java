@@ -32,6 +32,7 @@ import cn.dankal.basiclib.template.personal.ChangeAvatar;
 import cn.dankal.basiclib.template.personal.ChangeAvatarImpl;
 import cn.dankal.basiclib.util.ImagePathUtil;
 import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.ToastUtils;
 import retrofit2.http.PATCH;
@@ -56,6 +57,10 @@ public class ServiceActivity extends BaseActivity {
 
     private ServiceRvAdapter serviceRvAdapter;
     private List<ServiceTextBean> serviceTextBeanList=new ArrayList<>();
+    private String type;
+    private TextView title;
+    private TextView tvPhotograph;
+    private TextView tvAlbum;
 
     @Override
     protected int getLayoutId() {
@@ -65,6 +70,14 @@ public class ServiceActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+        type= SharedPreferencesUtils.getString(this,"identity","user");
+        if(!type.equals("user")){
+            title.setText("客服中心");
+            tipsText.setText("如客服没有及时回复，请联系1071377555@qq.com");
+            contentEt.setHint("请输入您的问题");
+            tvAlbum.setText("相册");
+            tvPhotograph.setText("拍摄");
+        }
         changeAvatar = new ChangeAvatarImpl(this, this);
         backImg.setOnClickListener(v -> finish());
         addImg.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +124,6 @@ public class ServiceActivity extends BaseActivity {
                         contentEt.setText("");
                         chatRv.scrollToPosition(serviceTextBeanList.size()-1);
                     }else{
-                        ToastUtils.showShort("Invalid message");
                     }
                     break;
             }
@@ -163,5 +175,8 @@ public class ServiceActivity extends BaseActivity {
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         chatRv.setLayoutManager(linearLayoutManager);
+        title = (TextView) findViewById(R.id.title);
+        tvPhotograph = (TextView) findViewById(R.id.tv_photograph);
+        tvAlbum = (TextView) findViewById(R.id.tv_album);
     }
 }
