@@ -52,4 +52,8 @@ public interface MyProtocol extends BaseRouteProtocol {
     String MYINTENTIONDETA=PART+"myintentiondeta";
 
     String MYREQUESTDETA=PART+"myrequestdeta";
+
+    String IDEADATA=PART+"myidea";
+
+    String WORKDATA=PART+"workdata";
 }

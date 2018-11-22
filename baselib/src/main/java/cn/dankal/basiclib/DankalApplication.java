@@ -13,6 +13,7 @@ import cn.dankal.basiclib.util.AppUtils;
 import cn.dankal.basiclib.util.DensityAdaptationUtils;
 import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.widget.loadsir.EmptyCallback;
+import cn.dankal.basiclib.widget.loadsir.EmptyEnCallback;
 import cn.dankal.basiclib.widget.loadsir.LoadingCallback;
 import cn.dankal.basiclib.widget.loadsir.RetryCallback;
 import cn.dankal.basiclib.widget.loadsir.core.LoadSir;
@@ -60,6 +61,7 @@ public class DankalApplication extends Application {
                 .addCallback(new RetryCallback())
                 .addCallback(new EmptyCallback())
                 .addCallback(new LoadingCallback())
+                .addCallback(new EmptyEnCallback())
 //                .setDefaultCallback(LoadingCallback.class)
                 .commit();
     }

@@ -52,6 +52,8 @@ public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.da
         @Override
         public void onBindData(MyRequestBean.databean data, int position) {
             internalImgRvAdapter =new InternalImgRvAdapter();
+            beAddImage.setNestedScrollingEnabled(false);
+            beAddImage.setHasFixedSize(true);
             beAddImage.setAdapter(internalImgRvAdapter);
             internalImgRvAdapter.updateData(data.getImages());
             requestName.setText(data.getTitle());

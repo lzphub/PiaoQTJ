@@ -2,18 +2,24 @@ package cn.dankal.home.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -71,6 +77,9 @@ public class PostRequstActivity extends BaseActivity {
     private List<Uri> result = new ArrayList<>();
     private ImageRvAdapter imageRvAdapter;
     private static List<String> images=new ArrayList<>();
+    final private static int KeyboardHeightLimit = 200;
+    private RelativeLayout rlContent;
+    private RelativeLayout rlOut;
 
     @Override
     protected int getLayoutId() {
@@ -88,6 +97,46 @@ public class PostRequstActivity extends BaseActivity {
         colseImg.setOnClickListener(v -> finish());
         periodEnd.setInputType(InputType.TYPE_NULL);
         periodStart.setInputType(InputType.TYPE_NULL);
+
+        titleEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                SpannableString spannableString=new SpannableString(titleEt.getText().toString().trim().length()+"/50");
+                ForegroundColorSpan colorSpan=new ForegroundColorSpan(getResources().getColor(R.color.login_btn_bg));
+                spannableString.setSpan(colorSpan,0,titleSize.getText().length()-3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                titleSize.setText(spannableString);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        rlOut.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                rlOut.getWindowVisibleDisplayFrame(r);
+                final int screenHeight = rlOut.getRootView().getHeight();
+                final int keyboardHeight = screenHeight - (r.bottom);
+
+                if (keyboardHeight > KeyboardHeightLimit) {
+                    FrameLayout.LayoutParams layoutParams= (FrameLayout.LayoutParams) rlOut.getLayoutParams();
+                    layoutParams.setMargins(0,0,0,keyboardHeight);
+                    rlOut.setLayoutParams(layoutParams);
+                }else{
+                    FrameLayout.LayoutParams layoutParams= (FrameLayout.LayoutParams) rlOut.getLayoutParams();
+                    layoutParams.setMargins(0,0,0,0);
+                    rlOut.setLayoutParams(layoutParams);
+                }
+            }
+        });
 
         periodStart.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -246,6 +295,8 @@ public class PostRequstActivity extends BaseActivity {
         priceMaxLl = findViewById(R.id.price_max_ll);
         priceMax = findViewById(R.id.price_max);
         contentEt = findViewById(R.id.content_et);
+        rlContent = (RelativeLayout) findViewById(R.id.rl_content);
+        rlOut = (RelativeLayout) findViewById(R.id.rl_out);
     }
 
     //图片上传至七牛

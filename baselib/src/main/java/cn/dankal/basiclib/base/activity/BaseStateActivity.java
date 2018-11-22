@@ -7,6 +7,7 @@ import android.view.View;
 
 import cn.dankal.basiclib.base.BaseStateView;
 import cn.dankal.basiclib.widget.loadsir.EmptyCallback;
+import cn.dankal.basiclib.widget.loadsir.EmptyEnCallback;
 import cn.dankal.basiclib.widget.loadsir.LoadingCallback;
 import cn.dankal.basiclib.widget.loadsir.RetryCallback;
 import cn.dankal.basiclib.widget.loadsir.callback.Callback;
@@ -29,7 +30,7 @@ public abstract class BaseStateActivity extends BaseActivity implements BaseStat
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (contentView() != null) {
-          /*  loadService = LoadSir.getDefault().register(contentView(), new Callback.OnReloadListener() {
+           loadService = LoadSir.getDefault().register(contentView(), new Callback.OnReloadListener() {
                 @Override
                 public void onReload(View v) {
                     loadService.showCallback(LoadingCallback.class);
@@ -37,8 +38,8 @@ public abstract class BaseStateActivity extends BaseActivity implements BaseStat
                     //callback
                     obtainData();
                 }
-            });*/
-            obtainData();
+            });
+//            obtainData();
         }
     }
 
@@ -67,5 +68,9 @@ public abstract class BaseStateActivity extends BaseActivity implements BaseStat
         }
     }
 
-
+    @Override
+    public void showEnEmpty() {
+        if (loadService == null) return;
+        loadService.showCallback(EmptyEnCallback.class);
+    }
 }

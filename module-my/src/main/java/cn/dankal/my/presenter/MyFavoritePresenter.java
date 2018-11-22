@@ -22,6 +22,12 @@ public class MyFavoritePresenter implements MyFavoriteContact.fcPersenter {
             public void onNext(ProductListBean productListBean) {
                 fcView.getDataSuccess(productListBean);
             }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                fcView.getDataFail();
+            }
         });
     }
 

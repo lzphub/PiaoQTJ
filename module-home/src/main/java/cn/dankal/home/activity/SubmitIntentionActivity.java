@@ -47,10 +47,11 @@ public class SubmitIntentionActivity extends BaseActivity {
             }
         }
         backImg.setOnClickListener(v -> finish());
-        tohomeLl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              ActivityUtils.finishOtherActivities(UserHomeActivity.class);
+        tohomeLl.setOnClickListener(v -> {
+            if("user".equals(SharedPreferencesUtils.getString(SubmitIntentionActivity.this, "identity", "enterprise"))){
+                ActivityUtils.finishOtherActivities(UserHomeActivity.class);
+            }else{
+                ActivityUtils.finishOtherActivities(HomeActivity.class);
             }
         });
     }

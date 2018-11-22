@@ -44,4 +44,5 @@ public class MyIntentionAllFragment extends BaseRvFragmentImp<MyIntentionBean.Da
         });
         return myIntentionRvAdapter;
     }
+
 }

@@ -14,6 +14,7 @@ import cn.dankal.basiclib.adapter.InternalImgRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.MyRequestBean;
 import cn.dankal.basiclib.bean.RequestDataBean;
+import cn.dankal.basiclib.util.StateUtil;
 import cn.dankal.my.presenter.MyRequestPresenter;
 import cn.dankal.my.presenter.RequestContact;
 import cn.dankal.setting.R;
@@ -32,6 +33,7 @@ public class MyRequestDetaActivity extends BaseActivity implements RequestContac
     private MyRequestPresenter myRequestPresenter=MyRequestPresenter.getPSPresenter();
     private String demandid;
     private InternalImgRvAdapter internalImgRvAdapter;
+    private ImageView ivState;
 
     @Override
     protected int getLayoutId() {
@@ -57,6 +59,7 @@ public class MyRequestDetaActivity extends BaseActivity implements RequestContac
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         addImgRv.setLayoutManager(linearLayoutManager);
+        ivState = (ImageView) findViewById(R.id.iv_state);
     }
 
     @Override
@@ -76,6 +79,9 @@ public class MyRequestDetaActivity extends BaseActivity implements RequestContac
         requestPeriod.setText(databean.getStart_date()+"~"+databean.getEnd_date());
         internalImgRvAdapter =new InternalImgRvAdapter();
         addImgRv.setAdapter(internalImgRvAdapter);
+        addImgRv.setHasFixedSize(true);
+        addImgRv.setNestedScrollingEnabled(false);
         internalImgRvAdapter.updateData(databean.getImages());
+        ivState.setImageResource(StateUtil.requestStateImg(5));
     }
 }

@@ -46,7 +46,25 @@ public class MyIntentionRvAdapter extends BaseRecyclerViewAdapter<MyIntentionBea
             Glide.with(context).load(data.getImages().get(0)).into(intentionImg);
             intentionName.setText(data.getProduct_name());
             intentionPrice.setText("$"+data.getProduct_price());
-            intentionState.setText(data.getStatus()+"");
+            String status="";
+            switch (data.getStatus()){
+                case 1:
+                    status="SUBMITTED";
+                    break;
+                case 2:
+                    status="RECEIVED";
+                    break;
+                case 3:
+                    status="IN PROGRESS";
+                    break;
+                case 4:
+                    status="UNDELIVERED";
+                    break;
+                case 5:
+                    status="FINISH";
+                    break;
+            }
+            intentionState.setText(status);
         }
     }
 }

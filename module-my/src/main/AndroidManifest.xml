@@ -30,7 +30,13 @@
         <activity android:name="cn.dankal.my.activity.MyRequestActivity" />
         <activity android:name="cn.dankal.my.activity.PickCountriesActivity" />
         <activity android:name="cn.dankal.my.activity.MyIntentionDetailsActivity" />
-        <activity android:name="cn.dankal.my.activity.MyRequestDetaActivity"/>
-        <activity android:name="cn.dankal.my.activity.EditDataEnActivity"/>    </application>
+        <activity android:name="cn.dankal.my.activity.MyRequestDetaActivity" />
+        <activity android:name="cn.dankal.my.activity.EditDataEnActivity" />
+        <activity
+            android:name="cn.dankal.my.activity.MyIdeaDataActivity"
+            android:label="@string/title_activity_my_idea_data"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="cn.dankal.my.activity.MyWorkListDataActivity"></activity>
+    </application>
 
 </manifest>

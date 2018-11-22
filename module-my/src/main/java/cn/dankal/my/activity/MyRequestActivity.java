@@ -136,7 +136,7 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
 
     @Override
     public Object contentView() {
-        return R.id.swipe_toload_layout;
+        return swipeToloadLayout;
     }
 
     @Override

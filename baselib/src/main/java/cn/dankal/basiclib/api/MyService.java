@@ -10,6 +10,7 @@ import cn.dankal.basiclib.bean.BankCardListBean;
 import cn.dankal.basiclib.bean.ComProbBean;
 import cn.dankal.basiclib.bean.IntentionDateBean;
 import cn.dankal.basiclib.bean.MyEarBean;
+import cn.dankal.basiclib.bean.MyIdeaListBean;
 import cn.dankal.basiclib.bean.MyIntentionBean;
 import cn.dankal.basiclib.bean.MyRequestBean;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
@@ -190,4 +191,10 @@ public interface MyService {
      */
     @GET("engineer/myprofit/gettransactionlist")
     Observable<TransactionBean> getTransactionList(@Query("page_index") int page_index, @Query("page_size") int page_size);
+
+    /**
+     *  我的创意
+     */
+    @GET("engineer/me/getidealist")
+    Observable<MyIdeaListBean> getMyIdeaList();
 }

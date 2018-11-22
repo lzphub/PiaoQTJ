@@ -4,14 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -21,8 +18,6 @@ import java.util.List;
 
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
-import cn.dankal.basiclib.util.Logger;
-import cn.dankal.my.entity.TabEntity;
 import cn.dankal.my.fragment.MyRequestFragment;
 import cn.dankal.setting.R;
 
@@ -43,7 +38,7 @@ public class MyIdeaActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_my_work_list2;
+        return R.layout.activity_my_work_list_right20;
     }
 
     @Override
@@ -74,11 +69,7 @@ public class MyIdeaActivity extends BaseActivity {
         });
 
         titleText.setText("我的创意");
-//        for(int i=0;i<tab_titel2.length;i++){
-//            mTabEntities.add(new TabEntity(tab_titel2[i]) {
-//            });
-//        }
-//        tabTitle.setTabData(mTabEntities);
+
 
     }
 

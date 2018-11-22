@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -16,7 +18,9 @@ import cn.dankal.basiclib.base.fragment.BaseLazyLoadFragment;
 import cn.dankal.basiclib.base.fragment.BaseStateFragment;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
+import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.MyWorkListBean;
+import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
 import cn.dankal.my.presenter.MyWorkListContact;
@@ -55,6 +59,12 @@ public class MyWorkListAllFragment extends BaseRvFragmentImp<MyWorkListBean.Data
     @Override
     public BaseRecyclerViewAdapter<MyWorkListBean.DataBean> getAdapter() {
         myWorkListRvAdapter = new MyWorkListRvAdapter();
+        myWorkListRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<MyWorkListBean.DataBean>() {
+            @Override
+            public void onItemClick(View v, int position, MyWorkListBean.DataBean data) {
+                ARouter.getInstance().build(MyProtocol.WORKDATA).withString("uuid",data.getUuid()).navigation();
+            }
+        });
         return myWorkListRvAdapter;
     }
 }

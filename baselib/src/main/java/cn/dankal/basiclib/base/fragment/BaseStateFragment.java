@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import cn.dankal.basiclib.base.BaseStateView;
 import cn.dankal.basiclib.widget.loadsir.EmptyCallback;
+import cn.dankal.basiclib.widget.loadsir.EmptyEnCallback;
 import cn.dankal.basiclib.widget.loadsir.LoadingCallback;
 import cn.dankal.basiclib.widget.loadsir.RetryCallback;
 import cn.dankal.basiclib.widget.loadsir.callback.Callback;
@@ -66,5 +67,11 @@ public abstract class BaseStateFragment extends BaseFragment implements BaseStat
     public void showLoading() {
         if (loadService != null)
             loadService.showCallback(LoadingCallback.class);
+    }
+
+    @Override
+    public void showEnEmpty() {
+        if (loadService != null)
+            loadService.showCallback(EmptyEnCallback.class);
     }
 }

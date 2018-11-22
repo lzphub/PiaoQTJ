@@ -102,7 +102,7 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
 
     @Override
     public Object contentView() {
-        return R.id.swipe_toload_layout;
+        return swipeToloadLayout;
     }
 
     @Override
@@ -118,6 +118,9 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
 
     @Override
     public void getDataSuccess(ProductListBean productListBean) {
+        if(productListBean.getData().size()==0){
+            showEnEmpty();
+        }
         if (dataBeanList != null) {
             dataBeanList.clear();
         }
@@ -129,6 +132,10 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
         }
         dataBeanList.addAll(productListBean.getData());
         myFavoriteRvAdapter.addMore(dataBeanList);
+    }
+
+    @Override
+    public void getDataFail() {
     }
 
     @Override

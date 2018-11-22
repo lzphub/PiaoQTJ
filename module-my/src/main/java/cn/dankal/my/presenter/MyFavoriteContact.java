@@ -9,6 +9,7 @@ public interface MyFavoriteContact {
 
     interface fcView extends BaseView{
         void getDataSuccess(ProductListBean productListBean);
+        void getDataFail();
         void updata(ProductListBean productListBean);
     }
 

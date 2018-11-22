@@ -50,22 +50,14 @@ public class SetWithdaPwdActivity extends BaseActivity {
         initView();
         code=getIntent().getIntExtra("type",0);
         email=getIntent().getStringExtra("email");
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        backImg.setOnClickListener(v -> finish());
+        btNext.setOnClickListener(v -> {
+            if(etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())){
+                setPwd(etPasswd.getText().toString().trim());
+            }else{
+                ToastUtils.showShort("两次输入不一致");
             }
-        });
-        btNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())){
-                    setPwd(etPasswd.getText().toString().trim());
-                }else{
-                    ToastUtils.showShort("两次输入不一致");
-                }
 
-            }
         });
     }
 

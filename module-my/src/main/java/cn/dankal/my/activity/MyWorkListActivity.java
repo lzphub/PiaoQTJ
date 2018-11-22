@@ -1,33 +1,22 @@
 package cn.dankal.my.activity;
 
-import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.View;
 import android.widget.ImageView;
-import android.support.v7.widget.RecyclerView;
-import android.support.design.widget.TabLayout;
-import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.flyco.tablayout.CommonTabLayout ;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.dankal.basiclib.adapter.MyIntentionVpAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
-import cn.dankal.basiclib.util.Logger;
 import cn.dankal.my.entity.TabEntity;
 import cn.dankal.my.fragment.MyWorkListAllFragment;
 import cn.dankal.my.fragment.MyWorkListProcessingFragment;
