@@ -18,6 +18,7 @@ import java.util.List;
 
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
+import cn.dankal.my.fragment.MyIdeaAllFragment;
 import cn.dankal.my.fragment.MyRequestFragment;
 import cn.dankal.setting.R;
 
@@ -44,15 +45,10 @@ public class MyIdeaActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        backImg.setOnClickListener(v -> finish());
 
         for(int i=0;i<tab_titel2.length;i++){
-            fragmentList.add(new MyRequestFragment());
+            fragmentList.add(new MyIdeaAllFragment());
         }
         tabViewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragmentList,tab_titel2));
         tabTitle.setViewPager(tabViewpager);
@@ -70,7 +66,7 @@ public class MyIdeaActivity extends BaseActivity {
 
         titleText.setText("我的创意");
 
-
+        tabViewpager.setOffscreenPageLimit(4);
     }
 
     private void initView() {

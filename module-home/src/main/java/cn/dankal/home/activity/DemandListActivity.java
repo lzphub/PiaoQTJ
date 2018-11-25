@@ -34,10 +34,8 @@ import static cn.dankal.basiclib.protocol.HomeProtocol.HOMEDEMANDLIST;
 @Route(path = HOMEDEMANDLIST)
 public class DemandListActivity extends BaseRvActivity<DemandListbean> {
 
-    private List<DemandListbean> demandListbeanList = new ArrayList<>();
     private DemandRvAdapter demandRvAdapter;
     private ImageView backImg;
-    private TextView titleText;
 
     @Override
     protected int getLayoutId() {
@@ -71,6 +69,5 @@ public class DemandListActivity extends BaseRvActivity<DemandListbean> {
 
     private void initView() {
         backImg = findViewById(R.id.back_img);
-        titleText = findViewById(R.id.title_text);
     }
 }

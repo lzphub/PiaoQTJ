@@ -119,6 +119,7 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
     @Override
     public void getDataSuccess(ProductListBean productListBean) {
         if(productListBean.getData().size()==0){
+            initLoadService();
             showEnEmpty();
         }
         if (dataBeanList != null) {

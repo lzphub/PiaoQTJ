@@ -98,6 +98,10 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContac
                         + LangHelper.regularizePrice(threshold) + "元");
                 return;
             }
+            if(Double.valueOf(cashMoney)<0.1){
+                ToastUtils.showShort("提现金额不能低于0.1元");
+                return;
+            }
             if (checkMoney()) {
                 return;
             }

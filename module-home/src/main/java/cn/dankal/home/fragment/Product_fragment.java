@@ -31,6 +31,7 @@ import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.ProductClassifyBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.ProductTabBean;
+import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.ProductProtocol;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.home.persenter.ProductClassifyContact;
@@ -169,7 +170,7 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
                 }
             }
         });
-
+        searchImg.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.HOMESEARCH).navigation());
     }
 
     @Override

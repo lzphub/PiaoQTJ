@@ -23,7 +23,6 @@ public class MyIntentionAllFragment extends BaseRvFragmentImp<MyIntentionBean.Da
 
     @Override
     protected void initComponents(View view) {
-
     }
 
     @Override

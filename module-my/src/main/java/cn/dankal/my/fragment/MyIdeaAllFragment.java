@@ -2,19 +2,27 @@ package cn.dankal.my.fragment;
 
 import android.view.View;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
+import cn.dankal.basiclib.adapter.MyIdeaListRvAdapter;
+import cn.dankal.basiclib.base.fragment.BaseRecyclerViewFragment;
 import cn.dankal.basiclib.base.fragment.BaseStateFragment;
+import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
+import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
+import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
+import cn.dankal.basiclib.bean.MyIdeaListBean;
+import cn.dankal.basiclib.common.OnFinishLoadDataListener;
+import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.my.presenter.MyIdeaListPersenter;
 import cn.dankal.setting.R;
 
-public class MyIdeaAllFragment extends BaseStateFragment {
+public class MyIdeaAllFragment extends BaseRecyclerViewFragment<MyIdeaListBean.DataBean> {
+
+    private MyIdeaListRvAdapter myIdeaListRvAdapter;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_my_request;
-    }
-
-    @Override
-    protected void initComponents() {
-
+        return R.layout.layout_recyclerview;
     }
 
     @Override
@@ -25,6 +33,28 @@ public class MyIdeaAllFragment extends BaseStateFragment {
 
     @Override
     public Object contentView() {
+        return R.id.swipe_toload_layout;
+    }
+
+    @Override
+    public BaseRecyclerViewPresenter<MyIdeaListBean.DataBean> getPresenter() {
+        return new MyIdeaListPersenter();
+    }
+
+    @Override
+    public BaseRecyclerViewAdapter<MyIdeaListBean.DataBean> getAdapter() {
+        myIdeaListRvAdapter=new MyIdeaListRvAdapter();
+        myIdeaListRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<MyIdeaListBean.DataBean>() {
+            @Override
+            public void onItemClick(View v, int position, MyIdeaListBean.DataBean data) {
+                ARouter.getInstance().build(MyProtocol.IDEADATA).withSerializable("data",data).navigation();
+            }
+        });
+        return myIdeaListRvAdapter;
+    }
+
+    @Override
+    public OnFinishLoadDataListener setOnFinishLoadDataListener() {
         return null;
     }
 }

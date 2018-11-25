@@ -53,7 +53,7 @@ public interface MyProtocol extends BaseRouteProtocol {
 
     String MYREQUESTDETA=PART+"myrequestdeta";
 
-    String IDEADATA=PART+"myidea";
+    String IDEADATA=PART+"myideadata";
 
     String WORKDATA=PART+"workdata";
 }

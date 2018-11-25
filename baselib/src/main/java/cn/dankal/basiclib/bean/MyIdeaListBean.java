@@ -1,5 +1,6 @@
 package cn.dankal.basiclib.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class MyIdeaListBean {
@@ -58,7 +59,7 @@ public class MyIdeaListBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * uuid : b5b9bf96ddd138248165d645c979eb9b
          * title : 这是第二个创意
@@ -70,7 +71,7 @@ public class MyIdeaListBean {
         private String uuid;
         private String title;
         private String detail;
-        private Object images;
+        private List<String> images;
         private int status;
 
         public String getUuid() {
@@ -97,11 +98,11 @@ public class MyIdeaListBean {
             this.detail = detail;
         }
 
-        public Object getImages() {
+        public List<String> getImages() {
             return images;
         }
 
-        public void setImages(Object images) {
+        public void setImages(List<String> images) {
             this.images = images;
         }
 

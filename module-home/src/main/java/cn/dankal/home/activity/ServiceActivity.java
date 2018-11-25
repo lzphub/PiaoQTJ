@@ -53,10 +53,10 @@ public class ServiceActivity extends BaseActivity {
     private android.widget.RelativeLayout etRl;
     final private static int KeyboardHeightLimit = 200;
     private ChangeAvatar changeAvatar;
-    private int phototype=0;
+    private int phototype = 0;
 
     private ServiceRvAdapter serviceRvAdapter;
-    private List<ServiceTextBean> serviceTextBeanList=new ArrayList<>();
+    private List<ServiceTextBean> serviceTextBeanList = new ArrayList<>();
     private String type;
     private TextView title;
     private TextView tvPhotograph;
@@ -70,8 +70,8 @@ public class ServiceActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        type= SharedPreferencesUtils.getString(this,"identity","user");
-        if(!type.equals("user")){
+        type = SharedPreferencesUtils.getString(this, "identity", "user");
+        if (!type.equals("user")) {
             title.setText("客服中心");
             tipsText.setText("如客服没有及时回复，请联系1071377555@qq.com");
             contentEt.setHint("请输入您的问题");
@@ -80,76 +80,64 @@ public class ServiceActivity extends BaseActivity {
         }
         changeAvatar = new ChangeAvatarImpl(this, this);
         backImg.setOnClickListener(v -> finish());
-        addImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(addToLl.getVisibility()==View.GONE){
-                    addImg.setImageResource(R.mipmap.ic_customerservice_close);
-                    addToLl.setVisibility(View.VISIBLE);
-                }else{
-                    addImg.setImageResource(R.mipmap.ic_customerservice_addto);
-                    addToLl.setVisibility(View.GONE);
-                }
+        addImg.setOnClickListener(v -> {
+            if (addToLl.getVisibility() == View.GONE) {
+                addImg.setImageResource(R.mipmap.ic_customerservice_close);
+                addToLl.setVisibility(View.VISIBLE);
+            } else {
+                addImg.setImageResource(R.mipmap.ic_customerservice_addto);
+                addToLl.setVisibility(View.GONE);
             }
         });
-        etRl.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Rect r = new Rect();
-                etRl.getWindowVisibleDisplayFrame(r);
-                final int screenHeight = etRl.getRootView().getHeight();
-                final int keyboardHeight = screenHeight - (r.bottom);
+        etRl.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            Rect r = new Rect();
+            etRl.getWindowVisibleDisplayFrame(r);
+            final int screenHeight = etRl.getRootView().getHeight();
+            final int keyboardHeight = screenHeight - (r.bottom);
 
-                if (keyboardHeight > KeyboardHeightLimit) {
-                    RelativeLayout.LayoutParams layoutParams= (RelativeLayout.LayoutParams) etRl.getLayoutParams();
-                    layoutParams.setMargins(0,0,0,keyboardHeight);
-                    etRl.setLayoutParams(layoutParams);
-                }else{
-                    RelativeLayout.LayoutParams layoutParams= (RelativeLayout.LayoutParams) etRl.getLayoutParams();
-                    layoutParams.setMargins(0,0,0,7);
-                    etRl.setLayoutParams(layoutParams);
-                }
+            if (keyboardHeight > KeyboardHeightLimit) {
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) etRl.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, keyboardHeight);
+                etRl.setLayoutParams(layoutParams);
+            } else {
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) etRl.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, 7);
+                etRl.setLayoutParams(layoutParams);
             }
         });
         contentEt.setOnEditorActionListener((v, actionId, event) -> {
-            switch (event.getKeyCode()){
+            switch (event.getKeyCode()) {
                 case KeyEvent.KEYCODE_ENTER:
-                    String msg=contentEt.getText().toString().trim();
-                    if(StringUtil.isValid(msg)){
-                        ServiceTextBean serviceTextBean=new ServiceTextBean();
+                    String msg = contentEt.getText().toString().trim();
+                    if (StringUtil.isValid(msg)) {
+                        ServiceTextBean serviceTextBean = new ServiceTextBean();
                         serviceTextBean.setType(1);
                         serviceTextBean.setSend_text(msg);
                         serviceTextBeanList.add(serviceTextBean);
                         serviceRvAdapter.update(serviceTextBeanList);
                         contentEt.setText("");
-                        chatRv.scrollToPosition(serviceTextBeanList.size()-1);
-                    }else{
+                        chatRv.scrollToPosition(serviceTextBeanList.size() - 1);
+                    } else {
                     }
                     break;
             }
             return true;
         });
-        serviceRvAdapter=new ServiceRvAdapter(serviceTextBeanList,ServiceActivity.this);
+        serviceRvAdapter = new ServiceRvAdapter(serviceTextBeanList, ServiceActivity.this);
         chatRv.setAdapter(serviceRvAdapter);
-        addToCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CameraHandler cameraHandler=new CameraHandler(ServiceActivity.this);
-                changeAvatar.checkPermission(cameraHandler, () -> {
-                    cameraHandler.takePhoto();
-                    phototype=0;
-                });
-            }
+        addToCamera.setOnClickListener(v -> {
+            CameraHandler cameraHandler = new CameraHandler(ServiceActivity.this);
+            changeAvatar.checkPermission(cameraHandler, () -> {
+                cameraHandler.takePhoto();
+                phototype = 0;
+            });
         });
-        addToAlbum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CameraHandler cameraHandler=new CameraHandler(ServiceActivity.this);
-                changeAvatar.checkPermission(cameraHandler, () -> {
-                    cameraHandler.pickPhoto();
-                    phototype=1;
-                });
-            }
+        addToAlbum.setOnClickListener(v -> {
+            CameraHandler cameraHandler = new CameraHandler(ServiceActivity.this);
+            changeAvatar.checkPermission(cameraHandler, () -> {
+                cameraHandler.pickPhoto();
+                phototype = 1;
+            });
         });
     }
 
@@ -157,26 +145,26 @@ public class ServiceActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            changeAvatar.onChatPickPhoto(chatRv,serviceRvAdapter,serviceTextBeanList,requestCode,resultCode,data);
+            changeAvatar.onChatPickPhoto(chatRv, serviceRvAdapter, serviceTextBeanList, requestCode, resultCode, data);
         }
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        tipsText = (TextView) findViewById(R.id.tips_text);
-        contentEt = (EditText) findViewById(R.id.content_et);
-        addImg = (ImageView) findViewById(R.id.add_img);
-        addToLl = (LinearLayout) findViewById(R.id.add_to_ll);
-        addToCamera = (LinearLayout) findViewById(R.id.add_to_camera);
-        addToAlbum = (LinearLayout) findViewById(R.id.add_to_album);
-        chatRv = (RecyclerView) findViewById(R.id.chat_rv);
-        etRl = (RelativeLayout) findViewById(R.id.et_rl);
+        backImg = findViewById(R.id.back_img);
+        tipsText = findViewById(R.id.tips_text);
+        contentEt = findViewById(R.id.content_et);
+        addImg = findViewById(R.id.add_img);
+        addToLl = findViewById(R.id.add_to_ll);
+        addToCamera = findViewById(R.id.add_to_camera);
+        addToAlbum = findViewById(R.id.add_to_album);
+        chatRv = findViewById(R.id.chat_rv);
+        etRl = findViewById(R.id.et_rl);
 
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         chatRv.setLayoutManager(linearLayoutManager);
-        title = (TextView) findViewById(R.id.title);
-        tvPhotograph = (TextView) findViewById(R.id.tv_photograph);
-        tvAlbum = (TextView) findViewById(R.id.tv_album);
+        title = findViewById(R.id.title);
+        tvPhotograph = findViewById(R.id.tv_photograph);
+        tvAlbum = findViewById(R.id.tv_album);
     }
 }

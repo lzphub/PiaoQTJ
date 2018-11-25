@@ -29,14 +29,18 @@ public abstract class BaseStateActivity extends BaseActivity implements BaseStat
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        obtainData();
+
+    }
+
+    public void initLoadService(){
         if (contentView() != null) {
-           loadService = LoadSir.getDefault().register(contentView(), new Callback.OnReloadListener() {
+            loadService = LoadSir.getDefault().register(contentView(), new Callback.OnReloadListener() {
                 @Override
                 public void onReload(View v) {
-                    loadService.showCallback(LoadingCallback.class);
+//                    loadService.showCallback(LoadingCallback.class);
                     //do retry logic...
                     //callback
-                    obtainData();
                 }
             });
 //            obtainData();

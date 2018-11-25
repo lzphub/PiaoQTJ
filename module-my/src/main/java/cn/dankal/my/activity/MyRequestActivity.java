@@ -141,6 +141,10 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
 
     @Override
     public void getDataSuccess(MyRequestBean myRequestBean) {
+//        if(myRequestBean.getData().size()==0){
+//            initLoadService();
+//            showEnEmpty();
+//        }
         if (myRequestBeans != null) {
             myRequestBeans.clear();
         }

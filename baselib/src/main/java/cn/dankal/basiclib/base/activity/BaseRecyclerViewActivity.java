@@ -11,6 +11,7 @@ import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewContract;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.common.OnFinishLoadDataListener;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
 
 /**
@@ -29,10 +30,12 @@ public abstract class BaseRecyclerViewActivity<M> extends BaseStateActivity impl
     private int pageIndex = 1;
     private boolean isUpdateList = false;
     private boolean isRefresh = true;
+    private String type;
 
     @Override
     protected void initComponents() {
         mPresenter = getPresenter();
+        type= SharedPreferencesUtils.getString(this, "identity", "user");
         if (mPresenter != null) mPresenter.attachView(this);
 
         mAdapter = getAdapter();
@@ -80,6 +83,7 @@ public abstract class BaseRecyclerViewActivity<M> extends BaseStateActivity impl
             } else {
                 if (mAdapter != null)
                     mAdapter.clearData();
+
             }
         } else {
             onFinishLoadDataListener.finishLoadMore();
@@ -89,7 +93,12 @@ public abstract class BaseRecyclerViewActivity<M> extends BaseStateActivity impl
             }
         }
         if (mAdapter != null && mAdapter.isEmpty()) {
-            showEmpty();
+            initLoadService();
+            if("user".equals(type)){
+                showEnEmpty();
+            }else{
+                showEmpty();
+            }
         }
     }
 

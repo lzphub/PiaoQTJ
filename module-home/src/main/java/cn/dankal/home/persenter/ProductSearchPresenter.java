@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import api.HomeServiceFactory;
 import api.ProductServiceFactory;
 import cn.dankal.basiclib.adapter.ProductRvAdapter;
+import cn.dankal.basiclib.bean.DemandListbean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.UserHomeBannerBean;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
@@ -46,6 +47,16 @@ public class ProductSearchPresenter implements ProductSearchContact.productSearc
             public void onError(Throwable e) {
                 super.onError(e);
                 ToastUtils.showShort(e.getMessage()+"");
+            }
+        });
+    }
+
+    @Override
+    public void demandSearch(String keyWord) {
+        ProductServiceFactory.searchDemandList(keyWord).safeSubscribe(new AbstractDialogSubscriber<DemandListbean>(searchview) {
+            @Override
+            public void onNext(DemandListbean demandListbean) {
+                searchview.demandSearchSuccess(demandListbean);
             }
         });
     }
