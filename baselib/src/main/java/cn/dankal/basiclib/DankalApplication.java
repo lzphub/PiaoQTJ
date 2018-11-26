@@ -2,6 +2,8 @@ package cn.dankal.basiclib;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
+import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -42,7 +44,6 @@ public class DankalApplication extends Application {
         //适配方案
         DensityAdaptationUtils.setDensity(context, 375);
         AppUtils.init(context);
-
     }
     /**
      * 初始化阿里路由

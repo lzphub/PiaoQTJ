@@ -96,8 +96,8 @@ dependencies {
 
     //mta 3.4.7 稳定版
     //mid jar包 必须添加
-    api deps.tencent.mta
-    api deps.tencent.mid
+//    api deps.tencent.mta
+//    api deps.tencent.mid
 
 //    api project(':component-zxing')
     api project(':component-annotations')
@@ -110,5 +110,9 @@ dependencies {
     implementation deps.kotlin.anko
     implementation "com.zhihu.android:matisse:0.5.2-beta3"
     api deps.support.multidex
+
+
+    api deps.push.jgsdk_jpush
+    api deps.push.jgsdk_jcore
 
 }

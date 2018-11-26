@@ -46,8 +46,7 @@ public class LoginActivity extends BaseActivity {
     protected void initComponents() {
         initView();
         //自动登录
-        if("user".equals(SharedPreferencesUtils.getString(this, "identity", "user"))){
-            Logger.d("tokento",DKUserManager.getUserToken().getAccessToken());
+        if(SharedPreferencesUtils.getString(this,"identity","user").equals("user")){
             if(DKUserManager.isLogined()){
                 refreshToken();
                 ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
@@ -55,9 +54,8 @@ public class LoginActivity extends BaseActivity {
                 finish();
             }
         }else{
-            Logger.d("tokento",DKUserManager.getUserToken().getAccessToken());
             if(DKUserManager.isLogined()){
-//                engRefreshToken();
+                engRefreshToken();
                 ARouter.getInstance().build(HomeProtocol.HOMEACTIVITY).navigation();
                 SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "enterprise");
                 finish();
@@ -97,6 +95,7 @@ public class LoginActivity extends BaseActivity {
           public void onNext(UserResponseBody userResponseBody) {
               DKUserManager.resetUserInfo();
               DKUserManager.saveUserInfo(userResponseBody);
+
               ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
               SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "user");
               finish();
