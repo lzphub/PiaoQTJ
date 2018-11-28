@@ -22,6 +22,7 @@ import api.ProductServiceFactory;
 import cn.dankal.address.R;
 import cn.dankal.basiclib.adapter.DemandRvAdapter;
 import cn.dankal.basiclib.adapter.ProductRvAdapter;
+import cn.dankal.basiclib.adapter.ProductSearchRvAdapter;
 import cn.dankal.basiclib.adapter.TextOnlyAdapter;
 import cn.dankal.basiclib.adapter.TextRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
@@ -53,7 +54,7 @@ public class HomeSearchActivity extends BaseActivity implements ProductSearchCon
     private List<String> searchRecord = new ArrayList<>();
     private TextView jilu;
     private TextOnlyAdapter textOnlyAdapter;
-    private ProductRvAdapter productRvAdapter;
+    private ProductSearchRvAdapter productRvAdapter;
     private DemandRvAdapter demandRvAdapter;
     private ProductSearchPresenter productSearchPresenter = ProductSearchPresenter.getPresenter();
     private String type;
@@ -149,7 +150,7 @@ public class HomeSearchActivity extends BaseActivity implements ProductSearchCon
     @Override
     public void serarchDataSuccess(ProductListBean productListBean) {
         ctlSearch.setVisibility(View.GONE);
-        productRvAdapter = new ProductRvAdapter();
+        productRvAdapter = new ProductSearchRvAdapter();
         productRvAdapter.updateData(productListBean.getData());
         searchList.setAdapter(productRvAdapter);
     }

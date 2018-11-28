@@ -1,14 +1,10 @@
 package cn.dankal.my.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.dankal.basiclib.adapter.MyIdeaListRvAdapter;
 import cn.dankal.basiclib.base.fragment.BaseRecyclerViewFragment;
@@ -25,7 +21,8 @@ import cn.dankal.my.presenter.MyIdeaListPersenter;
 import cn.dankal.setting.R;
 import cn.dankal.setting.R2;
 
-public class MyIdeaAllFragment extends BaseRecyclerViewFragment<MyIdeaListBean.DataBean> {
+public class MyIdeaPromotionFragment extends BaseRecyclerViewFragment<MyIdeaListBean.DataBean> {
+
 
     private MyIdeaListRvAdapter myIdeaListRvAdapter;
     private MyIdeaListPersenter myIdeaListPersenter;
@@ -48,17 +45,17 @@ public class MyIdeaAllFragment extends BaseRecyclerViewFragment<MyIdeaListBean.D
     @Override
     public BaseRecyclerViewPresenter<MyIdeaListBean.DataBean> getPresenter() {
         myIdeaListPersenter = new MyIdeaListPersenter();
-        myIdeaListPersenter.requestData("0");
+        myIdeaListPersenter.requestData("6");
         return myIdeaListPersenter;
     }
 
     @Override
     public BaseRecyclerViewAdapter<MyIdeaListBean.DataBean> getAdapter() {
-        myIdeaListRvAdapter = new MyIdeaListRvAdapter();
+        myIdeaListRvAdapter=new MyIdeaListRvAdapter();
         myIdeaListRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<MyIdeaListBean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, MyIdeaListBean.DataBean data) {
-                ARouter.getInstance().build(MyProtocol.IDEADATA).withSerializable("data", data).navigation();
+                ARouter.getInstance().build(MyProtocol.IDEADATA).withSerializable("data",data).navigation();
             }
         });
         return myIdeaListRvAdapter;
@@ -68,5 +65,4 @@ public class MyIdeaAllFragment extends BaseRecyclerViewFragment<MyIdeaListBean.D
     public OnFinishLoadDataListener setOnFinishLoadDataListener() {
         return null;
     }
-
 }

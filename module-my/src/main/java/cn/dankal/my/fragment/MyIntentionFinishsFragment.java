@@ -18,7 +18,7 @@ public class MyIntentionFinishsFragment extends BaseRvFragmentImp<MyIntentionBea
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_recyclerview;
+        return R.layout.layout_recyclerview_en;
     }
 
     @Override

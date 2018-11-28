@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import api.HomeServiceFactory;
 import cn.dankal.basiclib.bean.DemandListbean;
 import cn.dankal.basiclib.bean.ProductClassifyBean;
+import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.UserHomeBannerBean;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
@@ -24,9 +25,9 @@ public class ProductHomePresenter implements ProductHomeContact.productHomePrese
 
     @Override
     public void getData(int page,int size) {
-        HomeServiceFactory.getProduct(page,size).safeSubscribe(new AbstractDialogSubscriber<ProductListBean>(phview) {
+        HomeServiceFactory.getProduct(page,size).safeSubscribe(new AbstractDialogSubscriber<ProductHomeListBean>(phview) {
             @Override
-            public void onNext(ProductListBean productListBean) {
+            public void onNext(ProductHomeListBean productListBean) {
                 phview.getDataSuccess(productListBean);
             }
         });

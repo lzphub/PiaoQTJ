@@ -19,11 +19,13 @@ import java.net.URI;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import api.HomeServiceFactory;
 import api.MyServiceFactory;
 import api.UserServiceFactory;
 import cn.dankal.basiclib.adapter.ServiceRvAdapter;
 import cn.dankal.basiclib.base.BaseView;
 import cn.dankal.basiclib.base.callback.DKCallBack;
+import cn.dankal.basiclib.bean.ChatBean;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
 import cn.dankal.basiclib.bean.PersonalData_EngineerPostBean;
 import cn.dankal.basiclib.bean.ServiceTextBean;
@@ -34,6 +36,8 @@ import cn.dankal.basiclib.common.qiniu.QiniuUpload;
 import cn.dankal.basiclib.common.qiniu.UploadHelper;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.ImagePathUtil;
+import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.util.UriUtils;
 import cn.dankal.basiclib.util.image.PicUtils;
@@ -155,23 +159,25 @@ public class ChangeAvatarImpl implements ChangeAvatar {
     }
 
     @Override
-    public void onChatPickPhoto(RecyclerView recyclerView, ServiceRvAdapter serviceRvAdapter, List<ServiceTextBean> serviceTextBeanList, int requestCode, int resultCode, Intent data) {
-        ServiceTextBean serviceTextBean = new ServiceTextBean();
+    public void onChatPickPhoto(BaseView baseView,String pic,RecyclerView recyclerView, ServiceRvAdapter serviceRvAdapter, List<ChatBean.DataBean> serviceTextBeanList, int requestCode, int resultCode, Intent data) {
+        ChatBean.DataBean serviceTextBean = new ChatBean.DataBean();
         switch (requestCode) {
             case RequestCodes.TAKE_PHOTO:
                 Uri takePath = CamerImageBean.getInstance().getPath();
-                serviceTextBean.setSend_img(takePath);
-                serviceTextBean.setType(3);
+                serviceTextBean.setContent(takePath.toString());
+                serviceTextBean.setType(2);
+                uploadPic3(takePath,baseView);
                 break;
             case RequestCodes.PICK_PHOTO:
                 Uri pickpath = Uri.parse(ImagePathUtil.getImageAbsolutePath(context, data.getData()));
-                serviceTextBean.setSend_img(pickpath);
-                serviceTextBean.setType(3);
+                serviceTextBean.setContent(pickpath.toString());
+                serviceTextBean.setType(2);
+                uploadPic3(pickpath,baseView);
                 break;
             default:
         }
         serviceTextBeanList.add(serviceTextBean);
-        serviceRvAdapter.update(serviceTextBeanList);
+        serviceRvAdapter.update(serviceTextBeanList,pic);
         recyclerView.scrollToPosition(serviceTextBeanList.size() - 1);
     }
 
@@ -252,6 +258,65 @@ public class ChangeAvatarImpl implements ChangeAvatar {
 //                getIvHead().setImageURI(uri);
                 personalData_engineerPostBean.setAvatar(key);
                 setAvatar2(personalData_engineerPostBean);
+            }
+
+            @Override
+            public void onUpload(double percent) {
+                DecimalFormat df = new DecimalFormat("#0.00");
+                builder.setTipWord(df.format(percent * 100) + "%").showProgress();
+            }
+
+            @Override
+            public void onError(String string) {
+                ToastUtils.showLong(string);
+                loadingDialog.dismiss();
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL)
+                        .setTipWord("上传失败")
+                        .create(2000);
+                dialog.show();
+                dialog.dismiss();
+            }
+        }, b ? photoUris.getPath() : UriUtils.getPath(context, photoUris));
+
+//        Uri uri = Uri.fromFile(tempFile);
+//        mIvHead.setImageURI(uri);
+    }
+
+    private void uploadPic3(Uri photoUris,BaseView baseView) {
+        final File tempFile = new File(photoUris.getPath());
+
+        TipDialog.Builder builder = new TipDialog.Builder(context);
+        loadingDialog = builder
+                .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在发送").create();
+        loadingDialog.show();
+
+        boolean b = UriUtils.getPath(context, photoUris) == null;
+
+        new UploadHelper().uploadQiniuPic(new QiniuUpload.UploadListener() {
+            @Override
+            public void onSucess(String localPath, String key) {
+                loadingDialog.dismiss();
+                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
+                        .setTipWord("发送成功")
+                        .create(1000);
+                dialog.show();
+                dialog.dismiss();
+                String type = SharedPreferencesUtils.getString(context, "identity", "user");
+                if(type.equals("user")){
+                    MyServiceFactory.userServiceSendMsg(key,2).safeSubscribe(new AbstractDialogSubscriber<String>(baseView) {
+                        @Override
+                        public void onNext(String s) {
+
+                        }
+                    });
+                }else{
+                    MyServiceFactory.serviceSendMsg(key,2).safeSubscribe(new AbstractDialogSubscriber<String>(baseView) {
+                        @Override
+                        public void onNext(String s) {
+                        }
+                    });
+                }
             }
 
             @Override

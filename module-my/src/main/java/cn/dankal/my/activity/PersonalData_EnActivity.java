@@ -249,6 +249,7 @@ public class PersonalData_EnActivity extends BaseActivity {
                 countryText.setText(personalData_enBean.getCountry());
                 positionText.setText(personalData_enBean.getPosition());
 
+
                 personalDataEnBean = personalData_enBean;
 
                 ageitemcount = personalData_enBean.getAge();

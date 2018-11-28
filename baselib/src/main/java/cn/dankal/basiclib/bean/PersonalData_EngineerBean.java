@@ -19,7 +19,7 @@ public class PersonalData_EngineerBean {
     private String avatar;
     private String competence;
     private int level;
-    private Object mobile;
+    private String mobile;
     private String province;
     private String city;
 
@@ -63,11 +63,11 @@ public class PersonalData_EngineerBean {
         this.level = level;
     }
 
-    public Object getMobile() {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setMobile(Object mobile) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 

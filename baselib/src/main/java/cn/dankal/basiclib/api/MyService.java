@@ -7,6 +7,7 @@ import cn.dankal.annotations.ApiFactory;
 import cn.dankal.basiclib.bean.AboutUsBean;
 import cn.dankal.basiclib.bean.AddressBean;
 import cn.dankal.basiclib.bean.BankCardListBean;
+import cn.dankal.basiclib.bean.ChatBean;
 import cn.dankal.basiclib.bean.ComProbBean;
 import cn.dankal.basiclib.bean.IntentionDateBean;
 import cn.dankal.basiclib.bean.MyEarBean;
@@ -121,7 +122,7 @@ public interface MyService {
      * 需求列表
      */
     @GET("customer/demand")
-    Observable<MyRequestBean> getMyRequest(@Query("page_index") int page_index, @Query(" page_size") int page_size);
+    Observable<MyRequestBean> getMyRequest(@Query("status")String status,@Query("page_index") int page_index, @Query(" page_size") int page_size);
 
     /**
      * 删除需求
@@ -196,5 +197,32 @@ public interface MyService {
      *  我的创意
      */
     @GET("engineer/me/getidealist")
-    Observable<MyIdeaListBean> getMyIdeaList();
+    Observable<MyIdeaListBean> getMyIdeaList(@Query("status")int status,@Query("page_index") int page_index, @Query("page_size") int page_size);
+
+    /**
+     * 工程师端发送消息
+     */
+    @POST("engineer/service")
+    @FormUrlEncoded
+    Observable<String> serviceSendMsg(@Field("content")String content,@Field("type")int type);
+
+    /**
+     * 工程师端获取聊天记录
+     */
+    @GET("engineer/service")
+    Observable<ChatBean> getMsgRecord(@Query("page_index") String page_index,@Query("page_size")String page_size);
+
+    /**
+     *  用户端发送消息
+     */
+    @POST("customer/service")
+    @FormUrlEncoded
+    Observable<String> userServiceSendMsg(@Field("content")String content,@Field("type")int type);
+
+    /**
+     * 用户端获取聊天记录
+     */
+    @GET("customer/service")
+    Observable<ChatBean> getUserMsgRecord(@Query("page_index")String page_index,@Query("page_size")String page_size);
+
 }

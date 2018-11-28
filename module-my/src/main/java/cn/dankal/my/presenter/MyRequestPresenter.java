@@ -26,8 +26,8 @@ public class MyRequestPresenter implements RequestContact.idPresenter {
     }
 
     @Override
-    public void getData(int page_index,int page_size) {
-        MyServiceFactory.getMyRequest(page_index,page_size).safeSubscribe(new AbstractDialogSubscriber<MyRequestBean>(requestView) {
+    public void getData(String status,int page_index,int page_size) {
+        MyServiceFactory.getMyRequest(status,page_index,page_size).safeSubscribe(new AbstractDialogSubscriber<MyRequestBean>(requestView) {
             @Override
             public void onNext(MyRequestBean myRequestBean) {
                 requestView.getDataSuccess(myRequestBean);
@@ -36,11 +36,11 @@ public class MyRequestPresenter implements RequestContact.idPresenter {
     }
 
     @Override
-    public void delete(String demand_id) {
+    public void delete(String status,String demand_id) {
         MyServiceFactory.deleteMyRequest(demand_id).safeSubscribe(new AbstractDialogSubscriber<String>(requestView) {
             @Override
             public void onNext(String s) {
-                upData(1,10);
+                upData(status,1,10);
             }
         });
     }
@@ -55,8 +55,8 @@ public class MyRequestPresenter implements RequestContact.idPresenter {
         });
     }
 
-    private void upData(int page_index,int page_size){
-        MyServiceFactory.getMyRequest(page_index,page_size).safeSubscribe(new AbstractDialogSubscriber<MyRequestBean>(requestView) {
+    private void upData(String status,int page_index,int page_size){
+        MyServiceFactory.getMyRequest(status,page_index,page_size).safeSubscribe(new AbstractDialogSubscriber<MyRequestBean>(requestView) {
             @Override
             public void onNext(MyRequestBean myRequestBean) {
                requestView.updata(myRequestBean);

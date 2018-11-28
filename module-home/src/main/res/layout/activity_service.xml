@@ -15,10 +15,11 @@
 
         <ImageView
             android:id="@+id/back_img"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="49dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="23dp"
+            android:layout_marginLeft="13dp"
+            android:scaleType="center"
             android:src="@mipmap/ic_my_worklist_return" />
 
         <TextView
@@ -76,10 +77,12 @@
                 android:paddingLeft="18dp"
                 android:paddingRight="18dp"
                 android:paddingTop="7dp"
+                android:imeOptions="actionSend"
                 android:textColorHint="@color/colorC1"
                 android:textColor="@color/color33"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:imeActionLabel="发送"
                 android:maxLines="6"/>
 
             <ImageView
@@ -158,11 +161,23 @@
         </LinearLayout>
     </RelativeLayout>
 
+<cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout
+    android:id="@id/swipe_toload_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:load_more_complete_delay_duration="250"
+    app:refresh_complete_delay_duration="250"
+    android:layout_above="@id/et_rl"
+    android:layout_below="@id/tips_text">
+
+    <include
+        android:id="@+id/swipe_refresh_header"
+        layout="@layout/layout_addmore_header" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/chat_rv"
+        android:id="@id/swipe_target"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/et_rl"
-        android:layout_below="@id/tips_text"></android.support.v7.widget.RecyclerView>
+        android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
+</cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout>
 </RelativeLayout>

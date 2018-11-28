@@ -69,7 +69,7 @@
 
         <include
             android:id="@+id/swipe_refresh_header"
-            layout="@layout/layout_classic_header" />
+            layout="@layout/layout_classic_en_header" />
 
         <android.support.v4.widget.NestedScrollView
             android:id="@id/swipe_target"
@@ -143,6 +143,6 @@
 
         <include
             android:id="@id/swipe_load_more_footer"
-            layout="@layout/layout_classic_footer" />
+            layout="@layout/layout_classic_en_footer" />
     </cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout>
 </LinearLayout>

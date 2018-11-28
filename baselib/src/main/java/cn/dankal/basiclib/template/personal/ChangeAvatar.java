@@ -7,7 +7,9 @@ import android.widget.ImageView;
 import java.util.List;
 
 import cn.dankal.basiclib.adapter.ServiceRvAdapter;
+import cn.dankal.basiclib.base.BaseView;
 import cn.dankal.basiclib.base.callback.DKCallBack;
+import cn.dankal.basiclib.bean.ChatBean;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
 import cn.dankal.basiclib.bean.PersonalData_EngineerPostBean;
 import cn.dankal.basiclib.bean.ServiceTextBean;
@@ -26,5 +28,5 @@ public interface ChangeAvatar {
     void setIvHead(ImageView imageView);
     void onActivityResult(int requestCode, int resultCode, Intent data, PersonalData_EnBean personalData_enBean);
     void onActivityResult2(int requestCode, int resultCode, Intent data, PersonalData_EngineerPostBean personalData_engineerPostBean);
-    void onChatPickPhoto(RecyclerView recyclerView, ServiceRvAdapter serviceRvAdapter, List<ServiceTextBean> serviceTextBeanList, int requestCode, int resultCode, Intent data);
+    void onChatPickPhoto(BaseView baseView, String pic, RecyclerView recyclerView, ServiceRvAdapter serviceRvAdapter, List<ChatBean.DataBean> serviceTextBeanList, int requestCode, int resultCode, Intent data);
 }

@@ -7,11 +7,20 @@ public class PersonalData_EnBean implements Serializable {
     private String email;
     private String avatar;
     private int age;
+    private String mobile;
     private String contact;
     private String company;
     private String country;
     private String position;
     private String create_time;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public String getName() {
         return name;

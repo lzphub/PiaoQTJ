@@ -76,4 +76,25 @@ public class StateUtil {
         return stateImg;
     }
 
+    public static String requestState(int stateId){
+        String state = "";
+        switch (stateId){
+            case 1:
+                state="SUBMITTED";
+                break;
+            case 2:
+                state="RECEIVED";
+                break;
+            case 3:
+                state="IN PROGRESS";
+                break;
+            case 4:
+                state="UNDELIVERED";
+                break;
+            case 5:
+                state="FINISH";
+                break;
+        }
+        return state;
+    }
 }

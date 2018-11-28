@@ -121,6 +121,8 @@ public class MyIntentionActivity extends BaseActivity {
 
         tabViewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), (ArrayList<BaseFragment>) fragmentList,tab_titel2));
         tabTitle.setViewPager(tabViewpager);
+
+        tabViewpager.setOffscreenPageLimit(4);
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {

@@ -18,7 +18,7 @@ public class MyIntentionProgressFragment extends BaseRvFragmentImp<MyIntentionBe
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_recyclerview;
+        return R.layout.layout_recyclerview_en;
     }
 
     @Override

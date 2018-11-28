@@ -10,11 +10,12 @@ public class MyIdeaListPersenter extends BaseRecyclerViewPresenter<MyIdeaListBea
 
     @Override
     public void requestData(String pageIndex) {
-       MyServiceFactory.getMyIdeaList().safeSubscribe(new AbstractDialogSubscriber<MyIdeaListBean>(mView) {
-           @Override
-           public void onNext(MyIdeaListBean myIdeaListBean) {
-               mView.render(myIdeaListBean.getData());
-           }
-       });
+        MyServiceFactory.getMyIdeaList(Integer.valueOf(pageIndex),1,20).safeSubscribe(new AbstractDialogSubscriber<MyIdeaListBean>(mView) {
+            @Override
+            public void onNext(MyIdeaListBean myIdeaListBean) {
+                mView.render(myIdeaListBean.getData());
+            }
+        });
     }
+
 }

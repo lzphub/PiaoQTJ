@@ -14,8 +14,8 @@ public interface RequestContact {
         void getRequestDataSuccess(RequestDataBean requestDataBean);
     }
     interface idPresenter extends BasePresenter<RequestView>{
-        void getData(int page_index,int page_size);
-        void delete(String demand_id);
+        void getData(String status,int page_index,int page_size);
+        void delete(String status,String demand_id);
         void getRequestData(String demand_id);
     }
 }

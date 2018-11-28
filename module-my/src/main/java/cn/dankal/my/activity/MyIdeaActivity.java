@@ -19,6 +19,9 @@ import java.util.List;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
 import cn.dankal.my.fragment.MyIdeaAllFragment;
+import cn.dankal.my.fragment.MyIdeaFinishFragment;
+import cn.dankal.my.fragment.MyIdeaOngoingFragment;
+import cn.dankal.my.fragment.MyIdeaPromotionFragment;
 import cn.dankal.my.fragment.MyRequestFragment;
 import cn.dankal.setting.R;
 
@@ -32,6 +35,10 @@ public class MyIdeaActivity extends BaseActivity {
     private com.flyco.tablayout.SlidingTabLayout tabTitle;
     private android.support.v4.view.ViewPager tabViewpager;
     private List<BaseFragment> fragmentList=new ArrayList<>();
+    private MyIdeaAllFragment myIdeaAllFragment;
+    private MyIdeaOngoingFragment myIdeaOngoingFragment;
+    private MyIdeaFinishFragment myIdeaFinishFragment;
+    private MyIdeaPromotionFragment myIdeaPromotionFragment;
 
     private String[] tab_titel2={"全部","进行中","已完成","产品推广中"};
 
@@ -47,9 +54,26 @@ public class MyIdeaActivity extends BaseActivity {
         initView();
         backImg.setOnClickListener(v -> finish());
 
-        for(int i=0;i<tab_titel2.length;i++){
-            fragmentList.add(new MyIdeaAllFragment());
+        if(null == fragmentList){
+            fragmentList = new ArrayList<BaseFragment>();
         }
+        if(null==myIdeaAllFragment){
+            myIdeaAllFragment=new MyIdeaAllFragment();
+            fragmentList.add(myIdeaAllFragment);
+        }
+        if(null  == myIdeaOngoingFragment){
+            myIdeaOngoingFragment = new MyIdeaOngoingFragment();
+            fragmentList.add(myIdeaOngoingFragment);
+        }
+        if(null  == myIdeaFinishFragment){
+            myIdeaFinishFragment = new MyIdeaFinishFragment();
+            fragmentList.add(myIdeaFinishFragment);
+        }
+        if(null  == myIdeaPromotionFragment){
+            myIdeaPromotionFragment = new MyIdeaPromotionFragment();
+            fragmentList.add(myIdeaPromotionFragment);
+        }
+
         tabViewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragmentList,tab_titel2));
         tabTitle.setViewPager(tabViewpager);
         tabTitle.setOnTabSelectListener(new OnTabSelectListener() {

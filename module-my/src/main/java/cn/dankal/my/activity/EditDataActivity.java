@@ -62,6 +62,9 @@ public class EditDataActivity extends BaseActivity {
                     case 2:
                         personalData_engineerPostBean.setCompetence(etName.getText().toString().trim());
                         break;
+                    case 3:
+                        personalData_engineerPostBean.setMobile(etName.getText().toString().trim());
+                        break;
                 }
                 postEngineerData();
             }

@@ -10,14 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.dankal.basiclib.DankalApplication;
 import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.R2;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.base.recyclerview.del.BaseDelViewHolder;
 import cn.dankal.basiclib.bean.MyRequestBean;
+import cn.dankal.basiclib.util.StateUtil;
 
 public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.databean> {
+
 
     private List<String> urllist = new ArrayList<>();
 
@@ -40,6 +43,8 @@ public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.da
         TextView requestPrice;
         @BindView(R2.id.requect_data)
         TextView requectData;
+        @BindView(R2.id.state_text)
+        TextView stateText;
         private InternalImgRvAdapter internalImgRvAdapter;
 
         public MyViewHolder(View itemView) {
@@ -51,7 +56,7 @@ public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.da
 
         @Override
         public void onBindData(MyRequestBean.databean data, int position) {
-            internalImgRvAdapter =new InternalImgRvAdapter();
+            internalImgRvAdapter = new InternalImgRvAdapter();
             beAddImage.setNestedScrollingEnabled(false);
             beAddImage.setHasFixedSize(true);
             beAddImage.setAdapter(internalImgRvAdapter);
@@ -59,6 +64,7 @@ public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.da
             requestName.setText(data.getTitle());
             requectData.setText(data.getStart_date() + "~" + data.getEnd_date());
             requestPrice.setText("$" + data.getStart_price() + "~" + data.getEnd_price());
+//            stateText.setText(StateUtil.requestState(data.get));
         }
     }
 

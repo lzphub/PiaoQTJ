@@ -45,7 +45,7 @@ public class MyIdeaListRvAdapter extends BaseRecyclerViewAdapter<MyIdeaListBean.
 
         @Override
         public void onBindData(MyIdeaListBean.DataBean data, int position) {
-            tvState.setText(StateUtil.ideaState(1));
+            tvState.setText(StateUtil.ideaState(data.getStatus()));
             tvTitle.setText(data.getTitle());
             tvContent.setText(data.getDetail());
 

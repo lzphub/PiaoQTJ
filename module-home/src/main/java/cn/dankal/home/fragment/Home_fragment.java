@@ -33,6 +33,7 @@ import cn.dankal.basiclib.adapter.ProductRvAdapter;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.DemandListbean;
+import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.UserHomeBannerBean;
 import cn.dankal.basiclib.protocol.HomeProtocol;
@@ -87,6 +88,8 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
             spannableString = new SpannableString("最新需求");
             ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.home_green));
             spannableString.setSpan(colorSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            swipeToloadLayout.setRefreshEnabled(false);
+            swipeToloadLayout.setLoadMoreEnabled(false);
         } else {
             spannableString = new SpannableString("LATEST PRODUCT");
             ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.home_green));
@@ -158,7 +161,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
     }
 
     @Override
-    public void getDataSuccess(ProductListBean productListBean) {
+    public void getDataSuccess(ProductHomeListBean productListBean) {
 
         if (isRefresh) {
             productRvAdapter.clearData();
@@ -170,10 +173,10 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         demandList.setAdapter(productRvAdapter);
         demandList.setNestedScrollingEnabled(false);
         demandList.setHasFixedSize(true);
-        productRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductListBean.DataBean>() {
+        productRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductHomeListBean.DataBean>() {
             @Override
-            public void onItemClick(View v, int position, ProductListBean.DataBean data) {
-                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid", data.getProduct_uuid()).navigation();
+            public void onItemClick(View v, int position, ProductHomeListBean.DataBean data) {
+                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid", data.getUuid()).navigation();
             }
         });
     }

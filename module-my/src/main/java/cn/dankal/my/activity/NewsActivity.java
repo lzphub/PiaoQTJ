@@ -53,7 +53,6 @@ public class NewsActivity extends BaseRvActivity<NewsBean> {
         titleText = (TextView) findViewById(R.id.title_text);
     }
 
-
     @Override
     public BaseRecyclerViewPresenter<NewsBean> getPresenter() {
         return null;

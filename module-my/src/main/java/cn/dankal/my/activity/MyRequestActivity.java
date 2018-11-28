@@ -52,6 +52,8 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
     private boolean isUpdateList = false;
     private boolean isRefresh = true;
     private String[] tab_titel2={"FINISH","SUBMITTED","IN PROGRESS","RECEIVED","UNDELIVERED"};
+    private String[] statusId={"5","1","3","2","4"};
+    private String state="5";
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private com.flyco.tablayout.SlidingTabLayout tabTitle;
     private android.support.v4.view.ViewPager tabViewpager;
@@ -74,7 +76,10 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
         tabTitle.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-
+                state=statusId[position];
+                myRequestPresenter.detachView();
+                myRequestPresenter.attachView(MyRequestActivity.this);
+                myRequestPresenter.getData(state,pageIndex, 10);
             }
 
             @Override
@@ -93,21 +98,21 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
 
             @Override
             public void onDeleteClick(int position) {
-                myRequestPresenter.delete(myRequestRvAdapter.getDatas().get(position).getDemand_id());
+                myRequestPresenter.delete(state,myRequestRvAdapter.getDatas().get(position).getDemand_id());
             }
         });
         swipeToloadLayout.setOnLoadMoreListener(() -> {
             pageIndex++;
             isRefresh = false;
-            myRequestPresenter.getData(pageIndex, 10);
+            myRequestPresenter.getData(state,pageIndex, 10);
         });
         swipeToloadLayout.setOnRefreshListener(() -> {
             pageIndex = 1;
             isRefresh = true;
-            myRequestPresenter.getData(pageIndex, 10);
+            myRequestPresenter.getData(state,pageIndex, 10);
         });
 
-        myRequestPresenter.getData(pageIndex, 10);
+        myRequestPresenter.getData(state,pageIndex, 10);
 
     }
 

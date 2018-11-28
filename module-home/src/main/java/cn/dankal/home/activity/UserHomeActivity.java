@@ -19,18 +19,24 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.dankal.address.R;
 import cn.dankal.address.R2;
+import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.HomeProtocol;
+import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.widget.GenDialog;
 import cn.dankal.basiclib.widget.TimeDialog;
 import cn.dankal.home.fragment.Home_fragment;
 import cn.dankal.home.fragment.My_fragment;
 import cn.dankal.home.fragment.Product_fragment;
+import cn.jpush.android.api.JPushInterface;
 
 import static cn.dankal.basiclib.protocol.HomeProtocol.USERHOME;
 /*
@@ -59,6 +65,7 @@ public class UserHomeActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
+        setAlias();
         return R.layout.activity_user_home;
     }
 
@@ -112,5 +119,10 @@ public class UserHomeActivity extends BaseActivity {
             ARouter.getInstance().build(HomeProtocol.POSTREQUEST).navigation();
         }
     }
-
+    private void setAlias(){
+        JPushInterface.setAlias(this,10, DKUserManager.getUserInfo().getUuid());
+        Set<String> tags = new HashSet<>();
+        tags.add("user");
+        JPushInterface.setTags(this,10,tags);
+    }
 }

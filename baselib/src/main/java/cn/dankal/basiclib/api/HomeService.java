@@ -8,6 +8,7 @@ import cn.dankal.basiclib.bean.DemandListbean;
 import cn.dankal.basiclib.bean.MyWorkDataBean;
 import cn.dankal.basiclib.bean.MyWorkListBean;
 import cn.dankal.basiclib.bean.ProductClassifyBean;
+import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.UserHomeBannerBean;
 import io.reactivex.Observable;
@@ -42,7 +43,7 @@ public interface HomeService {
      *最新产品
      */
     @GET("customer/home/getproduct")
-    Observable<ProductListBean> getProduct(@Query("page_index")int page_index,@Query(" page_size")int  page_size);
+    Observable<ProductHomeListBean> getProduct(@Query("page_index")int page_index, @Query(" page_size")int  page_size);
 
     /**
      * 用户端轮播图
