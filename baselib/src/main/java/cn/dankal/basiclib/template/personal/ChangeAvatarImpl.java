@@ -89,6 +89,8 @@ public class ChangeAvatarImpl implements ChangeAvatar {
                 });
     }
 
+    //目前target版本改成了23，如果要改成高版本需要根据下面的修改
+    //https://stackoverflow.com/questions/38200282/android-os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data, PersonalData_EnBean personalData_enBean) {
         Uri uri;
