@@ -64,7 +64,7 @@ public class QiniuUpload {
         }, () -> isCancelled));
     }
 
-    //开始图片上传
+    //开始视频上传
     protected void beginQiniuVideoUpload(String token, final String localPath, final UploadListener uploadListener) {
       /*  data = <File对象、或 文件路径、或 字节数组>
         String key = <指定七牛服务上的文件名，或 null>;
@@ -72,7 +72,7 @@ public class QiniuUpload {
 
 
         String user_id = String.valueOf(DKUserManager.getUserInfo().getUuid());
-        String key = "cheersto_" + String.valueOf(System.currentTimeMillis())+ user_id+".mp4";
+        String key = "zm_" + String.valueOf(System.currentTimeMillis())+ user_id+".mp4";
         normaluploadManager.put(localPath, key, token, new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo info, JSONObject response) {
