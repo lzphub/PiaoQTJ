@@ -49,7 +49,7 @@ public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void addSendData(ChatBean.DataBean dataBean,String pic){
         this.serviceTextBeanList1 .add(dataBean);
         this.picurl = pic;
-        notifyDataSetChanged();
+        notifyItemInserted(serviceTextBeanList1.size());
     }
 
     @NonNull

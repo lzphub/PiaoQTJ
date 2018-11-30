@@ -5,11 +5,11 @@ import java.util.List;
 public class MyWorkListBean {
 
     /**
-     * total : 0
+     * total : 1
      * per_page : 10
      * current_page : 1
-     * last_page : 0
-     * data : [{"uuid":"12345678","start_price":"0","end_price":"10000","title":"title","content":"content","data":"2018-04-21"}]
+     * last_page : 1
+     * data : [{"uuid":"e6e14c8e980c8b9a1f7831695ce351d7","name":"简单的工单","start_price":"20.00","end_price":"50.00","cpl_start_date":"2018-10-29","cpl_end_date":"2019-04-04","status":3,"desc":"没啥可描述的"}]
      */
 
     private int total;
@@ -60,20 +60,24 @@ public class MyWorkListBean {
 
     public static class DataBean {
         /**
-         * uuid : 12345678
-         * start_price : 0
-         * end_price : 10000
-         * title : title
-         * content : content
-         * data : 2018-04-21
+         * uuid : e6e14c8e980c8b9a1f7831695ce351d7
+         * name : 简单的工单
+         * start_price : 20.00
+         * end_price : 50.00
+         * cpl_start_date : 2018-10-29
+         * cpl_end_date : 2019-04-04
+         * status : 3
+         * desc : 没啥可描述的
          */
 
         private String uuid;
+        private String name;
         private String start_price;
         private String end_price;
-        private String title;
-        private String content;
-        private String data;
+        private String cpl_start_date;
+        private String cpl_end_date;
+        private int status;
+        private String desc;
 
         public String getUuid() {
             return uuid;
@@ -81,6 +85,14 @@ public class MyWorkListBean {
 
         public void setUuid(String uuid) {
             this.uuid = uuid;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getStart_price() {
@@ -99,28 +111,36 @@ public class MyWorkListBean {
             this.end_price = end_price;
         }
 
-        public String getTitle() {
-            return title;
+        public String getCpl_start_date() {
+            return cpl_start_date;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
+        public void setCpl_start_date(String cpl_start_date) {
+            this.cpl_start_date = cpl_start_date;
         }
 
-        public String getContent() {
-            return content;
+        public String getCpl_end_date() {
+            return cpl_end_date;
         }
 
-        public void setContent(String content) {
-            this.content = content;
+        public void setCpl_end_date(String cpl_end_date) {
+            this.cpl_end_date = cpl_end_date;
         }
 
-        public String getData() {
-            return data;
+        public int getStatus() {
+            return status;
         }
 
-        public void setData(String data) {
-            this.data = data;
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
         }
     }
 }

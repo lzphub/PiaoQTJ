@@ -65,7 +65,7 @@ public class EnterpriseLoginActivity extends BaseActivity {
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(LoginProtocol.FORGETPWD).withString("type", "change_pwd").navigation();
+                ARouter.getInstance().build(LoginProtocol.REGISTERENTEREMSIL).withString("type", "change_pwd").navigation();
             }
         });
         btLogin.setOnClickListener(new View.OnClickListener() {

@@ -61,7 +61,7 @@
 
     <TextView
         android:id="@+id/content_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="content"
         android:textSize="13sp"
@@ -78,8 +78,6 @@
         android:layout_height="1dp"
         android:background="@color/colorE5"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="23dp"
-        android:layout_marginLeft="23dp"
         android:layout_marginBottom="43dp"/>
 
     <TextView

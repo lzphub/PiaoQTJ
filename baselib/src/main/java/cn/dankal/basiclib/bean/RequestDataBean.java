@@ -4,21 +4,24 @@ import java.util.List;
 
 public class RequestDataBean {
 
+
     /**
-     * title : Hhdnndn
-     * images : null
-     * start_price : 9.00
-     * end_price : 69669.00
-     * start_date : 2018-11-24
-     * end_date : 2018-11-26
+     * title : Text2
+     * images : ["zm_1542357474754null.png","zm_1542357474798null.png","zm_1542357474758null.png"]
+     * start_price : 6.00
+     * end_price : 963.00
+     * start_date : 2018-11-16
+     * end_date : 2018-11-22
+     * status : 4
      */
 
     private String title;
-    private List<String> images;
     private String start_price;
     private String end_price;
     private String start_date;
     private String end_date;
+    private int status;
+    private List<String> images;
 
     public String getTitle() {
         return title;
@@ -26,14 +29,6 @@ public class RequestDataBean {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
     }
 
     public String getStart_price() {
@@ -66,5 +61,21 @@ public class RequestDataBean {
 
     public void setEnd_date(String end_date) {
         this.end_date = end_date;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

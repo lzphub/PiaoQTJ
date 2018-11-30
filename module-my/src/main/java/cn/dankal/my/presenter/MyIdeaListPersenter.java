@@ -8,14 +8,19 @@ import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 
 public class MyIdeaListPersenter extends BaseRecyclerViewPresenter<MyIdeaListBean.DataBean> {
 
+    private int status;
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public void requestData(String pageIndex) {
-        MyServiceFactory.getMyIdeaList(Integer.valueOf(pageIndex),1,20).safeSubscribe(new AbstractDialogSubscriber<MyIdeaListBean>(mView) {
+        MyServiceFactory.getMyIdeaList(status,Integer.valueOf(pageIndex),20).safeSubscribe(new AbstractDialogSubscriber<MyIdeaListBean>(mView) {
             @Override
             public void onNext(MyIdeaListBean myIdeaListBean) {
                 mView.render(myIdeaListBean.getData());
             }
         });
     }
-
 }

@@ -41,6 +41,7 @@ import cn.dankal.basiclib.protocol.ProductProtocol;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.ToastUtils;
+import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.basiclib.widget.GenDialog;
 import cn.dankal.basiclib.widget.swipetoloadlayout.OnLoadMoreListener;
 import cn.dankal.basiclib.widget.swipetoloadlayout.OnRefreshListener;
@@ -186,7 +187,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         List<ImageData> imgurl = new ArrayList<>();
         for (int i = 0; i < userHomeBannerBean.getCarousels().size(); i++) {
             ImageData img1 = new ImageData();
-            img1.setImage(userHomeBannerBean.getCarousels().get(i).getImage());
+            img1.setImage(PicUtils.getUrl(userHomeBannerBean.getCarousels().get(i).getImage()));
             imgurl.add(img1);
         }
         banner.setDatas(imgurl).setCardImageLoader((context, imageView, path) -> Glide.with(context).load(path).into(imageView)).start();

@@ -22,6 +22,7 @@ import cn.dankal.basiclib.adapter.ProductScreenRvAdapter;
 import cn.dankal.basiclib.adapter.ProductTabRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
+import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.protocol.ProductProtocol;
 import cn.dankal.basiclib.util.Logger;
@@ -36,7 +37,7 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
     private ImageView serachImg;
     private Spinner spinner;
     private RecyclerView pageProductRv;
-    private List<ProductListBean> productListBeanList=new ArrayList<>();
+    private List<ProductHomeListBean> productListBeanList=new ArrayList<>();
     private ProductScreenPresenter productScreenPresenter=ProductScreenPresenter.getPSPresenter();
 
     @Override
@@ -76,16 +77,16 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void getDataSuccess(ProductListBean productListBean) {
+    public void getDataSuccess(ProductHomeListBean productListBean) {
         pageProductRv.setLayoutManager(new GridLayoutManager(this,2));
         ProductScreenRvAdapter productScreenRvAdapter=new ProductScreenRvAdapter();
         productListBeanList.add(productListBean);
         productScreenRvAdapter.addMore(productListBeanList);
         pageProductRv.setAdapter(productScreenRvAdapter);
-        productScreenRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductListBean>() {
+        productScreenRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductHomeListBean>() {
             @Override
-            public void onItemClick(View v, int position, ProductListBean data) {
-                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",productListBeanList.get(position).getData().get(0).getProduct_uuid()).navigation();
+            public void onItemClick(View v, int position, ProductHomeListBean data) {
+                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",productListBeanList.get(position).getData().get(0).getUuid()).navigation();
             }
         });
     }

@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.dankal.basiclib.adapter.MyIdeaListRvAdapter;
+import cn.dankal.basiclib.base.BaseRvFragmentImp;
 import cn.dankal.basiclib.base.fragment.BaseRecyclerViewFragment;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
@@ -25,7 +26,7 @@ import cn.dankal.my.presenter.MyIdeaListPersenter;
 import cn.dankal.setting.R;
 import cn.dankal.setting.R2;
 
-public class MyIdeaAllFragment extends BaseRecyclerViewFragment<MyIdeaListBean.DataBean> {
+public class MyIdeaAllFragment extends BaseRvFragmentImp<MyIdeaListBean.DataBean> {
 
     private MyIdeaListRvAdapter myIdeaListRvAdapter;
     private MyIdeaListPersenter myIdeaListPersenter;
@@ -48,7 +49,7 @@ public class MyIdeaAllFragment extends BaseRecyclerViewFragment<MyIdeaListBean.D
     @Override
     public BaseRecyclerViewPresenter<MyIdeaListBean.DataBean> getPresenter() {
         myIdeaListPersenter = new MyIdeaListPersenter();
-        myIdeaListPersenter.requestData("0");
+        myIdeaListPersenter.setStatus(0);
         return myIdeaListPersenter;
     }
 
@@ -62,11 +63,6 @@ public class MyIdeaAllFragment extends BaseRecyclerViewFragment<MyIdeaListBean.D
             }
         });
         return myIdeaListRvAdapter;
-    }
-
-    @Override
-    public OnFinishLoadDataListener setOnFinishLoadDataListener() {
-        return null;
     }
 
 }

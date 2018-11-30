@@ -87,15 +87,15 @@ public class UserRegistrCodeActivity extends BaseActivity {
 
                 @Override
                 public void onNext(CheckCode checkCode) {
-                    ARouter.getInstance().build(LoginProtocol.SETPWD).withString("emailAccount",getIntent().getStringExtra("emailAccount")).withString("type",type).navigation();
+                    ARouter.getInstance().build(LoginProtocol.USERSETPWD).withString("emailAccount",getIntent().getStringExtra("emailAccount")).withString("type",type).navigation();
                     finish();
                 }
 
                 @Override
                 public void onError(Throwable e) {
 //                    ToastUtils.showShort(e.toString());
-                    ARouter.getInstance().build(LoginProtocol.USERSETPWD).withString("emailAccount",getIntent().getStringExtra("emailAccount")).withString("type",type).navigation();
-                    finish();
+//                    ARouter.getInstance().build(LoginProtocol.USERSETPWD).withString("emailAccount",getIntent().getStringExtra("emailAccount")).withString("type",type).navigation();
+//                    finish();
                 }
 
                 @Override

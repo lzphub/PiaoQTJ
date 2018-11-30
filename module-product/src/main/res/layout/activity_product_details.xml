@@ -167,17 +167,14 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"></fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/content_img_rv"
+            <TextView
+                android:id="@+id/tv_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp" />
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"/>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="10dp"-->
-        <!--android:background="@drawable/view_gradient_btn_bg"-->
-        <!--android:layout_below="@id/title_rl"/>-->
 </RelativeLayout>

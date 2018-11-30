@@ -27,6 +27,7 @@ import cn.dankal.basiclib.adapter.TextOnlyAdapter;
 import cn.dankal.basiclib.adapter.TextRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.DemandListbean;
+import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.ServiceTextBean;
 import cn.dankal.basiclib.common.cache.SDCacheDirCompat;
@@ -148,7 +149,7 @@ public class HomeSearchActivity extends BaseActivity implements ProductSearchCon
     }
 
     @Override
-    public void serarchDataSuccess(ProductListBean productListBean) {
+    public void serarchDataSuccess(ProductHomeListBean productListBean) {
         ctlSearch.setVisibility(View.GONE);
         productRvAdapter = new ProductSearchRvAdapter();
         productRvAdapter.updateData(productListBean.getData());

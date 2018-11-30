@@ -6,6 +6,7 @@ import api.HomeServiceFactory;
 import api.ProductServiceFactory;
 import cn.dankal.basiclib.adapter.ProductRvAdapter;
 import cn.dankal.basiclib.bean.DemandListbean;
+import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.UserHomeBannerBean;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
@@ -37,9 +38,9 @@ public class ProductSearchPresenter implements ProductSearchContact.productSearc
 
     @Override
     public void search(String keyword, String category_uuid) {
-        ProductServiceFactory.getProductlist(keyword, category_uuid).safeSubscribe(new AbstractDialogSubscriber<ProductListBean>(searchview) {
+        ProductServiceFactory.getProductlist(keyword, category_uuid).safeSubscribe(new AbstractDialogSubscriber<ProductHomeListBean>(searchview) {
             @Override
-            public void onNext(ProductListBean productListBean) {
+            public void onNext(ProductHomeListBean productListBean) {
                 searchview.serarchDataSuccess(productListBean);
             }
 

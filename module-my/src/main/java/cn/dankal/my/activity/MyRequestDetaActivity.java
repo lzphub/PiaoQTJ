@@ -22,7 +22,7 @@ import cn.dankal.setting.R;
 import static cn.dankal.basiclib.protocol.MyProtocol.MYREQUESTDETA;
 
 @Route(path = MYREQUESTDETA)
-public class MyRequestDetaActivity extends BaseActivity implements RequestContact.RequestView {
+public class  MyRequestDetaActivity extends BaseActivity implements RequestContact.RequestView {
 
     private android.widget.ImageView backImg;
     private android.widget.TextView requestTitle;
@@ -34,6 +34,7 @@ public class MyRequestDetaActivity extends BaseActivity implements RequestContac
     private String demandid;
     private InternalImgRvAdapter internalImgRvAdapter;
     private ImageView ivState;
+    private TextView tvState;
 
     @Override
     protected int getLayoutId() {
@@ -60,6 +61,7 @@ public class MyRequestDetaActivity extends BaseActivity implements RequestContac
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         addImgRv.setLayoutManager(linearLayoutManager);
         ivState = (ImageView) findViewById(R.id.iv_state);
+        tvState = (TextView) findViewById(R.id.tv_state);
     }
 
     @Override
@@ -82,6 +84,7 @@ public class MyRequestDetaActivity extends BaseActivity implements RequestContac
         addImgRv.setHasFixedSize(true);
         addImgRv.setNestedScrollingEnabled(false);
         internalImgRvAdapter.updateData(databean.getImages());
-        ivState.setImageResource(StateUtil.requestStateImg(5));
+        ivState.setImageResource(StateUtil.requestStateImg(databean.getStatus()));
+        tvState.setText(StateUtil.requestState(databean.getStatus()));
     }
 }

@@ -14,6 +14,8 @@ import cn.dankal.basiclib.common.OnFinishLoadDataListener;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
 
+import static cn.dankal.basiclib.Constants.PAGE_SIZE;
+
 /**
  * @author Dankal Android Developer
  */
@@ -73,6 +75,9 @@ public abstract class BaseRecyclerViewActivity<M> extends BaseStateActivity impl
     public void render(List<M> t) {
         showContent();
         //不能同时结束刷新和加载更多，界面会不和谐
+        if(t != null &&t.size()<Integer.valueOf(PAGE_SIZE)){
+            swipeToLoadLayout.setLoadMoreEnabled(false);
+        }
         if (isRefresh) {
             onFinishLoadDataListener.finishRefresh();
             if (t != null && t.size() > 0) {

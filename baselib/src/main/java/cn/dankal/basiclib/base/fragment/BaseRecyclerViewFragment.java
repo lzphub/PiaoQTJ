@@ -20,6 +20,8 @@ import cn.dankal.basiclib.common.OnFinishLoadDataListener;
 import cn.dankal.basiclib.util.AppUtils;
 import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
 
+import static cn.dankal.basiclib.Constants.PAGE_SIZE;
+
 
 /**
  * 列表类型通用的Fragment
@@ -43,7 +45,6 @@ public abstract class BaseRecyclerViewFragment<M> extends BaseLazyLoadFragment
     private int pageIndex = 1;
     private boolean isUpdateList = false;
     private boolean isRefresh = true;
-    public static final String PAGE_SIZE="20";
 
 
     @Override
@@ -136,14 +137,21 @@ public abstract class BaseRecyclerViewFragment<M> extends BaseLazyLoadFragment
     @Override
     public void render(List<M> t) {
         showContent();
+        if(t != null &&t.size()<Integer.valueOf(PAGE_SIZE)){
+            ((SwipeToLoadLayout) mContentView.findViewById(R.id.swipe_toload_layout))
+                    .setLoadMoreEnabled(false);
+        }
         if (isRefresh) {
-            if (onFinishLoadDataListener != null)
+            if (onFinishLoadDataListener != null){
                 onFinishLoadDataListener.finishRefresh();
+            }
+
             if (t != null && t.size() > 0) {
                 if (mAdapter != null) {
                     mData = t;
                     mAdapter.updateData(mData);
                 }
+
             } else {
                 if (mAdapter != null)
                     mAdapter.clearData();

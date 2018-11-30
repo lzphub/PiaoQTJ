@@ -9,7 +9,7 @@
             android:screenOrientation="portrait"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="cn.dankal.address.fileprovider"
+            android:authorities="cn.dankal.basiclib.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

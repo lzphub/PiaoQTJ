@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -22,6 +24,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import api.MyServiceFactory;
 import cn.dankal.address.R;
@@ -31,6 +35,7 @@ import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.callback.DKCallBack;
 import cn.dankal.basiclib.base.recyclerview.SmoothScrollLayoutManager;
 import cn.dankal.basiclib.bean.ChatBean;
+import cn.dankal.basiclib.bean.NewServiceMsgBean;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
 import cn.dankal.basiclib.bean.PersonalData_EngineerBean;
 import cn.dankal.basiclib.bean.ServiceTextBean;
@@ -95,7 +100,7 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
         } else {
             servicePersenter.getMsgRecord("1", "30");
         }
-
+        downTimer.start();
         if (!type.equals("user")) {
             title.setText("客服中心");
             tipsText.setText("如客服没有及时回复，请联系1071377555@qq.com");
@@ -168,6 +173,36 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
         });
     }
 
+    CountDownTimer downTimer=new CountDownTimer(100000000,10000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            if(type.equals("user")){
+                servicePersenter.getUserNewMsg();
+            }else{
+                servicePersenter.getNewMsg();
+            }
+        }
+
+        @Override
+        public void onFinish() {
+            downTimer.start();
+        }
+    };
+
+    @Override
+    public void showLoadingDialog() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(downTimer!=null){
+            downTimer.cancel();
+            downTimer=null;
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -214,7 +249,11 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
         swipeToloadLayout = findViewById(R.id.swipe_toload_layout);
         swipeToloadLayout.setOnRefreshListener(() -> {
             page_index++;
-            servicePersenter.addmore(page_index + "", "30");
+            if(type.equals("user")){
+                servicePersenter.userAddMore(page_index+"","30");
+            }else{
+                servicePersenter.addmore(page_index + "", "30");
+            }
         });
         serviceRvAdapter = new ServiceRvAdapter(serviceTextBeanList, ServiceActivity.this);
         chatRv.setAdapter(serviceRvAdapter);
@@ -266,5 +305,18 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
             swipeToloadLayout.setRefreshEnabled(false);
         }
         chatRv.scrollToPosition(dataBean.size());
+    }
+
+    @Override
+    public void getNewMsg(List<NewServiceMsgBean.NewMsgBean> newMsgBeans) {
+        ChatBean.DataBean dataBean=null;
+        for(int i=newMsgBeans.size()-1;i>-1;i--){
+            dataBean=new ChatBean.DataBean();
+            dataBean.setSent_by("admin");
+            dataBean.setContent(newMsgBeans.get(i).getContent());
+            dataBean.setType(newMsgBeans.get(i).getType());
+            serviceRvAdapter.addSendData(dataBean,picurl);
+            chatRv.smoothScrollToPosition(serviceRvAdapter.getItemCount()-1);
+        }
     }
 }

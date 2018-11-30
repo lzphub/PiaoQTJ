@@ -93,9 +93,6 @@ public class PersonalDataActivity extends BaseActivity {
         headPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * 没有裁剪！！
-                 */
                 changeAvatar.checkPermission(new CameraHandler(PersonalDataActivity.this), null);
 
             }

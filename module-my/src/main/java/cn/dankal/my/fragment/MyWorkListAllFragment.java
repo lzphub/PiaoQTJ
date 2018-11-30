@@ -50,7 +50,6 @@ public class MyWorkListAllFragment extends BaseRvFragmentImp<MyWorkListBean.Data
 
     @Override
     public BaseRecyclerViewPresenter<MyWorkListBean.DataBean> getPresenter() {
-        Logger.d("fragment","AllFrag");
         worklistPresenter = new MyWorklistPresenter();
         worklistPresenter.setStatus("all");
         return worklistPresenter;

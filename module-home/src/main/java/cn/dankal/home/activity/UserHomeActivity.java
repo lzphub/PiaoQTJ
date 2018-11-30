@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -31,6 +32,7 @@ import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.widget.GenDialog;
 import cn.dankal.basiclib.widget.TimeDialog;
 import cn.dankal.home.fragment.Home_fragment;
@@ -59,6 +61,7 @@ public class UserHomeActivity extends BaseActivity {
     @BindView(R2.id.home_fra)
     FrameLayout homeFra;
 
+    private long exitTime = 0;
 
     private FragmentManager manager;
     private FragmentTransaction transaction;
@@ -71,37 +74,28 @@ public class UserHomeActivity extends BaseActivity {
 
     @Override
     protected void initComponents() {
-        manager=getSupportFragmentManager();
-        transaction=manager.beginTransaction();
-        Home_fragment homeFragment=new Home_fragment();
-        transaction.replace(R.id.home_fra,homeFragment).commit();
-        homeRbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    transaction=manager.beginTransaction();
-                    Home_fragment homeFragment=new Home_fragment();
-                    transaction.replace(R.id.home_fra,homeFragment).commit();
-                }
+        manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        Home_fragment homeFragment = new Home_fragment();
+        transaction.replace(R.id.home_fra, homeFragment).commit();
+        homeRbtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                transaction = manager.beginTransaction();
+                Home_fragment homeFragment1 = new Home_fragment();
+                transaction.replace(R.id.home_fra, homeFragment1).commit();
             }
         });
-        myRbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    transaction=manager.beginTransaction();
-                    My_fragment my_fragment=new My_fragment();
-                    transaction.replace(R.id.home_fra,my_fragment).commit();
-                }
+        myRbtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                transaction = manager.beginTransaction();
+                My_fragment my_fragment = new My_fragment();
+                transaction.replace(R.id.home_fra, my_fragment).commit();
             }
         });
-        productRbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                transaction=manager.beginTransaction();
-                Product_fragment product_fragment=new Product_fragment();
-                transaction.replace(R.id.home_fra,product_fragment).commit();
-            }
+        productRbtn.setOnClickListener(v -> {
+            transaction = manager.beginTransaction();
+            Product_fragment product_fragment = new Product_fragment();
+            transaction.replace(R.id.home_fra, product_fragment).commit();
         });
     }
 
@@ -112,17 +106,37 @@ public class UserHomeActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick( R2.id.release_text)
+    @OnClick(R2.id.release_text)
     public void onViewClicked(View view) {
         int i = view.getId();
         if (i == R.id.release_text) {
             ARouter.getInstance().build(HomeProtocol.POSTREQUEST).navigation();
         }
     }
-    private void setAlias(){
-        JPushInterface.setAlias(this,10, DKUserManager.getUserInfo().getUuid());
+
+    private void setAlias() {
+        JPushInterface.setAlias(this, 10, DKUserManager.getUserInfo().getUuid());
         Set<String> tags = new HashSet<>();
         tags.add("user");
-        JPushInterface.setTags(this,10,tags);
+        JPushInterface.setTags(this, 10, tags);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            ToastUtils.showShort("Press exit again");
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
     }
 }

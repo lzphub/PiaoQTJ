@@ -30,40 +30,16 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="如何取用我们照明大师的APP"
         android:textSize="18sp"
         android:textColor="@color/color33"
         android:layout_marginTop="54dp"
         android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
         app:layout_constraintTop_toBottomOf="@id/back_img"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <TextView
-        android:id="@+id/us_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="23dp"
-        android:layout_marginRight="23dp"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="新艺工厂，建筑面积600m2，现需要定制一套照明系统，大概600套，商丘信华国际酒店－酒店照明设计案例 两丘信华国际大酒店位于睢阳区神火大道与华商大道交汇处西南角，商丘信华国际大酒店按照标准五星级酒店的规 划设计建造，打這“规划设计一流，建筑装饰设计一流、设备设施和用品一流、人性化性能配置一流＂的高品质酒店。"
-        android:textColor="@color/color66"
-        android:textSize="14sp"
-        android:lineSpacingExtra="5dp"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/image_rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="23dp"
-        android:layout_marginRight="23dp"
-        app:layout_constraintTop_toBottomOf="@id/us_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"></android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>

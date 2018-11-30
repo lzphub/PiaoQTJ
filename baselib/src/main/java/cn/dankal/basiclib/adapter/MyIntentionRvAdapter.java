@@ -13,6 +13,8 @@ import cn.dankal.basiclib.R2;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.MyIntentionBean;
+import cn.dankal.basiclib.util.StateUtil;
+import cn.dankal.basiclib.util.image.PicUtils;
 
 public class MyIntentionRvAdapter extends BaseRecyclerViewAdapter<MyIntentionBean.DataBean> {
 
@@ -43,28 +45,10 @@ public class MyIntentionRvAdapter extends BaseRecyclerViewAdapter<MyIntentionBea
 
         @Override
         public void onBindData(MyIntentionBean.DataBean data, int position) {
-            Glide.with(context).load(data.getImages().get(0)).into(intentionImg);
+            Glide.with(context).load(PicUtils.getUrl(data.getImages().get(0))).into(intentionImg);
             intentionName.setText(data.getProduct_name());
             intentionPrice.setText("$"+data.getProduct_price());
-            String status="";
-            switch (data.getStatus()){
-                case 1:
-                    status="SUBMITTED";
-                    break;
-                case 2:
-                    status="RECEIVED";
-                    break;
-                case 3:
-                    status="IN PROGRESS";
-                    break;
-                case 4:
-                    status="UNDELIVERED";
-                    break;
-                case 5:
-                    status="FINISH";
-                    break;
-            }
-            intentionState.setText(status);
+            intentionState.setText(StateUtil.intentionStatus(data.getStatus()));
         }
     }
 }

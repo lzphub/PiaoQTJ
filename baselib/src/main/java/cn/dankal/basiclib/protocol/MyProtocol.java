@@ -15,6 +15,8 @@ public interface MyProtocol extends BaseRouteProtocol {
 
     String SYSTEMNEWS=PART+"news";
 
+    String ENGSYSTEMNEWS=PART+"engnews";
+
     String PERSONALDATA=PART+"personaldata";
 
     String PERSONALDATAEN=PART+"personaldataen";

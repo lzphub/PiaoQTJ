@@ -3,6 +3,8 @@ package cn.dankal.my.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,8 +25,8 @@ public class AboutUsActivity extends BaseActivity {
 
     private android.widget.ImageView backImg;
     private android.widget.TextView usContent;
-    private android.support.v7.widget.RecyclerView imageRv;
     private String type;
+    private TextView tvTitle;
 
     @Override
     protected int getLayoutId() {
@@ -38,6 +40,7 @@ public class AboutUsActivity extends BaseActivity {
         backImg.setOnClickListener(v -> finish());
         if(type.equals("user")){
             getData();
+            tvTitle.setText("ABOUT US");
         }else{
             engGetData();
         }
@@ -48,7 +51,9 @@ public class AboutUsActivity extends BaseActivity {
         MyServiceFactory.getAboutUs().safeSubscribe(new AbstractDialogSubscriber<AboutUsBean>(this) {
             @Override
             public void onNext(AboutUsBean aboutUsBean) {
-                usContent.setText(aboutUsBean.getValue());
+                CharSequence charSequence= Html.fromHtml(aboutUsBean.getValue());
+                usContent.setText(charSequence);
+                usContent.setMovementMethod(LinkMovementMethod.getInstance() );
             }
         });
     }
@@ -58,7 +63,9 @@ public class AboutUsActivity extends BaseActivity {
         MyServiceFactory.engGetAboutus().safeSubscribe(new AbstractDialogSubscriber<AboutUsBean>(this) {
             @Override
             public void onNext(AboutUsBean aboutUsBean) {
-                usContent.setText(aboutUsBean.getValue());
+                CharSequence charSequence= Html.fromHtml(aboutUsBean.getValue());
+                usContent.setText(charSequence);
+                usContent.setMovementMethod(LinkMovementMethod.getInstance() );
             }
         });
     }
@@ -68,6 +75,6 @@ public class AboutUsActivity extends BaseActivity {
     private void initView() {
         backImg = findViewById(R.id.back_img);
         usContent = findViewById(R.id.us_content);
-        imageRv = findViewById(R.id.image_rv);
+        tvTitle = findViewById(R.id.tv_title);
     }
 }

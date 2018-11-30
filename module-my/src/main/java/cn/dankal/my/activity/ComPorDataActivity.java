@@ -3,6 +3,8 @@ package cn.dankal.my.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,11 +21,11 @@ public class ComPorDataActivity extends BaseActivity {
 
     private android.widget.ImageView backImg;
     private android.widget.TextView title;
-    private android.widget.TextView usContent;
-    private android.support.v7.widget.RecyclerView imageRv;
+    private String content;
 
     @Override
     protected int getLayoutId() {
+        content=getIntent().getStringExtra("data");
         return R.layout.activity_com_por_data;
     }
 
@@ -36,12 +38,13 @@ public class ComPorDataActivity extends BaseActivity {
                 finish();
             }
         });
+        CharSequence charSequence= Html.fromHtml(content);
+        title.setText(charSequence);
+        title.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void initView() {
         backImg = (ImageView) findViewById(R.id.back_img);
         title = (TextView) findViewById(R.id.title);
-        usContent = (TextView) findViewById(R.id.us_content);
-        imageRv = (RecyclerView) findViewById(R.id.image_rv);
     }
 }

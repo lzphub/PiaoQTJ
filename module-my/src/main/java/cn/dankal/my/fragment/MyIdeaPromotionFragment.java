@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import butterknife.BindView;
 import butterknife.Unbinder;
 import cn.dankal.basiclib.adapter.MyIdeaListRvAdapter;
+import cn.dankal.basiclib.base.BaseRvFragmentImp;
 import cn.dankal.basiclib.base.fragment.BaseRecyclerViewFragment;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
@@ -21,7 +22,7 @@ import cn.dankal.my.presenter.MyIdeaListPersenter;
 import cn.dankal.setting.R;
 import cn.dankal.setting.R2;
 
-public class MyIdeaPromotionFragment extends BaseRecyclerViewFragment<MyIdeaListBean.DataBean> {
+public class MyIdeaPromotionFragment extends BaseRvFragmentImp<MyIdeaListBean.DataBean> {
 
 
     private MyIdeaListRvAdapter myIdeaListRvAdapter;
@@ -45,7 +46,7 @@ public class MyIdeaPromotionFragment extends BaseRecyclerViewFragment<MyIdeaList
     @Override
     public BaseRecyclerViewPresenter<MyIdeaListBean.DataBean> getPresenter() {
         myIdeaListPersenter = new MyIdeaListPersenter();
-        myIdeaListPersenter.requestData("6");
+        myIdeaListPersenter.setStatus(6);
         return myIdeaListPersenter;
     }
 
@@ -61,8 +62,4 @@ public class MyIdeaPromotionFragment extends BaseRecyclerViewFragment<MyIdeaList
         return myIdeaListRvAdapter;
     }
 
-    @Override
-    public OnFinishLoadDataListener setOnFinishLoadDataListener() {
-        return null;
-    }
 }

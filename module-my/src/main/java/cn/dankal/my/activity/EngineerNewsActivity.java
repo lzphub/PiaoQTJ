@@ -1,7 +1,5 @@
 package cn.dankal.my.activity;
 
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,28 +8,26 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 
 import cn.dankal.basiclib.adapter.SystemMsgRvAdapter;
 import cn.dankal.basiclib.base.BaseRvActivity;
-import cn.dankal.basiclib.base.activity.BaseActivity;
-import cn.dankal.basiclib.base.activity.BaseRecyclerViewActivity;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.SystemMsgBean;
-import cn.dankal.basiclib.common.OnFinishLoadDataListener;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.my.presenter.EngineerNewsPersenter;
 import cn.dankal.my.presenter.NewsPersenter;
 import cn.dankal.setting.R;
 
+import static cn.dankal.basiclib.protocol.MyProtocol.ENGSYSTEMNEWS;
 import static cn.dankal.basiclib.protocol.MyProtocol.SYSTEMNEWS;
 
-@Route(path = SYSTEMNEWS)
-public class NewsActivity extends BaseRvActivity<SystemMsgBean.DataBean> {
+@Route(path = ENGSYSTEMNEWS)
+public class EngineerNewsActivity extends BaseRvActivity<SystemMsgBean.DataBean> {
 
     private ImageView backImg;
     private TextView titleText;
     private SystemMsgRvAdapter systemMsgRvAdapter;
-    private NewsPersenter newsPersenter;
+    private EngineerNewsPersenter engineerNewsPersenter;
 
     @Override
     protected int getLayoutId() {
@@ -43,8 +39,7 @@ public class NewsActivity extends BaseRvActivity<SystemMsgBean.DataBean> {
         super.initComponents();
         initView();
         backImg.setOnClickListener(v -> finish());
-        titleText.setText("SYSTEM MESSAGES");
-
+        titleText.setText("系统消息");
     }
 
     private void initView() {
@@ -54,21 +49,21 @@ public class NewsActivity extends BaseRvActivity<SystemMsgBean.DataBean> {
 
     @Override
     public BaseRecyclerViewPresenter<SystemMsgBean.DataBean> getPresenter() {
-        newsPersenter = new NewsPersenter();
-        return newsPersenter;
+            engineerNewsPersenter=new EngineerNewsPersenter();
+            return engineerNewsPersenter;
 
     }
 
     @Override
     public BaseRecyclerViewAdapter<SystemMsgBean.DataBean> getAdapter() {
-        systemMsgRvAdapter = new SystemMsgRvAdapter();
+        systemMsgRvAdapter=new SystemMsgRvAdapter();
         systemMsgRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<SystemMsgBean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, SystemMsgBean.DataBean data) {
                 ToastUtils.showShort(data.getTitle());
             }
         });
-        return systemMsgRvAdapter;
+        return systemMsgRvAdapter ;
     }
 
 }

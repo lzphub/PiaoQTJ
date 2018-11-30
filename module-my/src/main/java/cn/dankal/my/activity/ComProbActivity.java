@@ -73,7 +73,7 @@ public class ComProbActivity extends BaseRvActivity<ComProbBean.DataBean> {
         textRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ComProbBean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, ComProbBean.DataBean data) {
-                ARouter.getInstance().build(MyProtocol.COMPORDATA).navigation();
+                ARouter.getInstance().build(MyProtocol.COMPORDATA).withString("data",data.getAnswer()).navigation();
             }
         });
         return textRvAdapter;

@@ -47,7 +47,6 @@
         android:singleLine="true"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:text="425570976@qq.com"
         android:textColor="@color/color33"
         android:textColorHint="@color/colorCF"
         android:textSize="14sp"
@@ -79,7 +78,6 @@
 
     <EditText
         android:id="@+id/et_passwd"
-        android:text="123456"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"

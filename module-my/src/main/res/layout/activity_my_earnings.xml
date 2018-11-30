@@ -17,7 +17,7 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="254dp"
-            android:background="@mipmap/pic_my_profit_background">
+            android:background="@mipmap/pic_my_background">
 
             <ImageView
                 android:id="@+id/back_img"

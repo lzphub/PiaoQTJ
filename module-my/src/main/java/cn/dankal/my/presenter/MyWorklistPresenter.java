@@ -31,20 +31,11 @@ public class MyWorklistPresenter extends BaseRecyclerViewPresenter<MyWorkListBea
 
     @Override
     public void requestData(String pageIndex) {
-        Logger.d("fragment",status);
         HomeServiceFactory.getWorkList(pageIndex, "10", status).safeSubscribe(new AbstractDialogSubscriber<MyWorkListBean>(mView) {
             @Override
             public void onNext(MyWorkListBean myWorkListBean) {
                 mView.render(myWorkListBean.getData());
-                Logger.d("fragmentOnnext",status);
             }
-
-            @Override
-            public void onError(Throwable e) {
-                super.onError(e);
-                Logger.d("fragmenterror",status);
-            }
-
 
         });
     }

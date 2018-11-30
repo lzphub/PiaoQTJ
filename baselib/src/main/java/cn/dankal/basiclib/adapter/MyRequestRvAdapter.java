@@ -52,19 +52,19 @@ public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.da
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             beAddImage.setLayoutManager(linearLayoutManager);
+            beAddImage.setNestedScrollingEnabled(false);
+            beAddImage.setHasFixedSize(true);
         }
 
         @Override
         public void onBindData(MyRequestBean.databean data, int position) {
             internalImgRvAdapter = new InternalImgRvAdapter();
-            beAddImage.setNestedScrollingEnabled(false);
-            beAddImage.setHasFixedSize(true);
             beAddImage.setAdapter(internalImgRvAdapter);
             internalImgRvAdapter.updateData(data.getImages());
             requestName.setText(data.getTitle());
             requectData.setText(data.getStart_date() + "~" + data.getEnd_date());
             requestPrice.setText("$" + data.getStart_price() + "~" + data.getEnd_price());
-//            stateText.setText(StateUtil.requestState(data.get));
+            stateText.setText(StateUtil.requestState(data.getStatus()));
         }
     }
 

@@ -79,7 +79,7 @@ public class MyIdeaActivity extends BaseActivity {
         tabTitle.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-
+                tabViewpager.setCurrentItem(position);
             }
 
             @Override

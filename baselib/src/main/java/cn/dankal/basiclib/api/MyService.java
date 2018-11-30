@@ -14,11 +14,13 @@ import cn.dankal.basiclib.bean.MyEarBean;
 import cn.dankal.basiclib.bean.MyIdeaListBean;
 import cn.dankal.basiclib.bean.MyIntentionBean;
 import cn.dankal.basiclib.bean.MyRequestBean;
+import cn.dankal.basiclib.bean.NewServiceMsgBean;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
 import cn.dankal.basiclib.bean.PersonalData_EngineerBean;
 import cn.dankal.basiclib.bean.PersonalData_EngineerPostBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.RequestDataBean;
+import cn.dankal.basiclib.bean.SystemMsgBean;
 import cn.dankal.basiclib.bean.TransactionBean;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -104,7 +106,7 @@ public interface MyService {
      */
     @POST("customer/me/getIntentionList")
     @FormUrlEncoded
-    Observable<MyIntentionBean> getIntentionList(@Field("status") String status);
+    Observable<MyIntentionBean> getIntentionList(@Field("status") String status,@Field("page_index") int page_index, @Field(" page_size") int page_size);
 
     /**
      * 意向详情
@@ -213,6 +215,12 @@ public interface MyService {
     Observable<ChatBean> getMsgRecord(@Query("page_index") String page_index,@Query("page_size")String page_size);
 
     /**
+     *  工程师端获取最新消息
+     */
+    @GET("engineer/Service/getNew")
+    Observable<NewServiceMsgBean> getEngNewServiceMsg();
+
+    /**
      *  用户端发送消息
      */
     @POST("customer/service")
@@ -224,5 +232,25 @@ public interface MyService {
      */
     @GET("customer/service")
     Observable<ChatBean> getUserMsgRecord(@Query("page_index")String page_index,@Query("page_size")String page_size);
+
+    /**
+     *  用户端获取最新消息
+     */
+    @GET("customer/Service/getNew")
+    Observable<NewServiceMsgBean> getNewServiceMsg();
+
+    /**
+     * 用户端系统消息列表
+     */
+    @POST("customer/me/getmessagelist")
+    @FormUrlEncoded
+    Observable<SystemMsgBean> getSystemMsg(@Field("page_index")int page_index,@Field("page_size")int page_size);
+
+    /**
+     * 工程师端系统消息列表
+     */
+    @POST("engineer/me/getmessagelist")
+    @FormUrlEncoded
+    Observable<SystemMsgBean> engineerGetSystemMsg(@Field("page_index")int page_index,@Field("page_size")int page_size);
 
 }

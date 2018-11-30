@@ -96,7 +96,14 @@ public class My_fragment extends BaseFragment {
             }
         });
         setting.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.SETTING).navigation());
-        myNews.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.SYSTEMNEWS).navigation());
+        myNews.setOnClickListener(v -> {
+            if (type.equals("user")){
+                ARouter.getInstance().build(MyProtocol.SYSTEMNEWS).navigation();
+            }else{
+                ARouter.getInstance().build(MyProtocol.ENGSYSTEMNEWS).navigation();
+            }
+        });
+
         headPic.setOnClickListener(v -> {
             if(type.equals("user")){
                 ARouter.getInstance().build(MyProtocol.PERSONALDATAEN).navigation();

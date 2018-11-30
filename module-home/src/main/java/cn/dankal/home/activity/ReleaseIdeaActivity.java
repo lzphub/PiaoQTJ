@@ -176,7 +176,7 @@ public class ReleaseIdeaActivity extends BaseActivity {
                 loadingDialog.dismiss();
                 TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
                         .setTipWord("上传成功")
-                        .create(2000);
+                        .create(1000);
                 dialog.show();
                 dialog.dismiss();
                 images.add(key);

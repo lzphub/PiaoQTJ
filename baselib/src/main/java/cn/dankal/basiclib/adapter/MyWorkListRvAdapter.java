@@ -10,6 +10,7 @@ import cn.dankal.basiclib.R2;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.MyWorkListBean;
+import cn.dankal.basiclib.util.StateUtil;
 
 public class MyWorkListRvAdapter extends BaseRecyclerViewAdapter<MyWorkListBean.DataBean> {
 
@@ -41,9 +42,9 @@ public class MyWorkListRvAdapter extends BaseRecyclerViewAdapter<MyWorkListBean.
 
         @Override
         public void onBindData(MyWorkListBean.DataBean data, int position) {
-//            statusText.setText(data.get);
-            titleTv.setText(data.getTitle());
-            contentTv.setText(data.getContent());
+            statusText.setText(StateUtil.WorkListState(data.getStatus()));
+            titleTv.setText(data.getName());
+            contentTv.setText(data.getDesc());
             priceText.setText("$"+data.getStart_price()+"~"+data.getEnd_price());
         }
     }

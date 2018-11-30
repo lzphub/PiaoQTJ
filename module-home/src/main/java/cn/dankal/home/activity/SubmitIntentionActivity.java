@@ -37,7 +37,7 @@ public class SubmitIntentionActivity extends BaseActivity {
     protected void initComponents() {
         initView();
         feedback= getIntent().getStringExtra("feedback");
-        if(feedback.equals("feedback")){
+        if("feedback".equals(feedback)){
             if("user".equals(SharedPreferencesUtils.getString(this, "identity", "enterprise"))) {
                 content.setText("Feedback success");
             }else{
@@ -60,6 +60,6 @@ public class SubmitIntentionActivity extends BaseActivity {
         backImg = findViewById(R.id.back_img);
         tohomeLl =  findViewById(R.id.tohome_ll);
         content = findViewById(R.id.content);
-        returnText = (TextView) findViewById(R.id.return_text);
+        returnText = findViewById(R.id.return_text);
     }
 }

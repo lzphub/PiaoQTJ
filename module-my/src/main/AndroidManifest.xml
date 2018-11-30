@@ -37,6 +37,7 @@
             android:label="@string/title_activity_my_idea_data"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="cn.dankal.my.activity.MyWorkListDataActivity"></activity>
+        <activity android:name="cn.dankal.my.activity.EngineerNewsActivity"/>
     </application>
 
 </manifest>

@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -42,6 +44,7 @@ import cn.dankal.basiclib.bean.ProductDataBean;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.util.DisplayHelper;
 import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.basiclib.widget.swipetoloadlayout.util.DensityUtil;
 import cn.dankal.basiclib.widget.wheelview.MyNestedScrollView;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -60,7 +63,6 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
     private android.widget.TextView productPrice;
     private android.widget.TextView productName;
     private android.widget.TextView productContent;
-    private android.support.v7.widget.RecyclerView contentImgRv;
     private List<String> stringList = new ArrayList<>();
     private android.support.v4.widget.NestedScrollView contentScroll;
     private RelativeLayout titleRl;
@@ -68,6 +70,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
     private TextView title;
     private String uuid;
     private ProductDataPresenter productDataPresenter=ProductDataPresenter.getPSPresenter();
+    private TextView tvDetail;
 
     @Override
     protected int getLayoutId() {
@@ -78,7 +81,6 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
     @Override
     protected void initComponents() {
         initView();
-        initRv();
         initSc();
         uuid=getIntent().getStringExtra("uuid");
         productDataPresenter.attachView(this);
@@ -119,11 +121,11 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
         productPrice = findViewById(R.id.product_price);
         productName = findViewById(R.id.product_name);
         productContent = findViewById(R.id.product_content);
-        contentImgRv = findViewById(R.id.content_img_rv);
         contentScroll = findViewById(R.id.content_scroll);
         titleRl = findViewById(R.id.title_rl);
         productVideo = findViewById(R.id.product_video);
         title = findViewById(R.id.title);
+        tvDetail = (TextView) findViewById(R.id.tv_detail);
     }
 
     @Override
@@ -257,26 +259,12 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
         banner.stopAutoPlay();
     }
 
-    private void initRv() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        contentImgRv.setLayoutManager(linearLayoutManager);
-        for (int i = 0; i < 3; i++) {
-            stringList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541421297535&di=7ada3a21db141cb769f8bce9d407686b&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2Fdbfb6a5c4276ef323c6b140f40b688363f7c52dd.jpg");
-        }
-        OnlyImgRvAdapter onlyImgRvAdapter = new OnlyImgRvAdapter();
-        onlyImgRvAdapter.addMore(stringList);
-        contentImgRv.setAdapter(onlyImgRvAdapter);
-        contentImgRv.setNestedScrollingEnabled(false);
-        contentImgRv.setHasFixedSize(true);
-    }
-
     @Override
     public void getDataSuccess(ProductDataBean productDataBean) {
         List<ImageData> imgurl = new ArrayList<>();
         for (int i = 0; i < productDataBean.getImages().size(); i++) {
             ImageData img1 = new ImageData();
-            img1.setImage(productDataBean.getImages().get(i));
+            img1.setImage(PicUtils.getUrl(productDataBean.getImages().get(i)));
             img1.setSubtitleTitle(i + 1 + "/4");
             imgurl.add(img1);
         }
@@ -284,5 +272,8 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
         productName.setText(productDataBean.getName());
         productPrice.setText("$"+productDataBean.getPrice());
         productContent.setText(productDataBean.getDescription());
+        CharSequence charSequence= Html.fromHtml(productDataBean.getDetail());
+        tvDetail.setText(charSequence);
+        tvDetail.setMovementMethod(LinkMovementMethod.getInstance() );
     }
 }

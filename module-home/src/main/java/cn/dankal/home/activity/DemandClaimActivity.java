@@ -172,7 +172,7 @@ public class DemandClaimActivity extends BaseActivity {
         TipDialog.Builder builder = new TipDialog.Builder(context);
         loadingDialog = builder
                 .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord("uploading").create();
+                .setTipWord("图片上传中").create();
         loadingDialog.show();
 
         boolean b = UriUtils.getPath(context, uri) == null;
@@ -182,8 +182,8 @@ public class DemandClaimActivity extends BaseActivity {
             public void onSucess(String localPath, String key) {
                 loadingDialog.dismiss();
                 TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
-                        .setTipWord("Uploaded successfully")
-                        .create(2000);
+                        .setTipWord("上传成功")
+                        .create(1000);
                 dialog.show();
                 dialog.dismiss();
                 images.add(key);

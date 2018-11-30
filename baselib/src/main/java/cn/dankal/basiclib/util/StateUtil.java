@@ -4,7 +4,7 @@ import cn.dankal.basiclib.R;
 
 public class StateUtil {
 
-    public static String IntentionState(int stateId){
+    public static String WorkListState(int stateId){
         String state="";
         switch (stateId){
             case 3:
@@ -27,6 +27,28 @@ public class StateUtil {
                 break;
         }
         return state;
+    }
+
+    public  static String intentionStatus(int statusId){
+        String status="";
+        switch (statusId){
+            case 1:
+                status="SUBMITTED";
+                break;
+            case 2:
+                status="RECEIVED";
+                break;
+            case 3:
+                status="IN PROGRESS";
+                break;
+            case 4:
+                status="UNDELIVERED";
+                break;
+            case 5:
+                status="FINISH";
+                break;
+        }
+        return status;
     }
 
     public static String ideaState(int stateId){

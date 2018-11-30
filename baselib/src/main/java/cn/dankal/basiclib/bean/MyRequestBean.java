@@ -59,7 +59,15 @@ public class MyRequestBean {
         private String description;
         private String demand_id;
         private List<String> images;
+        private int status;
 
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
 
         public String getDemand_id() {
             return demand_id;

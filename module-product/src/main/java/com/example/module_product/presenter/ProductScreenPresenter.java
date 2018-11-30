@@ -6,6 +6,7 @@ import api.ProductServiceFactory;
 import cn.dankal.basiclib.api.ProductService;
 import cn.dankal.basiclib.base.BaseResult;
 import cn.dankal.basiclib.base.BaseView;
+import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 
@@ -23,9 +24,9 @@ public class ProductScreenPresenter implements ProductScreenContact.psPresenter 
 
     @Override
     public void getData(String keyword,String uuid) {
-        ProductServiceFactory.getProductlist(keyword,uuid).safeSubscribe(new AbstractDialogSubscriber<ProductListBean>(psView) {
+        ProductServiceFactory.getProductlist(keyword,uuid).safeSubscribe(new AbstractDialogSubscriber<ProductHomeListBean>(psView) {
             @Override
-            public void onNext(ProductListBean productListBean) {
+            public void onNext(ProductHomeListBean productListBean) {
                 psView.getDataSuccess(productListBean);
             }
         });

@@ -10,7 +10,9 @@ import api.MyServiceFactory;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.bean.ChatBean;
 import cn.dankal.basiclib.bean.DemandListbean;
+import cn.dankal.basiclib.bean.NewServiceMsgBean;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.Logger;
 
 public class ServicePersenter implements ServiceContact.productPresenter {
 
@@ -79,6 +81,43 @@ public class ServicePersenter implements ServiceContact.productPresenter {
             }
         });
     }
+
+    @Override
+    public void getNewMsg() {
+        MyServiceFactory.getEngNewServiceMsg().safeSubscribe(new AbstractDialogSubscriber<NewServiceMsgBean>(pcview) {
+            @Override
+            public void onNext(NewServiceMsgBean newServiceMsgBean) {
+                if(null!=newServiceMsgBean.getNew_msg()){
+                    pcview.getNewMsg(newServiceMsgBean.getNew_msg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                Logger.d("errorrrr",e);
+            }
+        });
+    }
+
+    @Override
+    public void getUserNewMsg() {
+        MyServiceFactory.getNewServiceMsg().safeSubscribe(new AbstractDialogSubscriber<NewServiceMsgBean>(pcview) {
+            @Override
+            public void onNext(NewServiceMsgBean newServiceMsgBean) {
+                if(null!=newServiceMsgBean.getNew_msg()){
+                    pcview.getNewMsg(newServiceMsgBean.getNew_msg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                Logger.d("errrorrrr",e);
+            }
+        });
+    }
+
 
     @Override
     public void userSendMsg(String content, int type) {
