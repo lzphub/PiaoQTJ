@@ -32,7 +32,7 @@ public class UserRegisterPresenter implements SmsCode {
                     .subscribe(new AbstractDialogSubscriber<String>(baseView) {
                         @Override
                         public void onNext(String s) {
-                            sendCodeSuccess(mBtCode);
+                            sendEngCodeSuccess(mBtCode);
                         }
                     });
         } else {
@@ -44,14 +44,14 @@ public class UserRegisterPresenter implements SmsCode {
     public void sendCodeSuccess(Button mBtCode) {
         mBtCode.setEnabled(false);
         //倒计时
-        mDisposable = Flowable.intervalRange(1, 600, 0, 1, TimeUnit.SECONDS)
+        mDisposable = Flowable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(aLong -> {
-                    mBtCode.setText("OBTAIN(" + (600 - aLong) + ")");
+                    mBtCode.setText("已发送(" + (60 - aLong) + ")");
                 })
                 .doOnComplete(() -> {
                     mBtCode.setEnabled(true);
-                    mBtCode.setText("GET CODE");
+                    mBtCode.setText("获取验证码");
                 }).subscribe();
     }
 
@@ -71,6 +71,21 @@ public class UserRegisterPresenter implements SmsCode {
                 });
             }
     }
+
+    public void sendEngCodeSuccess(Button mBtCode) {
+        mBtCode.setEnabled(false);
+        //倒计时
+        mDisposable = Flowable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(aLong -> {
+                    mBtCode.setText("OBTAIN(" + (60 - aLong) + ")");
+                })
+                .doOnComplete(() -> {
+                    mBtCode.setEnabled(true);
+                    mBtCode.setText("GET CODE");
+                }).subscribe();
+    }
+
 
     @Override
     public void bankCardCode(String phone, Button mBtCode, String type) {

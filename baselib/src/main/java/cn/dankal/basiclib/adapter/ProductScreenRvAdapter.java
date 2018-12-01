@@ -16,7 +16,7 @@ import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.util.image.PicUtils;
 
-public class ProductScreenRvAdapter extends BaseRecyclerViewAdapter<ProductHomeListBean> {
+public class ProductScreenRvAdapter extends BaseRecyclerViewAdapter<ProductHomeListBean.DataBean> {
 
 
     @Override
@@ -29,7 +29,7 @@ public class ProductScreenRvAdapter extends BaseRecyclerViewAdapter<ProductHomeL
         return new MyViewHolder(rootView);
     }
 
-    class MyViewHolder extends BaseRecyclerViewHolder<ProductHomeListBean> {
+    class MyViewHolder extends BaseRecyclerViewHolder<ProductHomeListBean.DataBean> {
         @BindView(R2.id.product_img)
         ImageView productImg;
         @BindView(R2.id.product_price)
@@ -44,10 +44,10 @@ public class ProductScreenRvAdapter extends BaseRecyclerViewAdapter<ProductHomeL
 
 
         @Override
-        public void onBindData(ProductHomeListBean data, int position) {
-            Glide.with(context).load(PicUtils.getUrl(data.getData().get(position).getImages().get(0))).into(productImg);
-            productPrice.setText("$"+data.getData().get(position).getPrice());
-            productName.setText(data.getData().get(position).getName());
+        public void onBindData(ProductHomeListBean.DataBean data, int position) {
+            Glide.with(context).load(PicUtils.getUrl(data.getImages().get(0))).into(productImg);
+            productPrice.setText("$"+data.getPrice());
+            productName.setText(data.getName());
         }
     }
 }

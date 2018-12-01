@@ -42,6 +42,7 @@ public class My_fragment extends BaseFragment {
     private TextView menuText3;
     private TextView menuText4;
     private TextView menuText5;
+    private String head_pic;
 
     @Override
     protected int getLayoutId() {
@@ -112,7 +113,7 @@ public class My_fragment extends BaseFragment {
             }
         });
 
-        customer.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.SERVICE).navigation());
+        customer.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.SERVICE).withString("head_pic",head_pic).navigation());
 
     }
 
@@ -141,9 +142,9 @@ public class My_fragment extends BaseFragment {
             public void onNext(PersonalData_EnBean personalData_enBean) {
                 myName.setText(personalData_enBean.getName());
                 PicUtils.loadAvatar(personalData_enBean.getAvatar(),headPic);
+                head_pic=personalData_enBean.getAvatar();
             }
         });
-//        myName.setText(DKUserManager.getUserInfo().getName());
     }
     private void getEngineerData(){
         MyServiceFactory.getEngineerData().safeSubscribe(new AbstractDialogSubscriber<PersonalData_EngineerBean>(this) {
@@ -151,6 +152,7 @@ public class My_fragment extends BaseFragment {
             public void onNext(PersonalData_EngineerBean personalData_engineerBean) {
                 myName.setText(personalData_engineerBean.getName());
                 PicUtils.loadAvatar(personalData_engineerBean.getAvatar(),headPic);
+                head_pic=personalData_engineerBean.getAvatar();
             }
         });
     }
@@ -158,7 +160,7 @@ public class My_fragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        dismissLoadingDialog();
         if(type.equals("user")){
             getData();
         }else{

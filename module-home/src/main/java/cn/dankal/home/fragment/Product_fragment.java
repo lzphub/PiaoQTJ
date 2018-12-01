@@ -197,7 +197,7 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
         productTabRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductClassifyBean.RootBean.ChildrenBean>() {
             @Override
             public void onItemClick(View v, int position, ProductClassifyBean.RootBean.ChildrenBean data) {
-                ARouter.getInstance().build(ProductProtocol.SCREEN).navigation();
+                ARouter.getInstance().build(ProductProtocol.SCREEN).withString("uuid",data.getUuid()).navigation();
             }
         });
     }

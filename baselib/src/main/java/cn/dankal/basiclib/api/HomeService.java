@@ -77,6 +77,13 @@ public interface HomeService {
     Observable<MyWorkDataBean> getWorkData(@Path("project_uuid")String project_uuid);
 
     /**
+     *  完成工单
+     */
+    @POST("engineer/me/postCompletedDetail")
+    @FormUrlEncoded
+    Observable<String> postCompletedDetail(@Field("project_uuid")String project_uuid,@Field("plan_uuid")String plan_uuid,@Field("cpl_detail")String cpl_detail,@Field("cpl_images[]")List<String> cpl_images);
+
+    /**
      * 认领需求
      */
     @POST("engineer/home/postplan")

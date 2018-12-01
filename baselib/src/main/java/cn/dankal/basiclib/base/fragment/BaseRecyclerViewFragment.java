@@ -18,6 +18,7 @@ import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewContract;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.common.OnFinishLoadDataListener;
 import cn.dankal.basiclib.util.AppUtils;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
 
 import static cn.dankal.basiclib.Constants.PAGE_SIZE;
@@ -45,11 +46,13 @@ public abstract class BaseRecyclerViewFragment<M> extends BaseLazyLoadFragment
     private int pageIndex = 1;
     private boolean isUpdateList = false;
     private boolean isRefresh = true;
+    private String type;
 
 
     @Override
     public void initComponents() {
         mPresenter = getPresenter();
+        type= SharedPreferencesUtils.getString(getActivity(), "identity", "user");
         if (mPresenter != null) mPresenter.attachView(this);
 
         mAdapter = getAdapter();
@@ -165,7 +168,12 @@ public abstract class BaseRecyclerViewFragment<M> extends BaseLazyLoadFragment
             }
         }
         if (mAdapter != null && mAdapter.isEmpty()) {
-            showEmpty();
+            initLoadServer();
+            if("user".equals(type)){
+                showEnEmpty();
+            }else{
+                showEmpty();
+            }
         }
     }
 

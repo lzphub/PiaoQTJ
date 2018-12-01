@@ -20,6 +20,15 @@ public class ProductDataBean {
     private String description;
     private String detail;
     private List<String> images;
+    private int is_favourite;
+
+    public int getIs_favourite() {
+        return is_favourite;
+    }
+
+    public void setIs_favourite(int is_favourite) {
+        this.is_favourite = is_favourite;
+    }
 
     public String getUuid() {
         return uuid;

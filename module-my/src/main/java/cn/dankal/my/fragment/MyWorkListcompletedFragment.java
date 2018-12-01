@@ -4,13 +4,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import cn.dankal.basiclib.adapter.MyWorkListRvAdapter;
 import cn.dankal.basiclib.base.BaseRvFragmentImp;
 import cn.dankal.basiclib.base.fragment.BaseLazyLoadFragment;
 import cn.dankal.basiclib.base.fragment.BaseStateFragment;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
+import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.MyWorkListBean;
+import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
 import cn.dankal.my.presenter.MyWorkListContact;
@@ -48,6 +52,12 @@ public class MyWorkListcompletedFragment extends BaseRvFragmentImp<MyWorkListBea
     @Override
     public BaseRecyclerViewAdapter<MyWorkListBean.DataBean> getAdapter() {
         myWorkListRvAdapter = new MyWorkListRvAdapter();
+        myWorkListRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<MyWorkListBean.DataBean>() {
+            @Override
+            public void onItemClick(View v, int position, MyWorkListBean.DataBean data) {
+                ARouter.getInstance().build(MyProtocol.WORKDATA).withString("uuid",data.getUuid()).withInt("statusId",data.getStatus()).navigation();
+            }
+        });
         return myWorkListRvAdapter;
     }
 }

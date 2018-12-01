@@ -89,7 +89,6 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
             spannableString = new SpannableString("最新需求");
             ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.home_green));
             spannableString.setSpan(colorSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            swipeToloadLayout.setRefreshEnabled(false);
             swipeToloadLayout.setLoadMoreEnabled(false);
         } else {
             spannableString = new SpannableString("LATEST PRODUCT");
@@ -141,8 +140,13 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         productHomePresenter = ProductHomePresenter.getPresenter();
         productHomePresenter.attachView(this);
         if (identity.equals("enterprise")) {
-            productHomePresenter.getEngData(1,3);
+            productHomePresenter.getEngData(page,3);
             productHomePresenter.getEngBanner();
+            swipeToloadLayout.setOnRefreshListener(() -> {
+                page = 1;
+                isRefresh = true;
+                productHomePresenter.getEngData(page, 3);
+            });
         } else {
             productRvAdapter = new ProductRvAdapter();
             productHomePresenter.getData(page, 10);
@@ -205,6 +209,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         demandList.setAdapter(demandRvAdapter);
         demandList.setNestedScrollingEnabled(false);
         demandList.setHasFixedSize(true);
+        swipeToloadLayout.setRefreshing(false);
         demandRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<DemandListbean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, DemandListbean.DataBean data) {

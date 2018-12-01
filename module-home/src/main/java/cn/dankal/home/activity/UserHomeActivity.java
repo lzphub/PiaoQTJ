@@ -2,6 +2,7 @@ package cn.dankal.home.activity;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.SpannableString;
@@ -23,6 +24,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import java.util.HashSet;
 import java.util.Set;
 
+import api.MyServiceFactory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,7 +32,9 @@ import cn.dankal.address.R;
 import cn.dankal.address.R2;
 import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.bean.HasNewBean;
 import cn.dankal.basiclib.protocol.HomeProtocol;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.widget.GenDialog;
@@ -100,6 +104,11 @@ public class UserHomeActivity extends BaseActivity {
     }
 
     @Override
+    public void showLoadingDialog() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
@@ -113,6 +122,37 @@ public class UserHomeActivity extends BaseActivity {
             ARouter.getInstance().build(HomeProtocol.POSTREQUEST).navigation();
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        downTimer.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        downTimer.cancel();
+    }
+
+    CountDownTimer downTimer=new CountDownTimer(1000000,10000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            MyServiceFactory.getHasNew().safeSubscribe(new AbstractDialogSubscriber<HasNewBean>(UserHomeActivity.this) {
+                @Override
+                public void onNext(HasNewBean hasNewBean) {
+                    if(hasNewBean.getHas_new()==1){
+                        ToastUtils.showShort("There is a new message");
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onFinish() {
+            downTimer.start();
+        }
+    };
 
     private void setAlias() {
         JPushInterface.setAlias(this, 10, DKUserManager.getUserInfo().getUuid());

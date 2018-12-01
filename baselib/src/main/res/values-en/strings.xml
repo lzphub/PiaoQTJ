@@ -25,4 +25,5 @@
 	<string name="takephoto">PHOTOGRAPH</string>
 	<string name="pickphoto">SELECT FROM ALBUM</string>
 	<string name="cancel">CANCEL</string>
+	<string name="Refresh">Refresh</string>
 </resources>

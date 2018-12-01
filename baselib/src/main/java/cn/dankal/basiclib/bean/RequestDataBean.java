@@ -6,13 +6,14 @@ public class RequestDataBean {
 
 
     /**
-     * title : Text2
-     * images : ["zm_1542357474754null.png","zm_1542357474798null.png","zm_1542357474758null.png"]
-     * start_price : 6.00
-     * end_price : 963.00
-     * start_date : 2018-11-16
-     * end_date : 2018-11-22
-     * status : 4
+     * title : Text8
+     * images : ["zm_1542420461151.png"]
+     * start_price : 25.00
+     * end_price : 36.00
+     * start_date : 2018-11-17
+     * end_date : 2018-11-23
+     * status : 2
+     * description : Jdhhdhhdhdhddhhdhdhshshuhdbudhdhdhvywujnxb
      */
 
     private String title;
@@ -21,6 +22,7 @@ public class RequestDataBean {
     private String start_date;
     private String end_date;
     private int status;
+    private String description;
     private List<String> images;
 
     public String getTitle() {
@@ -69,6 +71,14 @@ public class RequestDataBean {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<String> getImages() {

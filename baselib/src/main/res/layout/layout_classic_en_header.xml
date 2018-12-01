@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Refresh"
+            android:text="@string/Refresh"
             android:textColor="#4FA3FF"/>
 
     </RelativeLayout>

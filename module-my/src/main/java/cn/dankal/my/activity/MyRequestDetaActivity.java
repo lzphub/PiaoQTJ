@@ -86,5 +86,6 @@ public class  MyRequestDetaActivity extends BaseActivity implements RequestConta
         internalImgRvAdapter.updateData(databean.getImages());
         ivState.setImageResource(StateUtil.requestStateImg(databean.getStatus()));
         tvState.setText(StateUtil.requestState(databean.getStatus()));
+        requestContent.setText(databean.getDescription());
     }
 }

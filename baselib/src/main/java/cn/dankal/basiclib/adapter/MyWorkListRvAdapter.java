@@ -1,15 +1,22 @@
 package cn.dankal.basiclib.adapter;
 
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import butterknife.BindView;
 import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.R2;
+import cn.dankal.basiclib.api.MyService;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.MyWorkListBean;
+import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.StateUtil;
 
 public class MyWorkListRvAdapter extends BaseRecyclerViewAdapter<MyWorkListBean.DataBean> {
@@ -33,6 +40,10 @@ public class MyWorkListRvAdapter extends BaseRecyclerViewAdapter<MyWorkListBean.
         TextView contentTv;
         @BindView(R2.id.price_text)
         TextView priceText;
+        @BindView(R2.id.bt_finish)
+        Button btFinish;
+        @BindView(R2.id.rl_finish)
+        RelativeLayout rlFinish;
 
 
         public MyViewHolder(View itemView) {
@@ -43,9 +54,24 @@ public class MyWorkListRvAdapter extends BaseRecyclerViewAdapter<MyWorkListBean.
         @Override
         public void onBindData(MyWorkListBean.DataBean data, int position) {
             statusText.setText(StateUtil.WorkListState(data.getStatus()));
+            if(data.getStatus()==5 || data.getStatus()==8){
+                statusText.setTextColor(Color.parseColor("#FE3824"));
+            }
             titleTv.setText(data.getName());
             contentTv.setText(data.getDesc());
-            priceText.setText("$"+data.getStart_price()+"~"+data.getEnd_price());
+            priceText.setText("$" + data.getStart_price() + "~" + data.getEnd_price());
+            if(data.getStatus()==4){
+                rlFinish.setVisibility(View.VISIBLE);
+            }else if(data.getStatus()==8){
+                rlFinish.setVisibility(View.VISIBLE);
+                btFinish.setText("重新提交");
+            }
+            btFinish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ARouter.getInstance().build(MyProtocol.FINISHWORK).withString("project_uuid",data.getUuid()).navigation();
+                }
+            });
         }
     }
 }

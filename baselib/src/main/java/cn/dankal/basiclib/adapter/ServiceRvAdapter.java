@@ -132,7 +132,11 @@ public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private void setTextMsg(MyViewHolder holder, ChatBean.DataBean bean) {
         holder.sendtext.setText(bean.getContent());
-        PicUtils.loadAvatar(PicUtils.getUrl(picurl), holder.pic);
+        if("admin".equals(bean.getSent_by())){
+            PicUtils.loadAvatar("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543656909175&di=a9952f754166f220e241835a0c8b5fed&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F58ee3d6d55fbb2fbd0b9f507444a20a44623dc11.jpg", holder.pic);
+        }else{
+            PicUtils.loadAvatar(PicUtils.getUrl(picurl), holder.pic);
+        }
     }
 
     class MyImgHolder extends RecyclerView.ViewHolder {
@@ -147,8 +151,11 @@ public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     private void setImgMsg(MyImgHolder holder, ChatBean.DataBean bean) {
-
-        PicUtils.loadAvatar(PicUtils.getUrl(picurl), holder.head_pic);
+        if(bean.getSent_by().equals("admin")){
+            PicUtils.loadAvatar("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543656909175&di=a9952f754166f220e241835a0c8b5fed&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F58ee3d6d55fbb2fbd0b9f507444a20a44623dc11.jpg", holder.head_pic);
+        }else{
+            PicUtils.loadAvatar(PicUtils.getUrl(picurl), holder.head_pic);
+        }
         if(bean.getContent().substring(0,1).equals("/")){
             Glide.with(context).load(bean.getContent()).into(holder.senimg);
         }else{

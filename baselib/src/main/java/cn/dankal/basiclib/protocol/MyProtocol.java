@@ -1,5 +1,7 @@
 package cn.dankal.basiclib.protocol;
 
+import retrofit2.http.POST;
+
 public interface MyProtocol extends BaseRouteProtocol {
     String PART = "/my/";
 
@@ -58,4 +60,6 @@ public interface MyProtocol extends BaseRouteProtocol {
     String IDEADATA=PART+"myideadata";
 
     String WORKDATA=PART+"workdata";
+
+    String FINISHWORK= PART+"finishwork";
 }

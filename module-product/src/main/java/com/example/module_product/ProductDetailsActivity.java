@@ -5,8 +5,11 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -72,6 +75,24 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
     private ProductDataPresenter productDataPresenter=ProductDataPresenter.getPSPresenter();
     private TextView tvDetail;
 
+    private Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    CharSequence charSequence = (CharSequence) msg.obj;
+                    if (charSequence != null) {
+                        tvDetail.setText(charSequence);
+                        tvDetail.setMovementMethod(LinkMovementMethod.getInstance());
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_product_details;
@@ -91,17 +112,12 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
         Glide.with(this)
                 .load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541421297535&di=7ada3a21db141cb769f8bce9d407686b&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Farchive%2Fdbfb6a5c4276ef323c6b140f40b688363f7c52dd.jpg")
                 .into(productVideo.thumbImageView);
-        serviceBtn.setOnClickListener(new View.OnClickListener() {
+        serviceBtn.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.SERVICE).navigation());
+        backImg.setOnClickListener(v -> finish());
+        collImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(HomeProtocol.SERVICE).navigation();
-            }
-        });
-        backImg.setOnClickListener(v -> finish());
-        collImg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if(collImg.isChecked()){
                     collImg.setBackgroundResource(R.mipmap.ic_home_details_like_click);
                     productDataPresenter.addCollection(uuid);
                 }else{
@@ -125,7 +141,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
         titleRl = findViewById(R.id.title_rl);
         productVideo = findViewById(R.id.product_video);
         title = findViewById(R.id.title);
-        tvDetail = (TextView) findViewById(R.id.tv_detail);
+        tvDetail = findViewById(R.id.tv_detail);
     }
 
     @Override
@@ -265,15 +281,48 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
         for (int i = 0; i < productDataBean.getImages().size(); i++) {
             ImageData img1 = new ImageData();
             img1.setImage(PicUtils.getUrl(productDataBean.getImages().get(i)));
-            img1.setSubtitleTitle(i + 1 + "/4");
+            img1.setSubtitleTitle(i + 1 + "/"+productDataBean.getImages().size());
             imgurl.add(img1);
         }
         banner.setDatas(imgurl).setPlay(true).setCardImageLoader((context, imageView, path) -> Glide.with(context).load(path).into(imageView)).start();
         productName.setText(productDataBean.getName());
         productPrice.setText("$"+productDataBean.getPrice());
         productContent.setText(productDataBean.getDescription());
-        CharSequence charSequence= Html.fromHtml(productDataBean.getDetail());
-        tvDetail.setText(charSequence);
-        tvDetail.setMovementMethod(LinkMovementMethod.getInstance() );
+        setActivityContent(productDataBean.getDetail());
+        if(productDataBean.getIs_favourite()==1){
+            collImg.setBackgroundResource(R.mipmap.ic_home_details_like_click);
+            collImg.setChecked(true);
+        }else {
+            collImg.setBackgroundResource(R.mipmap.ic_home_details_like_unclicked);
+            collImg.setChecked(false);
+        }
+    }
+
+    //加载富文本
+    private void setActivityContent(final String activityContent) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Html.ImageGetter imageGetter = new Html.ImageGetter() {
+
+                    @Override
+                    public Drawable getDrawable(String source) {
+                        Drawable drawable;
+                        drawable = PicUtils.getImageNetwork(source);
+                        if (drawable != null) {
+                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                        } else if (drawable == null) {
+                            return null;
+                        }
+                        return drawable;
+                    }
+                };
+                CharSequence charSequence = Html.fromHtml(activityContent.trim(), imageGetter, null);
+                Message ms = Message.obtain();
+                ms.what = 1;
+                ms.obj = charSequence;
+                mHandler.sendMessage(ms);
+            }
+        }).start();
     }
 }

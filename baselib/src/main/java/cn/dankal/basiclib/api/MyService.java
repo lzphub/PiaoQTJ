@@ -9,6 +9,7 @@ import cn.dankal.basiclib.bean.AddressBean;
 import cn.dankal.basiclib.bean.BankCardListBean;
 import cn.dankal.basiclib.bean.ChatBean;
 import cn.dankal.basiclib.bean.ComProbBean;
+import cn.dankal.basiclib.bean.HasNewBean;
 import cn.dankal.basiclib.bean.IntentionDateBean;
 import cn.dankal.basiclib.bean.MyEarBean;
 import cn.dankal.basiclib.bean.MyIdeaListBean;
@@ -253,4 +254,15 @@ public interface MyService {
     @FormUrlEncoded
     Observable<SystemMsgBean> engineerGetSystemMsg(@Field("page_index")int page_index,@Field("page_size")int page_size);
 
+    /**
+     * 用户端获取是否有新消息
+     */
+    @GET("customer/service/hasnew")
+    Observable<HasNewBean> getHasNew();
+
+    /**
+     * 工程师端是否有新消息
+     */
+    @GET("engineer/service/hasnew")
+    Observable<HasNewBean> getEngHasNew();
 }

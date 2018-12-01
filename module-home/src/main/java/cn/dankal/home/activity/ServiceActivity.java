@@ -79,7 +79,7 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
     private TextView tvPhotograph;
     private TextView tvAlbum;
     private ServicePersenter servicePersenter;
-    private String picurl;
+    private String picurl="";
     private cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout swipeToloadLayout;
     private int page_index = 1;
 
@@ -92,7 +92,10 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
     protected void initComponents() {
         initView();
         type = SharedPreferencesUtils.getString(this, "identity", "user");
-        getPersonalData();
+        picurl=getIntent().getStringExtra("head_pic");
+        if(picurl==null){
+            getPersonalData();
+        }
         servicePersenter = new ServicePersenter();
         servicePersenter.attachView(this);
         if ("user".equals(type)) {
@@ -100,7 +103,6 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
         } else {
             servicePersenter.getMsgRecord("1", "30");
         }
-        downTimer.start();
         if (!type.equals("user")) {
             title.setText("客服中心");
             tipsText.setText("如客服没有及时回复，请联系1071377555@qq.com");
@@ -275,6 +277,8 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
         if (isLastPage) {
             swipeToloadLayout.setRefreshEnabled(false);
         }
+
+        downTimer.start();
     }
 
     @Override
@@ -295,6 +299,8 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
         if (isLastPage) {
             swipeToloadLayout.setRefreshEnabled(false);
         }
+
+        downTimer.start();
     }
 
     @Override

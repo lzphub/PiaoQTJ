@@ -69,47 +69,25 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.login_btn_bg));
         spannableString.setSpan(colorSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         titleRank.setText(spannableString);
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        backImg.setOnClickListener(v -> finish());
+        tardingList.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.TRANSACTIONRECORD).navigation());
+        withdrawalLl.setOnClickListener(v -> {
+            if (issetpwd==1) {
+                ARouter.getInstance().build(MyProtocol.WITHDRAWAL).withString("balance", balanceText.getText().toString().trim().substring(1, balanceText.getText().toString().trim().length() - 1)).navigation();
+            } else {
+                GenDialog.CustomBuilder customBuilder = new GenDialog.CustomBuilder(MyEarningsActivity.this);
+                customBuilder.setContent(R.layout.unsetpwd_layout);
+                Dialog dialog1 = customBuilder.create();
+                ImageView close = dialog1.findViewById(R.id.close_img);
+                close.setOnClickListener(v1 -> dialog1.dismiss());
+                RelativeLayout setPwd = dialog1.findViewById(R.id.toSetPwd_Rl);
+                setPwd.setOnClickListener(v12 -> {
+                    dialog1.dismiss();
+                    ARouter.getInstance().build(MyProtocol.SETWITHPEDCODE).withInt("type", ResultCode.myEarCode).navigation();
+                });
+                dialog1.show();
             }
-        });
-        tardingList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.TRANSACTIONRECORD).navigation();
-            }
-        });
-        withdrawalLl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (issetpwd==1) {
-                    ARouter.getInstance().build(MyProtocol.WITHDRAWAL).withString("balance", balanceText.getText().toString().trim().substring(1, balanceText.getText().toString().trim().length() - 1)).navigation();
-                } else {
-                    GenDialog.CustomBuilder customBuilder = new GenDialog.CustomBuilder(MyEarningsActivity.this);
-                    customBuilder.setContent(R.layout.unsetpwd_layout);
-                    Dialog dialog1 = customBuilder.create();
-                    ImageView close = dialog1.findViewById(R.id.close_img);
-                    close.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog1.dismiss();
-                        }
-                    });
-                    RelativeLayout setPwd = dialog1.findViewById(R.id.toSetPwd_Rl);
-                    setPwd.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog1.dismiss();
 
-                            ARouter.getInstance().build(MyProtocol.SETWITHPEDCODE).withInt("type", ResultCode.myEarCode).navigation();
-                        }
-                    });
-                    dialog1.show();
-                }
-
-            }
         });
     }
 
@@ -120,14 +98,14 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        tardingList = (TextView) findViewById(R.id.tarding_list);
-        balanceText = (TextView) findViewById(R.id.balance_text);
-        rankingText = (TextView) findViewById(R.id.ranking_text);
-        titleRank = (TextView) findViewById(R.id.title_rank);
-        rankOnetothreeList = (RecyclerView) findViewById(R.id.rank_onetothree_list);
-        rankFourtotenList = (RecyclerView) findViewById(R.id.rank_fourtoten_list);
-        withdrawalLl = (LinearLayout) findViewById(R.id.withdrawal_ll);
+        backImg = findViewById(R.id.back_img);
+        tardingList = findViewById(R.id.tarding_list);
+        balanceText = findViewById(R.id.balance_text);
+        rankingText = findViewById(R.id.ranking_text);
+        titleRank = findViewById(R.id.title_rank);
+        rankOnetothreeList = findViewById(R.id.rank_onetothree_list);
+        rankFourtotenList = findViewById(R.id.rank_fourtoten_list);
+        withdrawalLl = findViewById(R.id.withdrawal_ll);
     }
 
     @Override
@@ -147,7 +125,7 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
             bean = myEarBean.getChart().get(i);
             myEarBeansTop3.add(bean);
         }
-        if (resize(myEarBean) > 3) {
+        if (myEarBean.getChart().size() > 3) {
             for (int n = 3; n < myEarBean.getChart().size(); n++) {
                 bean = new MyEarBean.ChartBean();
                 bean = myEarBean.getChart().get(n);

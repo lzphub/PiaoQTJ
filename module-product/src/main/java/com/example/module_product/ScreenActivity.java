@@ -37,8 +37,9 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
     private ImageView serachImg;
     private Spinner spinner;
     private RecyclerView pageProductRv;
-    private List<ProductHomeListBean> productListBeanList=new ArrayList<>();
+    private List<ProductHomeListBean.DataBean> productListBeanList=new ArrayList<>();
     private ProductScreenPresenter productScreenPresenter=ProductScreenPresenter.getPSPresenter();
+    private String uuid;
 
     @Override
     protected int getLayoutId() {
@@ -50,6 +51,7 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
         initView();
         productScreenPresenter.attachView(this);
         backImg.setOnClickListener(this);
+        uuid=getIntent().getStringExtra("uuid");
         for (int i = 0; i < 5; i++) {
             itemList.add("item" + i);
         }
@@ -57,7 +59,7 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
         stringArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
         stringArrayAdapter.addAll(itemList);
         spinner.setAdapter(stringArrayAdapter);
-        productScreenPresenter.getData("","");
+        productScreenPresenter.getData("",uuid);
     }
 
     private void initView() {
@@ -80,14 +82,19 @@ public class ScreenActivity extends BaseActivity implements View.OnClickListener
     public void getDataSuccess(ProductHomeListBean productListBean) {
         pageProductRv.setLayoutManager(new GridLayoutManager(this,2));
         ProductScreenRvAdapter productScreenRvAdapter=new ProductScreenRvAdapter();
-        productListBeanList.add(productListBean);
+        productListBeanList.addAll(productListBean.getData());
         productScreenRvAdapter.addMore(productListBeanList);
         pageProductRv.setAdapter(productScreenRvAdapter);
-        productScreenRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductHomeListBean>() {
+        productScreenRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<ProductHomeListBean.DataBean>() {
             @Override
-            public void onItemClick(View v, int position, ProductHomeListBean data) {
-                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",productListBeanList.get(position).getData().get(0).getUuid()).navigation();
+            public void onItemClick(View v, int position, ProductHomeListBean.DataBean data) {
+                ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid",data.getUuid()).navigation();
             }
         });
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_un_item, R.id.checked_item);
+        stringArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        stringArrayAdapter.clear();
+        stringArrayAdapter.addAll(productListBean.getTag());
+        spinner.setAdapter(stringArrayAdapter);
     }
 }

@@ -143,6 +143,7 @@ public class ServicePersenter implements ServiceContact.productPresenter {
                 }else{
                     pcview.getMsgRecord(dataBeanList,false);
                 }
+
             }
         });
     }

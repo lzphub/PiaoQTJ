@@ -33,8 +33,10 @@ public class SubmitIdeaActivity extends BaseActivity {
     protected void initComponents() {
         initView();
         type=getIntent().getIntExtra("type",1);
-        if(type!=1){
+        if(type==2){
             returnText.setText("已提交认领该需求\n请等待后台审核");
+        }else if(type==3){
+            returnText.setText("已提交认完成该需求\n请等待后台审核");
         }
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override

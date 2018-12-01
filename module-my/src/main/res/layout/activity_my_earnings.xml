@@ -185,6 +185,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:layout_marginTop="21dp"
+                        android:overScrollMode="never"
                         app:layout_constraintTop_toBottomOf="@id/title_rank"></android.support.v7.widget.RecyclerView>
 
                     <android.support.v7.widget.RecyclerView
@@ -192,6 +193,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="21dp"
+                        android:overScrollMode="never"
                         app:layout_constraintTop_toBottomOf="@id/rank_onetothree_list"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
 

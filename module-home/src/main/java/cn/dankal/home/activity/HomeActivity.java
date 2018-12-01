@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.CountDownTimer;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -19,11 +20,14 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import java.util.HashSet;
 import java.util.Set;
 
+import api.MyServiceFactory;
 import cn.dankal.address.R;
 import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.bean.HasNewBean;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.home.fragment.Home_fragment;
@@ -80,6 +84,42 @@ public class HomeActivity extends BaseActivity {
         homeFra = findViewById(R.id.home_fra);
         setAlias();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        downTimer.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        downTimer.cancel();
+    }
+
+    @Override
+    public void showLoadingDialog() {
+
+    }
+
+    CountDownTimer downTimer=new CountDownTimer(1000000,10000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            MyServiceFactory.getEngHasNew().safeSubscribe(new AbstractDialogSubscriber<HasNewBean>(HomeActivity.this) {
+                @Override
+                public void onNext(HasNewBean hasNewBean) {
+                    if(hasNewBean.getHas_new()==1){
+                        ToastUtils.showShort("有新消息了");
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onFinish() {
+            downTimer.start();
+        }
+    };
 
     private void setAlias(){
         JPushInterface.setAlias(this,10, DKUserManager.getUserInfo().getUuid());

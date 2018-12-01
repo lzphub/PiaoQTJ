@@ -11,6 +11,7 @@ public class ProductHomeListBean {
      * current_page : 1
      * last_page : 1
      * data : [{"uuid":"7da4bfded9611eba30fee52db91d848e","name":"范鼎的蛋蛋","price":"9.90","images":["FngLrTlf3dIXi_uIwbVrV9yWEP-p","FuhRfAk-WNjdLudqw--zGOk-jti2","FhOPEH6Ia41tWD4zQARHVKUnXPhG","FvCuNd9kMK_VP0xHv-B9vONThLwl"],"description":"范鼎的蛋蛋"},{"uuid":"7064fe3bef9702806847c1a2b9f0ed10","name":"范鼎的饭","price":"9.90","images":["FuhRfAk-WNjdLudqw--zGOk-jti2","FngLrTlf3dIXi_uIwbVrV9yWEP-p","FvCuNd9kMK_VP0xHv-B9vONThLwl","FhOPEH6Ia41tWD4zQARHVKUnXPhG"],"description":"范鼎的饭"}]
+     * tag : ["标签1","标签2"]
      */
 
     private int total;
@@ -18,6 +19,7 @@ public class ProductHomeListBean {
     private int current_page;
     private int last_page;
     private List<DataBean> data;
+    private List<String> tag;
 
     public int getTotal() {
         return total;
@@ -57,6 +59,14 @@ public class ProductHomeListBean {
 
     public void setData(List<DataBean> data) {
         this.data = data;
+    }
+
+    public List<String> getTag() {
+        return tag;
+    }
+
+    public void setTag(List<String> tag) {
+        this.tag = tag;
     }
 
     public static class DataBean {

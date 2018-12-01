@@ -40,7 +40,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/card_list"
         android:layout_width="match_parent"
-        android:layout_height="288dp"></android.support.v7.widget.RecyclerView>
+        android:layout_height="288dp"
+        android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
 
     <Button
         android:id="@+id/add_btn"
