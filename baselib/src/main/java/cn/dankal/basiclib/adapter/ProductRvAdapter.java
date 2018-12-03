@@ -51,7 +51,7 @@ public class ProductRvAdapter extends BaseRecyclerViewAdapter<ProductHomeListBea
             Glide.with(context).load(PicUtils.getUrl(data.getImages().get(0))).into(productImg);
             productPrice.setText(data.getPrice());
             productName.setText(data.getName());
-//            productContent.setText(data.get);
+            productContent.setText(data.getDescription());
         }
     }
 }
