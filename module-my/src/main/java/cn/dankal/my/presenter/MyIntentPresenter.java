@@ -2,6 +2,8 @@ package cn.dankal.my.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class MyIntentPresenter implements  MyIntentContact.fcPersenter{
 
     @Override
     public void getData(GetIntentionBean getIntentionBean) {
-        MyServiceFactory.getIntentionList(getIntentionBean).safeSubscribe(new AbstractDialogSubscriber<MyIntentionBean>(fcView) {
+        MyServiceFactory.getIntentionList(JSON.toJSONString(getIntentionBean.getStatus()),getIntentionBean.getPage_index(),getIntentionBean.getPage_size()).safeSubscribe(new AbstractDialogSubscriber<MyIntentionBean>(fcView) {
             @Override
             public void onNext(MyIntentionBean myIntentionBean) {
                 fcView.getDataSuccess(myIntentionBean);
@@ -33,7 +35,10 @@ public class MyIntentPresenter implements  MyIntentContact.fcPersenter{
 
     @Override
     public void addData(GetIntentionBean getIntentionBean) {
-        MyServiceFactory.getIntentionList(getIntentionBean).safeSubscribe(new AbstractDialogSubscriber<MyIntentionBean>(fcView) {
+        MyServiceFactory.getIntentionList(JSON.toJSONString(getIntentionBean.getStatus()),
+                getIntentionBean.getPage_index(),
+                getIntentionBean.getPage_size())
+                .safeSubscribe(new AbstractDialogSubscriber<MyIntentionBean>(fcView) {
             @Override
             public void onNext(MyIntentionBean myIntentionBean) {
                 fcView.updata(myIntentionBean);

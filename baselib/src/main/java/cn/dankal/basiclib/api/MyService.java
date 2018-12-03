@@ -107,8 +107,8 @@ public interface MyService {
     /**
      * 我的意向
      */
-    @POST("customer/me/getIntentionList")
-    Observable<MyIntentionBean> getIntentionList(@Body GetIntentionBean status);
+    @GET("customer/me/getIntentionList")
+    Observable<MyIntentionBean> getIntentionList(@Query("status")String status,@Query("page_index") int page_index, @Query(" page_size") int page_size);
 
     /**
      * 意向详情
