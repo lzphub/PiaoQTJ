@@ -42,7 +42,6 @@ public class MyIdeaActivity extends BaseActivity {
 
     private String[] tab_titel2={"全部","进行中","已完成","产品推广中"};
 
-    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -55,7 +54,7 @@ public class MyIdeaActivity extends BaseActivity {
         backImg.setOnClickListener(v -> finish());
 
         if(null == fragmentList){
-            fragmentList = new ArrayList<BaseFragment>();
+            fragmentList = new ArrayList<>();
         }
         if(null==myIdeaAllFragment){
             myIdeaAllFragment=new MyIdeaAllFragment();
@@ -94,10 +93,10 @@ public class MyIdeaActivity extends BaseActivity {
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
-        tabTitle = (SlidingTabLayout) findViewById(R.id.tab_title);
-        tabViewpager = (ViewPager) findViewById(R.id.tab_viewpager);
+        backImg = findViewById(R.id.back_img);
+        titleText = findViewById(R.id.title_text);
+        tabTitle = findViewById(R.id.tab_title);
+        tabViewpager = findViewById(R.id.tab_viewpager);
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {

@@ -57,31 +57,14 @@ public class SetPwdCodeActivity extends BaseActivity implements BaseView {
         initView();
         getData();
         code2=getIntent().getIntExtra("type",0);
-        backImg.setOnClickListener(new View.OnClickListener() {
+        backImg.setOnClickListener(v -> finish());
+        btNext.setOnClickListener(v -> checkCode(email,"withdrawal",etEmailNum.getText().toString().trim()));
+        getVeCode.setOnClickListener(v -> UserServiceFactory.getCode(email,"withdrawal").safeSubscribe(new AbstractDialogSubscriber<String>(SetPwdCodeActivity.this) {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onNext(String s) {
+                sendSuccess(getVeCode);
             }
-        });
-        btNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                checkCode(email,"withdrawal",etEmailNum.getText().toString().trim());
-
-            }
-        });
-        getVeCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserServiceFactory.getCode(email,"withdrawal").safeSubscribe(new AbstractDialogSubscriber<String>(SetPwdCodeActivity.this) {
-                    @Override
-                    public void onNext(String s) {
-                        sendSuccess(getVeCode);
-                    }
-                });
-            }
-        });
+        }));
     }
 
     private void sendSuccess(Button mBtCode){
@@ -114,8 +97,6 @@ public class SetPwdCodeActivity extends BaseActivity implements BaseView {
 
                 @Override
                 public void onError(Throwable e) {
-//                    ARouter.getInstance().build(MyProtocol.SETWITHPWD).withInt("type",code2).withString("email",email).navigation();
-//                    finish();
                     ToastUtils.showShort(e+"");
                 }
 
@@ -139,12 +120,12 @@ public class SetPwdCodeActivity extends BaseActivity implements BaseView {
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
-        tips = (TextView) findViewById(R.id.tips);
-        tvPhoneNum = (TextView) findViewById(R.id.tv_phone_num);
-        getVeCode = (Button) findViewById(R.id.getVeCode);
-        etEmailNum = (EditText) findViewById(R.id.et_email_num);
-        btNext = (Button) findViewById(R.id.bt_next);
+        backImg = findViewById(R.id.back_img);
+        titleText = findViewById(R.id.title_text);
+        tips = findViewById(R.id.tips);
+        tvPhoneNum = findViewById(R.id.tv_phone_num);
+        getVeCode = findViewById(R.id.getVeCode);
+        etEmailNum = findViewById(R.id.et_email_num);
+        btNext = findViewById(R.id.bt_next);
     }
 }

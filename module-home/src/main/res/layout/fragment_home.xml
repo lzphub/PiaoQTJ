@@ -96,18 +96,28 @@
                     app:subtitle_title_text_color="#ffffffff"
                     app:subtitle_title_text_size="12dp"></com.xuezj.cardbanner.CardBanner>
 
+                <RadioGroup
+                    android:id="@+id/rdgroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/banner"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
                 <TextView
                     android:id="@+id/new_demand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="23dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="30dp"
                     android:text="最新需求"
                     android:textColor="@color/color33"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/banner" />
+                    app:layout_constraintTop_toBottomOf="@id/rdgroup" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/demand_list"

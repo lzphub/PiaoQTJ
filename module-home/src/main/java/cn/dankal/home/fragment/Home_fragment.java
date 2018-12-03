@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -68,6 +70,10 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
     private cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout swipeToloadLayout;
     private ProductRvAdapter productRvAdapter;
     private DemandRvAdapter demandRvAdapter;
+    private android.widget.RadioGroup rdgroup;
+    private RadioButton fristRdButton;
+    private List<RadioButton> radioButtons=new ArrayList<>();
+    int iconId=0;
 
     @Override
     protected int getLayoutId() {
@@ -126,6 +132,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         banner = (CardBanner) view.findViewById(R.id.banner);
         resText = (TextView) view.findViewById(R.id.res_text);
         swipeToloadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipe_toload_layout);
+        rdgroup = view.findViewById(R.id.rdgroup);
     }
 
     /*
@@ -194,12 +201,60 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
             img1.setImage(PicUtils.getUrl(userHomeBannerBean.getCarousels().get(i).getImage()));
             imgurl.add(img1);
         }
-        banner.setDatas(imgurl).setCardImageLoader((context, imageView, path) -> Glide.with(context).load(path).into(imageView)).start();
+        banner.setDatas(imgurl).setDelayTime(2000).setCardImageLoader((context, imageView, path) -> Glide.with(context).load(path).into(imageView)).start();
         banner.setOnItemClickListener(position -> {
             Uri uri = Uri.parse("http://" + userHomeBannerBean.getCarousels().get(position).getJump_url());
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         });
+        initRadioButton(userHomeBannerBean.getCarousels().size());
+    }
+
+    private void initRadioButton(int size){
+        for (int i = 0; i < size; i++) {
+            RadioButton tempButton = new RadioButton(getContext());
+            tempButton.setBackgroundResource(R.drawable.home_banner_selector);  // 设置RadioButton的背景图片
+            tempButton.setButtonDrawable(android.R.color.transparent);            // 设置按钮的样式
+            tempButton.setPadding(5, 0, 5, 0);
+            tempButton.setHeight(10);
+            tempButton.setWidth(10);
+
+            if (i == 0) {
+                fristRdButton = tempButton;
+                radioButtons.add(fristRdButton);
+            }
+
+            rdgroup.addView(tempButton, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            radioButtons.add(tempButton);
+        }
+
+        if (fristRdButton != null) {
+            fristRdButton.setChecked(true);
+            downTimer.start();
+        }
+
+    }
+
+    CountDownTimer downTimer=new CountDownTimer(1000000,2000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            iconId++;
+            if(iconId>=radioButtons.size()){
+                iconId=0;
+            }
+            radioButtons.get(iconId).setChecked(true);
+        }
+
+        @Override
+        public void onFinish() {
+
+        }
+    };
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        downTimer.cancel();
     }
 
     @Override

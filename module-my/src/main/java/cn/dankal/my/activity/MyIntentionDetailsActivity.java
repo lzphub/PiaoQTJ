@@ -78,7 +78,7 @@ public class MyIntentionDetailsActivity extends BaseActivity implements Intentio
         contactsMail = findViewById(R.id.contacts_mail);
         intentionDeta = findViewById(R.id.intention_deta);
         intentionInfo = findViewById(R.id.intention_info);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvTitle = findViewById(R.id.tv_title);
     }
 
     @Override

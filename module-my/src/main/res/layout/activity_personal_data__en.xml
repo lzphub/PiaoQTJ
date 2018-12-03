@@ -93,7 +93,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="39dp"
-            android:text="JAY HHH"
             android:textColor="@color/color33"
             android:textSize="14sp"
             android:textStyle="bold"/>
@@ -138,7 +137,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="39dp"
-            android:text="23"
             android:textColor="@color/color33"
             android:textSize="14sp"
             android:textStyle="bold"/>
@@ -183,7 +181,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="39dp"
-            android:text="134 8383 2939"
             android:textColor="@color/color33"
             android:textSize="14sp"
             android:textStyle="bold"/>
@@ -228,7 +225,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="39dp"
-            android:text="123456789@QQ.COM"
             android:textColor="@color/color33"
             android:textSize="14sp"
             android:textStyle="bold"/>
@@ -266,7 +262,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="39dp"
-            android:text="RAND CORPORATION"
             android:textColor="@color/color33"
             android:textSize="14sp"
             android:textStyle="bold"/>
@@ -311,7 +306,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="39dp"
-            android:text="AMERICA"
             android:textColor="@color/color33"
             android:textSize="14sp"
             android:textStyle="bold"/>
@@ -355,7 +349,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="39dp"
-            android:text="WHOLESALER"
             android:textColor="@color/color33"
             android:textSize="14sp"
             android:textStyle="bold"/>

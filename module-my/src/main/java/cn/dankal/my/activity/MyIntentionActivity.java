@@ -96,7 +96,7 @@ public class MyIntentionActivity extends BaseActivity {
 
     private void initVp(){
         if(null == fragmentList){
-            fragmentList = new ArrayList<BaseFragment>();
+            fragmentList = new ArrayList<>();
         }
 
         if(null  == myIntentionAllFragment){

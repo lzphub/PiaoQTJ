@@ -153,6 +153,17 @@ public class My_fragment extends BaseFragment {
                 myName.setText(personalData_engineerBean.getName());
                 PicUtils.loadAvatar(personalData_engineerBean.getAvatar(),headPic);
                 head_pic=personalData_engineerBean.getAvatar();
+                switch (personalData_engineerBean.getLevel()){
+                    case 1:
+                        myPostion.setText("初级工程师");
+                        break;
+                    case 2:
+                        myPostion.setText("中级工程师");
+                        break;
+                    case 3:
+                        myPostion.setText("高级工程师");
+                        break;
+                }
             }
         });
     }

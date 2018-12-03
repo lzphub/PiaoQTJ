@@ -9,6 +9,7 @@ import cn.dankal.basiclib.bean.AddressBean;
 import cn.dankal.basiclib.bean.BankCardListBean;
 import cn.dankal.basiclib.bean.ChatBean;
 import cn.dankal.basiclib.bean.ComProbBean;
+import cn.dankal.basiclib.bean.GetIntentionBean;
 import cn.dankal.basiclib.bean.HasNewBean;
 import cn.dankal.basiclib.bean.IntentionDateBean;
 import cn.dankal.basiclib.bean.MyEarBean;
@@ -24,6 +25,7 @@ import cn.dankal.basiclib.bean.RequestDataBean;
 import cn.dankal.basiclib.bean.SystemMsgBean;
 import cn.dankal.basiclib.bean.TransactionBean;
 import io.reactivex.Observable;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -106,8 +108,7 @@ public interface MyService {
      * 我的意向
      */
     @POST("customer/me/getIntentionList")
-    @FormUrlEncoded
-    Observable<MyIntentionBean> getIntentionList(@Field("status") String status,@Field("page_index") int page_index, @Field(" page_size") int page_size);
+    Observable<MyIntentionBean> getIntentionList(@Body GetIntentionBean status);
 
     /**
      * 意向详情

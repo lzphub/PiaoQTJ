@@ -54,33 +54,30 @@ public class EditDataEnActivity extends BaseActivity {
                 etName.setHint("PLEASE FILL IN YOUR COMPANY HERE!");
                 break;
         }
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (data) {
-                    case "name":
-                        personalData_enBean.setName(etName.getText().toString().trim());
-                        break;
-                    case "number":
-                        personalData_enBean.setMobile(etName.getText().toString().trim());
-                        break;
-                    case "email":
-                        personalData_enBean.setEmail(etName.getText().toString().trim());
-                        break;
-                    case "company":
-                        personalData_enBean.setCompany(etName.getText().toString().trim());
-                        break;
-                }
-                updata();
+        submitBtn.setOnClickListener(v -> {
+            switch (data) {
+                case "name":
+                    personalData_enBean.setName(etName.getText().toString().trim());
+                    break;
+                case "number":
+                    personalData_enBean.setMobile(etName.getText().toString().trim());
+                    break;
+                case "email":
+                    personalData_enBean.setEmail(etName.getText().toString().trim());
+                    break;
+                case "company":
+                    personalData_enBean.setCompany(etName.getText().toString().trim());
+                    break;
             }
+            updata();
         });
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
-        etName = (EditText) findViewById(R.id.et_name);
-        submitBtn = (Button) findViewById(R.id.submit_btn);
+        backImg = findViewById(R.id.back_img);
+        titleText = findViewById(R.id.title_text);
+        etName = findViewById(R.id.et_name);
+        submitBtn = findViewById(R.id.submit_btn);
     }
 
     private void updata() {

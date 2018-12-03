@@ -32,8 +32,6 @@ public class MyWorkListActivity extends BaseActivity {
     private SlidingTabLayout  tabTitle;
     private android.support.v4.view.ViewPager tabViewpager;
     private String[] tab_titel={"全部","进行中","已完成"};
-    private MyIntentionVpAdapter myIntentionVpAdapter;
-
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private MyWorkListAllFragment myWorkListAllFragment;
     private MyWorkListProcessingFragment myWorkListProcessingFragment;
@@ -84,28 +82,29 @@ public class MyWorkListActivity extends BaseActivity {
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        tabTitle = (SlidingTabLayout) findViewById(R.id.tab_title);
-        tabViewpager = (ViewPager) findViewById(R.id.tab_viewpager);
+        backImg = findViewById(R.id.back_img);
+        tabTitle = findViewById(R.id.tab_title);
+        tabViewpager = findViewById(R.id.tab_viewpager);
     }
 
 
     private void initViewPager(){
         if(null == fragmentList){
-            fragmentList = new ArrayList<BaseFragment>();
+            fragmentList = new ArrayList<>();
         }
         if(null==myWorkListAllFragment){
             myWorkListAllFragment=new MyWorkListAllFragment();
             fragmentList.add(myWorkListAllFragment);
         }
-        if(null  == myWorkListcompletedFragment){
-            myWorkListcompletedFragment = new MyWorkListcompletedFragment();
-            fragmentList.add(myWorkListcompletedFragment);
-        }
         if(null  == myWorkListProcessingFragment){
             myWorkListProcessingFragment = new MyWorkListProcessingFragment();
             fragmentList.add(myWorkListProcessingFragment);
         }
+        if(null  == myWorkListcompletedFragment){
+            myWorkListcompletedFragment = new MyWorkListcompletedFragment();
+            fragmentList.add(myWorkListcompletedFragment);
+        }
+
 
         tabViewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), (ArrayList<BaseFragment>) fragmentList,tab_titel));
         tabTitle.setViewPager(tabViewpager);

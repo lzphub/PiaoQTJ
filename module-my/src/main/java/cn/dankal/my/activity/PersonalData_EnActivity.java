@@ -1,7 +1,9 @@
 package cn.dankal.my.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,12 +13,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.yalantis.ucrop.UCrop;
 
+import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,18 +32,25 @@ import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
 import cn.dankal.basiclib.common.camera.CameraHandler;
 import cn.dankal.basiclib.common.camera.RequestCodes;
+import cn.dankal.basiclib.common.qiniu.QiniuUpload;
+import cn.dankal.basiclib.common.qiniu.UploadHelper;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.template.personal.ChangeAvatar;
 import cn.dankal.basiclib.template.personal.ChangeAvatarImpl;
 import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.ToastUtils;
+import cn.dankal.basiclib.util.UriUtils;
+import cn.dankal.basiclib.util.image.AvatarUtil;
 import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.basiclib.widget.CircleImageView;
+import cn.dankal.basiclib.widget.TipDialog;
 import cn.dankal.basiclib.widget.wheelview.WheelView;
 import cn.dankal.basiclib.widget.wheelview.adapters.ArrayWheelAdapter;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.PERSONALDATAEN;
+import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
 
 @Route(path = PERSONALDATAEN)
 public class PersonalData_EnActivity extends BaseActivity {
@@ -61,7 +75,6 @@ public class PersonalData_EnActivity extends BaseActivity {
     private String[] positions = {"IMPORTER", "WHOLESALERS", "RETAILERS", "DESIGNER", "PERSONAL", "OTHER"};
     private List<String> positionList = new ArrayList<>();
     private int ageitemcount = 0, positioncount = 0;
-    private ChangeAvatar changeAvatar;
     private PersonalData_EnBean personalDataEnBean;
 
     @Override
@@ -85,8 +98,8 @@ public class PersonalData_EnActivity extends BaseActivity {
         eMailRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "email").withSerializable("bean", personalDataEnBean).navigation());
         companyRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "company").withSerializable("bean", personalDataEnBean).navigation());
 
-        changeAvatar = new ChangeAvatarImpl(this, this);
-        changeAvatar.setIvHead(headPic);
+//        changeAvatar = new ChangeAvatarImpl(this, this);
+//        changeAvatar.setIvHead(headPic);
     }
 
     private void initView() {
@@ -110,18 +123,60 @@ public class PersonalData_EnActivity extends BaseActivity {
     }
 
     private void initBottomDialog() {
-        /**
-         * 没有裁剪！！
-         */
-        changeAvatar.checkPermission(new CameraHandler(this), null);
-
+        AvatarUtil avatarUtil=new AvatarUtil(this);
+        avatarUtil.beginCameraDialog(this);
     }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case AvatarUtil.REQUEST_CODE_ALBUM://相册存储权限
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    AvatarUtil.openAlbum(this);
+                } else {
+                    Toast.makeText(this, "PERMISSION TO SELECT GALLERY IS REQUIRED", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case AvatarUtil.REQUEST_CODE_CAMERA://相机拍照权限
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {//允许
+                    AvatarUtil.openCamera(this);
+                } else {//拒绝
+                    Toast.makeText(this, "YOU CAN ONLY USE THE PHOTO FEATURE IF YOU AGREE TO CAMERA PERMISSIONS", Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            changeAvatar.onActivityResult(requestCode, resultCode, data, personalDataEnBean);
+            //正确返回
+            if (resultCode == RESULT_OK) {
+                switch (requestCode) {
+                    case AvatarUtil.TAKE_PHOTO://相机返回
+                        //相机返回图片，调用裁剪的方法
+                        AvatarUtil.startUCrop(PersonalData_EnActivity.this, AvatarUtil.imageUri, "CUTTING HEAD");
+                        break;
+                    case AvatarUtil.CHOOSE_PHOTO://相册返回
+                        try {
+                            if (data != null) {
+                                Uri uri = data.getData();
+                                //相册返回图片，调用裁剪的方法
+                                AvatarUtil.startUCrop(PersonalData_EnActivity.this, uri, "CUTTING HEAD");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(this, "IMAGE SELECTION FAILED", Toast.LENGTH_LONG).show();
+                        }
+                        break;
+                    case UCrop.REQUEST_CROP://剪切返回
+                        Uri resultUri = UCrop.getOutput(data);
+                        uploadPic(resultUri,personalDataEnBean);
+                        break;
+                }
+            } else {
+                Toast.makeText(this, "IMAGE SELECTION FAILED",Toast.LENGTH_LONG).show();
+            }
          } else if (resultCode == 2) {
             if (requestCode == 2) {
                 countryText.setText(data.getStringExtra("countries"));
@@ -249,7 +304,6 @@ public class PersonalData_EnActivity extends BaseActivity {
                 countryText.setText(personalData_enBean.getCountry());
                 positionText.setText(personalData_enBean.getPosition());
 
-
                 personalDataEnBean = personalData_enBean;
 
                 ageitemcount = personalData_enBean.getAge();
@@ -260,6 +314,52 @@ public class PersonalData_EnActivity extends BaseActivity {
                         return;
                     }
                 }
+            }
+        });
+    }
+
+    private void uploadPic(Uri photoUris, PersonalData_EnBean personalData_enBean) {
+        final File tempFile = new File(photoUris.getPath());
+
+        TipDialog.Builder builder = new TipDialog.Builder(this);
+        loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("UpLoading").create();
+        loadingDialog.show();
+
+        boolean b = UriUtils.getPath(this, photoUris) == null;
+
+        new UploadHelper().uploadQiniuPic(new QiniuUpload.UploadListener() {
+            @Override
+            public void onSucess(String localPath, String key) {
+                loadingDialog.dismiss();
+                personalData_enBean.setAvatar(key);
+                setAvatar(personalData_enBean);
+                File deletefile=new File(localPath);
+                getContentResolver().delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, MediaStore.Images.Media.DATA + "=?", new String[]{localPath});//删除系统缩略图
+                deletefile.delete();
+            }
+
+            @Override
+            public void onUpload(double percent) {
+                DecimalFormat df = new DecimalFormat("#0.00");
+                builder.setTipWord(df.format(percent * 100) + "%").showProgress();
+            }
+
+            @Override
+            public void onError(String string) {
+                ToastUtils.showLong(string);
+                loadingDialog.dismiss();
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL).setTipWord("上传失败").create(2000);
+                dialog.show();
+                dialog.dismiss();
+            }
+        }, b ? photoUris.getPath() : UriUtils.getPath(this, photoUris));
+    }
+    private void setAvatar(PersonalData_EnBean personalData_enBean) {
+        MyServiceFactory.updateInfo(personalData_enBean).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
+            @Override
+            public void onNext(String s) {
+                PicUtils.loadAvatar(personalData_enBean.getAvatar(), headPic);
+                ToastUtils.showShort("Uploaded successfully");
             }
         });
     }

@@ -46,35 +46,27 @@ public class EditDataActivity extends BaseActivity {
         }else if(type==3){
             etName.setHint("请输入您的手机号");
         }
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        backImg.setOnClickListener(v -> finish());
+        submitBtn.setOnClickListener(v -> {
+            switch (type){
+                case 1:
+                    personalData_engineerPostBean.setName(etName.getText().toString().trim());
+                    break;
+                case 2:
+                    personalData_engineerPostBean.setCompetence(etName.getText().toString().trim());
+                    break;
+                case 3:
+                    personalData_engineerPostBean.setMobile(etName.getText().toString().trim());
+                    break;
             }
-        });
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (type){
-                    case 1:
-                        personalData_engineerPostBean.setName(etName.getText().toString().trim());
-                        break;
-                    case 2:
-                        personalData_engineerPostBean.setCompetence(etName.getText().toString().trim());
-                        break;
-                    case 3:
-                        personalData_engineerPostBean.setMobile(etName.getText().toString().trim());
-                        break;
-                }
-                postEngineerData();
-            }
+            postEngineerData();
         });
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        etName = (EditText) findViewById(R.id.et_name);
-        submitBtn = (Button) findViewById(R.id.submit_btn);
+        backImg = findViewById(R.id.back_img);
+        etName = findViewById(R.id.et_name);
+        submitBtn = findViewById(R.id.submit_btn);
     }
 
     //更新个人信息

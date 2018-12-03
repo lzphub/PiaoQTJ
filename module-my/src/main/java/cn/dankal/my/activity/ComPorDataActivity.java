@@ -32,19 +32,14 @@ public class ComPorDataActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        backImg.setOnClickListener(v -> finish());
         CharSequence charSequence= Html.fromHtml(content);
         title.setText(charSequence);
         title.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        title = (TextView) findViewById(R.id.title);
+        backImg = findViewById(R.id.back_img);
+        title = findViewById(R.id.title);
     }
 }

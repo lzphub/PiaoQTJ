@@ -17,6 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/color99"
-        android:text="EMPYT~..." />
+        android:text="EMPTY~..." />
 
 </LinearLayout>

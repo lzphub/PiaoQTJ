@@ -1,16 +1,23 @@
 package cn.dankal.my.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.yalantis.ucrop.UCrop;
 
+import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +27,22 @@ import cn.dankal.basiclib.bean.AddressBean;
 import cn.dankal.basiclib.bean.PersonalData_EngineerBean;
 import cn.dankal.basiclib.bean.PersonalData_EngineerPostBean;
 import cn.dankal.basiclib.common.camera.CameraHandler;
+import cn.dankal.basiclib.common.qiniu.QiniuUpload;
+import cn.dankal.basiclib.common.qiniu.UploadHelper;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.template.personal.ChangeAvatar;
 import cn.dankal.basiclib.template.personal.ChangeAvatarImpl;
 import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.ToastUtils;
+import cn.dankal.basiclib.util.UriUtils;
+import cn.dankal.basiclib.util.image.AvatarUtil;
 import cn.dankal.basiclib.util.image.PicUtils;
+import cn.dankal.basiclib.widget.TipDialog;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.PERSONALDATA;
+import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
 
 @Route(path = PERSONALDATA)
 public class PersonalDataActivity extends BaseActivity {
@@ -66,59 +79,50 @@ public class PersonalDataActivity extends BaseActivity {
         if(StringUtil.isValid(getIntent().getStringExtra("skills"))){
             skillsText.setText(getIntent().getStringExtra("skills"));
         }
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        backImg.setOnClickListener(v -> finish());
+        nameRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 1).withSerializable("data",personalData_engineerPostBean).navigation());
+        skillsRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 2).withSerializable("data",personalData_engineerPostBean).navigation());
+        phoneRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 3).withSerializable("data",personalData_engineerPostBean).navigation());
+        headPic.setOnClickListener(v -> {
+            AvatarUtil avatarUtil=new AvatarUtil(this);
+            avatarUtil.beginCameraDialog(this);
         });
-        nameRl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 1).withSerializable("data",personalData_engineerPostBean).navigation();
-            }
-        });
-        skillsRl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 2).withSerializable("data",personalData_engineerPostBean).navigation();
-            }
-        });
-        phoneRl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 3).withSerializable("data",personalData_engineerPostBean).navigation();
-            }
-        });
-        headPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeAvatar.checkPermission(new CameraHandler(PersonalDataActivity.this), null);
-
-            }
-        });
-        addressRl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initAddressDialog();
-            }
-        });
+        addressRl.setOnClickListener(v -> initAddressDialog());
         changeAvatar = new ChangeAvatarImpl(this, this);
         changeAvatar.setIvHead(headPic);
     }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case AvatarUtil.REQUEST_CODE_ALBUM://相册存储权限
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    AvatarUtil.openAlbum(this);
+                } else {
+                    Toast.makeText(this, "选择图库需要同意权限", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case AvatarUtil.REQUEST_CODE_CAMERA://相机拍照权限
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {//允许
+                    AvatarUtil.openCamera(this);
+                } else {//拒绝
+                    Toast.makeText(this, "只有同意相机权限,才能使用扫码功能", Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
+        }
+    }
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        picRl = (RelativeLayout) findViewById(R.id.pic_rl);
-        headPic = (ImageView) findViewById(R.id.head_pic);
-        nameRl = (RelativeLayout) findViewById(R.id.name_rl);
-        nameText = (TextView) findViewById(R.id.name_text);
-        skillsRl = (RelativeLayout) findViewById(R.id.skills_rl);
-        skillsText = (TextView) findViewById(R.id.skills_text);
-        phoneRl = (RelativeLayout) findViewById(R.id.phone_rl);
-        phoneText = (TextView) findViewById(R.id.phone_text);
-        addressRl = (RelativeLayout) findViewById(R.id.address_rl);
-        addressText = (TextView) findViewById(R.id.address_text);
+        backImg = findViewById(R.id.back_img);
+        picRl = findViewById(R.id.pic_rl);
+        headPic = findViewById(R.id.head_pic);
+        nameRl = findViewById(R.id.name_rl);
+        nameText = findViewById(R.id.name_text);
+        skillsRl = findViewById(R.id.skills_rl);
+        skillsText = findViewById(R.id.skills_text);
+        phoneRl = findViewById(R.id.phone_rl);
+        phoneText = findViewById(R.id.phone_text);
+        addressRl = findViewById(R.id.address_rl);
+        addressText = findViewById(R.id.address_text);
     }
 
     private void initAddressDialog() {
@@ -256,7 +260,81 @@ public class PersonalDataActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            changeAvatar.onActivityResult2(requestCode, resultCode, data, personalData_engineerPostBean);
+            //正确返回
+            if (resultCode == RESULT_OK) {
+                switch (requestCode) {
+                    case AvatarUtil.TAKE_PHOTO://相机返回
+                        //相机返回图片，调用裁剪的方法
+                        AvatarUtil.startUCrop(PersonalDataActivity.this, AvatarUtil.imageUri, "裁剪头像");
+                        break;
+                    case AvatarUtil.CHOOSE_PHOTO://相册返回
+                        try {
+                            if (data != null) {
+                                Uri uri = data.getData();
+                                //相册返回图片，调用裁剪的方法
+                                AvatarUtil.startUCrop(PersonalDataActivity.this, uri, "裁剪头像");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(this, "图片选择失败", Toast.LENGTH_LONG).show();
+                        }
+                        break;
+                    case UCrop.REQUEST_CROP://剪切返回
+                        Uri resultUri = UCrop.getOutput(data);
+                        uploadPic2(resultUri,personalData_engineerPostBean);
+                        break;
+                }
+            } else {
+                Toast.makeText(this, "图片选择失败",Toast.LENGTH_LONG).show();
+            }
         }
+    }
+
+    private void uploadPic2(Uri photoUris, PersonalData_EngineerPostBean personalData_engineerPostBean) {
+        final File tempFile = new File(photoUris.getPath());
+
+        TipDialog.Builder builder = new TipDialog.Builder(this);
+        loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("正在上传").create();
+        loadingDialog.show();
+
+        boolean b = UriUtils.getPath(this, photoUris) == null;
+
+        new UploadHelper().uploadQiniuPic(new QiniuUpload.UploadListener() {
+            @Override
+            public void onSucess(String localPath, String key) {
+                loadingDialog.dismiss();
+
+                personalData_engineerPostBean.setAvatar(key);
+                setAvatar2(personalData_engineerPostBean);
+                File deletefile=new File(localPath);
+                getContentResolver().delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, MediaStore.Images.Media.DATA + "=?", new String[]{localPath});//删除系统缩略图
+                deletefile.delete();
+            }
+
+            @Override
+            public void onUpload(double percent) {
+                DecimalFormat df = new DecimalFormat("#0.00");
+                builder.setTipWord(df.format(percent * 100) + "%").showProgress();
+            }
+
+            @Override
+            public void onError(String string) {
+                ToastUtils.showLong(string);
+                loadingDialog.dismiss();
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL).setTipWord("上传失败").create(2000);
+                dialog.show();
+                dialog.dismiss();
+            }
+        }, b ? photoUris.getPath() : UriUtils.getPath(this, photoUris));
+    }
+
+    private void setAvatar2(PersonalData_EngineerPostBean personalData_engineerPostBean) {
+        MyServiceFactory.engineerUpdateInfo(personalData_engineerPostBean).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
+            @Override
+            public void onNext(String s) {
+                PicUtils.loadAvatar(personalData_engineerPostBean.getAvatar(), headPic);
+                ToastUtils.showShort("上传成功");
+            }
+        });
     }
 }

@@ -48,18 +48,8 @@ public class CheckBankCardActivity extends BaseActivity implements BankCardConta
         initView();
         bankCardPersenter.attachView(this);
         bankCardPersenter.getBankCardList();
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(MyProtocol.BINDCARD).navigation();
-            }
-        });
+        backImg.setOnClickListener(v -> finish());
+        addBtn.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.BINDCARD).navigation());
     }
 
     @Override
@@ -69,9 +59,9 @@ public class CheckBankCardActivity extends BaseActivity implements BankCardConta
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
+        backImg = findViewById(R.id.back_img);
         cardList =  findViewById(R.id.card_list);
-        addBtn = (Button) findViewById(R.id.add_btn);
+        addBtn = findViewById(R.id.add_btn);
     }
 
     @Override
@@ -97,7 +87,7 @@ public class CheckBankCardActivity extends BaseActivity implements BankCardConta
             public void onItemClick(View view, int position) {
                 checkBankCarkAdapter.setSelection(position);
                 Intent intent=new Intent();
-                intent.putExtra("card", (Serializable) bankCardListBean.getCards().get(position));
+                intent.putExtra("card", bankCardListBean.getCards().get(position));
                 setResult(20,intent);
                 finish();
             }

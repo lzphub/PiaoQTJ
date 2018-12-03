@@ -117,10 +117,10 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
+        backImg = findViewById(R.id.back_img);
 
-        tabTitle = (SlidingTabLayout) findViewById(R.id.tab_title);
-        tabViewpager = (ViewPager) findViewById(R.id.tab_viewpager);
+        tabTitle = findViewById(R.id.tab_title);
+        tabViewpager = findViewById(R.id.tab_viewpager);
         swipeToloadLayout = findViewById(R.id.swipe_toload_layout);
         swipeTarget = findViewById(R.id.swipe_target);
 
@@ -146,10 +146,6 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
 
     @Override
     public void getDataSuccess(MyRequestBean myRequestBean) {
-//        if(myRequestBean.getData().size()==0){
-//            initLoadService();
-//            showEnEmpty();
-//        }
         if (myRequestBeans != null) {
             myRequestBeans.clear();
         }

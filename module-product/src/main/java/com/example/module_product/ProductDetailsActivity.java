@@ -114,16 +114,13 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
                 .into(productVideo.thumbImageView);
         serviceBtn.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.SERVICE).navigation());
         backImg.setOnClickListener(v -> finish());
-        collImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(collImg.isChecked()){
-                    collImg.setBackgroundResource(R.mipmap.ic_home_details_like_click);
-                    productDataPresenter.addCollection(uuid);
-                }else{
-                    collImg.setBackgroundResource(R.mipmap.ic_home_details_like_unclicked);
-                    productDataPresenter.deleteCollection(uuid);
-                }
+        collImg.setOnClickListener(v -> {
+            if(collImg.isChecked()){
+                collImg.setBackgroundResource(R.mipmap.ic_home_details_like_click);
+                productDataPresenter.addCollection(uuid);
+            }else{
+                collImg.setBackgroundResource(R.mipmap.ic_home_details_like_unclicked);
+                productDataPresenter.deleteCollection(uuid);
             }
         });
     }
@@ -160,16 +157,12 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
 
     @TargetApi(Build.VERSION_CODES.M)
     private void initSc() {
-        contentScroll.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                Logger.d("scroll", "x=" + scrollX + "    " + "y=" + scrollY + "   ox=" + oldScrollX + "    oy=" + oldScrollY);
-                setTitleTextAlpha(scrollY, oldScrollY);
-                if (scrollY > oldScrollY && scrollY > 200 && scrollY < 300) {
-                    collImg.setVisibility(View.GONE);
-                } else if (scrollY < oldScrollY && scrollY > 200 && scrollY < 300) {
-                    collImg.setVisibility(View.VISIBLE);
-                }
+        contentScroll.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            setTitleTextAlpha(scrollY, oldScrollY);
+            if (scrollY > oldScrollY && scrollY > 200 && scrollY < 300) {
+                collImg.setVisibility(View.GONE);
+            } else if (scrollY < oldScrollY && scrollY > 200 && scrollY < 300) {
+                collImg.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -300,29 +293,22 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
 
     //加载富文本
     private void setActivityContent(final String activityContent) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Html.ImageGetter imageGetter = new Html.ImageGetter() {
-
-                    @Override
-                    public Drawable getDrawable(String source) {
-                        Drawable drawable;
-                        drawable = PicUtils.getImageNetwork(source);
-                        if (drawable != null) {
-                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                        } else if (drawable == null) {
-                            return null;
-                        }
-                        return drawable;
-                    }
-                };
-                CharSequence charSequence = Html.fromHtml(activityContent.trim(), imageGetter, null);
-                Message ms = Message.obtain();
-                ms.what = 1;
-                ms.obj = charSequence;
-                mHandler.sendMessage(ms);
-            }
+        new Thread(() -> {
+            Html.ImageGetter imageGetter = source -> {
+                Drawable drawable;
+                drawable = PicUtils.getImageNetwork(source);
+                if (drawable != null) {
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                } else if (drawable == null) {
+                    return null;
+                }
+                return drawable;
+            };
+            CharSequence charSequence = Html.fromHtml(activityContent.trim(), imageGetter, null);
+            Message ms = Message.obtain();
+            ms.what = 1;
+            ms.obj = charSequence;
+            mHandler.sendMessage(ms);
         }).start();
     }
 }

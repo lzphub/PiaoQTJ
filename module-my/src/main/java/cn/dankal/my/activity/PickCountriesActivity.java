@@ -63,15 +63,12 @@ public class PickCountriesActivity extends BaseActivity {
             }
         });
 
-        lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtils.showShort(((ContactSortModel) adapter.getItem(position)).getName());
-                Intent intent=new Intent();
-                intent.putExtra("countries",((ContactSortModel) adapter.getItem(position)).getName());
-                setResult(2,intent);
-                finish();
-            }
+        lvContact.setOnItemClickListener((parent, view, position, id) -> {
+            ToastUtils.showShort(((ContactSortModel) adapter.getItem(position)).getName());
+            Intent intent=new Intent();
+            intent.putExtra("countries",((ContactSortModel) adapter.getItem(position)).getName());
+            setResult(2,intent);
+            finish();
         });
     }
 

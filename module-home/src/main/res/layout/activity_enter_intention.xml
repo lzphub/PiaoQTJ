@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:background="@null"
-                android:text="JAY HHH"
+                android:hint="PlEASE FILL YOUR NAME"
                 android:textSize="20sp"
                 android:textColor="@color/color33"
                 android:textStyle="bold"

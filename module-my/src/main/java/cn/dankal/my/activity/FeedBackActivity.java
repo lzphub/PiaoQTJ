@@ -74,12 +74,7 @@ public class FeedBackActivity extends BaseActivity {
             etOpinion.setHint("* WE KNOW HOW TO LISTEN. PLEASE WRITE DOWN YOUR SUGGESTIONS HERE");
             submitBtn.setText("SAVE");
         }
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        backImg.setOnClickListener(v -> finish());
         etOpinion.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -141,34 +136,30 @@ public class FeedBackActivity extends BaseActivity {
                 }
                 imageRvAdapter=new ImageRvAdapter(this,result);
                 imgList.setAdapter(imageRvAdapter);
-                imageRvAdapter.setOnClickListener(new ImageRvAdapter.OnClickListener() {
-                    @Override
-                    public void OnClick(int pos) {
-                        result.remove(pos);
-                        imageRvAdapter.UpData(result);
-                        addImg.setVisibility(View.VISIBLE);
-                    }
+                imageRvAdapter.setOnClickListener(pos -> {
+                    result.remove(pos);
+                    imageRvAdapter.UpData(result);
+                    addImg.setVisibility(View.VISIBLE);
                 });
             }
         }
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
-        etOpinion = (EditText) findViewById(R.id.et_opinion);
-        opinionSize = (TextView) findViewById(R.id.opinion_size);
-        addImg = (ImageView) findViewById(R.id.add_img);
-        imgList = (RecyclerView) findViewById(R.id.img_list);
-        submitBtn = (Button) findViewById(R.id.submit_btn);
-        title = (TextView) findViewById(R.id.title);
+        backImg = findViewById(R.id.back_img);
+        titleText = findViewById(R.id.title_text);
+        etOpinion = findViewById(R.id.et_opinion);
+        opinionSize = findViewById(R.id.opinion_size);
+        addImg = findViewById(R.id.add_img);
+        imgList = findViewById(R.id.img_list);
+        submitBtn = findViewById(R.id.submit_btn);
+        title = findViewById(R.id.title);
     }
 
     //图片上传至七牛
     public static void uploadQiniu(Uri uri,Context context){
         final String[] path = {null};
         TipDialog loadingDialog;
-//        final File tempFile = new File(uri.getPath());
 
         TipDialog.Builder builder = new TipDialog.Builder(context);
         if(identity.equals("user")){

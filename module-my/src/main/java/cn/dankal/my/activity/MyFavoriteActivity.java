@@ -91,7 +91,7 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
     @Override
     protected void onRestart() {
         super.onRestart();
-        myFavoritePresenter.getData(1,10);
+        myFavoritePresenter.getData(1,20);
     }
 
     private void initView() {
@@ -133,6 +133,9 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
         }
         dataBeanList.addAll(productListBean.getData());
         myFavoriteRvAdapter.addMore(dataBeanList);
+        if(productListBean.getData().size()<20){
+            swipeToloadLayout.setLoadMoreEnabled(false);
+        }
     }
 
     @Override

@@ -60,8 +60,8 @@ public class  MyRequestDetaActivity extends BaseActivity implements RequestConta
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         addImgRv.setLayoutManager(linearLayoutManager);
-        ivState = (ImageView) findViewById(R.id.iv_state);
-        tvState = (TextView) findViewById(R.id.tv_state);
+        ivState = findViewById(R.id.iv_state);
+        tvState = findViewById(R.id.tv_state);
     }
 
     @Override

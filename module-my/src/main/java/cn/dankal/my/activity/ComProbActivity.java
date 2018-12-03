@@ -54,8 +54,8 @@ public class ComProbActivity extends BaseRvActivity<ComProbBean.DataBean> {
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
+        backImg = findViewById(R.id.back_img);
+        titleText = findViewById(R.id.title_text);
     }
 
     @Override

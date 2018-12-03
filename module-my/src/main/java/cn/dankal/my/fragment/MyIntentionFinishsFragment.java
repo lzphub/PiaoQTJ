@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -18,6 +21,7 @@ import cn.dankal.basiclib.base.fragment.BaseFragment;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
+import cn.dankal.basiclib.bean.GetIntentionBean;
 import cn.dankal.basiclib.bean.MyIntentionBean;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.widget.swipetoloadlayout.OnLoadMoreListener;
@@ -55,17 +59,20 @@ public class MyIntentionFinishsFragment extends BaseFragment implements MyIntent
         swipeTarget.setLayoutManager(linearLayoutManager);
         myIntentPresenter = new MyIntentPresenter();
         myIntentPresenter.attachView(this);
-        myIntentPresenter.getData("5", pageIndex, 20);
+        List<String> statues=new ArrayList<>();
+        statues.add("5");
+        GetIntentionBean getIntentionBean=new GetIntentionBean();
+        getIntentionBean.setPage_size(20);
+        getIntentionBean.setPage_index(pageIndex);
+        getIntentionBean.setStatus(statues);
+        myIntentPresenter.getData(getIntentionBean);
         swipeToloadLayout.setOnLoadMoreListener(() -> {
             pageIndex++;
-            myIntentPresenter.addData("5",pageIndex,20);
+            myIntentPresenter.addData(getIntentionBean);
         });
-        swipeToloadLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                pageIndex=1;
-                myIntentPresenter.getData("5",pageIndex,20);
-            }
+        swipeToloadLayout.setOnRefreshListener(() -> {
+            pageIndex=1;
+            myIntentPresenter.getData(getIntentionBean);
         });
     }
 

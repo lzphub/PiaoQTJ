@@ -1,7 +1,10 @@
 package cn.dankal.my.presenter;
 
+import java.util.List;
+
 import cn.dankal.basiclib.base.BasePresenter;
 import cn.dankal.basiclib.base.BaseView;
+import cn.dankal.basiclib.bean.GetIntentionBean;
 import cn.dankal.basiclib.bean.MyIntentionBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 
@@ -13,8 +16,8 @@ public interface MyIntentContact {
     }
 
     interface fcPersenter extends BasePresenter<fcView>{
-        void getData(String statusId,int page, int size);
-        void addData(String statusId,int page, int size);
+        void getData(GetIntentionBean getIntentionBean);
+        void addData(GetIntentionBean getIntentionBean);
     }
 
 }

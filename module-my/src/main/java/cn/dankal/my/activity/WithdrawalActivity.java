@@ -76,12 +76,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContac
         kBean = getIntent().getStringExtra("balance");
         availableBalance.setText("可用余额 " + kBean + "元");
         backImg.setOnClickListener(v -> finish());
-        addCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(WithdrawalActivity.this, CheckBankCardActivity.class), 20);
-            }
-        });
+        addCard.setOnClickListener(v -> startActivityForResult(new Intent(WithdrawalActivity.this, CheckBankCardActivity.class), 20));
         allWith.setOnClickListener(v -> {
             moenyEt.setText(kBean);
             moenyEt.requestFocus();
@@ -94,11 +89,10 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContac
                 return;
             }
             if (Double.valueOf(cashMoney) < threshold) {
-                ToastUtils.showShort("最低提现金额为"
-                        + LangHelper.regularizePrice(threshold) + "元");
+                ToastUtils.showShort("最低提现金额为" + LangHelper.regularizePrice(threshold) + "元");
                 return;
             }
-            if(Double.valueOf(cashMoney)<0.1){
+            if (Double.valueOf(cashMoney) < 0.1) {
                 ToastUtils.showShort("提现金额不能低于0.1元");
                 return;
             }
@@ -154,12 +148,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContac
 
             }
         });
-        deleteImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moenyEt.setText("");
-            }
-        });
+        deleteImage.setOnClickListener(v -> moenyEt.setText(""));
     }
 
 
@@ -193,18 +182,18 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContac
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        addCard = (RelativeLayout) findViewById(R.id.add_card);
-        moenyEt = (EditText) findViewById(R.id.moeny_et);
-        availableBalance = (TextView) findViewById(R.id.available_balance);
-        allWith = (TextView) findViewById(R.id.all_with);
-        withBtn = (Button) findViewById(R.id.with_btn);
-        bankCardText = (TextView) findViewById(R.id.bank_card_text);
-        rmbLogo = (TextView) findViewById(R.id.rmb_logo);
-        rmbLogo2 = (TextView) findViewById(R.id.rmb_logo2);
-        deleteImage = (ImageView) findViewById(R.id.delete_image);
-        cardName = (TextView) findViewById(R.id.card_name);
-        cradNumtext = (TextView) findViewById(R.id.crad_num);
+        backImg = findViewById(R.id.back_img);
+        addCard = findViewById(R.id.add_card);
+        moenyEt = findViewById(R.id.moeny_et);
+        availableBalance = findViewById(R.id.available_balance);
+        allWith = findViewById(R.id.all_with);
+        withBtn = findViewById(R.id.with_btn);
+        bankCardText = findViewById(R.id.bank_card_text);
+        rmbLogo = findViewById(R.id.rmb_logo);
+        rmbLogo2 = findViewById(R.id.rmb_logo2);
+        deleteImage = findViewById(R.id.delete_image);
+        cardName = findViewById(R.id.card_name);
+        cradNumtext = findViewById(R.id.crad_num);
     }
 
     @Override

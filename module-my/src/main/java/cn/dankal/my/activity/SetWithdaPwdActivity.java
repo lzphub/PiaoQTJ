@@ -48,36 +48,33 @@ public class SetWithdaPwdActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        code=getIntent().getIntExtra("type",0);
-        email=getIntent().getStringExtra("email");
+        code = getIntent().getIntExtra("type", 0);
+        email = getIntent().getStringExtra("email");
         backImg.setOnClickListener(v -> finish());
         btNext.setOnClickListener(v -> {
-            if(etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())){
+            if (etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())) {
                 setPwd(etPasswd.getText().toString().trim());
-            }else{
+            } else {
                 ToastUtils.showShort("两次输入不一致");
             }
 
         });
     }
 
-    private void setPwd(String pwd){
+    private void setPwd(String pwd) {
         MyServiceFactory.setWithPwd(pwd).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
             @Override
             public void onNext(String s) {
                 GenDialog.CustomBuilder2 customBuilder2 = new GenDialog.CustomBuilder2(SetWithdaPwdActivity.this);
                 customBuilder2.setContent(R.layout.finish_dialog);
                 Dialog dialog1 = customBuilder2.create();
-                Button ok_btn=dialog1.findViewById(R.id.ok_btn);
-                ok_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog1.dismiss();
-                        ActivityUtils.finishActivity(SetPwdCodeActivity.class);
-                        ActivityUtils.finishActivity(SetWithdaPwdActivity.class);
-                        if(code== ResultCode.myEarCode){
-                            ARouter.getInstance().build(MyProtocol.WITHDRAWAL).navigation();
-                        }
+                Button ok_btn = dialog1.findViewById(R.id.ok_btn);
+                ok_btn.setOnClickListener(v -> {
+                    dialog1.dismiss();
+                    ActivityUtils.finishActivity(SetPwdCodeActivity.class);
+                    ActivityUtils.finishActivity(SetWithdaPwdActivity.class);
+                    if (code == ResultCode.myEarCode) {
+                        ARouter.getInstance().build(MyProtocol.WITHDRAWAL).navigation();
                     }
                 });
                 dialog1.show();
@@ -86,12 +83,12 @@ public class SetWithdaPwdActivity extends BaseActivity {
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
-        tvPhoneNum = (TextView) findViewById(R.id.tv_phone_num);
-        etPhoneNum = (EditText) findViewById(R.id.et_phone_num);
-        passwd = (TextView) findViewById(R.id.passwd);
-        etPasswd = (EditText) findViewById(R.id.et_passwd);
-        btNext = (Button) findViewById(R.id.bt_next);
+        backImg = findViewById(R.id.back_img);
+        titleText = findViewById(R.id.title_text);
+        tvPhoneNum = findViewById(R.id.tv_phone_num);
+        etPhoneNum = findViewById(R.id.et_phone_num);
+        passwd = findViewById(R.id.passwd);
+        etPasswd = findViewById(R.id.et_passwd);
+        btNext = findViewById(R.id.bt_next);
     }
 }

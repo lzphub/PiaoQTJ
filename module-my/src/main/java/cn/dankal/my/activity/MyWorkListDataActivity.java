@@ -139,19 +139,12 @@ public class MyWorkListDataActivity extends BaseStateActivity implements WorkDat
         }
         if (statusId == 4) {
             tvFinish.setVisibility(View.VISIBLE);
-//            LinearLayoutManager linearLayoutManager2=new LinearLayoutManager(this);
-//            linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
-//            rvPlanFinishImg.setLayoutManager(linearLayoutManager2);
-//            OnlyImgRvAdapter onlyImgRvAdapter2 = new OnlyImgRvAdapter();
-//            onlyImgRvAdapter2.addMore(myWorkDataBean.getCpl().get(0).getCpl_images());
-//            rvPlanImg.setAdapter(onlyImgRvAdapter2);
-//            tvPlanFinishDetails.setText(myWorkDataBean.getCpl().get(0).getCpl_detail());
         }
         tvFinish.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.FINISHWORK).withString("project_uuid", myWorkDataBean.getProject().getUuid()).withString("plan_uuid", myWorkDataBean.getPlan().get(0).getPlan_uuid()).navigation());
     }
 
     private void initView() {
-        llFinish = (LinearLayout) findViewById(R.id.ll_finish);
-        tvFinish = (TextView) findViewById(R.id.tv_finish);
+        llFinish = findViewById(R.id.ll_finish);
+        tvFinish = findViewById(R.id.tv_finish);
     }
 }
