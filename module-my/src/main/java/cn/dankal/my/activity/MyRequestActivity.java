@@ -49,7 +49,6 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
     private List<MyRequestBean.databean> myRequestBeans = new ArrayList<>();
     private cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout swipeToloadLayout;
     private int pageIndex = 1;
-    private boolean isUpdateList = false;
     private boolean isRefresh = true;
     private String[] tab_titel2={"FINISH","SUBMITTED","IN PROGRESS","RECEIVED","UNDELIVERED"};
     private String[] statusId={"5","1","3","2","4"};
@@ -57,6 +56,7 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private com.flyco.tablayout.SlidingTabLayout tabTitle;
     private android.support.v4.view.ViewPager tabViewpager;
+    private int pageSize=20;
 
     @Override
     protected int getLayoutId() {
@@ -79,7 +79,7 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
                 state=statusId[position];
                 myRequestPresenter.detachView();
                 myRequestPresenter.attachView(MyRequestActivity.this);
-                myRequestPresenter.getData(state,pageIndex, 10);
+                myRequestPresenter.getData(state,pageIndex, pageSize);
             }
 
             @Override
@@ -98,7 +98,11 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
 
             @Override
             public void onDeleteClick(int position) {
-                myRequestPresenter.delete(state,myRequestRvAdapter.getDatas().get(position).getDemand_id());
+                if(myRequestRvAdapter.getDatas().get(position).getStatus()==1){
+                    myRequestPresenter.delete(state,myRequestRvAdapter.getDatas().get(position).getDemand_id());
+                }else{
+                    ToastUtils.showShort("This state cannot be deleted");
+                }
             }
         });
         swipeToloadLayout.setOnLoadMoreListener(() -> {
@@ -157,6 +161,9 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
         }
         myRequestBeans.addAll(myRequestBean.getData());
         myRequestRvAdapter.addMore(myRequestBeans);
+        if(myRequestBean.getData().size()<pageSize){
+            swipeToloadLayout.setLoadMoreEnabled(false);
+        }
     }
 
     @Override
@@ -166,6 +173,9 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
         }
         myRequestBeans.addAll(myRequestBean.getData());
         myRequestRvAdapter.updateData(myRequestBeans);
+        if(myRequestBean.getData().size()<pageSize){
+            swipeToloadLayout.setLoadMoreEnabled(false);
+        }
     }
 
     @Override

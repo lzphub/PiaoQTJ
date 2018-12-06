@@ -52,7 +52,7 @@
         android:background="@null"
         android:hint="@string/enterEmail"
         android:textStyle="bold"
-        android:maxLength="20"
+        android:maxLength="30"
         android:singleLine="true"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"

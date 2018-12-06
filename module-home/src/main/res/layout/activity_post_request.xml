@@ -30,15 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/colse_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="23dp"
-                android:layout_marginTop="29dp"
-                android:src="@mipmap/ic_home_release_close"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
                 android:id="@+id/title_the"
@@ -292,4 +284,12 @@
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v4.widget.NestedScrollView>
+    <ImageView
+        android:id="@+id/colse_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="23dp"
+        android:layout_marginTop="29dp"
+        android:src="@mipmap/ic_home_release_close"
+        android:layout_alignParentRight="true"/>
 </RelativeLayout>

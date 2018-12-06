@@ -295,21 +295,24 @@ public class ChangeAvatarImpl implements ChangeAvatar {
             @Override
             public void onSucess(String localPath, String key) {
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("发送成功").create(1000);
-                dialog.show();
-                dialog.dismiss();
+
                 String type = SharedPreferencesUtils.getString(context, "identity", "user");
                 if (type.equals("user")) {
                     MyServiceFactory.userServiceSendMsg(key, 2).safeSubscribe(new AbstractDialogSubscriber<String>(baseView) {
                         @Override
                         public void onNext(String s) {
-
+                            TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("Send a success").create(1000);
+                            dialog.show();
+                            dialog.dismiss();
                         }
                     });
                 } else {
                     MyServiceFactory.serviceSendMsg(key, 2).safeSubscribe(new AbstractDialogSubscriber<String>(baseView) {
                         @Override
                         public void onNext(String s) {
+                            TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("发送成功").create(1000);
+                            dialog.show();
+                            dialog.dismiss();
                         }
                     });
                 }

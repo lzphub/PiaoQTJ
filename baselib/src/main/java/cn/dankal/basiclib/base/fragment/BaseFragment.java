@@ -18,6 +18,7 @@ import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.base.BaseView;
 import cn.dankal.basiclib.util.ActivityUtils;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.StatusBarHelper;
 import cn.dankal.basiclib.util.TitleBarUtils;
 import cn.dankal.basiclib.util.ToastUtils;
@@ -114,10 +115,18 @@ public abstract class BaseFragment extends Fragment implements BaseView {
             loadingDialog.dismiss();
             loadingDialog = null;
         }
-        loadingDialog = new TipDialog.Builder(getActivity())
-                .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord("正在加载")
-                .create();
+        if("user".equals(SharedPreferencesUtils.getString(getContext(),"identity","user"))){
+            loadingDialog = new TipDialog.Builder(getContext())
+                    .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
+                    .setTipWord("Loading")
+                    .create();
+        }else{
+            loadingDialog = new TipDialog.Builder(getContext())
+                    .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
+                    .setTipWord("正在加载")
+                    .create();
+        }
+
         loadingDialog.show();
     }
 

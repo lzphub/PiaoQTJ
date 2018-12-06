@@ -15,7 +15,7 @@ public interface ProductSearchContact {
     }
 
     interface productSearchPresenter extends BasePresenter<searchview>{
-        void search(String keyword, String category_uuid);
+        void search(String keyword, String category_uuid,String tag);
         void demandSearch(String keyWord);
     }
 

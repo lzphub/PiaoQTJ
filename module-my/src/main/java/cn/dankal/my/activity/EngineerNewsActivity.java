@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import cn.dankal.basiclib.adapter.SystemMsgRvAdapter;
 import cn.dankal.basiclib.base.BaseRvActivity;
@@ -12,6 +13,7 @@ import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.SystemMsgBean;
+import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.my.presenter.EngineerNewsPersenter;
@@ -60,7 +62,11 @@ public class EngineerNewsActivity extends BaseRvActivity<SystemMsgBean.DataBean>
         systemMsgRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<SystemMsgBean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, SystemMsgBean.DataBean data) {
-                ToastUtils.showShort(data.getTitle());
+                if(data.getKind()==1){
+                    ARouter.getInstance().build(MyProtocol.SYSTEMNEWSCONTENT).withString("content",data.getContent()).navigation();
+                }else{
+                    ARouter.getInstance().build(MyProtocol.WORKDATA).withString("uuid",data.getUuid()).navigation();
+                }
             }
         });
         return systemMsgRvAdapter ;

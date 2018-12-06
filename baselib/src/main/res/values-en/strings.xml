@@ -26,4 +26,5 @@
 	<string name="pickphoto">SELECT FROM ALBUM</string>
 	<string name="cancel">CANCEL</string>
 	<string name="Refresh">Refresh</string>
+	<string name="sendSuccess">Send a success</string>
 </resources>

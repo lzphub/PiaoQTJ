@@ -70,7 +70,8 @@
         <cn.dankal.basiclib.base.recyclerview.del.DeleteRecyclerView
             android:id="@+id/swipe_target"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"/>
 
         <include
             android:id="@id/swipe_load_more_footer"

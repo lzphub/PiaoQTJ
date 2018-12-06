@@ -24,6 +24,7 @@ import cn.dankal.basiclib.ResultCode;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.common.qiniu.QiniuUpload;
 import cn.dankal.basiclib.common.qiniu.UploadHelper;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.Logger;
@@ -106,7 +107,26 @@ public class ReleaseIdeaActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        super.onError(e);
+                        dismissLoadingDialog();
+                        if (e instanceof LocalException) {
+                            LocalException exception = (LocalException) e;
+                            if(exception.getMsg().equals("title不能为空")){
+                                ToastUtils.showShort("方案标题不能为空");
+                                return;
+                            }
+                            if(exception.getMsg().equals("title长度不符合要求 6,50")){
+                                ToastUtils.showShort("方案标题至少为6个字符");
+                                return;
+                            }
+                            if(exception.getMsg().equals("detail长度不符合要求 15,20000")){
+                                ToastUtils.showShort("方案详情至少为15个字符");
+                                return;
+                            }
+                            if(exception.getMsg().equals("detail不能为空")){
+                                ToastUtils.showShort("方案详情不能为空");
+                                return;
+                            }
+                        }
                     }
                 });
             }

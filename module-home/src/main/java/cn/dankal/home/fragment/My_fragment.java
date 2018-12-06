@@ -141,7 +141,7 @@ public class My_fragment extends BaseFragment {
             @Override
             public void onNext(PersonalData_EnBean personalData_enBean) {
                 myName.setText(personalData_enBean.getName());
-                PicUtils.loadAvatar(personalData_enBean.getAvatar(),headPic);
+                PicUtils.loadAvatar(PicUtils.getUrl(personalData_enBean.getAvatar()),headPic);
                 head_pic=personalData_enBean.getAvatar();
             }
         });

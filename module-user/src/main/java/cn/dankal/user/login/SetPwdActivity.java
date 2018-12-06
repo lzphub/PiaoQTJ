@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 
 import api.UserServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.LoginProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.StringUtil;
@@ -41,44 +42,57 @@ public class SetPwdActivity extends BaseActivity {
     protected void initComponents() {
         initView();
         type=getIntent().getStringExtra("type");
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        backImg.setOnClickListener(v -> finish());
+        bt_next.setOnClickListener(v -> {
+            String email=getIntent().getStringExtra("emailAccount");
+            String pwd=etPhoneNum.getText().toString().trim();
+            String pwd2=etPasswd.getText().toString().trim();
+            if(pwd==null || pwd2==null){
+                ToastUtils.showShort("请输入密码");
+                return;
             }
-        });
-        bt_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email=getIntent().getStringExtra("emailAccount");
-                String pwd=etPhoneNum.getText().toString().trim();
-                String pwd2=etPasswd.getText().toString().trim();
-                if(!pwd2.equals(pwd)){
-                    ToastUtils.showShort("两次输入的密码不一致");
-                    return;
-                }
-                if(type.equals("sign_up")){
-                    UserServiceFactory.engResetPassword(email, pwd).safeSubscribe(new AbstractDialogSubscriber<String>(SetPwdActivity.this) {
-                        @Override
-                        public void onNext(String s) {
-                            Toast.makeText(SetPwdActivity.this, getResources().getString(R.string.setpwdOk), Toast.LENGTH_SHORT).show();
-                            finishAllActivities();
-                            ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
+            if(!pwd2.equals(pwd)){
+                ToastUtils.showShort("请确认密码一致");
+                return;
+            }
+            if(type.equals("sign_up")){
+                UserServiceFactory.engResetPassword(email, pwd).safeSubscribe(new AbstractDialogSubscriber<String>(SetPwdActivity.this) {
+                    @Override
+                    public void onNext(String s) {
+                        Toast.makeText(SetPwdActivity.this, getResources().getString(R.string.setpwdOk), Toast.LENGTH_SHORT).show();
+                        finishAllActivities();
+                        ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof LocalException) {
+                            LocalException exception = (LocalException) e;
+                            //401 重新获取access token , 如果还返回412 就是refresh token 也失效了。需要重新登录
+                                ToastUtils.showShort(((LocalException) e).getMsg());
                         }
-                    });
-                }else{
-                    UserServiceFactory.engChangePwd(email,pwd).safeSubscribe(new AbstractDialogSubscriber<String>(SetPwdActivity.this) {
-                        @Override
-                        public void onNext(String s) {
-                            Toast.makeText(SetPwdActivity.this, getResources().getString(R.string.setpwdOk), Toast.LENGTH_SHORT).show();
-                            finishAllActivities();
-                            ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
+                    }
+                });
+            }else{
+                UserServiceFactory.engChangePwd(email,pwd).safeSubscribe(new AbstractDialogSubscriber<String>(SetPwdActivity.this) {
+                    @Override
+                    public void onNext(String s) {
+                        Toast.makeText(SetPwdActivity.this, getResources().getString(R.string.setpwdOk), Toast.LENGTH_SHORT).show();
+                        finishAllActivities();
+                        ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof LocalException) {
+                            LocalException exception = (LocalException) e;
+                            ToastUtils.showShort((exception.getMsg()));
                         }
-                    });
-                }
+                    }
+                });
+            }
 
 
-            }
         });
     }
 

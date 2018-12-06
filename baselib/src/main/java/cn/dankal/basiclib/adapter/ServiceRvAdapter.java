@@ -1,6 +1,7 @@
 package cn.dankal.basiclib.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +24,7 @@ import cn.dankal.basiclib.bean.ChatBean;
 import cn.dankal.basiclib.bean.ServiceTextBean;
 import cn.dankal.basiclib.util.image.PicUtils;
 
-public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private List<ChatBean.DataBean> serviceTextBeanList1 = new ArrayList<>();
     private String picurl;
@@ -52,6 +53,11 @@ public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyItemInserted(serviceTextBeanList1.size());
     }
 
+    public String getPicurl(int position){
+       return serviceTextBeanList1.get(position).getContent();
+    }
+
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -75,6 +81,7 @@ public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 viewHolder = new MyImgHolder(view);
                 break;
         }
+
         return viewHolder;
     }
 
@@ -95,6 +102,12 @@ public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 setImgMsg((MyImgHolder) holder, serviceTextBean);
                 break;
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mItemClickListener.onItemClick(v,serviceTextBeanList1.get(position).getType(),position);
+            }
+        });
     }
 
     @Override
@@ -118,6 +131,8 @@ public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemCount() {
         return serviceTextBeanList1 == null ? 0 : serviceTextBeanList1.size();
     }
+
+
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView pic;
@@ -151,7 +166,7 @@ public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     private void setImgMsg(MyImgHolder holder, ChatBean.DataBean bean) {
-        if(bean.getSent_by().equals("admin")){
+        if("admin".equals(bean.getSent_by())){
             PicUtils.loadAvatar("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543656909175&di=a9952f754166f220e241835a0c8b5fed&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F58ee3d6d55fbb2fbd0b9f507444a20a44623dc11.jpg", holder.head_pic);
         }else{
             PicUtils.loadAvatar(PicUtils.getUrl(picurl), holder.head_pic);
@@ -162,5 +177,15 @@ public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             Glide.with(context).load(PicUtils.getUrl(bean.getContent())).into(holder.senimg);
         }
 
+    }
+
+    private OnItemClickListener mItemClickListener;
+
+    public static interface OnItemClickListener {
+        void onItemClick(View view,int type,int position);
+    }
+
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
+        mItemClickListener = itemClickListener;
     }
 }

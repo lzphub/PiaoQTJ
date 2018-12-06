@@ -5,11 +5,11 @@ import java.util.List;
 public class SystemMsgBean {
 
     /**
-     * total : 1
+     * total : 2
      * per_page : 20
      * current_page : 1
      * last_page : 1
-     * data : [{"uuid":"2df42e8944b8a0cb0e899dd434a24e7f","title":"测试","content":"测试","is_read":0,"push_time":"2018-11-27 21:35:19"}]
+     * data : [{"uuid":"0eddb48c6061165f0a32f4a5fdbb7899","title":"text","content":"text","is_read":0,"push_time":"2018-11-29 16:56:00","kind":1},{"uuid":"2df42e8944b8a0cb0e899dd434a24e7f","title":"测试","content":"测试","is_read":0,"push_time":"2018-11-27 21:35:19","kind":1}]
      */
 
     private int total;
@@ -60,11 +60,12 @@ public class SystemMsgBean {
 
     public static class DataBean {
         /**
-         * uuid : 2df42e8944b8a0cb0e899dd434a24e7f
-         * title : 测试
-         * content : 测试
+         * uuid : 0eddb48c6061165f0a32f4a5fdbb7899
+         * title : text
+         * content : text
          * is_read : 0
-         * push_time : 2018-11-27 21:35:19
+         * push_time : 2018-11-29 16:56:00
+         * kind : 1
          */
 
         private String uuid;
@@ -72,6 +73,7 @@ public class SystemMsgBean {
         private String content;
         private int is_read;
         private String push_time;
+        private int kind;
 
         public String getUuid() {
             return uuid;
@@ -111,6 +113,14 @@ public class SystemMsgBean {
 
         public void setPush_time(String push_time) {
             this.push_time = push_time;
+        }
+
+        public int getKind() {
+            return kind;
+        }
+
+        public void setKind(int kind) {
+            this.kind = kind;
         }
     }
 }

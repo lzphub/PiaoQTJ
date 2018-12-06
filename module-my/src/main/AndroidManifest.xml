@@ -38,7 +38,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="cn.dankal.my.activity.MyWorkListDataActivity" />
         <activity android:name="cn.dankal.my.activity.EngineerNewsActivity" />
-        <activity android:name="cn.dankal.my.activity.FinishWorkActivity"></activity>
+        <activity android:name="cn.dankal.my.activity.FinishWorkActivity" />
+        <activity android:name="cn.dankal.my.activity.SysMsgContentActivity"></activity>
     </application>
 
 </manifest>

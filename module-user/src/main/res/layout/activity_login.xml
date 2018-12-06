@@ -41,7 +41,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="8dp"
         android:background="@null"
-        android:hint="PLEASE RNTER YOUR ACCOUNT NUMBER"
+        android:hint="PLEASE ENTER YOUR ACCOUNT NUMBER"
         android:textStyle="bold"
         android:maxLength="20"
         android:singleLine="true"

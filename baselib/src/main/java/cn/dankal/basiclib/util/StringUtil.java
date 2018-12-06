@@ -243,5 +243,13 @@ public class StringUtil {
         return Arrays.asList(split);
     }
 
+    /**
+     * 判断是否为整数
+     * @param str
+     * @return
+     */
+    public static boolean isDigits(String str) {
+        return str.matches("[-+]?[0-9]*");
+    }
 
 }

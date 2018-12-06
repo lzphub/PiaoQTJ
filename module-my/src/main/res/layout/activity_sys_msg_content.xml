@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorFF">
+    android:background="@color/colorFF"
+    tools:context="cn.dankal.my.activity.SysMsgContentActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="69dp">
+
         <ImageView
             android:id="@+id/back_img"
             android:layout_width="wrap_content"
@@ -21,37 +23,24 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="MY FAVORITE"
+            android:text="系统消息"
             android:textColor="@color/color33"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
     </android.support.constraint.ConstraintLayout>
 
-    <cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout
+    <WebView
+        android:id="@+id/web_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/swipe_toload_layout">
-
-        <include
-            android:id="@+id/swipe_refresh_header"
-            layout="@layout/layout_classic_en_header" />
-
-
-        <cn.dankal.basiclib.base.recyclerview.del.DeleteRecyclerView
-            android:id="@+id/swipe_target"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never"/>
-
-        <include
-            android:id="@id/swipe_load_more_footer"
-            layout="@layout/layout_classic_en_footer" />
-    </cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout>
+        android:layout_height="wrap_content"></WebView>
 
 </LinearLayout>

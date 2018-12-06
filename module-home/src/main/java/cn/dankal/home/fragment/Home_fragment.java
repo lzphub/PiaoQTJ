@@ -3,35 +3,52 @@ package cn.dankal.home.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.EventLog;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.shizhefei.view.indicator.Indicator;
 import com.xuezj.cardbanner.CardBanner;
 import com.xuezj.cardbanner.ImageData;
 import com.xuezj.cardbanner.imageloader.CardImageLoader;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.dankal.address.R;
+import cn.dankal.basiclib.CardTransformer;
+import cn.dankal.basiclib.FixedSpeedScroller;
 import cn.dankal.basiclib.adapter.DemandRvAdapter;
 import cn.dankal.basiclib.adapter.ProductRvAdapter;
+import cn.dankal.basiclib.adapter.ViewPagerAdapter;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.DemandListbean;
@@ -40,6 +57,7 @@ import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.bean.UserHomeBannerBean;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.ProductProtocol;
+import cn.dankal.basiclib.util.DisplayHelper;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.ToastUtils;
@@ -58,7 +76,6 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
     private android.widget.TextView newDemand;
     private android.support.v7.widget.RecyclerView demandList;
     private android.widget.TextView loadMore;
-    private com.xuezj.cardbanner.CardBanner banner;
     private List<DemandListbean> demandListbeanList = new ArrayList<>();
     private List<ProductListBean> productListBeanList = new ArrayList<>();
     private TextView resText;
@@ -72,8 +89,16 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
     private DemandRvAdapter demandRvAdapter;
     private android.widget.RadioGroup rdgroup;
     private RadioButton fristRdButton;
-    private List<RadioButton> radioButtons=new ArrayList<>();
-    int iconId=0;
+    private List<RadioButton> radioButtons = new ArrayList<>();
+    int iconId = 0;
+    private LinearLayout releaseLl2;
+    private TextView resText2;
+    private android.support.v4.view.ViewPager banner;
+    private com.shizhefei.view.indicator.FixedIndicatorView singleTabScrollIndicatorView;
+    private List<ImageView> imageViews;
+    private ViewPagerAdapter mAdapter;
+    private int count = 0;
+    private Context context;
 
     @Override
     protected int getLayoutId() {
@@ -87,6 +112,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
 
     @Override
     protected void initComponents(View view) {
+        context = getActivity();
         initView(view);
         identity = SharedPreferencesUtils.getString(getContext(), "identity", "enterprise");
         initRv();
@@ -96,44 +122,68 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
             ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.home_green));
             spannableString.setSpan(colorSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             swipeToloadLayout.setLoadMoreEnabled(false);
+            releaseLl.setVisibility(View.VISIBLE);
+            releaseLl2.setVisibility(View.GONE);
         } else {
             spannableString = new SpannableString("LATEST PRODUCT");
             ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.home_green));
             spannableString.setSpan(colorSpan, 0, 6, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             resText.setText("PUBLISH A REQUEST");
-            ViewGroup.LayoutParams layoutParams = releaseLl.getLayoutParams();
-            layoutParams.width = 485;
-            releaseLl.setLayoutParams(layoutParams);
             loadMore.setVisibility(View.GONE);
             logoImg.setImageResource(R.mipmap.pic_logo_english);
+            releaseLl2.setVisibility(View.VISIBLE);
+            releaseLl.setVisibility(View.VISIBLE);
         }
         newDemand.setText(spannableString);
 
         loadMore.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.HOMEDEMANDLIST).navigation());
         searchImg.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.HOMESEARCH).navigation());
         releaseLl.setOnClickListener(v -> {
-            if (identity.equals("enterprise")) {
-                ARouter.getInstance().build(HomeProtocol.HOMERELEASE).navigation();
-            } else {
-                ARouter.getInstance().build(HomeProtocol.POSTREQUEST).navigation();
-            }
+            ARouter.getInstance().build(HomeProtocol.HOMERELEASE).navigation();
         });
+        releaseLl2.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.POSTREQUEST).navigation());
 
     }
 
 
     private void initView(View view) {
-        logoImg = (ImageView) view.findViewById(R.id.logo_img);
-        searchImg = (ImageView) view.findViewById(R.id.search_img);
-        releaseLl = (LinearLayout) view.findViewById(R.id.release_ll);
-        newDemand = (TextView) view.findViewById(R.id.new_demand);
-        demandList = (RecyclerView) view.findViewById(R.id.demand_list);
-        loadMore = (TextView) view.findViewById(R.id.load_more);
-        banner = (CardBanner) view.findViewById(R.id.banner);
-        resText = (TextView) view.findViewById(R.id.res_text);
-        swipeToloadLayout = (SwipeToLoadLayout) view.findViewById(R.id.swipe_toload_layout);
-        rdgroup = view.findViewById(R.id.rdgroup);
+        logoImg = view.findViewById(R.id.logo_img);
+        searchImg = view.findViewById(R.id.search_img);
+        releaseLl = view.findViewById(R.id.release_ll);
+        newDemand = view.findViewById(R.id.new_demand);
+        demandList = view.findViewById(R.id.demand_list);
+        loadMore = view.findViewById(R.id.load_more);
+        resText = view.findViewById(R.id.res_text);
+        swipeToloadLayout = view.findViewById(R.id.swipe_toload_layout);
+        releaseLl2 = view.findViewById(R.id.release_ll2);
+        resText2 = view.findViewById(R.id.res_text2);
+        banner = view.findViewById(R.id.banner);
+        singleTabScrollIndicatorView = view.findViewById(R.id.singleTab_scrollIndicatorView);
     }
+
+    private class MyAdapter extends Indicator.IndicatorAdapter {
+
+        private final int count;
+
+        public MyAdapter(int count) {
+            super();
+            this.count = count;
+        }
+
+        @Override
+        public int getCount() {
+            return count;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.tab_guide, parent, false);
+            }
+            return convertView;
+        }
+    }
+
 
     /*
      * 初始化RecyclerView
@@ -147,7 +197,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         productHomePresenter = ProductHomePresenter.getPresenter();
         productHomePresenter.attachView(this);
         if (identity.equals("enterprise")) {
-            productHomePresenter.getEngData(page,3);
+            productHomePresenter.getEngData(page, 3);
             productHomePresenter.getEngBanner();
             swipeToloadLayout.setOnRefreshListener(() -> {
                 page = 1;
@@ -191,70 +241,90 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
                 ARouter.getInstance().build(ProductProtocol.PRODUCTDETA).withString("uuid", data.getUuid()).navigation();
             }
         });
+        if (productListBean.getData() != null && productListBean.getData().size() < 10) {
+            swipeToloadLayout.setLoadMoreEnabled(false);
+        }
     }
 
     @Override
     public void getBannerSuccess(UserHomeBannerBean userHomeBannerBean) {
-        List<ImageData> imgurl = new ArrayList<>();
-        for (int i = 0; i < userHomeBannerBean.getCarousels().size(); i++) {
-            ImageData img1 = new ImageData();
-            img1.setImage(PicUtils.getUrl(userHomeBannerBean.getCarousels().get(i).getImage()));
-            imgurl.add(img1);
-        }
-        banner.setDatas(imgurl).setDelayTime(2000).setCardImageLoader((context, imageView, path) -> Glide.with(context).load(path).into(imageView)).start();
-        banner.setOnItemClickListener(position -> {
-            Uri uri = Uri.parse("http://" + userHomeBannerBean.getCarousels().get(position).getJump_url());
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-        });
-        initRadioButton(userHomeBannerBean.getCarousels().size());
-    }
 
-    private void initRadioButton(int size){
-        for (int i = 0; i < size; i++) {
-            RadioButton tempButton = new RadioButton(getContext());
-            tempButton.setBackgroundResource(R.drawable.home_banner_selector);  // 设置RadioButton的背景图片
-            tempButton.setButtonDrawable(android.R.color.transparent);            // 设置按钮的样式
-            tempButton.setPadding(5, 0, 5, 0);
-            tempButton.setHeight(10);
-            tempButton.setWidth(10);
 
-            if (i == 0) {
-                fristRdButton = tempButton;
-                radioButtons.add(fristRdButton);
+        singleTabScrollIndicatorView.setAdapter(new MyAdapter(userHomeBannerBean.getCarousels().size()));
+
+        singleTabScrollIndicatorView.setCurrentItem(0, true);
+
+        banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
             }
 
-            rdgroup.addView(tempButton, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            radioButtons.add(tempButton);
-        }
+            @Override
+            public void onPageSelected(int i) {
+                count = i;
+                singleTabScrollIndicatorView.setCurrentItem(i % userHomeBannerBean.getCarousels().size(), true);
+            }
 
-        if (fristRdButton != null) {
-            fristRdButton.setChecked(true);
-            downTimer.start();
-        }
+            @Override
+            public void onPageScrollStateChanged(int i) {
 
+            }
+        });
+
+        imageViews = new ArrayList<>();
+        for (int i = 0; i < 200 * userHomeBannerBean.getCarousels().size(); i++) {
+            ImageView imageView = new ImageView(getActivity());
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            Glide.with(context).load(PicUtils.getUrl(userHomeBannerBean.getCarousels().get(i % userHomeBannerBean.getCarousels().size()).getImage())).into(imageView);
+            imageViews.add(imageView);
+            final int finalI = i;
+            imageView.setOnClickListener(v -> {
+                Uri uri = Uri.parse("http://" + userHomeBannerBean.getCarousels().get(finalI % userHomeBannerBean.getCarousels().size()).getJump_url());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+
+            });
+        }
+        mAdapter = new ViewPagerAdapter(context, userHomeBannerBean.getCarousels(), imageViews);
+        try {
+            Field field = ViewPager.class.getDeclaredField("mScroller");
+            field.setAccessible(true);
+            FixedSpeedScroller scroller = new FixedSpeedScroller(banner.getContext(), new AccelerateInterpolator());
+            field.set(banner, scroller);
+            scroller.setmDuration(1000);
+        } catch (Exception e) {
+
+        }
+        banner.setOffscreenPageLimit(4);
+        banner.setPageMargin(5);
+        banner.setPageTransformer(true, new CardTransformer());
+        banner.setAdapter(mAdapter);
+
+        count = 10;
+
+        downTimer2.start();
     }
 
-    CountDownTimer downTimer=new CountDownTimer(1000000,2000) {
+
+    CountDownTimer downTimer2 = new CountDownTimer(1000000, 3000) {
         @Override
         public void onTick(long millisUntilFinished) {
-            iconId++;
-            if(iconId>=radioButtons.size()){
-                iconId=0;
-            }
-            radioButtons.get(iconId).setChecked(true);
+            banner.setCurrentItem(count, true);
+            count++;
         }
 
         @Override
         public void onFinish() {
-
+            downTimer2.start();
         }
     };
+
 
     @Override
     public void onStop() {
         super.onStop();
-        downTimer.cancel();
+        downTimer2.cancel();
     }
 
     @Override
@@ -268,7 +338,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         demandRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<DemandListbean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, DemandListbean.DataBean data) {
-                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withSerializable("demandData",data).navigation();
+                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withSerializable("demandData", data).navigation();
             }
         });
     }

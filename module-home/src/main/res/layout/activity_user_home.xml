@@ -10,73 +10,82 @@
         android:id="@+id/tab_rg"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:elevation="12dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/colorFF"
-        android:layout_alignParentBottom="true">
+        android:elevation="12dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/home_rbtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="9dp"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@drawable/home_user_tab_selector"
-            android:text="HOME"
-            android:gravity="center"
-            android:textSize="11sp"
-            android:drawablePadding="3dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginBottom="4dp"
             android:checked="true"
-            android:textColor="@drawable/tab_home_textcolor_selector"/>
+            android:drawablePadding="3dp"
+            android:background="@color/transparent"
+            android:drawableTop="@drawable/home_user_tab_selector"
+            android:gravity="center"
+            android:text="HOME"
+            android:textColor="@drawable/tab_home_textcolor_selector"
+            android:textSize="11sp"
+            android:textStyle="bold" />
 
         <RadioButton
             android:id="@+id/product_rbtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="9dp"
             android:layout_weight="1"
             android:button="@null"
-            android:text="PRODUCT"
+            android:drawablePadding="3dp"
             android:drawableTop="@drawable/home_product_tab_selector"
             android:gravity="center"
+            android:text="PRODUCT"
+            android:background="@color/transparent"
+            android:textColor="@drawable/tab_home_textcolor_selector"
             android:textSize="11sp"
-            android:drawablePadding="3dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginBottom="4dp"
-            android:textColor="@drawable/tab_home_textcolor_selector"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/release_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="9dp"
             android:layout_weight="1"
             android:button="@null"
-            android:text="PUBLISH"
+            android:drawablePadding="3dp"
             android:drawableTop="@mipmap/ic_tab_release_dark"
             android:gravity="center"
+            android:text="PUBLISH"
+            android:textColor="@color/color66"
             android:textSize="11sp"
-            android:drawablePadding="3dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginBottom="4dp"
-            android:textColor="@color/color66"/>
+            android:textStyle="bold" />
+
         <RadioButton
             android:id="@+id/my_rbtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="9dp"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@drawable/home_tab_wd_selector"
-            android:text="MINE"
-            android:gravity="center"
-            android:textSize="11sp"
             android:drawablePadding="3dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginBottom="4dp"
-            android:textColor="@drawable/tab_home_textcolor_selector"/>
+            android:drawableTop="@drawable/home_tab_wd_selector"
+            android:gravity="center"
+            android:text="MINE"
+            android:background="@color/transparent"
+            android:textColor="@drawable/tab_home_textcolor_selector"
+            android:textSize="11sp"
+            android:textStyle="bold" />
 
     </RadioGroup>
+
     <FrameLayout
         android:id="@+id/home_fra"
         android:layout_width="match_parent"

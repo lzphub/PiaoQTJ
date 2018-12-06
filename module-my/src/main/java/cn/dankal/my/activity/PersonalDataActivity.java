@@ -229,6 +229,7 @@ public class PersonalDataActivity extends BaseActivity {
                 skillsText.setText(personalData_engineerBean.getCompetence());
                 addressText.setText(personalData_engineerBean.getProvince()+personalData_engineerBean.getCity());
                 phoneText.setText(personalData_engineerBean.getMobile());
+
                 PicUtils.loadAvatar(personalData_engineerBean.getAvatar(),headPic);
                 personalData_engineerPostBean.setCompetence(personalData_engineerBean.getCompetence());
                 personalData_engineerPostBean.setName(personalData_engineerBean.getName());

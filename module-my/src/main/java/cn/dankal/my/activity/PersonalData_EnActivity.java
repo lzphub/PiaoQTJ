@@ -98,8 +98,6 @@ public class PersonalData_EnActivity extends BaseActivity {
         eMailRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "email").withSerializable("bean", personalDataEnBean).navigation());
         companyRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "company").withSerializable("bean", personalDataEnBean).navigation());
 
-//        changeAvatar = new ChangeAvatarImpl(this, this);
-//        changeAvatar.setIvHead(headPic);
     }
 
     private void initView() {
@@ -295,7 +293,7 @@ public class PersonalData_EnActivity extends BaseActivity {
         MyServiceFactory.getUserData().safeSubscribe(new AbstractDialogSubscriber<PersonalData_EnBean>(this) {
             @Override
             public void onNext(PersonalData_EnBean personalData_enBean) {
-                PicUtils.loadAvatar(personalData_enBean.getAvatar(),headPic);
+                PicUtils.loadAvatar(PicUtils.getUrl(personalData_enBean.getAvatar()),headPic);
                 nameText.setText(personalData_enBean.getName());
                 ageText.setText(personalData_enBean.getAge() + "");
                 contactText.setText(personalData_enBean.getContact());

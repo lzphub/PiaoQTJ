@@ -26,6 +26,11 @@ public class ProductDataPresenter implements ProductDataContact.pdPresenter {
             public void onNext(ProductDataBean productDataBean) {
                 pdView.getDataSuccess(productDataBean);
             }
+
+            @Override
+            public void onError(Throwable e) {
+                pdView.getDataFail();
+            }
         });
     }
 

@@ -60,7 +60,7 @@ public class EditDataEnActivity extends BaseActivity {
                     personalData_enBean.setName(etName.getText().toString().trim());
                     break;
                 case "number":
-                    personalData_enBean.setMobile(etName.getText().toString().trim());
+                    personalData_enBean.setContact(etName.getText().toString().trim());
                     break;
                 case "email":
                     personalData_enBean.setEmail(etName.getText().toString().trim());

@@ -1,5 +1,6 @@
 package cn.dankal.my.presenter;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.widget.Button;
 
@@ -100,11 +101,13 @@ public class BankCardPersenter implements BankCardContact.idPresenter,SmsCode{
         mDisposable = Flowable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(aLong -> {
-                    mBtCode.setText("已发送(" + (60 - aLong) + ")");
+                    mBtCode.setText("获取验证码(" + (60 - aLong) + ")");
+                    mBtCode.setBackgroundColor(Color.parseColor("#CFCFCF"));
                 })
                 .doOnComplete(() -> {
                     mBtCode.setEnabled(true);
                     mBtCode.setText("获取验证码");
+                    mBtCode.setBackgroundColor(Color.parseColor("#6FBA27"));
                 }).subscribe();
     }
 

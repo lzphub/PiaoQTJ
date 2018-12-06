@@ -11,9 +11,11 @@ public interface ProductScreenContact {
 
     interface psView extends BaseView{
         void getDataSuccess(ProductHomeListBean productListBean);
+        void upDataSuccess(ProductHomeListBean productHomeListBean);
     }
 
     interface psPresenter extends BasePresenter<psView>{
-        void getData(String keyword,String uuid);
+        void getData(String keyword,String uuid,String tag);
+        void upData(String keyword,String uuid,String tag);
     }
 }

@@ -44,6 +44,7 @@ public abstract class BaseRecyclerViewFragment<M> extends BaseLazyLoadFragment
 
     private List<M> mData = new ArrayList<>();
     private int pageIndex = 1;
+    private int pageSize=20;
     private boolean isUpdateList = false;
     private boolean isRefresh = true;
     private String type;
@@ -153,6 +154,9 @@ public abstract class BaseRecyclerViewFragment<M> extends BaseLazyLoadFragment
                 if (mAdapter != null) {
                     mData = t;
                     mAdapter.updateData(mData);
+                }
+                if(t.size()<pageSize){
+                    swipeToLoadLayout.setLoadMoreEnabled(false);
                 }
 
             } else {

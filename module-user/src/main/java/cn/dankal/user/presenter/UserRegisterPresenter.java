@@ -1,5 +1,6 @@
 package cn.dankal.user.presenter;
 
+import android.graphics.Color;
 import android.widget.Button;
 
 import java.util.concurrent.TimeUnit;
@@ -47,11 +48,13 @@ public class UserRegisterPresenter implements SmsCode {
         mDisposable = Flowable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(aLong -> {
-                    mBtCode.setText("已发送(" + (60 - aLong) + ")");
+                    mBtCode.setText("获取验证码(" + (60 - aLong) + ")");
+                    mBtCode.setBackgroundColor(Color.parseColor("#CFCFCF"));
                 })
                 .doOnComplete(() -> {
                     mBtCode.setEnabled(true);
                     mBtCode.setText("获取验证码");
+                    mBtCode.setBackgroundColor(Color.parseColor("#6FBA27"));
                 }).subscribe();
     }
 
@@ -78,11 +81,13 @@ public class UserRegisterPresenter implements SmsCode {
         mDisposable = Flowable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(aLong -> {
-                    mBtCode.setText("OBTAIN(" + (60 - aLong) + ")");
+                    mBtCode.setText("GET CODE(" + (60 - aLong) + ")");
+                    mBtCode.setBackgroundColor(Color.parseColor("#CFCFCF"));
                 })
                 .doOnComplete(() -> {
                     mBtCode.setEnabled(true);
                     mBtCode.setText("GET CODE");
+                    mBtCode.setBackgroundColor(Color.parseColor("#6FBA27"));
                 }).subscribe();
     }
 

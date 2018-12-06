@@ -9,6 +9,7 @@ public interface ProductDataContact {
 
     interface pdView extends BaseView{
         void getDataSuccess(ProductDataBean productDataBean);
+        void getDataFail();
     }
 
     interface pdPresenter extends BasePresenter<pdView>{

@@ -23,11 +23,21 @@ public class ProductScreenPresenter implements ProductScreenContact.psPresenter 
     }
 
     @Override
-    public void getData(String keyword,String uuid) {
-        ProductServiceFactory.getProductlist(keyword,uuid).safeSubscribe(new AbstractDialogSubscriber<ProductHomeListBean>(psView) {
+    public void getData(String keyword,String uuid,String tag) {
+        ProductServiceFactory.getProductlist(keyword,uuid,tag).safeSubscribe(new AbstractDialogSubscriber<ProductHomeListBean>(psView) {
             @Override
             public void onNext(ProductHomeListBean productListBean) {
                 psView.getDataSuccess(productListBean);
+            }
+        });
+    }
+
+    @Override
+    public void upData(String keyword, String uuid, String tag) {
+        ProductServiceFactory.getProductlist(keyword,uuid,tag).safeSubscribe(new AbstractDialogSubscriber<ProductHomeListBean>(psView) {
+            @Override
+            public void onNext(ProductHomeListBean productListBean) {
+                psView.upDataSuccess(productListBean);
             }
         });
     }

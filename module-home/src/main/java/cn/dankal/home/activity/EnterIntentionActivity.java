@@ -21,6 +21,7 @@ import api.ProductServiceFactory;
 import cn.dankal.address.R;
 import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.ToastUtils;
@@ -108,8 +109,12 @@ public class EnterIntentionActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                super.onError(e);
-                ToastUtils.showShort(e.getMessage());
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if(exception.equals("email格式不符")){
+                        ToastUtils.showShort("Email format mismatch");
+                    }
+                }
             }
         });
     }

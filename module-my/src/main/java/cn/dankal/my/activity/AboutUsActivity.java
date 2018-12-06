@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,27 +31,9 @@ import static cn.dankal.basiclib.protocol.MyProtocol.ABOUTUS;
 public class AboutUsActivity extends BaseActivity {
 
     private android.widget.ImageView backImg;
-    private android.widget.TextView usContent;
     private String type;
     private TextView tvTitle;
-
-    private Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    CharSequence charSequence = (CharSequence) msg.obj;
-                    if (charSequence != null) {
-                        usContent.setText(charSequence);
-                        usContent.setMovementMethod(LinkMovementMethod.getInstance());
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
+    private android.webkit.WebView webContent;
 
     @Override
     protected int getLayoutId() {
@@ -73,9 +58,7 @@ public class AboutUsActivity extends BaseActivity {
         MyServiceFactory.getAboutUs().safeSubscribe(new AbstractDialogSubscriber<AboutUsBean>(this) {
             @Override
             public void onNext(AboutUsBean aboutUsBean) {
-                CharSequence charSequence= Html.fromHtml(aboutUsBean.getValue());
-                usContent.setText(charSequence);
-                usContent.setMovementMethod(LinkMovementMethod.getInstance() );
+                webContent.loadDataWithBaseURL(null,aboutUsBean.getValue(), "text/html", "UTF-8", null);
             }
         });
     }
@@ -85,35 +68,36 @@ public class AboutUsActivity extends BaseActivity {
         MyServiceFactory.engGetAboutus().safeSubscribe(new AbstractDialogSubscriber<AboutUsBean>(this) {
             @Override
             public void onNext(AboutUsBean aboutUsBean) {
-                setActivityContent(aboutUsBean.getValue());
+                webContent.loadDataWithBaseURL(null,aboutUsBean.getValue(), "text/html", "UTF-8", null);
+
             }
         });
     }
 
     private void initView() {
         backImg = findViewById(R.id.back_img);
-        usContent = findViewById(R.id.us_content);
         tvTitle = findViewById(R.id.tv_title);
+        webContent = findViewById(R.id.web_content);
+        WebSettings webSettings=webContent.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setSupportZoom(true);
+        webContent.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                imgReset(view);
+            }
+        });
     }
 
-    //加载富文本
-    private void setActivityContent(final String activityContent) {
-        new Thread(() -> {
-            Html.ImageGetter imageGetter = source -> {
-                Drawable drawable;
-                drawable = PicUtils.getImageNetwork(source);
-                if (drawable != null) {
-                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                } else if (drawable == null) {
-                    return null;
-                }
-                return drawable;
-            };
-            CharSequence charSequence = Html.fromHtml(activityContent.trim(), imageGetter, null);
-            Message ms = Message.obtain();
-            ms.what = 1;
-            ms.obj = charSequence;
-            mHandler.sendMessage(ms);
-        }).start();
+    private void imgReset(WebView webView) {
+        webView.loadUrl("javascript:(function(){" +
+                "var objs = document.getElementsByTagName('img'); " +
+                "for(var i=0;i<objs.length;i++)  " +
+                "{"
+                + "var img = objs[i];   " +
+                "    img.style.maxWidth = '100%'; img.style.height = 'auto';  " +
+                "}" +
+                "})()");
     }
 }

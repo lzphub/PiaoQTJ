@@ -32,6 +32,7 @@ import cn.dankal.address.R;
 import cn.dankal.basiclib.adapter.ServiceRvAdapter;
 import cn.dankal.basiclib.api.MyService;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.base.activity.BigPhotoActivity;
 import cn.dankal.basiclib.base.callback.DKCallBack;
 import cn.dankal.basiclib.base.recyclerview.SmoothScrollLayoutManager;
 import cn.dankal.basiclib.bean.ChatBean;
@@ -259,6 +260,14 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
         });
         serviceRvAdapter = new ServiceRvAdapter(serviceTextBeanList, ServiceActivity.this);
         chatRv.setAdapter(serviceRvAdapter);
+        serviceRvAdapter.setItemClickListener((view, type, position) -> {
+            if(type==2){
+                Logger.d("bitPhoto",serviceRvAdapter.getPicurl(position));
+                Intent intent=new Intent(this, BigPhotoActivity.class);
+                intent.putExtra("url",serviceRvAdapter.getPicurl(position));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

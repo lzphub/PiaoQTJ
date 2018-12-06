@@ -25,7 +25,7 @@ public interface ProductService {
      * 商品列表和搜索
      */
     @GET("customer/product")
-    Observable<ProductHomeListBean> getProductlist(@Query("keyword")String keyword, @Query("category_uuid") String category_uuid);
+    Observable<ProductHomeListBean> getProductlist(@Query("keyword")String keyword, @Query("category_uuid") String category_uuid,@Query("tag")String tag);
 
     /**
      * 需求搜索

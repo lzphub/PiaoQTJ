@@ -53,7 +53,7 @@ public class MyIdeaDataActivity extends BaseStateActivity {
         dataBean = (MyIdeaListBean.DataBean) getIntent().getSerializableExtra("data");
         tvTitle.setText(dataBean.getTitle());
         tvContent.setText(dataBean.getDetail());
-        tvState.setText(StateUtil.ideaState(1));
+        tvState.setText(StateUtil.ideaState(dataBean.getStatus()));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvIdeaImg.setLayoutManager(linearLayoutManager);

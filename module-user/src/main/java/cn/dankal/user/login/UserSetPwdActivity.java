@@ -9,11 +9,17 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import api.UserServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.domain.HttpStatusCode;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.LoginProtocol;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.StringUtil;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.user.R;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -50,11 +56,17 @@ public class UserSetPwdActivity extends BaseActivity {
         bt_next.setText("CONTINUE");
         backImg.setOnClickListener(v -> finish());
         bt_next.setOnClickListener(v -> {
-            if(etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())&& StringUtil.isValid(etPhoneNum.getText().toString().trim())){
-                if(type.equals("change_pwd")){
-                    changePwd(getIntent().getStringExtra("emailAccount"),etPhoneNum.getText().toString().trim());
+            if(etPhoneNum.getText().toString().trim()==null || etPasswd.getText().toString().trim()==null){
+               ToastUtils.showShort("PLEASE INPUT YOUR PASSWORD");
+            }else{
+                if(etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())&& StringUtil.isValid(etPhoneNum.getText().toString().trim())){
+                    if("change_pwd".equals(type)){
+                        changePwd(getIntent().getStringExtra("emailAccount"),etPhoneNum.getText().toString().trim());
+                    }else{
+                        setPasswd(getIntent().getStringExtra("emailAccount"),etPhoneNum.getText().toString().trim());
+                    }
                 }else{
-                    setPasswd(getIntent().getStringExtra("emailAccount"),etPhoneNum.getText().toString().trim());
+                    ToastUtils.showShort("PLEASE CONFIRM PASSWORD CONSISTENCY");
                 }
             }
         });
@@ -104,7 +116,13 @@ public class UserSetPwdActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                Logger.d("setpwd","e");
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    //401 重新获取access token , 如果还返回412 就是refresh token 也失效了。需要重新登录
+                    if(exception.getMsg().equals("此邮箱已被注册")){
+                        ToastUtils.showShort("This email address has been registered");
+                    }
+                }
             }
 
             @Override

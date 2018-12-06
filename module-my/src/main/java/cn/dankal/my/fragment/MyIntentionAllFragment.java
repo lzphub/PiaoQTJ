@@ -57,7 +57,6 @@ public class MyIntentionAllFragment extends BaseFragment implements MyIntentCont
         myIntentPresenter = new MyIntentPresenter();
         myIntentPresenter.attachView(this);
         List<String> statues=new ArrayList<>();
-        statues.add("");
         GetIntentionBean getIntentionBean=new GetIntentionBean();
         getIntentionBean.setPage_size(20);
         getIntentionBean.setPage_index(pageIndex);

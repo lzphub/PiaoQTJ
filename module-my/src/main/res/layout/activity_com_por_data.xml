@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorFF"
     tools:context="cn.dankal.my.activity.ComPorDataActivity">
 
     <ImageView
@@ -17,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -28,16 +30,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <WebView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="如何取用我们照明大师的APP"
-        android:textSize="18sp"
-        android:textColor="@color/color33"
-        android:layout_marginTop="54dp"
-        android:layout_marginLeft="22dp"
-        android:layout_marginRight="22dp"
+        android:layout_marginTop="20dp"
+        android:scrollbars="none"
+        android:background="@color/colorFF"
         app:layout_constraintTop_toBottomOf="@id/back_img"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
