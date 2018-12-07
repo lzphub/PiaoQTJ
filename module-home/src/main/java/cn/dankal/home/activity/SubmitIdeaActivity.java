@@ -36,7 +36,7 @@ public class SubmitIdeaActivity extends BaseActivity {
         if(type==2){
             returnText.setText("已提交认领该需求\n请等待后台审核");
         }else if(type==3){
-            returnText.setText("已提交认完成该需求\n请等待后台审核");
+            returnText.setText("已提交完成该需求\n请等待后台审核");
         }
         backImg.setOnClickListener(v -> finish());
         toHomeRl.setOnClickListener(v -> {

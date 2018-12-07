@@ -316,6 +316,11 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
     @Override
     public void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         downTimer2.cancel();
     }
 

@@ -60,7 +60,7 @@ public class DemandListActivity extends BaseRvActivity<DemandListbean> {
         demandRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<DemandListbean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, DemandListbean.DataBean data) {
-                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withSerializable("demandData",data).navigation();
+                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withString("project_uuid", data.getUuid()).withString("time",data.getCreate_time()).navigation();
             }
         });
         return demandRvAdapter;
