@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -14,7 +13,6 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.dankal.basiclib.adapter.MyIntentionVpAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
 import cn.dankal.my.entity.TabEntity;
@@ -25,6 +23,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYWORKLIST;
 
+/**
+ * 我的工单
+ */
 @Route(path = MYWORKLIST)
 public class MyWorkListActivity extends BaseActivity {
 

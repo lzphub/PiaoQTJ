@@ -122,6 +122,8 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
                 addToLl.setVisibility(View.GONE);
             }
         });
+
+        //输入法监听
         etRl.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             Rect r = new Rect();
             etRl.getWindowVisibleDisplayFrame(r);
@@ -176,6 +178,7 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
         });
     }
 
+    //十秒获取一次新消息
     CountDownTimer downTimer=new CountDownTimer(100000000,10000) {
         @Override
         public void onTick(long millisUntilFinished) {

@@ -27,6 +27,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.SETWITHPWD;
 
+/**
+ * 设置提现密码
+ */
 @Route(path = SETWITHPWD)
 public class SetWithdaPwdActivity extends BaseActivity {
 
@@ -83,12 +86,12 @@ public class SetWithdaPwdActivity extends BaseActivity {
     }
 
     private void initView() {
+        passwd = findViewById(R.id.passwd);
+        btNext = findViewById(R.id.bt_next);
         backImg = findViewById(R.id.back_img);
+        etPasswd = findViewById(R.id.et_passwd);
         titleText = findViewById(R.id.title_text);
         tvPhoneNum = findViewById(R.id.tv_phone_num);
         etPhoneNum = findViewById(R.id.et_phone_num);
-        passwd = findViewById(R.id.passwd);
-        etPasswd = findViewById(R.id.et_passwd);
-        btNext = findViewById(R.id.bt_next);
     }
 }

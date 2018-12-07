@@ -28,6 +28,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.CHECKCARD;
 
+/**
+ * 选择银行卡
+ */
 @Route(path = CHECKCARD)
 public class CheckBankCardActivity extends BaseActivity implements BankCardContact.bcView {
 
@@ -59,19 +62,9 @@ public class CheckBankCardActivity extends BaseActivity implements BankCardConta
     }
 
     private void initView() {
+        addBtn = findViewById(R.id.add_btn);
         backImg = findViewById(R.id.back_img);
         cardList =  findViewById(R.id.card_list);
-        addBtn = findViewById(R.id.add_btn);
-    }
-
-    @Override
-    public void bindCardSuccess() {
-
-    }
-
-    @Override
-    public void bindCardFail() {
-
     }
 
     @Override
@@ -97,5 +90,15 @@ public class CheckBankCardActivity extends BaseActivity implements BankCardConta
                     bankCardPersenter.deleteCard(bankCardListBean.getCards().get(position).getCard_number());
             }
         });
+    }
+
+    @Override
+    public void bindCardSuccess() {
+
+    }
+
+    @Override
+    public void bindCardFail() {
+
     }
 }

@@ -1,30 +1,19 @@
 package cn.dankal.my.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
 import cn.dankal.basiclib.adapter.MyIdeaListRvAdapter;
 import cn.dankal.basiclib.base.BaseRvFragmentImp;
-import cn.dankal.basiclib.base.fragment.BaseRecyclerViewFragment;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.MyIdeaListBean;
-import cn.dankal.basiclib.common.OnFinishLoadDataListener;
 import cn.dankal.basiclib.protocol.MyProtocol;
-import cn.dankal.basiclib.widget.swipetoloadlayout.OnLoadMoreListener;
-import cn.dankal.basiclib.widget.swipetoloadlayout.OnRefreshListener;
-import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
 import cn.dankal.my.presenter.MyIdeaListPersenter;
 import cn.dankal.setting.R;
-import cn.dankal.setting.R2;
 
 public class MyIdeaAllFragment extends BaseRvFragmentImp<MyIdeaListBean.DataBean> {
 

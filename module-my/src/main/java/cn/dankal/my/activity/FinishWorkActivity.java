@@ -41,6 +41,10 @@ import cn.dankal.setting.R2;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.FINISHWORK;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
+
+/**
+ * 完成工单
+ */
 @Route(path = FINISHWORK)
 public class FinishWorkActivity extends BaseActivity {
 
@@ -151,7 +155,6 @@ public class FinishWorkActivity extends BaseActivity {
 
     //图片上传至七牛
     public static void uploadQiniu(Uri uri,Context context){
-        final String[] path = {null};
         TipDialog loadingDialog;
 
         TipDialog.Builder builder = new TipDialog.Builder(context);

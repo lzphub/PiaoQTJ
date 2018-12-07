@@ -71,10 +71,6 @@ public class My_fragment extends BaseFragment {
             getEngineerData();
         }
 
-        Glide.with(getContext())
-                .load("http://cdn.duitang.com/uploads/item/201408/28/20140828142218_PS4fi.thumb.700_0.png")
-                .into(headPic);
-
         myWorklist.setOnClickListener(v -> {
             if(type.equals("user")){
                 ARouter.getInstance().build(MyProtocol.MYREQUEST).navigation();
@@ -135,7 +131,7 @@ public class My_fragment extends BaseFragment {
         menuText5 = view.findViewById(R.id.menu_text5);
     }
 
-    //获取信息
+    //获取用户信息
     private void getData(){
         MyServiceFactory.getUserData().safeSubscribe(new AbstractDialogSubscriber<PersonalData_EnBean>(this) {
             @Override

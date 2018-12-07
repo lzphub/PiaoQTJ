@@ -10,6 +10,7 @@ import cn.dankal.basiclib.bean.MyWorkListBean;
 import cn.dankal.basiclib.bean.ProductClassifyBean;
 import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
+import cn.dankal.basiclib.bean.ProjectDataBean;
 import cn.dankal.basiclib.bean.UserHomeBannerBean;
 import io.reactivex.Observable;
 
@@ -63,6 +64,11 @@ public interface HomeService {
     @GET("engineer/home/getproject")
     Observable<DemandListbean> getDemandList(@Query("page_index")int page_index,@Query(" page_size")int  page_size);
 
+    /**
+     *  首页需求详情
+     */
+    @GET("engineer/home/getprojectdetail/{project_uuid}")
+    Observable<ProjectDataBean> getDemandDeta(@Path("project_uuid")String project_uuid);
 
     /**
      * 工单列表

@@ -26,6 +26,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYINTENTION;
 
+/**
+ * 我的意向
+ */
 @Route(path = MYINTENTION)
 public class MyIntentionActivity extends BaseActivity {
 
@@ -36,7 +39,6 @@ public class MyIntentionActivity extends BaseActivity {
     private String[] tab_titel2={"ALL","SUBMITTED","IN PROGRESS","FINISH"};
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private List<BaseFragment> fragmentList;
-    private MyIntentionVpAdapter myIntentionVpAdapter;
     private MyIntentionAllFragment myIntentionAllFragment;
     private MyIntentionSubmittedFragment myIntentionSubmittedFragment;
     private MyIntentionProgressFragment myIntentionProgressFragment;

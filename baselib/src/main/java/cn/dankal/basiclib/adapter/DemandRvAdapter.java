@@ -10,6 +10,7 @@ import cn.dankal.basiclib.R2;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.DemandListbean;
+import cn.dankal.basiclib.util.StringUtil;
 
 public class DemandRvAdapter extends BaseRecyclerViewAdapter<DemandListbean.DataBean> {
 
@@ -43,8 +44,8 @@ public class DemandRvAdapter extends BaseRecyclerViewAdapter<DemandListbean.Data
 
         @Override
         public void onBindData(DemandListbean.DataBean data, int position) {
-            demandPrice.setText("¥"+data.getStart_price()+"~"+data.getEnd_price());
-            reDate.setText(data.getCpl_start_date()+"~"+data.getCpl_end_date());
+            demandPrice.setText("¥"+ StringUtil.isDigits(data.getStart_price())+" ~ "+StringUtil.isDigits(data.getEnd_price()));
+            reDate.setText(data.getCreate_time());
             demandTitle.setText(data.getName());
             demandContent.setText(data.getDesc());
         }

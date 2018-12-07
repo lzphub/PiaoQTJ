@@ -19,6 +19,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.SETTING;
 
+/**
+ * 设置
+ */
 @Route(path = SETTING)
 public class SettingActivity extends BaseActivity {
 
@@ -45,10 +48,13 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+
         backImg.setOnClickListener(v -> finish());
         aboutUs.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.ABOUTUS).navigation());
         opinion.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.OPINION).navigation());
+        problem.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.COMPROB).navigation());
         setPwd.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.SETWITHPEDCODE).navigation());
+
         loginOut.setOnClickListener(v -> {
             DKUserManager.resetToken();
             DKUserManager.resetUserInfo();
@@ -59,7 +65,7 @@ public class SettingActivity extends BaseActivity {
             }
             ActivityUtils.finishAllActivities();
         });
-        problem.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.COMPROB).navigation());
+
         clearCache.setOnClickListener(v -> {
             CacheManager.cleanCache(SettingActivity.this, SDCacheDir.getInstance(SettingActivity.this).cachepath);
             CacheManager.cleanCache(SettingActivity.this, SDCacheDir.getInstance(SettingActivity.this).cachepath2);
@@ -74,20 +80,22 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void initView() {
-        backImg = findViewById(R.id.back_img);
-        problem = findViewById(R.id.problem);
-        aboutUs = findViewById(R.id.about_us);
-        clearCache = findViewById(R.id.clear_cache);
-        opinion = findViewById(R.id.opinion);
         setPwd = findViewById(R.id.set_pwd);
-        loginOut = findViewById(R.id.login_out);
-        problemText = findViewById(R.id.problem_text);
-        aboutText = findViewById(R.id.about_text);
-        clearText = findViewById(R.id.clear_text);
-        opinionText = findViewById(R.id.opinion_text);
+        problem = findViewById(R.id.problem);
+        opinion = findViewById(R.id.opinion);
+        backImg = findViewById(R.id.back_img);
+        aboutUs = findViewById(R.id.about_us);
         outText = findViewById(R.id.out_text);
         tvTitle = findViewById(R.id.tv_title);
+        loginOut = findViewById(R.id.login_out);
+        aboutText = findViewById(R.id.about_text);
+        clearText = findViewById(R.id.clear_text);
+        clearCache = findViewById(R.id.clear_cache);
+        problemText = findViewById(R.id.problem_text);
+        opinionText = findViewById(R.id.opinion_text);
+
         type = SharedPreferencesUtils.getString(this, "identity", "");
+
         if (type.equals("user")) {
             problemText.setText("FAQ");
             aboutText.setText("ABOUT US");

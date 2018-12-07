@@ -23,6 +23,9 @@ import cn.dankal.setting.R;
 import static cn.dankal.basiclib.protocol.MyProtocol.ENGSYSTEMNEWS;
 import static cn.dankal.basiclib.protocol.MyProtocol.SYSTEMNEWS;
 
+/**
+ * 工程师系统消息
+ */
 @Route(path = ENGSYSTEMNEWS)
 public class EngineerNewsActivity extends BaseRvActivity<SystemMsgBean.DataBean> {
 
@@ -40,6 +43,7 @@ public class EngineerNewsActivity extends BaseRvActivity<SystemMsgBean.DataBean>
     public void initComponents() {
         super.initComponents();
         initView();
+
         backImg.setOnClickListener(v -> finish());
         titleText.setText("系统消息");
     }
@@ -51,25 +55,25 @@ public class EngineerNewsActivity extends BaseRvActivity<SystemMsgBean.DataBean>
 
     @Override
     public BaseRecyclerViewPresenter<SystemMsgBean.DataBean> getPresenter() {
-            engineerNewsPersenter=new EngineerNewsPersenter();
-            return engineerNewsPersenter;
+        engineerNewsPersenter = new EngineerNewsPersenter();
+        return engineerNewsPersenter;
 
     }
 
     @Override
     public BaseRecyclerViewAdapter<SystemMsgBean.DataBean> getAdapter() {
-        systemMsgRvAdapter=new SystemMsgRvAdapter();
+        systemMsgRvAdapter = new SystemMsgRvAdapter();
         systemMsgRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<SystemMsgBean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, SystemMsgBean.DataBean data) {
-                if(data.getKind()==1){
-                    ARouter.getInstance().build(MyProtocol.SYSTEMNEWSCONTENT).withString("content",data.getContent()).navigation();
-                }else{
-                    ARouter.getInstance().build(MyProtocol.WORKDATA).withString("uuid",data.getUuid()).navigation();
+                if (data.getKind() == 1) {
+                    ARouter.getInstance().build(MyProtocol.SYSTEMNEWSCONTENT).withString("content", data.getContent()).navigation();
+                } else {
+                    ARouter.getInstance().build(MyProtocol.WORKDATA).withString("uuid", data.getUuid()).navigation();
                 }
             }
         });
-        return systemMsgRvAdapter ;
+        return systemMsgRvAdapter;
     }
 
 }

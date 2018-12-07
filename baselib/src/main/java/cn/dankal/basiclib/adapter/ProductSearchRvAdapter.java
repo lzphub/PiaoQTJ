@@ -49,11 +49,7 @@ public class ProductSearchRvAdapter extends BaseRecyclerViewAdapter<ProductHomeL
         @Override
         public void onBindData(ProductHomeListBean.DataBean data, int position) {
             Glide.with(context).load(PicUtils.getUrl(data.getImages().get(0))).into(productImg);
-            if(StringUtil.isDigits(data.getPrice())){
-                productPrice.setText("$"+ data.getPrice());
-            }else{
-                productPrice.setText("$"+ data.getPrice().substring(0,data.getPrice().indexOf(".")));
-            }
+            productPrice.setText("$"+ StringUtil.isDigits(data.getPrice()));
             productName.setText(data.getName());
             productContent.setText(data.getDescription());
         }

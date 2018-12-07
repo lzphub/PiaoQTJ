@@ -3,14 +3,8 @@ package cn.dankal.my.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
@@ -22,10 +16,13 @@ import cn.dankal.my.fragment.MyIdeaAllFragment;
 import cn.dankal.my.fragment.MyIdeaFinishFragment;
 import cn.dankal.my.fragment.MyIdeaOngoingFragment;
 import cn.dankal.my.fragment.MyIdeaPromotionFragment;
-import cn.dankal.my.fragment.MyRequestFragment;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYIDEA;
+
+/**
+ * 我的创意
+ */
 
 @Route(path = MYIDEA)
 public class MyIdeaActivity extends BaseActivity {

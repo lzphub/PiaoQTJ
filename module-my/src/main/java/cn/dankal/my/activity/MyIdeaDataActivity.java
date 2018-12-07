@@ -21,6 +21,10 @@ import cn.dankal.setting.R2;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.IDEADATA;
 
+/**
+ * 我的创意详情
+ */
+
 @Route(path = IDEADATA)
 public class MyIdeaDataActivity extends BaseStateActivity {
 

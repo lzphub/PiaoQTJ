@@ -44,6 +44,9 @@ import cn.dankal.setting.R;
 import static cn.dankal.basiclib.protocol.MyProtocol.PERSONALDATA;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
 
+/**
+ * 工程师个人信息
+ */
 @Route(path = PERSONALDATA)
 public class PersonalDataActivity extends BaseActivity {
 
@@ -59,9 +62,9 @@ public class PersonalDataActivity extends BaseActivity {
     private RelativeLayout addressRl;
     private TextView addressText;
     private AddressBean addressBeans;
-    private List<String> province_list=new ArrayList<>(),city_list=new ArrayList<>();
-    private int provinceCount=0,cityCount=0;
-    private PersonalData_EngineerPostBean personalData_engineerPostBean=new PersonalData_EngineerPostBean();
+    private List<String> province_list = new ArrayList<>(), city_list = new ArrayList<>();
+    private int provinceCount = 0, cityCount = 0;
+    private PersonalData_EngineerPostBean personalData_engineerPostBean = new PersonalData_EngineerPostBean();
     private ChangeAvatar changeAvatar;
 
     @Override
@@ -72,25 +75,30 @@ public class PersonalDataActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+
         getEngineerData();
-        if(StringUtil.isValid(getIntent().getStringExtra("name"))){
+
+        if (StringUtil.isValid(getIntent().getStringExtra("name"))) {
             nameText.setText(getIntent().getStringExtra("name"));
         }
-        if(StringUtil.isValid(getIntent().getStringExtra("skills"))){
+        if (StringUtil.isValid(getIntent().getStringExtra("skills"))) {
             skillsText.setText(getIntent().getStringExtra("skills"));
         }
+
         backImg.setOnClickListener(v -> finish());
-        nameRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 1).withSerializable("data",personalData_engineerPostBean).navigation());
-        skillsRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 2).withSerializable("data",personalData_engineerPostBean).navigation());
-        phoneRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 3).withSerializable("data",personalData_engineerPostBean).navigation());
+        addressRl.setOnClickListener(v -> initAddressDialog());
+        nameRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 1).withSerializable("data", personalData_engineerPostBean).navigation());
+        skillsRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 2).withSerializable("data", personalData_engineerPostBean).navigation());
+        phoneRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATA).withInt("datatype", 3).withSerializable("data", personalData_engineerPostBean).navigation());
         headPic.setOnClickListener(v -> {
-            AvatarUtil avatarUtil=new AvatarUtil(this);
+            AvatarUtil avatarUtil = new AvatarUtil(this);
             avatarUtil.beginCameraDialog(this);
         });
-        addressRl.setOnClickListener(v -> initAddressDialog());
+
         changeAvatar = new ChangeAvatarImpl(this, this);
         changeAvatar.setIvHead(headPic);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -111,17 +119,18 @@ public class PersonalDataActivity extends BaseActivity {
             default:
         }
     }
+
     private void initView() {
-        backImg = findViewById(R.id.back_img);
         picRl = findViewById(R.id.pic_rl);
-        headPic = findViewById(R.id.head_pic);
         nameRl = findViewById(R.id.name_rl);
+        backImg = findViewById(R.id.back_img);
+        phoneRl = findViewById(R.id.phone_rl);
+        headPic = findViewById(R.id.head_pic);
         nameText = findViewById(R.id.name_text);
         skillsRl = findViewById(R.id.skills_rl);
-        skillsText = findViewById(R.id.skills_text);
-        phoneRl = findViewById(R.id.phone_rl);
         phoneText = findViewById(R.id.phone_text);
         addressRl = findViewById(R.id.address_rl);
+        skillsText = findViewById(R.id.skills_text);
         addressText = findViewById(R.id.address_text);
     }
 
@@ -129,19 +138,19 @@ public class PersonalDataActivity extends BaseActivity {
         MyServiceFactory.getGeoInfo().safeSubscribe(new AbstractDialogSubscriber<AddressBean>(this) {
             @Override
             public void onNext(AddressBean addressBean) {
-                addressBeans=new AddressBean();
-                addressBeans=addressBean;
-                if(province_list!=null){
+                addressBeans = new AddressBean();
+                addressBeans = addressBean;
+                if (province_list != null) {
                     province_list.clear();
                 }
-                if(city_list!=null){
+                if (city_list != null) {
                     city_list.clear();
                 }
-                provinceCount=0;
-                cityCount=0;
-                for(int i=0;i<addressBean.getRoot().size();i++){
+                provinceCount = 0;
+                cityCount = 0;
+                for (int i = 0; i < addressBean.getRoot().size(); i++) {
                     province_list.add(addressBean.getRoot().get(i).getName());
-                    for(int n=0;n<addressBean.getRoot().get(0).getChildren().size();n++){
+                    for (int n = 0; n < addressBean.getRoot().get(0).getChildren().size(); n++) {
                         city_list.add(addressBean.getRoot().get(0).getChildren().get(n).getName());
                     }
                 }
@@ -151,7 +160,7 @@ public class PersonalDataActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                ToastUtils.showShort(e+"");
+                ToastUtils.showShort(e + "");
                 return;
             }
         });
@@ -159,17 +168,17 @@ public class PersonalDataActivity extends BaseActivity {
 
     }
 
-    private void showDialog(){
+    //选择地区
+    private void showDialog() {
         BottomSheetDialog sheetDialog = new BottomSheetDialog(this);
         sheetDialog.setContentView(R.layout.dialog_pick_address);
-        sheetDialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet)
-                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        sheetDialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet).setBackgroundColor(getResources().getColor(android.R.color.transparent));
         sheetDialog.show();
         TextView cancel = sheetDialog.getDelegate().findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(v -> sheetDialog.dismiss());
         WheelPicker position = sheetDialog.getDelegate().findViewById(R.id.province_wheel);
         position.setData(province_list);
-        WheelPicker city=sheetDialog.getDelegate().findViewById(R.id.city_wheel);
+        WheelPicker city = sheetDialog.getDelegate().findViewById(R.id.city_wheel);
         city.setData(city_list);
         TextView save = sheetDialog.getDelegate().findViewById(R.id.tv_save);
         position.setSelectedItemPosition(0);
@@ -182,11 +191,11 @@ public class PersonalDataActivity extends BaseActivity {
             @Override
             public void onWheelSelected(int position) {
                 provinceCount = position;
-                if(city_list!=null){
+                if (city_list != null) {
                     city_list.clear();
                 }
-                for(int i=0;i<addressBeans.getRoot().get(position%34).getChildren().size();i++){
-                    city_list.add(addressBeans.getRoot().get(position%34).getChildren().get(i).getName());
+                for (int i = 0; i < addressBeans.getRoot().get(position % 34).getChildren().size(); i++) {
+                    city_list.add(addressBeans.getRoot().get(position % 34).getChildren().get(i).getName());
                 }
                 city.setData(city_list);
             }
@@ -203,7 +212,7 @@ public class PersonalDataActivity extends BaseActivity {
 
             @Override
             public void onWheelSelected(int position) {
-                cityCount=position;
+                cityCount = position;
             }
 
             @Override
@@ -212,25 +221,25 @@ public class PersonalDataActivity extends BaseActivity {
             }
         });
         save.setOnClickListener(v -> {
-            addressText.setText(province_list.get(provinceCount%34)+city_list.get(cityCount%city_list.size()));
-            personalData_engineerPostBean.setProvince(province_list.get(provinceCount%34));
-            personalData_engineerPostBean.setCity(city_list.get(cityCount%city_list.size()));
+            addressText.setText(province_list.get(provinceCount % 34) + city_list.get(cityCount % city_list.size()));
+            personalData_engineerPostBean.setProvince(province_list.get(provinceCount % 34));
+            personalData_engineerPostBean.setCity(city_list.get(cityCount % city_list.size()));
             sheetDialog.dismiss();
             postEngineerData();
         });
     }
 
     //获取数据
-    private void getEngineerData(){
+    private void getEngineerData() {
         MyServiceFactory.getEngineerData().safeSubscribe(new AbstractDialogSubscriber<PersonalData_EngineerBean>(this) {
             @Override
             public void onNext(PersonalData_EngineerBean personalData_engineerBean) {
                 nameText.setText(personalData_engineerBean.getName());
                 skillsText.setText(personalData_engineerBean.getCompetence());
-                addressText.setText(personalData_engineerBean.getProvince()+personalData_engineerBean.getCity());
+                addressText.setText(personalData_engineerBean.getProvince() + personalData_engineerBean.getCity());
                 phoneText.setText(personalData_engineerBean.getMobile());
 
-                PicUtils.loadAvatar(personalData_engineerBean.getAvatar(),headPic);
+                PicUtils.loadAvatar(personalData_engineerBean.getAvatar(), headPic);
                 personalData_engineerPostBean.setCompetence(personalData_engineerBean.getCompetence());
                 personalData_engineerPostBean.setName(personalData_engineerBean.getName());
                 personalData_engineerPostBean.setAvatar(personalData_engineerBean.getAvatar());
@@ -248,7 +257,7 @@ public class PersonalDataActivity extends BaseActivity {
     }
 
     //更新个人信息
-    private void postEngineerData(){
+    private void postEngineerData() {
         MyServiceFactory.engineerUpdateInfo(personalData_engineerPostBean).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
             @Override
             public void onNext(String s) {
@@ -282,11 +291,11 @@ public class PersonalDataActivity extends BaseActivity {
                         break;
                     case UCrop.REQUEST_CROP://剪切返回
                         Uri resultUri = UCrop.getOutput(data);
-                        uploadPic2(resultUri,personalData_engineerPostBean);
+                        uploadPic2(resultUri, personalData_engineerPostBean);
                         break;
                 }
             } else {
-                Toast.makeText(this, "图片选择失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "图片选择失败", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -307,7 +316,7 @@ public class PersonalDataActivity extends BaseActivity {
 
                 personalData_engineerPostBean.setAvatar(key);
                 setAvatar2(personalData_engineerPostBean);
-                File deletefile=new File(localPath);
+                File deletefile = new File(localPath);
                 getContentResolver().delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, MediaStore.Images.Media.DATA + "=?", new String[]{localPath});//删除系统缩略图
                 deletefile.delete();
             }

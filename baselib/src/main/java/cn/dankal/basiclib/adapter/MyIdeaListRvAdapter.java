@@ -6,17 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import butterknife.BindView;
 import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.R2;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
+import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.MyIdeaListBean;
+import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.StateUtil;
 
 public class MyIdeaListRvAdapter extends BaseRecyclerViewAdapter<MyIdeaListBean.DataBean> {
-
-
 
 
     @Override
@@ -39,6 +41,7 @@ public class MyIdeaListRvAdapter extends BaseRecyclerViewAdapter<MyIdeaListBean.
         @BindView(R2.id.rv_imgs)
         RecyclerView rvImgs;
         private OnlyImgRvAdapter onlyImgRvAdapter;
+
         public MyViewHolder(View itemView) {
             super(itemView);
         }
@@ -49,14 +52,22 @@ public class MyIdeaListRvAdapter extends BaseRecyclerViewAdapter<MyIdeaListBean.
             tvTitle.setText(data.getTitle());
             tvContent.setText(data.getDetail());
 
-            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             rvImgs.setLayoutManager(linearLayoutManager);
             rvImgs.setNestedScrollingEnabled(false);
             rvImgs.setHasFixedSize(true);
-            onlyImgRvAdapter=new OnlyImgRvAdapter();
+            onlyImgRvAdapter = new OnlyImgRvAdapter();
             onlyImgRvAdapter.addMore(data.getImages());
             rvImgs.setAdapter(onlyImgRvAdapter);
+
+            MyIdeaListBean.DataBean dataBean=data;
+
+            onlyImgRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<String>() {
+                @Override
+                public void onItemClick(View v, int position, String data) {
+                    ARouter.getInstance().build(MyProtocol.IDEADATA).withSerializable("data", dataBean).navigation();                }
+            });
 
         }
     }

@@ -26,10 +26,12 @@ import cn.dankal.address.R;
 import cn.dankal.basiclib.ResultCode;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.DemandListbean;
+import cn.dankal.basiclib.bean.ProjectDataBean;
 import cn.dankal.basiclib.common.qiniu.QiniuUpload;
 import cn.dankal.basiclib.common.qiniu.UploadHelper;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.util.UriUtils;
 import cn.dankal.basiclib.util.image.CheckImage;
@@ -57,7 +59,8 @@ public class DemandClaimActivity extends BaseActivity {
     private int size = 5;
     private ImageRvAdapter imageRvAdapter;
     private static List<String> images=new ArrayList<>();
-    private DemandListbean.DataBean dataBean;
+    private ProjectDataBean dataBean;
+    private String time;
 
     @Override
     protected int getLayoutId() {
@@ -67,31 +70,20 @@ public class DemandClaimActivity extends BaseActivity {
     @Override
     public void initComponents() {
         initView();
-        dataBean= (DemandListbean.DataBean) getIntent().getSerializableExtra("demandData");
+        dataBean= (ProjectDataBean) getIntent().getSerializableExtra("demandData");
+        time=getIntent().getStringExtra("time");
         demandTitle.setText(dataBean.getName());
         demand_content.setText(dataBean.getDesc());
-        demandPrice.setText("¥"+dataBean.getStart_price()+"~"+dataBean.getEnd_price());
-        releaseTime.setText(dataBean.getCpl_start_date()+"~"+dataBean.getCpl_end_date());
-        backImg.setOnClickListener(new View.OnClickListener() {
+        demandPrice.setText("¥"+ StringUtil.isDigits(dataBean.getStart_price())+" ~ "+StringUtil.isDigits(dataBean.getEnd_price()));
+        releaseTime.setText(time);
+        backImg.setOnClickListener(v -> finish());
+        submitBtn.setOnClickListener(v -> HomeServiceFactory.postplan(dataBean.getUuid(),detailsEt.getText().toString().trim(),images).safeSubscribe(new AbstractDialogSubscriber<String>(DemandClaimActivity.this) {
             @Override
-            public void onClick(View v) {
+            public void onNext(String s) {
+                ARouter.getInstance().build(HomeProtocol.SUBMITIDEA).withInt("type", 2).navigation();
                 finish();
             }
-        });
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                HomeServiceFactory.postplan(dataBean.getUuid(),detailsEt.getText().toString().trim(),images).safeSubscribe(new AbstractDialogSubscriber<String>(DemandClaimActivity.this) {
-                    @Override
-                    public void onNext(String s) {
-                        ARouter.getInstance().build(HomeProtocol.SUBMITIDEA).withInt("type", 2).navigation();
-                        finish();
-                    }
-                });
-
-            }
-        });
+        }));
 
         addImg.setOnClickListener(v -> CheckImage.takePhotoPicker(DemandClaimActivity.this, 1));
         detailsEt.addTextChangedListener(new TextWatcher() {
@@ -116,15 +108,15 @@ public class DemandClaimActivity extends BaseActivity {
     }
 
     private void initView() {
-        submitBtn = (Button) findViewById(R.id.submit_btn);
-        backImg = (ImageView) findViewById(R.id.back_img);
-        demandPrice = (TextView) findViewById(R.id.demand_price);
-        releaseTime = (TextView) findViewById(R.id.re_date);
-        demandTitle = (TextView) findViewById(R.id.demand_title);
-        addImg = (ImageView) findViewById(R.id.add_img);
-        imgList = (RecyclerView) findViewById(R.id.img_list);
-        sizeDetails = (TextView) findViewById(R.id.size_details);
-        detailsEt = (EditText) findViewById(R.id.details_et);
+        submitBtn = findViewById(R.id.submit_btn);
+        backImg = findViewById(R.id.back_img);
+        demandPrice = findViewById(R.id.demand_price);
+        releaseTime = findViewById(R.id.re_date);
+        demandTitle = findViewById(R.id.demand_title);
+        addImg = findViewById(R.id.add_img);
+        imgList = findViewById(R.id.img_list);
+        sizeDetails = findViewById(R.id.size_details);
+        detailsEt = findViewById(R.id.details_et);
         demand_content=findViewById(R.id.demand_content);
     }
 
@@ -145,13 +137,10 @@ public class DemandClaimActivity extends BaseActivity {
                 }
                 imageRvAdapter=new ImageRvAdapter(this,result);
                 imgList.setAdapter(imageRvAdapter);
-                imageRvAdapter.setOnClickListener(new ImageRvAdapter.OnClickListener() {
-                    @Override
-                    public void OnClick(int pos) {
-                        result.remove(pos);
-                        imageRvAdapter.UpData(result);
-                        addImg.setVisibility(View.VISIBLE);
-                    }
+                imageRvAdapter.setOnClickListener(pos -> {
+                    result.remove(pos);
+                    imageRvAdapter.UpData(result);
+                    addImg.setVisibility(View.VISIBLE);
                 });
             }
         }
@@ -162,7 +151,6 @@ public class DemandClaimActivity extends BaseActivity {
     public static void uploadQiniu(Uri uri,Context context){
         final String[] path = {null};
         TipDialog loadingDialog;
-//        final File tempFile = new File(uri.getPath());
 
         TipDialog.Builder builder = new TipDialog.Builder(context);
         loadingDialog = builder

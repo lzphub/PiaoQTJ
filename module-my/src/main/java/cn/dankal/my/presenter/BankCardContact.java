@@ -9,9 +9,9 @@ import cn.dankal.basiclib.bean.IntentionDateBean;
 
 public interface BankCardContact {
     interface bcView extends BaseView{
+        void getBankCardListSuccess(BankCardListBean bankCardListBean);
         void bindCardSuccess();
         void bindCardFail();
-        void getBankCardListSuccess(BankCardListBean bankCardListBean);
     }
     interface idPresenter extends BasePresenter<bcView>{
         void sendCode(Button button,String phone);

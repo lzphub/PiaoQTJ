@@ -76,21 +76,14 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
     private android.widget.TextView newDemand;
     private android.support.v7.widget.RecyclerView demandList;
     private android.widget.TextView loadMore;
-    private List<DemandListbean> demandListbeanList = new ArrayList<>();
-    private List<ProductListBean> productListBeanList = new ArrayList<>();
     private TextView resText;
     private String identity;
-    private android.support.v4.widget.NestedScrollView scroll;
     private int page = 1;
     private boolean isRefresh = true;
     private ProductHomePresenter productHomePresenter;
     private cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout swipeToloadLayout;
     private ProductRvAdapter productRvAdapter;
     private DemandRvAdapter demandRvAdapter;
-    private android.widget.RadioGroup rdgroup;
-    private RadioButton fristRdButton;
-    private List<RadioButton> radioButtons = new ArrayList<>();
-    int iconId = 0;
     private LinearLayout releaseLl2;
     private TextView resText2;
     private android.support.v4.view.ViewPager banner;
@@ -249,7 +242,6 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
     @Override
     public void getBannerSuccess(UserHomeBannerBean userHomeBannerBean) {
 
-
         singleTabScrollIndicatorView.setAdapter(new MyAdapter(userHomeBannerBean.getCarousels().size()));
 
         singleTabScrollIndicatorView.setCurrentItem(0, true);
@@ -257,7 +249,6 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
             }
 
             @Override
@@ -302,11 +293,12 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         banner.setAdapter(mAdapter);
 
         count = 10;
+        banner.setCurrentItem(count,false);
 
         downTimer2.start();
     }
 
-
+    //轮播图定时
     CountDownTimer downTimer2 = new CountDownTimer(1000000, 3000) {
         @Override
         public void onTick(long millisUntilFinished) {
@@ -338,7 +330,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         demandRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<DemandListbean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, DemandListbean.DataBean data) {
-                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withSerializable("demandData", data).navigation();
+                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withString("project_uuid", data.getUuid()).withString("time",data.getCreate_time()).navigation();
             }
         });
     }

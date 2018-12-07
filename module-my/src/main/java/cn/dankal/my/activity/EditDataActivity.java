@@ -1,27 +1,19 @@
 package cn.dankal.my.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 
 import api.MyServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.PersonalData_EngineerPostBean;
-import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
-import cn.dankal.basiclib.util.ActivityUtils;
-import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.EDITDATA;
 
+/**
+ * 工程师编辑个人信息
+ */
 @Route(path = EDITDATA)
 public class EditDataActivity extends BaseActivity {
 
@@ -64,8 +56,8 @@ public class EditDataActivity extends BaseActivity {
     }
 
     private void initView() {
-        backImg = findViewById(R.id.back_img);
         etName = findViewById(R.id.et_name);
+        backImg = findViewById(R.id.back_img);
         submitBtn = findViewById(R.id.submit_btn);
     }
 

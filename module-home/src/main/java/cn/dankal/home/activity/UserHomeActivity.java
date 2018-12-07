@@ -135,6 +135,7 @@ public class UserHomeActivity extends BaseActivity {
         downTimer.cancel();
     }
 
+    //十秒获取一次是否有新消息
     CountDownTimer downTimer=new CountDownTimer(1000000,10000) {
         @Override
         public void onTick(long millisUntilFinished) {
@@ -154,10 +155,11 @@ public class UserHomeActivity extends BaseActivity {
         }
     };
 
+    //注册极光推送别名
     private void setAlias() {
         JPushInterface.setAlias(this, 10, DKUserManager.getUserInfo().getUuid());
         Set<String> tags = new HashSet<>();
-        tags.add("user");
+        tags.add("customer");
         JPushInterface.setTags(this, 10, tags);
     }
 

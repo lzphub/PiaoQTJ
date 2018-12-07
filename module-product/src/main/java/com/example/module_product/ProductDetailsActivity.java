@@ -289,11 +289,9 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
         }
         banner.setDatas(imgurl).setPlay(true).setCardImageLoader((context, imageView, path) -> Glide.with(context).load(path).into(imageView)).start();
         productName.setText(productDataBean.getName());
-        if(StringUtil.isDigits(productDataBean.getPrice())){
-            productPrice.setText("$"+ productDataBean.getPrice());
-        }else{
-            productPrice.setText("$"+ productDataBean.getPrice().substring(0,productDataBean.getPrice().indexOf(".")));
-        }
+
+        productPrice.setText("$"+ StringUtil.isDigits(productDataBean.getPrice()));
+
         productContent.setText(productDataBean.getDescription());
         tvDetail.loadDataWithBaseURL(null, productDataBean.getDetail(), "text/html", "UTF-8", null);
         if (productDataBean.getIs_favourite() == 1) {

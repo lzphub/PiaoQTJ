@@ -18,6 +18,9 @@ import cn.dankal.setting.R2;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.SYSTEMNEWSCONTENT;
 
+/**
+ * 系统消息详情
+ */
 @Route(path = SYSTEMNEWSCONTENT)
 public class SysMsgContentActivity extends BaseStateActivity {
 

@@ -4,12 +4,13 @@ import java.util.List;
 
 public class MyWorkListBean {
 
+
     /**
-     * total : 1
+     * total : 2
      * per_page : 10
      * current_page : 1
      * last_page : 1
-     * data : [{"uuid":"e6e14c8e980c8b9a1f7831695ce351d7","name":"简单的工单","start_price":"20.00","end_price":"50.00","cpl_start_date":"2018-10-29","cpl_end_date":"2019-04-04","status":3,"desc":"没啥可描述的"}]
+     * data : [{"uuid":"ae22e7225e55cfdc5daf45ed4248ec60","name":"zjx测试","start_price":"100.00","end_price":"1000.00","cpl_start_date":"2018-10-22","cpl_end_date":"2019-11-11","status":4,"desc":"nothing need to say","plan_uuid":"21b346b6fceac3e430fe588dc899c973"},{"uuid":"e6e14c8e980c8b9a1f7831695ce351d7","name":"简单的工单","start_price":"20.00","end_price":"50.00","cpl_start_date":"2018-10-29","cpl_end_date":"2019-04-04","status":3,"desc":"没啥可描述的","plan_uuid":"67f662bb28967ecd2e3d354f8338d7a6"}]
      */
 
     private int total;
@@ -60,14 +61,15 @@ public class MyWorkListBean {
 
     public static class DataBean {
         /**
-         * uuid : e6e14c8e980c8b9a1f7831695ce351d7
-         * name : 简单的工单
-         * start_price : 20.00
-         * end_price : 50.00
-         * cpl_start_date : 2018-10-29
-         * cpl_end_date : 2019-04-04
-         * status : 3
-         * desc : 没啥可描述的
+         * uuid : ae22e7225e55cfdc5daf45ed4248ec60
+         * name : zjx测试
+         * start_price : 100.00
+         * end_price : 1000.00
+         * cpl_start_date : 2018-10-22
+         * cpl_end_date : 2019-11-11
+         * status : 4
+         * desc : nothing need to say
+         * plan_uuid : 21b346b6fceac3e430fe588dc899c973
          */
 
         private String uuid;
@@ -78,6 +80,7 @@ public class MyWorkListBean {
         private String cpl_end_date;
         private int status;
         private String desc;
+        private String plan_uuid;
 
         public String getUuid() {
             return uuid;
@@ -141,6 +144,14 @@ public class MyWorkListBean {
 
         public void setDesc(String desc) {
             this.desc = desc;
+        }
+
+        public String getPlan_uuid() {
+            return plan_uuid;
+        }
+
+        public void setPlan_uuid(String plan_uuid) {
+            this.plan_uuid = plan_uuid;
         }
     }
 }

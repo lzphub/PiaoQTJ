@@ -58,18 +58,12 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
     @BindView(R2.id.tab_layout)
     VerticalTabLayout tabLayout;
 
-    private RadioButton fristRdButton;
-    private List<RadioButton> radioButtons = new ArrayList<>();
-    private Context context;
-
-    private List<ProductTabBean> productTabBeanList = new ArrayList<>();
     private ProductClassifyBean productClassBean;
     private ProductTabRvAdapter productTabRvAdapter;
     private ProductClassifyPresenter productClassifyPresenter = ProductClassifyPresenter.getPresenter();
 
     @Override
     protected int getLayoutId() {
-        context=getContext();
         return R.layout.fragment_product;
     }
 

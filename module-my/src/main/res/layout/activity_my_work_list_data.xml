@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/rl_title"
             android:layout_width="match_parent"
             android:layout_height="69dp"
             android:background="@color/colorFF">
@@ -25,12 +26,25 @@
                 android:paddingLeft="23dp"
                 android:paddingTop="37dp"
                 android:src="@mipmap/ic_my_worklist_return" />
+            <TextView
+                android:id="@+id/tv_title_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="工单详情"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#00333333"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/sc_scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:id="@+id/ll_content"

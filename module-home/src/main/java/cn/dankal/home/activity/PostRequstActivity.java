@@ -49,6 +49,8 @@ import cn.dankal.basiclib.util.image.CheckImage;
 import cn.dankal.basiclib.util.image.ImagePathUtil;
 import cn.dankal.basiclib.widget.TimeDialog;
 import cn.dankal.basiclib.widget.TipDialog;
+import cn.dankal.home.persenter.PostRequestContact;
+import cn.dankal.home.persenter.PostRequestPresenter;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -56,7 +58,7 @@ import static cn.dankal.basiclib.protocol.HomeProtocol.POSTREQUEST;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
 
 @Route(path = POSTREQUEST)
-public class PostRequstActivity extends BaseActivity {
+public class PostRequstActivity extends BaseActivity implements PostRequestContact.pcview {
     private android.widget.Button submitBtn;
     private android.widget.ImageView colseImg;
     private android.widget.TextView titleThe;
@@ -73,13 +75,14 @@ public class PostRequstActivity extends BaseActivity {
     private android.widget.LinearLayout priceMaxLl;
     private android.widget.EditText priceMax;
     private android.widget.EditText contentEt;
-    private int size = 3;
+    private int size = 5;
     private List<Uri> result = new ArrayList<>();
     private ImageRvAdapter imageRvAdapter;
     private static List<String> images=new ArrayList<>();
     final private static int KeyboardHeightLimit = 200;
     private RelativeLayout rlContent;
     private RelativeLayout rlOut;
+    private PostRequestPresenter postRequestPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -107,7 +110,12 @@ public class PostRequstActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 SpannableString spannableString=new SpannableString(titleEt.getText().toString().trim().length()+"/50");
-                ForegroundColorSpan colorSpan=new ForegroundColorSpan(getResources().getColor(R.color.login_btn_bg));
+                ForegroundColorSpan colorSpan;
+                if(titleEt.getText().toString().trim().length()>=50){
+                    colorSpan=new ForegroundColorSpan(getResources().getColor(R.color.colorFE3824));
+                }else{
+                    colorSpan=new ForegroundColorSpan(getResources().getColor(R.color.login_btn_bg));
+                }
                 spannableString.setSpan(colorSpan,0,titleSize.getText().length()-3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 titleSize.setText(spannableString);
             }
@@ -118,23 +126,20 @@ public class PostRequstActivity extends BaseActivity {
             }
         });
 
-        rlOut.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Rect r = new Rect();
-                rlOut.getWindowVisibleDisplayFrame(r);
-                final int screenHeight = rlOut.getRootView().getHeight();
-                final int keyboardHeight = screenHeight - (r.bottom);
+        rlOut.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            Rect r = new Rect();
+            rlOut.getWindowVisibleDisplayFrame(r);
+            final int screenHeight = rlOut.getRootView().getHeight();
+            final int keyboardHeight = screenHeight - (r.bottom);
 
-                if (keyboardHeight > KeyboardHeightLimit) {
-                    FrameLayout.LayoutParams layoutParams= (FrameLayout.LayoutParams) rlOut.getLayoutParams();
-                    layoutParams.setMargins(0,0,0,keyboardHeight);
-                    rlOut.setLayoutParams(layoutParams);
-                }else{
-                    FrameLayout.LayoutParams layoutParams= (FrameLayout.LayoutParams) rlOut.getLayoutParams();
-                    layoutParams.setMargins(0,0,0,0);
-                    rlOut.setLayoutParams(layoutParams);
-                }
+            if (keyboardHeight > KeyboardHeightLimit) {
+                FrameLayout.LayoutParams layoutParams= (FrameLayout.LayoutParams) rlOut.getLayoutParams();
+                layoutParams.setMargins(0,0,0,keyboardHeight);
+                rlOut.setLayoutParams(layoutParams);
+            }else{
+                FrameLayout.LayoutParams layoutParams= (FrameLayout.LayoutParams) rlOut.getLayoutParams();
+                layoutParams.setMargins(0,0,0,0);
+                rlOut.setLayoutParams(layoutParams);
             }
         });
 
@@ -192,11 +197,15 @@ public class PostRequstActivity extends BaseActivity {
         String end_price = priceMax.getText().toString().trim();
         String start_date = periodStart.getText().toString().trim();
         String end_date = periodEnd.getText().toString().trim();
-        if (title == null) {
-            ToastUtils.showShort("Title is mandatory");
-        } else if (content.length() < 15) {
+        if (title == null || title.length()==0) {
+            ToastUtils.showShort("Please fill in the title");
+        }else if(title.length()<4){
+            ToastUtils.showShort("The length of title cannot be less than 4");
+        }else if (content.length() < 15) {
             ToastUtils.showShort("The length of description cannot be less than 15");
         } else {
+            postRequestPresenter=new PostRequestPresenter();
+            postRequestPresenter.attachView(this);
             PostRequestBean postRequestBean = new PostRequestBean();
             postRequestBean.setTitle(title);
             postRequestBean.setDescription(content);
@@ -205,28 +214,7 @@ public class PostRequstActivity extends BaseActivity {
             postRequestBean.setStart_price(start_price);
             postRequestBean.setEnd_price(end_price);
             postRequestBean.setImages(images);
-            HomeServiceFactory.postRequest(postRequestBean).safeSubscribe(new Observer<String>() {
-                @Override
-                public void onSubscribe(Disposable d) {
-
-                }
-
-                @Override
-                public void onNext(String s) {
-                    ToastUtils.showShort("Release success");
-                    finish();
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    ToastUtils.showShort(e + "");
-                }
-
-                @Override
-                public void onComplete() {
-
-                }
-            });
+            postRequestPresenter.post(postRequestBean);
         }
     }
 
@@ -295,15 +283,14 @@ public class PostRequstActivity extends BaseActivity {
         priceMaxLl = findViewById(R.id.price_max_ll);
         priceMax = findViewById(R.id.price_max);
         contentEt = findViewById(R.id.content_et);
-        rlContent = (RelativeLayout) findViewById(R.id.rl_content);
-        rlOut = (RelativeLayout) findViewById(R.id.rl_out);
+        rlContent = findViewById(R.id.rl_content);
+        rlOut = findViewById(R.id.rl_out);
     }
 
     //图片上传至七牛
     public static void uploadQiniu(Uri uri,Context context){
         final String[] path = {null};
         TipDialog loadingDialog;
-//        final File tempFile = new File(uri.getPath());
 
         TipDialog.Builder builder = new TipDialog.Builder(context);
         loadingDialog = builder
@@ -342,5 +329,10 @@ public class PostRequstActivity extends BaseActivity {
                 dialog.dismiss();
             }
         }, b ? uri.getPath() : UriUtils.getPath(context, uri));
+    }
+
+    @Override
+    public void postSuccess() {
+        finish();
     }
 }

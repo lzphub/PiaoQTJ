@@ -5,21 +5,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -30,14 +21,10 @@ import java.util.List;
 import api.MyServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
-import cn.dankal.basiclib.common.camera.CameraHandler;
-import cn.dankal.basiclib.common.camera.RequestCodes;
 import cn.dankal.basiclib.common.qiniu.QiniuUpload;
 import cn.dankal.basiclib.common.qiniu.UploadHelper;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
-import cn.dankal.basiclib.template.personal.ChangeAvatar;
-import cn.dankal.basiclib.template.personal.ChangeAvatarImpl;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.util.UriUtils;
@@ -45,13 +32,14 @@ import cn.dankal.basiclib.util.image.AvatarUtil;
 import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.basiclib.widget.CircleImageView;
 import cn.dankal.basiclib.widget.TipDialog;
-import cn.dankal.basiclib.widget.wheelview.WheelView;
-import cn.dankal.basiclib.widget.wheelview.adapters.ArrayWheelAdapter;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.PERSONALDATAEN;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
 
+/**
+ * 用户端个人信息
+ */
 @Route(path = PERSONALDATAEN)
 public class PersonalData_EnActivity extends BaseActivity {
 
@@ -89,9 +77,9 @@ public class PersonalData_EnActivity extends BaseActivity {
         getData();
 
         backImg.setOnClickListener(v -> finish());
+        ageRl.setOnClickListener(v -> initAgeDialog());
         picRl.setOnClickListener(v -> initBottomDialog());
         positionRl.setOnClickListener(v -> initPositionDialog());
-        ageRl.setOnClickListener(v -> initAgeDialog());
         countryRl.setOnClickListener(v -> startActivityForResult(new Intent(PersonalData_EnActivity.this, PickCountriesActivity.class), 2));
         nameRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "name").withSerializable("bean", personalDataEnBean).navigation());
         contactRl.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.EDITDATAEN).withString("data", "number").withSerializable("bean", personalDataEnBean).navigation());
@@ -101,29 +89,30 @@ public class PersonalData_EnActivity extends BaseActivity {
     }
 
     private void initView() {
-        backImg = findViewById(R.id.back_img);
-        picRl = findViewById(R.id.pic_rl);
-        headPic = findViewById(R.id.head_pic);
-        nameRl = findViewById(R.id.name_rl);
-        nameText = findViewById(R.id.name_text);
         ageRl = findViewById(R.id.age_rl);
+        picRl = findViewById(R.id.pic_rl);
+        nameRl = findViewById(R.id.name_rl);
         ageText = findViewById(R.id.age_text);
-        contactRl = findViewById(R.id.contact_rl);
-        contactText = findViewById(R.id.contact_text);
+        backImg = findViewById(R.id.back_img);
+        headPic = findViewById(R.id.head_pic);
         eMailRl = findViewById(R.id.e_mail_rl);
-        eMailText = findViewById(R.id.e_mail_text);
+        nameText = findViewById(R.id.name_text);
+        contactRl = findViewById(R.id.contact_rl);
         companyRl = findViewById(R.id.company_rl);
-        companyText = findViewById(R.id.company_text);
         countryRl = findViewById(R.id.country_rl);
-        countryText = findViewById(R.id.country_text);
+        eMailText = findViewById(R.id.e_mail_text);
         positionRl = findViewById(R.id.position_rl);
+        contactText = findViewById(R.id.contact_text);
+        companyText = findViewById(R.id.company_text);
+        countryText = findViewById(R.id.country_text);
         positionText = findViewById(R.id.position_text);
     }
 
     private void initBottomDialog() {
-        AvatarUtil avatarUtil=new AvatarUtil(this);
+        AvatarUtil avatarUtil = new AvatarUtil(this);
         avatarUtil.beginCameraDialog(this);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -144,6 +133,7 @@ public class PersonalData_EnActivity extends BaseActivity {
             default:
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -169,13 +159,13 @@ public class PersonalData_EnActivity extends BaseActivity {
                         break;
                     case UCrop.REQUEST_CROP://剪切返回
                         Uri resultUri = UCrop.getOutput(data);
-                        uploadPic(resultUri,personalDataEnBean);
+                        uploadPic(resultUri, personalDataEnBean);
                         break;
                 }
             } else {
-                Toast.makeText(this, "IMAGE SELECTION FAILED",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "IMAGE SELECTION FAILED", Toast.LENGTH_LONG).show();
             }
-         } else if (resultCode == 2) {
+        } else if (resultCode == 2) {
             if (requestCode == 2) {
                 countryText.setText(data.getStringExtra("countries"));
                 personalDataEnBean.setCountry(data.getStringExtra("countries"));
@@ -199,8 +189,7 @@ public class PersonalData_EnActivity extends BaseActivity {
         }
         BottomSheetDialog sheetDialog = new BottomSheetDialog(this);
         sheetDialog.setContentView(R.layout.dialog_pick_position);
-        sheetDialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet)
-                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        sheetDialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet).setBackgroundColor(getResources().getColor(android.R.color.transparent));
         sheetDialog.show();
         TextView cancel = sheetDialog.getDelegate().findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(v -> sheetDialog.dismiss());
@@ -241,7 +230,7 @@ public class PersonalData_EnActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                Logger.d(e+"");
+                Logger.d(e + "");
             }
         });
     }
@@ -255,8 +244,7 @@ public class PersonalData_EnActivity extends BaseActivity {
         }
         BottomSheetDialog sheetDialog = new BottomSheetDialog(this);
         sheetDialog.setContentView(R.layout.dialog_pick_position);
-        sheetDialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet)
-                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        sheetDialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet).setBackgroundColor(getResources().getColor(android.R.color.transparent));
         sheetDialog.show();
         TextView title = sheetDialog.getDelegate().findViewById(R.id.dialog_title);
         title.setText("AGE");
@@ -293,7 +281,7 @@ public class PersonalData_EnActivity extends BaseActivity {
         MyServiceFactory.getUserData().safeSubscribe(new AbstractDialogSubscriber<PersonalData_EnBean>(this) {
             @Override
             public void onNext(PersonalData_EnBean personalData_enBean) {
-                PicUtils.loadAvatar(PicUtils.getUrl(personalData_enBean.getAvatar()),headPic);
+                PicUtils.loadAvatar(PicUtils.getUrl(personalData_enBean.getAvatar()), headPic);
                 nameText.setText(personalData_enBean.getName());
                 ageText.setText(personalData_enBean.getAge() + "");
                 contactText.setText(personalData_enBean.getContact());
@@ -331,7 +319,7 @@ public class PersonalData_EnActivity extends BaseActivity {
                 loadingDialog.dismiss();
                 personalData_enBean.setAvatar(key);
                 setAvatar(personalData_enBean);
-                File deletefile=new File(localPath);
+                File deletefile = new File(localPath);
                 getContentResolver().delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, MediaStore.Images.Media.DATA + "=?", new String[]{localPath});//删除系统缩略图
                 deletefile.delete();
             }
@@ -352,6 +340,7 @@ public class PersonalData_EnActivity extends BaseActivity {
             }
         }, b ? photoUris.getPath() : UriUtils.getPath(this, photoUris));
     }
+
     private void setAvatar(PersonalData_EnBean personalData_enBean) {
         MyServiceFactory.updateInfo(personalData_enBean).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
             @Override

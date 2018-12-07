@@ -38,27 +38,19 @@ public class SubmitIdeaActivity extends BaseActivity {
         }else if(type==3){
             returnText.setText("已提交认完成该需求\n请等待后台审核");
         }
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        toHomeRl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                if(ActivityUtils.isActivityExistsInStack(DemandDetailsActivity.class)){
-                    ActivityUtils.finishActivity(DemandDetailsActivity.class);
-                }
+        backImg.setOnClickListener(v -> finish());
+        toHomeRl.setOnClickListener(v -> {
+            finish();
+            if(ActivityUtils.isActivityExistsInStack(DemandDetailsActivity.class)){
+                ActivityUtils.finishActivity(DemandDetailsActivity.class);
             }
         });
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        toHomeText = (TextView) findViewById(R.id.toHome_text);
-        toHomeRl = (RelativeLayout) findViewById(R.id.toHome_Rl);
-        returnText = (TextView) findViewById(R.id.return_text);
+        backImg = findViewById(R.id.back_img);
+        toHomeText = findViewById(R.id.toHome_text);
+        toHomeRl = findViewById(R.id.toHome_Rl);
+        returnText = findViewById(R.id.return_text);
     }
 }

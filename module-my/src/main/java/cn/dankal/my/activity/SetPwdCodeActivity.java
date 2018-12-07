@@ -32,6 +32,9 @@ import io.reactivex.disposables.Disposable;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.SETWITHPEDCODE;
 
+/**
+ * 设置提现密码获取验证码
+ */
 @Route(path = SETWITHPEDCODE)
 public class SetPwdCodeActivity extends BaseActivity implements BaseView {
 
@@ -55,11 +58,14 @@ public class SetPwdCodeActivity extends BaseActivity implements BaseView {
     @Override
     protected void initComponents() {
         initView();
+
         getData();
-        code2=getIntent().getIntExtra("type",0);
+
+        code2 = getIntent().getIntExtra("type", 0);
+
         backImg.setOnClickListener(v -> finish());
-        btNext.setOnClickListener(v -> checkCode(email,"withdrawal",etEmailNum.getText().toString().trim()));
-        getVeCode.setOnClickListener(v -> UserServiceFactory.getCode(email,"withdrawal").safeSubscribe(new AbstractDialogSubscriber<String>(SetPwdCodeActivity.this) {
+        btNext.setOnClickListener(v -> checkCode(email, "withdrawal", etEmailNum.getText().toString().trim()));
+        getVeCode.setOnClickListener(v -> UserServiceFactory.getCode(email, "withdrawal").safeSubscribe(new AbstractDialogSubscriber<String>(SetPwdCodeActivity.this) {
             @Override
             public void onNext(String s) {
                 sendSuccess(getVeCode);
@@ -67,37 +73,34 @@ public class SetPwdCodeActivity extends BaseActivity implements BaseView {
         }));
     }
 
-    private void sendSuccess(Button mBtCode){
+    private void sendSuccess(Button mBtCode) {
         mBtCode.setEnabled(false);
         //倒计时
-        mDisposable = Flowable.intervalRange(1, 600, 0, 1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(aLong -> {
-                    mBtCode.setText("OBTAIN(" + (600 - aLong) + ")");
-                })
-                .doOnComplete(() -> {
-                    mBtCode.setEnabled(true);
-                    mBtCode.setText("GET CODE");
-                }).subscribe();
+        mDisposable = Flowable.intervalRange(1, 600, 0, 1, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).doOnNext(aLong -> {
+            mBtCode.setText("OBTAIN(" + (600 - aLong) + ")");
+        }).doOnComplete(() -> {
+            mBtCode.setEnabled(true);
+            mBtCode.setText("GET CODE");
+        }).subscribe();
     }
 
     //检查验证码
     public void checkCode(String email, String type, String code) {
-        if(StringUtil.checkEmail(email)){
-            UserServiceFactory.verifyCode(email,type,code).safeSubscribe(new Observer<CheckCode>() {
+        if (StringUtil.checkEmail(email)) {
+            UserServiceFactory.verifyCode(email, type, code).safeSubscribe(new Observer<CheckCode>() {
                 @Override
                 public void onSubscribe(Disposable d) {
                 }
 
                 @Override
                 public void onNext(CheckCode checkCode) {
-                    ARouter.getInstance().build(MyProtocol.SETWITHPWD).withInt("type",code2).withString("email",email).navigation();
+                    ARouter.getInstance().build(MyProtocol.SETWITHPWD).withInt("type", code2).withString("email", email).navigation();
                     finish();
                 }
 
                 @Override
                 public void onError(Throwable e) {
-                    ToastUtils.showShort(e+"");
+                    ToastUtils.showShort(e + "");
                 }
 
                 @Override
@@ -109,23 +112,23 @@ public class SetPwdCodeActivity extends BaseActivity implements BaseView {
     }
 
 
-    private void getData(){
+    private void getData() {
         MyServiceFactory.getEngineerData().safeSubscribe(new AbstractDialogSubscriber<PersonalData_EngineerBean>(this) {
             @Override
             public void onNext(PersonalData_EngineerBean personalData_engineerBean) {
-                tips.append(personalData_engineerBean.getEmail()+"的验证码");
-                email=personalData_engineerBean.getEmail();
+                tips.append(personalData_engineerBean.getEmail() + "的验证码");
+                email = personalData_engineerBean.getEmail();
             }
         });
     }
 
     private void initView() {
-        backImg = findViewById(R.id.back_img);
-        titleText = findViewById(R.id.title_text);
         tips = findViewById(R.id.tips);
-        tvPhoneNum = findViewById(R.id.tv_phone_num);
-        getVeCode = findViewById(R.id.getVeCode);
-        etEmailNum = findViewById(R.id.et_email_num);
         btNext = findViewById(R.id.bt_next);
+        backImg = findViewById(R.id.back_img);
+        getVeCode = findViewById(R.id.getVeCode);
+        titleText = findViewById(R.id.title_text);
+        tvPhoneNum = findViewById(R.id.tv_phone_num);
+        etEmailNum = findViewById(R.id.et_email_num);
     }
 }

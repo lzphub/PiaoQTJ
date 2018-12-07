@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Lighting</string>
+	<string name="app_name">Lighting Master</string>
 	<string name="login_activity_path">cn.dankal.user.login.LoginActivity</string>
 	<string name="registr">Register an account</string>
 	<string name="account">account number</string>

@@ -1,11 +1,5 @@
 package cn.dankal.my.activity;
 
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
 
 import api.MyServiceFactory;
@@ -17,6 +11,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.EDITDATAEN;
 
+/**
+ * 用户编辑个人信息
+ */
 @Route(path = EDITDATAEN)
 public class EditDataEnActivity extends BaseActivity {
     private android.widget.ImageView backImg;
@@ -38,7 +35,7 @@ public class EditDataEnActivity extends BaseActivity {
         titleText.setText("PERSONAL DATA");
         submitBtn.setText("SAVE");
 
-        personalData_enBean= (PersonalData_EnBean) getIntent().getSerializableExtra("bean");
+        personalData_enBean = (PersonalData_EnBean) getIntent().getSerializableExtra("bean");
         data = getIntent().getStringExtra("data");
         switch (data) {
             case "name":
@@ -74,9 +71,9 @@ public class EditDataEnActivity extends BaseActivity {
     }
 
     private void initView() {
+        etName = findViewById(R.id.et_name);
         backImg = findViewById(R.id.back_img);
         titleText = findViewById(R.id.title_text);
-        etName = findViewById(R.id.et_name);
         submitBtn = findViewById(R.id.submit_btn);
     }
 
@@ -90,7 +87,7 @@ public class EditDataEnActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                ToastUtils.showShort(e+"");
+                ToastUtils.showShort(e + "");
             }
         });
     }

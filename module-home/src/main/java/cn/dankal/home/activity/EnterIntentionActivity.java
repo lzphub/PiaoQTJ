@@ -73,7 +73,6 @@ public class EnterIntentionActivity extends BaseActivity {
                 return;
             }
 
-
             if(content.isEmpty()){
                 ToastUtils.showShort("The detailed intention cannot be empty");
                 return;
@@ -109,9 +108,10 @@ public class EnterIntentionActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
+                dismissLoadingDialog();
                 if (e instanceof LocalException) {
                     LocalException exception = (LocalException) e;
-                    if(exception.equals("email格式不符")){
+                    if(exception.getMsg().equals("email格式不符")){
                         ToastUtils.showShort("Email format mismatch");
                     }
                 }

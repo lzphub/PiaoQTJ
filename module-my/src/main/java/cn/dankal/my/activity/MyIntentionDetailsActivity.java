@@ -1,11 +1,8 @@
 package cn.dankal.my.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,6 +22,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYINTENTIONDETA;
 
+/**
+ * 我的意向详情
+ */
 @Route(path = MYINTENTIONDETA)
 public class MyIntentionDetailsActivity extends BaseActivity implements IntentionDetailsContact.idView {
 

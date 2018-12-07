@@ -35,6 +35,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYEARNING;
 
+/**
+ * 我的收益
+ */
 @Route(path = MYEARNING)
 public class MyEarningsActivity extends BaseActivity implements MyEarContact.meView {
 
@@ -49,7 +52,7 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
     private List<MyEarBean.ChartBean> myEarBeansTop3 = new ArrayList<>(), myEarBeans4to10 = new ArrayList<>();
     private MyEarAdapter myEarAdapter;
     private MyEar2Adapter myEar2Adapter;
-    private MyEarPersenter myEarPersenter=MyEarPersenter.getPersenter();
+    private MyEarPersenter myEarPersenter = MyEarPersenter.getPersenter();
     private int issetpwd;
 
     //提现门槛
@@ -65,14 +68,16 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
         initView();
         myEarPersenter.attachView(this);
         myEarPersenter.getData();
+
         SpannableString spannableString = new SpannableString("收益排名");
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.login_btn_bg));
         spannableString.setSpan(colorSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         titleRank.setText(spannableString);
+
         backImg.setOnClickListener(v -> finish());
         tardingList.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.TRANSACTIONRECORD).navigation());
         withdrawalLl.setOnClickListener(v -> {
-            if (issetpwd==1) {
+            if (issetpwd == 1) {
                 ARouter.getInstance().build(MyProtocol.WITHDRAWAL).withString("balance", balanceText.getText().toString().trim().substring(1, balanceText.getText().toString().trim().length() - 1)).navigation();
             } else {
                 GenDialog.CustomBuilder customBuilder = new GenDialog.CustomBuilder(MyEarningsActivity.this);
@@ -99,25 +104,25 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
 
     private void initView() {
         backImg = findViewById(R.id.back_img);
+        titleRank = findViewById(R.id.title_rank);
         tardingList = findViewById(R.id.tarding_list);
         balanceText = findViewById(R.id.balance_text);
         rankingText = findViewById(R.id.ranking_text);
-        titleRank = findViewById(R.id.title_rank);
-        rankOnetothreeList = findViewById(R.id.rank_onetothree_list);
-        rankFourtotenList = findViewById(R.id.rank_fourtoten_list);
         withdrawalLl = findViewById(R.id.withdrawal_ll);
+        rankFourtotenList = findViewById(R.id.rank_fourtoten_list);
+        rankOnetothreeList = findViewById(R.id.rank_onetothree_list);
     }
 
     @Override
     public void getDataSuccess(MyEarBean myEarBean) {
         balanceText.setText("$" + myEarBean.getSelf().getBalance());
-        rankingText.setText(myEarBean.getSelf().getRank()+"");
-        issetpwd=myEarBean.getSelf().getHas_withdrawal_pwd();
+        rankingText.setText(myEarBean.getSelf().getRank() + "");
+        issetpwd = myEarBean.getSelf().getHas_withdrawal_pwd();
         MyEarBean.ChartBean bean;
-        if(myEarBeansTop3!=null){
+        if (myEarBeansTop3 != null) {
             myEarBeansTop3.clear();
         }
-        if(myEarBeans4to10!=null){
+        if (myEarBeans4to10 != null) {
             myEarBeans4to10.clear();
         }
         for (int i = 0; i < resize(myEarBean); i++) {
@@ -132,20 +137,28 @@ public class MyEarningsActivity extends BaseActivity implements MyEarContact.meV
                 myEarBeans4to10.add(bean);
             }
         }
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
+
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
+
         rankOnetothreeList.setLayoutManager(linearLayoutManager);
         rankFourtotenList.setLayoutManager(linearLayoutManager2);
+
         rankOnetothreeList.setNestedScrollingEnabled(false);
-        rankOnetothreeList.setHasFixedSize(true);
         rankFourtotenList.setNestedScrollingEnabled(false);
+
+        rankOnetothreeList.setHasFixedSize(true);
         rankFourtotenList.setHasFixedSize(true);
+
         myEarAdapter = new MyEarAdapter();
-        myEarAdapter.addMore(myEarBeansTop3);
         myEar2Adapter = new MyEar2Adapter();
+
+        myEarAdapter.addMore(myEarBeansTop3);
         myEar2Adapter.addMore(myEarBeans4to10);
+
         rankOnetothreeList.setAdapter(myEarAdapter);
         rankFourtotenList.setAdapter(myEar2Adapter);
     }

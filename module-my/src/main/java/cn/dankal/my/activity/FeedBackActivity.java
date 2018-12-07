@@ -42,22 +42,25 @@ import cn.dankal.setting.R;
 import static cn.dankal.basiclib.protocol.MyProtocol.OPINION;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
 
+/**
+ * 意见反馈
+ */
 @Route(path = OPINION)
 public class FeedBackActivity extends BaseActivity {
 
+    private android.widget.TextView title;
+    private android.widget.ImageView addImg;
+    private android.widget.Button submitBtn;
     private android.widget.ImageView backImg;
     private android.widget.TextView titleText;
     private android.widget.EditText etOpinion;
     private android.widget.TextView opinionSize;
-    private android.widget.ImageView addImg;
     private android.support.v7.widget.RecyclerView imgList;
-    private android.widget.Button submitBtn;
-    private int size=3;
-    private List<Uri> result=new ArrayList<>();
     private ImageRvAdapter imageRvAdapter;
-    private static String identity=null;
-    private TextView title;
-    private static List<String> images=new ArrayList<>();
+    private int size = 3;
+    private List<Uri> result = new ArrayList<>();
+    private static String identity = null;
+    private static List<String> images = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -68,7 +71,7 @@ public class FeedBackActivity extends BaseActivity {
     protected void initComponents() {
         initView();
         identity = SharedPreferencesUtils.getString(this, "identity", "enterprise");
-        if(identity.equals("user")){
+        if (identity.equals("user")) {
             titleText.setText("HELP AND FEEDBACK");
             title.setText("ADD IMAGE");
             etOpinion.setHint("* WE KNOW HOW TO LISTEN. PLEASE WRITE DOWN YOUR SUGGESTIONS HERE");
@@ -83,9 +86,9 @@ public class FeedBackActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                SpannableString spannableString=new SpannableString(etOpinion.getText().toString().trim().length()+"/200");
-                ForegroundColorSpan colorSpan=new ForegroundColorSpan(getResources().getColor(R.color.login_btn_bg));
-                spannableString.setSpan(colorSpan,0,opinionSize.getText().length()-4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                SpannableString spannableString = new SpannableString(etOpinion.getText().toString().trim().length() + "/200");
+                ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.login_btn_bg));
+                spannableString.setSpan(colorSpan, 0, opinionSize.getText().length() - 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 opinionSize.setText(spannableString);
             }
 
@@ -94,25 +97,25 @@ public class FeedBackActivity extends BaseActivity {
 
             }
         });
-        addImg.setOnClickListener(v -> CheckImage.takePhotoPicker(FeedBackActivity.this,size - result.size()));
+        addImg.setOnClickListener(v -> CheckImage.takePhotoPicker(FeedBackActivity.this, size - result.size()));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         imgList.setLayoutManager(linearLayoutManager);
 
         submitBtn.setOnClickListener(v -> {
-            if(identity.equals("user")){
-                MyServiceFactory.postFeedBack(etOpinion.getText().toString().trim(),images).safeSubscribe(new AbstractDialogSubscriber<String>(FeedBackActivity.this) {
+            if (identity.equals("user")) {
+                MyServiceFactory.postFeedBack(etOpinion.getText().toString().trim(), images).safeSubscribe(new AbstractDialogSubscriber<String>(FeedBackActivity.this) {
                     @Override
                     public void onNext(String s) {
-                        ARouter.getInstance().build(HomeProtocol.SUBMITINTENTION).withString("feedback","feedback").navigation();
+                        ARouter.getInstance().build(HomeProtocol.SUBMITINTENTION).withString("feedback", "feedback").navigation();
                         finish();
                     }
                 });
-            }else{
-                MyServiceFactory.engPostFeedBack(etOpinion.getText().toString().trim(),images).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
+            } else {
+                MyServiceFactory.engPostFeedBack(etOpinion.getText().toString().trim(), images).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
                     @Override
                     public void onNext(String s) {
-                        ARouter.getInstance().build(HomeProtocol.SUBMITINTENTION).withString("feedback","feedback").navigation();
+                        ARouter.getInstance().build(HomeProtocol.SUBMITINTENTION).withString("feedback", "feedback").navigation();
                         finish();
                     }
                 });
@@ -123,18 +126,18 @@ public class FeedBackActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode== ResultCode.CheckImageCode){
+        if (requestCode == ResultCode.CheckImageCode) {
             if (data != null) {
-                for(int i = 0; i< Matisse.obtainPathResult(data).size(); i++){
-                    result .add( Matisse.obtainResult(data).get(i));
+                for (int i = 0; i < Matisse.obtainPathResult(data).size(); i++) {
+                    result.add(Matisse.obtainResult(data).get(i));
                 }
-                if(result.size()==size){
+                if (result.size() == size) {
                     addImg.setVisibility(View.INVISIBLE);
                 }
-                for(int i=0;i<result.size();i++){
-                    uploadQiniu(result.get(i),this);
+                for (int i = 0; i < result.size(); i++) {
+                    uploadQiniu(result.get(i), this);
                 }
-                imageRvAdapter=new ImageRvAdapter(this,result);
+                imageRvAdapter = new ImageRvAdapter(this, result);
                 imgList.setAdapter(imageRvAdapter);
                 imageRvAdapter.setOnClickListener(pos -> {
                     result.remove(pos);
@@ -146,30 +149,26 @@ public class FeedBackActivity extends BaseActivity {
     }
 
     private void initView() {
+        title = findViewById(R.id.title);
+        addImg = findViewById(R.id.add_img);
         backImg = findViewById(R.id.back_img);
+        imgList = findViewById(R.id.img_list);
         titleText = findViewById(R.id.title_text);
         etOpinion = findViewById(R.id.et_opinion);
-        opinionSize = findViewById(R.id.opinion_size);
-        addImg = findViewById(R.id.add_img);
-        imgList = findViewById(R.id.img_list);
         submitBtn = findViewById(R.id.submit_btn);
-        title = findViewById(R.id.title);
+        opinionSize = findViewById(R.id.opinion_size);
     }
 
     //图片上传至七牛
-    public static void uploadQiniu(Uri uri,Context context){
+    public static void uploadQiniu(Uri uri, Context context) {
         final String[] path = {null};
         TipDialog loadingDialog;
 
         TipDialog.Builder builder = new TipDialog.Builder(context);
-        if(identity.equals("user")){
-            loadingDialog = builder
-                    .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
-                    .setTipWord("uploading").create();
-        }else{
-            loadingDialog = builder
-                    .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
-                    .setTipWord("正在上传").create();
+        if (identity.equals("user")) {
+            loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("uploading").create();
+        } else {
+            loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("正在上传").create();
         }
         loadingDialog.show();
 
@@ -179,16 +178,12 @@ public class FeedBackActivity extends BaseActivity {
             @Override
             public void onSucess(String localPath, String key) {
                 loadingDialog.dismiss();
-                if(identity.equals("user")){
-                    TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
-                            .setTipWord("Uploaded successfully")
-                            .create(2000);
+                if (identity.equals("user")) {
+                    TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("Uploaded successfully").create(2000);
                     dialog.show();
                     dialog.dismiss();
-                }else{
-                    TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
-                            .setTipWord("上传成功,请等待审核")
-                            .create(2000);
+                } else {
+                    TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("上传成功,请等待审核").create(2000);
                     dialog.show();
                     dialog.dismiss();
                 }
@@ -206,9 +201,7 @@ public class FeedBackActivity extends BaseActivity {
             public void onError(String string) {
                 ToastUtils.showLong(string);
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL)
-                        .setTipWord("上传失败")
-                        .create(2000);
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL).setTipWord("上传失败").create(2000);
                 dialog.show();
                 dialog.dismiss();
             }

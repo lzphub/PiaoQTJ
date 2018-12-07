@@ -18,6 +18,7 @@ import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.MyWorkListBean;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.StateUtil;
+import cn.dankal.basiclib.util.StringUtil;
 
 public class MyWorkListRvAdapter extends BaseRecyclerViewAdapter<MyWorkListBean.DataBean> {
 
@@ -59,19 +60,14 @@ public class MyWorkListRvAdapter extends BaseRecyclerViewAdapter<MyWorkListBean.
             }
             titleTv.setText(data.getName());
             contentTv.setText(data.getDesc());
-            priceText.setText("$" + data.getStart_price() + "~" + data.getEnd_price());
+            priceText.setText("$" + StringUtil.isDigits(data.getStart_price()) + " ~ " + StringUtil.isDigits(data.getEnd_price()));
             if(data.getStatus()==4){
                 rlFinish.setVisibility(View.VISIBLE);
             }else if(data.getStatus()==8){
                 rlFinish.setVisibility(View.VISIBLE);
                 btFinish.setText("重新提交");
             }
-            btFinish.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ARouter.getInstance().build(MyProtocol.FINISHWORK).withString("project_uuid",data.getUuid()).navigation();
-                }
-            });
+            btFinish.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.FINISHWORK).withString("project_uuid",data.getUuid()).withString("plan_uuid",data.getPlan_uuid()).navigation());
         }
     }
 }

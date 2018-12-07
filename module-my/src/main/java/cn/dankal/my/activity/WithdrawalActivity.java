@@ -39,6 +39,9 @@ import cn.dankal.setting.R;
 import static cn.dankal.basiclib.protocol.MyProtocol.WITHDRAWAL;
 import static cn.dankal.my.activity.MyEarningsActivity.threshold;
 
+/**
+ * 提现
+ */
 @Route(path = WITHDRAWAL)
 public class WithdrawalActivity extends BaseActivity implements WithdrawalContact.bcView {
 
@@ -50,11 +53,8 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContac
     private android.widget.Button withBtn;
 
     private String cardNum = "6222600260001072444";
-    private String bankUUID = "0";
     private String cashMoney = "100";
     private String kBean;
-    private String poundage;
-    private double leftMoney;
     private TextView bankCardText;
     private TextView rmbLogo;
     private TextView rmbLogo2;
@@ -73,8 +73,10 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContac
     @Override
     protected void initComponents() {
         initView();
+
         kBean = getIntent().getStringExtra("balance");
         availableBalance.setText("可用余额 " + kBean + "元");
+
         backImg.setOnClickListener(v -> finish());
         addCard.setOnClickListener(v -> startActivityForResult(new Intent(WithdrawalActivity.this, CheckBankCardActivity.class), 20));
         allWith.setOnClickListener(v -> {
@@ -82,6 +84,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContac
             moenyEt.requestFocus();
             moenyEt.setSelection(moenyEt.getText().toString().length());
         });
+
         withBtn.setOnClickListener(v -> {
             cashMoney = moenyEt.getText().toString();
             if (!StringUtil.isValid(cashMoney)) {
@@ -185,15 +188,15 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContac
         backImg = findViewById(R.id.back_img);
         addCard = findViewById(R.id.add_card);
         moenyEt = findViewById(R.id.moeny_et);
-        availableBalance = findViewById(R.id.available_balance);
         allWith = findViewById(R.id.all_with);
         withBtn = findViewById(R.id.with_btn);
-        bankCardText = findViewById(R.id.bank_card_text);
         rmbLogo = findViewById(R.id.rmb_logo);
         rmbLogo2 = findViewById(R.id.rmb_logo2);
-        deleteImage = findViewById(R.id.delete_image);
         cardName = findViewById(R.id.card_name);
         cradNumtext = findViewById(R.id.crad_num);
+        deleteImage = findViewById(R.id.delete_image);
+        bankCardText = findViewById(R.id.bank_card_text);
+        availableBalance = findViewById(R.id.available_balance);
     }
 
     @Override

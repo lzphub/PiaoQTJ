@@ -1,10 +1,6 @@
 package cn.dankal.my.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +17,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYREQUESTDETA;
 
+/**
+ * 我的需求详情
+ */
 @Route(path = MYREQUESTDETA)
 public class  MyRequestDetaActivity extends BaseActivity implements RequestContact.RequestView {
 

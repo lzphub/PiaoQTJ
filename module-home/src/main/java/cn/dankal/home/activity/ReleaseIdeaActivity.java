@@ -52,7 +52,7 @@ public class ReleaseIdeaActivity extends BaseActivity {
     private List<Uri> result = new ArrayList<>();
     private int size = 5;
     private ImageRvAdapter imageRvAdapter;
-    private static List<String> images=new ArrayList<>();
+    private static List<String> images = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -71,7 +71,7 @@ public class ReleaseIdeaActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sizeTitle.setText(titleEt.getText().toString().trim().length()+"/50");
+                sizeTitle.setText(titleEt.getText().toString().trim().length() + "/50");
             }
 
             @Override
@@ -87,7 +87,7 @@ public class ReleaseIdeaActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sizeDetails.setText(detailsEt.getText().toString().trim().length()+"/2000");
+                sizeDetails.setText(detailsEt.getText().toString().trim().length() + "/2000");
             }
 
             @Override
@@ -95,42 +95,37 @@ public class ReleaseIdeaActivity extends BaseActivity {
 
             }
         });
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+        submitBtn.setOnClickListener(v -> HomeServiceFactory.postidea(titleEt.getText().toString().trim(), detailsEt.getText().toString().trim(), images).safeSubscribe(new AbstractDialogSubscriber<String>(ReleaseIdeaActivity.this) {
             @Override
-            public void onClick(View v) {
-                HomeServiceFactory.postidea(titleEt.getText().toString().trim(),detailsEt.getText().toString().trim(),images).safeSubscribe(new AbstractDialogSubscriber<String>(ReleaseIdeaActivity.this) {
-                    @Override
-                    public void onNext(String s) {
-                        ARouter.getInstance().build(HomeProtocol.SUBMITIDEA).navigation();
-                        finish();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        dismissLoadingDialog();
-                        if (e instanceof LocalException) {
-                            LocalException exception = (LocalException) e;
-                            if(exception.getMsg().equals("title不能为空")){
-                                ToastUtils.showShort("方案标题不能为空");
-                                return;
-                            }
-                            if(exception.getMsg().equals("title长度不符合要求 6,50")){
-                                ToastUtils.showShort("方案标题至少为6个字符");
-                                return;
-                            }
-                            if(exception.getMsg().equals("detail长度不符合要求 15,20000")){
-                                ToastUtils.showShort("方案详情至少为15个字符");
-                                return;
-                            }
-                            if(exception.getMsg().equals("detail不能为空")){
-                                ToastUtils.showShort("方案详情不能为空");
-                                return;
-                            }
-                        }
-                    }
-                });
+            public void onNext(String s) {
+                ARouter.getInstance().build(HomeProtocol.SUBMITIDEA).navigation();
+                finish();
             }
-        });
+
+            @Override
+            public void onError(Throwable e) {
+                dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if (exception.getMsg().equals("title不能为空")) {
+                        ToastUtils.showShort("方案标题不能为空");
+                        return;
+                    }
+                    if (exception.getMsg().equals("title长度不符合要求 6,50")) {
+                        ToastUtils.showShort("方案标题至少为6个字符");
+                        return;
+                    }
+                    if (exception.getMsg().equals("detail长度不符合要求 15,20000")) {
+                        ToastUtils.showShort("方案详情至少为15个字符");
+                        return;
+                    }
+                    if (exception.getMsg().equals("detail不能为空")) {
+                        ToastUtils.showShort("方案详情不能为空");
+                        return;
+                    }
+                }
+            }
+        }));
 
         addImg.setOnClickListener(v -> CheckImage.takePhotoPicker(ReleaseIdeaActivity.this, size - result.size()));
 
@@ -140,15 +135,15 @@ public class ReleaseIdeaActivity extends BaseActivity {
     }
 
     private void initView() {
-        submitBtn = (Button) findViewById(R.id.submit_btn);
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
-        sizeTitle = (TextView) findViewById(R.id.size_title);
-        titleEt = (EditText) findViewById(R.id.title_et);
-        addImg = (ImageView) findViewById(R.id.add_img);
-        imgList = (RecyclerView) findViewById(R.id.img_list);
-        sizeDetails = (TextView) findViewById(R.id.size_details);
-        detailsEt = (EditText) findViewById(R.id.details_et);
+        submitBtn = findViewById(R.id.submit_btn);
+        backImg = findViewById(R.id.back_img);
+        titleText = findViewById(R.id.title_text);
+        sizeTitle = findViewById(R.id.size_title);
+        titleEt = findViewById(R.id.title_et);
+        addImg = findViewById(R.id.add_img);
+        imgList = findViewById(R.id.img_list);
+        sizeDetails = findViewById(R.id.size_details);
+        detailsEt = findViewById(R.id.details_et);
     }
 
     @Override
@@ -156,17 +151,17 @@ public class ReleaseIdeaActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ResultCode.CheckImageCode) {
             if (data != null) {
-                for(int i = 0; i< Matisse.obtainPathResult(data).size(); i++){
-                    result .add( Matisse.obtainResult(data).get(i));
+                for (int i = 0; i < Matisse.obtainPathResult(data).size(); i++) {
+                    result.add(Matisse.obtainResult(data).get(i));
                 }
-                if(result.size()==size){
+                if (result.size() == size) {
                     addImg.setVisibility(View.INVISIBLE);
                 }
-                images=new ArrayList<>();
-                for(int i=0;i<result.size();i++){
-                    uploadQiniu(result.get(i),this);
+                images = new ArrayList<>();
+                for (int i = 0; i < result.size(); i++) {
+                    uploadQiniu(result.get(i), this);
                 }
-                imageRvAdapter=new ImageRvAdapter(this,result);
+                imageRvAdapter = new ImageRvAdapter(this, result);
                 imgList.setAdapter(imageRvAdapter);
                 imageRvAdapter.setOnClickListener(pos -> {
                     result.remove(pos);
@@ -178,14 +173,12 @@ public class ReleaseIdeaActivity extends BaseActivity {
     }
 
     //图片上传至七牛
-    public static void uploadQiniu(Uri uri,Context context){
+    public static void uploadQiniu(Uri uri, Context context) {
         final String[] path = {null};
         TipDialog loadingDialog;
 
         TipDialog.Builder builder = new TipDialog.Builder(context);
-        loadingDialog = builder
-                .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord("上传图片中").create();
+        loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("上传图片中").create();
         loadingDialog.show();
 
         boolean b = UriUtils.getPath(context, uri) == null;
@@ -194,9 +187,7 @@ public class ReleaseIdeaActivity extends BaseActivity {
             @Override
             public void onSucess(String localPath, String key) {
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
-                        .setTipWord("上传成功")
-                        .create(1000);
+                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("上传成功").create(1000);
                 dialog.show();
                 dialog.dismiss();
                 images.add(key);
@@ -212,9 +203,7 @@ public class ReleaseIdeaActivity extends BaseActivity {
             public void onError(String string) {
                 ToastUtils.showLong(string);
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL)
-                        .setTipWord("上传失败")
-                        .create(2000);
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL).setTipWord("上传失败").create(2000);
                 dialog.show();
                 dialog.dismiss();
             }

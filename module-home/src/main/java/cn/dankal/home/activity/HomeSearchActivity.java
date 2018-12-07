@@ -5,6 +5,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -88,17 +90,19 @@ public class HomeSearchActivity extends BaseActivity implements ProductSearchCon
             jilu.setText("RECENT SEARCHES");
         }
         searchFinish.setOnClickListener(v -> finish());
-        etSearch.setOnFocusChangeListener((v, hasFocus) -> {
-            searchLogo.setVisibility(View.GONE);
-            search_delete.setVisibility(View.VISIBLE);
-        });
         search_delete.setOnClickListener(v -> etSearch.setText(""));
+
+        //搜索记录搜索
         textOnlyAdapter.setOnRvItemClickListener(new OnRvItemClickListener<String>() {
             @Override
             public void onItemClick(View v, int position, String data) {
                 searchLogo.setVisibility(View.GONE);
                 search_delete.setVisibility(View.VISIBLE);
                 etSearch.setText(textOnlyAdapter.getDatas().get(position));
+                if (searchRecord.size() >= 10) {
+                    searchRecord.remove(9);
+                }
+                searchRecord.add(0,textOnlyAdapter.getDatas().get(position));
                 if (type.equals("user")) {
                     SDCacheDirCompat.writeObject("search", searchRecord);
                     productSearchPresenter.search(etSearch.getText().toString().trim(), "","");
@@ -108,13 +112,37 @@ public class HomeSearchActivity extends BaseActivity implements ProductSearchCon
                 }
             }
         });
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s!=null){
+                    searchLogo.setVisibility(View.GONE);
+                    search_delete.setVisibility(View.VISIBLE);
+                }else{
+                    search_delete.setVisibility(View.GONE);
+                    searchLogo.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         etSearch.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                 if(StringUtil.isValid(etSearch.getText().toString().trim())){
                     if (searchRecord.size() >= 10) {
-                        searchRecord.remove(0);
+                        searchRecord.remove(9);
                     }
-                    searchRecord.add(etSearch.getText().toString());
+                    searchRecord.add(0,etSearch.getText().toString());
                     if (type.equals("user")) {
                         SDCacheDirCompat.writeObject("search", searchRecord);
                         productSearchPresenter.search(etSearch.getText().toString().trim(), "","");

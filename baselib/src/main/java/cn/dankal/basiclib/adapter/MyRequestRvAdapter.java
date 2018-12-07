@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +17,10 @@ import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.R2;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
+import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.base.recyclerview.del.BaseDelViewHolder;
 import cn.dankal.basiclib.bean.MyRequestBean;
+import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.StateUtil;
 
 public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.databean> {
@@ -69,6 +73,15 @@ public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.da
             }
             requestPrice.setText("$" + data.getStart_price() + "~" + data.getEnd_price());
             stateText.setText(StateUtil.requestState(data.getStatus()));
+
+            MyRequestBean.databean data2=data;
+
+            internalImgRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<String>() {
+                @Override
+                public void onItemClick(View v, int position, String data) {
+                    ARouter.getInstance().build(MyProtocol.MYREQUESTDETA).withString("demand_id",data2.getDemand_id()).navigation();
+                }
+            });
         }
     }
 

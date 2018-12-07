@@ -77,6 +77,24 @@ public class DemandListbean {
         private String cpl_start_date;
         private String cpl_end_date;
         private String desc;
+        private String detail;
+        private String create_time;
+
+        public String getCreate_time() {
+            return create_time;
+        }
+
+        public void setCreate_time(String create_time) {
+            this.create_time = create_time;
+        }
+
+        public String getDetail() {
+            return detail;
+        }
+
+        public void setDetail(String detail) {
+            this.detail = detail;
+        }
 
         public String getUuid() {
             return uuid;

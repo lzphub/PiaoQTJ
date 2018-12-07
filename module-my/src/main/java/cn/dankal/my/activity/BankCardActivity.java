@@ -25,6 +25,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.BINDCARD;
 
+/**
+ * 绑定银行卡
+ */
 @Route(path = BINDCARD)
 public class BankCardActivity extends BaseActivity implements BankCardContact.bcView {
 
@@ -50,27 +53,22 @@ public class BankCardActivity extends BaseActivity implements BankCardContact.bc
         bankCardPersenter.attachView(this);
         backImg.setOnClickListener(v -> finish());
         submitBtn.setOnClickListener(v -> {
-            String bankname= BankUtil.getname(cardIdEt.getText().toString());
-            bankCardPersenter.bindCard(cardIdEt.getText().toString().trim(), nameEt.getText().toString().trim(), cardIdentityEt.getText().toString().trim(), phoneNumEt.getText().toString().trim(),bankname, codeVeEt.getText().toString().trim());
+            String bankname = BankUtil.getname(cardIdEt.getText().toString());
+            bankCardPersenter.bindCard(cardIdEt.getText().toString().trim(), nameEt.getText().toString().trim(), cardIdentityEt.getText().toString().trim(), phoneNumEt.getText().toString().trim(), bankname, codeVeEt.getText().toString().trim());
         });
-        getVeCodeText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bankCardPersenter.sendCode(getVeCodeText, phoneNumEt.getText().toString().trim());
-            }
-        });
+        getVeCodeText.setOnClickListener(v -> bankCardPersenter.sendCode(getVeCodeText, phoneNumEt.getText().toString().trim()));
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        enterCardId = (TextView) findViewById(R.id.enter_card_id);
-        cardIdEt = (EditText) findViewById(R.id.card_id_et);
-        nameEt = (EditText) findViewById(R.id.name_et);
-        cardIdentityEt = (EditText) findViewById(R.id.card_identity_et);
-        phoneNumEt = (EditText) findViewById(R.id.phone_num_et);
-        codeVeEt = (EditText) findViewById(R.id.code_ve_et);
+        nameEt = findViewById(R.id.name_et);
+        backImg = findViewById(R.id.back_img);
+        cardIdEt = findViewById(R.id.card_id_et);
+        codeVeEt = findViewById(R.id.code_ve_et);
+        submitBtn = findViewById(R.id.submit_btn);
+        phoneNumEt = findViewById(R.id.phone_num_et);
+        enterCardId = findViewById(R.id.enter_card_id);
         getVeCodeText = findViewById(R.id.getVeCode_text);
-        submitBtn = (Button) findViewById(R.id.submit_btn);
+        cardIdentityEt = findViewById(R.id.card_identity_et);
     }
 
     @Override

@@ -27,6 +27,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.ABOUTUS;
 
+/**
+ * 关于我们
+ */
 @Route(path = ABOUTUS)
 public class AboutUsActivity extends BaseActivity {
 
@@ -43,32 +46,32 @@ public class AboutUsActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        type= SharedPreferencesUtils.getString(this,"identity","user");
+        type = SharedPreferencesUtils.getString(this, "identity", "user");
         backImg.setOnClickListener(v -> finish());
-        if(type.equals("user")){
+        if (type.equals("user")) {
             getData();
             tvTitle.setText("ABOUT US");
-        }else{
+        } else {
             engGetData();
         }
     }
 
     //用户端获取数据
-    private void getData(){
+    private void getData() {
         MyServiceFactory.getAboutUs().safeSubscribe(new AbstractDialogSubscriber<AboutUsBean>(this) {
             @Override
             public void onNext(AboutUsBean aboutUsBean) {
-                webContent.loadDataWithBaseURL(null,aboutUsBean.getValue(), "text/html", "UTF-8", null);
+                webContent.loadDataWithBaseURL(null, aboutUsBean.getValue(), "text/html", "UTF-8", null);
             }
         });
     }
 
     //工程师端获取数据
-    private void engGetData(){
+    private void engGetData() {
         MyServiceFactory.engGetAboutus().safeSubscribe(new AbstractDialogSubscriber<AboutUsBean>(this) {
             @Override
             public void onNext(AboutUsBean aboutUsBean) {
-                webContent.loadDataWithBaseURL(null,aboutUsBean.getValue(), "text/html", "UTF-8", null);
+                webContent.loadDataWithBaseURL(null, aboutUsBean.getValue(), "text/html", "UTF-8", null);
 
             }
         });
@@ -78,10 +81,11 @@ public class AboutUsActivity extends BaseActivity {
         backImg = findViewById(R.id.back_img);
         tvTitle = findViewById(R.id.tv_title);
         webContent = findViewById(R.id.web_content);
-        WebSettings webSettings=webContent.getSettings();
+
+        WebSettings webSettings = webContent.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(true);
-        webContent.setWebViewClient(new WebViewClient(){
+        webContent.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -91,13 +95,6 @@ public class AboutUsActivity extends BaseActivity {
     }
 
     private void imgReset(WebView webView) {
-        webView.loadUrl("javascript:(function(){" +
-                "var objs = document.getElementsByTagName('img'); " +
-                "for(var i=0;i<objs.length;i++)  " +
-                "{"
-                + "var img = objs[i];   " +
-                "    img.style.maxWidth = '100%'; img.style.height = 'auto';  " +
-                "}" +
-                "})()");
+        webView.loadUrl("javascript:(function(){" + "var objs = document.getElementsByTagName('img'); " + "for(var i=0;i<objs.length;i++)  " + "{" + "var img = objs[i];   " + "    img.style.maxWidth = '100%'; img.style.height = 'auto';  " + "}" + "})()");
     }
 }

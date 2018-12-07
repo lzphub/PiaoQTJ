@@ -16,7 +16,6 @@ public class MyRequestPresenter implements RequestContact.idPresenter {
 
     private RequestContact.RequestView requestView;
     private static MyRequestPresenter myRequestPresenter = null;
-    private MyRequestBean myRequestBean=null;
 
     public static synchronized MyRequestPresenter getPSPresenter() {
         if (myRequestPresenter == null) {

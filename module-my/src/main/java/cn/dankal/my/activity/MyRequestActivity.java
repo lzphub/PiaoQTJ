@@ -3,18 +3,13 @@ package cn.dankal.my.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.flyco.tablayout.CommonTabLayout;
-import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
@@ -28,10 +23,6 @@ import cn.dankal.basiclib.bean.MyRequestBean;
 import cn.dankal.basiclib.bean.RequestDataBean;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.ToastUtils;
-import cn.dankal.basiclib.widget.swipetoloadlayout.OnLoadMoreListener;
-import cn.dankal.basiclib.widget.swipetoloadlayout.OnRefreshListener;
-import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
-import cn.dankal.my.entity.TabEntity;
 import cn.dankal.my.fragment.MyRequestFragment;
 import cn.dankal.my.presenter.MyRequestPresenter;
 import cn.dankal.my.presenter.RequestContact;
@@ -39,6 +30,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYREQUEST;
 
+/**
+ * 我的需求
+ */
 @Route(path = MYREQUEST)
 public class MyRequestActivity extends BaseStateActivity implements RequestContact.RequestView {
 
