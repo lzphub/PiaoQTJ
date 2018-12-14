@@ -65,7 +65,7 @@ public class NewsActivity extends BaseRvActivity<SystemMsgBean.DataBean> {
                 if(data.getKind()==1){
                     ARouter.getInstance().build(MyProtocol.SYSTEMNEWSCONTENT).withString("content",data.getContent()).navigation();
                 }else{
-                    ARouter.getInstance().build(MyProtocol.WORKDATA).withString("uuid",data.getUuid()).navigation();
+//                    ARouter.getInstance().build(MyProtocol.WORKDATA).withString("uuid",data.getUuid()).navigation();
                 }
             }
         });

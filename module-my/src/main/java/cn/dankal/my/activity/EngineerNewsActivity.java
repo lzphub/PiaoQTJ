@@ -68,8 +68,9 @@ public class EngineerNewsActivity extends BaseRvActivity<SystemMsgBean.DataBean>
             public void onItemClick(View v, int position, SystemMsgBean.DataBean data) {
                 if (data.getKind() == 1) {
                     ARouter.getInstance().build(MyProtocol.SYSTEMNEWSCONTENT).withString("content", data.getContent()).navigation();
-                } else {
-                    ARouter.getInstance().build(MyProtocol.WORKDATA).withString("uuid", data.getUuid()).navigation();
+                } else if (data.getKind() == 2) {
+                    String[] str = data.getContent().split("###");
+                    ARouter.getInstance().build(MyProtocol.WORKDATA).withString("uuid", str[0]).withInt("statusId", Integer.valueOf(str[1])).navigation();
                 }
             }
         });

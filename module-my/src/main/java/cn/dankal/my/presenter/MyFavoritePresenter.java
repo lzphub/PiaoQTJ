@@ -9,7 +9,9 @@ import api.MyServiceFactory;
 import api.ProductServiceFactory;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.bean.ProductListBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.ToastUtils;
 
 public class MyFavoritePresenter implements MyFavoriteContact.fcPersenter {
 
@@ -25,8 +27,13 @@ public class MyFavoritePresenter implements MyFavoriteContact.fcPersenter {
 
             @Override
             public void onError(Throwable e) {
-                super.onError(e);
-                fcView.getDataFail();
+                fcView.dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
+                    }
+                }
             }
         });
     }
@@ -40,6 +47,17 @@ public class MyFavoritePresenter implements MyFavoriteContact.fcPersenter {
                     @Override
                     public void onNext(ProductListBean productListBean) {
                         fcView.updata(productListBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        fcView.dismissLoadingDialog();
+                        if (e instanceof LocalException) {
+                            LocalException exception = (LocalException) e;
+                            if(exception.getMsg().equals("网络错误")){
+                                ToastUtils.showShort("Network error");
+                            }
+                        }
                     }
                 });
             }

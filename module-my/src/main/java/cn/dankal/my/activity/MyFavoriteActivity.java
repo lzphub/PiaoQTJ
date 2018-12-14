@@ -126,6 +126,7 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
 
     @Override
     public void getDataFail() {
+
     }
 
     @Override

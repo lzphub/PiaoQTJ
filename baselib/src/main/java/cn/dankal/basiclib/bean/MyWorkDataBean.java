@@ -136,7 +136,7 @@ public class MyWorkDataBean {
         private String plan_uuid;
         private String plan_detail;
         private int status;
-        private Object refuse_reason;
+        private String refuse_reason;
         private List<String> plan_images;
 
         public String getPlan_uuid() {
@@ -163,11 +163,11 @@ public class MyWorkDataBean {
             this.status = status;
         }
 
-        public Object getRefuse_reason() {
+        public String getRefuse_reason() {
             return refuse_reason;
         }
 
-        public void setRefuse_reason(Object refuse_reason) {
+        public void setRefuse_reason(String refuse_reason) {
             this.refuse_reason = refuse_reason;
         }
 

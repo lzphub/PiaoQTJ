@@ -52,6 +52,8 @@ public class ProductSearchPresenter implements ProductSearchContact.productSearc
                     LocalException exception = (LocalException) e;
                     if(exception.getMsg().equals("keyword长度不符合要求 2,32")){
                         ToastUtils.showShort("Enter at least two characters");
+                    }else if (exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
                     }
                 }
             }
@@ -73,6 +75,8 @@ public class ProductSearchPresenter implements ProductSearchContact.productSearc
                     LocalException exception = (LocalException) e;
                     if(exception.getMsg().equals("keyword长度不符合要求 2,32")){
                         ToastUtils.showShort("至少输入两个字符");
+                    }else{
+                        ToastUtils.showShort(exception.getMsg());
                     }
                 }
             }

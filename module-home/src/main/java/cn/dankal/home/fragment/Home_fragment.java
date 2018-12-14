@@ -18,6 +18,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.EventLog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -278,22 +279,31 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
             });
         }
         mAdapter = new ViewPagerAdapter(context, userHomeBannerBean.getCarousels(), imageViews);
-        try {
-            Field field = ViewPager.class.getDeclaredField("mScroller");
-            field.setAccessible(true);
-            FixedSpeedScroller scroller = new FixedSpeedScroller(banner.getContext(), new AccelerateInterpolator());
-            field.set(banner, scroller);
-            scroller.setmDuration(1000);
-        } catch (Exception e) {
 
-        }
+
+        banner.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_MOVE:
+                    try {
+                        Field field = ViewPager.class.getDeclaredField("mScroller");
+                        field.setAccessible(true);
+                        FixedSpeedScroller scroller = new FixedSpeedScroller(banner.getContext(), new AccelerateInterpolator());
+                        field.set(banner, scroller);
+                        scroller.setmDuration(100);
+                    } catch (Exception e) {
+                    }
+                    break;
+            }
+            return false;
+        });
+
         banner.setOffscreenPageLimit(4);
         banner.setPageMargin(5);
         banner.setPageTransformer(true, new CardTransformer());
         banner.setAdapter(mAdapter);
 
         count = 10;
-        banner.setCurrentItem(count,false);
+        banner.setCurrentItem(count, false);
 
         downTimer2.start();
     }
@@ -302,6 +312,15 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
     CountDownTimer downTimer2 = new CountDownTimer(1000000, 3000) {
         @Override
         public void onTick(long millisUntilFinished) {
+            try {
+                Field field = ViewPager.class.getDeclaredField("mScroller");
+                field.setAccessible(true);
+                FixedSpeedScroller scroller = new FixedSpeedScroller(banner.getContext(), new AccelerateInterpolator());
+                field.set(banner, scroller);
+                scroller.setmDuration(1000);
+            } catch (Exception e) {
+
+            }
             banner.setCurrentItem(count, true);
             count++;
         }
@@ -335,7 +354,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         demandRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<DemandListbean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, DemandListbean.DataBean data) {
-                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withString("project_uuid", data.getUuid()).withString("time",data.getCreate_time()).navigation();
+                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withString("project_uuid", data.getUuid()).withString("time", data.getCreate_time()).navigation();
             }
         });
     }

@@ -55,7 +55,7 @@ public class MyWorkListProcessingFragment extends BaseRvFragmentImp<MyWorkListBe
         myWorkListRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<MyWorkListBean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, MyWorkListBean.DataBean data) {
-                ARouter.getInstance().build(MyProtocol.WORKDATA).withString("uuid",data.getUuid()).withInt("statusId",data.getStatus()).navigation();
+                ARouter.getInstance().build(MyProtocol.WORKDATA).withString("uuid",data.getPlan_uuid()).withInt("statusId",data.getStatus()).navigation();
             }
         });
         return myWorkListRvAdapter;

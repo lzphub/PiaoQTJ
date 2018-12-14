@@ -1,5 +1,6 @@
 package cn.dankal.basiclib.adapter;
 
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -49,6 +50,11 @@ public class MyIdeaListRvAdapter extends BaseRecyclerViewAdapter<MyIdeaListBean.
         @Override
         public void onBindData(MyIdeaListBean.DataBean data, int position) {
             tvState.setText(StateUtil.ideaState(data.getStatus()));
+            if(data.getStatus()==2){
+                tvState.setTextColor(Color.parseColor("#FE3824"));
+            }else{
+                tvState.setTextColor(Color.parseColor("#141414"));
+            }
             tvTitle.setText(data.getTitle());
             tvContent.setText(data.getDetail());
 

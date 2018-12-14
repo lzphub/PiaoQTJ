@@ -73,7 +73,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
-                        android:text="工单已认领，审核中"
                         android:textColor="@color/color14"
                         android:textSize="25sp"
                         android:textStyle="bold" />
@@ -92,7 +91,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
                             android:layout_marginTop="9dp"
-                            android:text="预计价格：$260000内"
                             android:textColor="@color/colorFF"
                             android:textSize="15sp" />
 
@@ -102,7 +100,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
                             android:layout_marginTop="7dp"
-                            android:text="交付工期：2018-08-09~208-10-09"
                             android:textColor="@color/colorFF"
                             android:textSize="15sp" />
 
@@ -155,7 +152,6 @@
                         android:layout_marginRight="24dp"
                         android:layout_marginTop="16dp"
                         android:lineSpacingExtra="5dp"
-                        android:text="商丘信华国际大酒店酒店照明设计方案主要是灯光是酒店风格的有机组成部分，而灯具部分考虑外观与建筑空间的 协调、与装潢风格要统一。灯具的造型、材质、色泽都要与空间的风格一致，同时也影可着空司的风格。独特的灯 具往往成为室内空间的表征"
                         android:textColor="@color/color99"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -172,7 +168,7 @@
                         android:textStyle="bold"
                         android:visibility="gone"/>
 
-                    <TextView
+                    <WebView
                         android:id="@+id/tv_claim_refused_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -181,7 +177,6 @@
                         android:layout_marginRight="24dp"
                         android:layout_marginTop="16dp"
                         android:lineSpacingExtra="5dp"
-                        android:text="由于您的方案不符合工单详细要求"
                         android:visibility="gone"
                         android:textColor="@color/colorFE3824"
                         android:textSize="14sp"
@@ -235,7 +230,6 @@
                         android:layout_marginRight="24dp"
                         android:layout_marginTop="16dp"
                         android:lineSpacingExtra="5dp"
-                        android:text="商丘信华国际大酒店酒店照明设计方案主要是灯光是酒店风格的有机组成部分，而灯具部分考虑外观与建筑空间的 协调、与装潢风格要统一。灯具的造型、材质、色泽都要与空间的风格一致，同时也影可着空司的风格。独特的灯 具往往成为室内空间的表征"
                         android:textColor="@color/color99"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -246,13 +240,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="23dp"
                         android:layout_marginTop="30dp"
-                        android:text="认领方案拒绝原因"
+                        android:text="完成方案拒绝原因"
                         android:textColor="@color/color14"
                         android:textSize="20dp"
                         android:textStyle="bold"
                         android:visibility="gone"/>
 
-                    <TextView
+                    <WebView
                         android:id="@+id/tv_plan_refused_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -261,7 +255,6 @@
                         android:layout_marginRight="24dp"
                         android:layout_marginTop="16dp"
                         android:lineSpacingExtra="5dp"
-                        android:text="由于您的方案不符合工单详细要求"
                         android:textColor="@color/colorFE3824"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -317,7 +310,6 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
                         android:layout_marginTop="19dp"
-                        android:text="大型工厂照明需求解决，急需定600led 暖黄色光源"
                         android:textColor="@color/color33"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -326,6 +318,7 @@
                         android:id="@+id/tv_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:scrollbars="none"
                         android:layout_marginLeft="24dp"
                         android:layout_marginRight="24dp"
                         android:layout_marginTop="16dp"

@@ -76,7 +76,6 @@
                         android:id="@+id/balance_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$560000"
                         android:textColor="@color/colorFF"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -104,7 +103,6 @@
                         android:id="@+id/ranking_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20"
                         android:textColor="@color/colorFF"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
@@ -172,7 +170,8 @@
 
             <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:overScrollMode="never">
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -4,7 +4,9 @@ import android.support.annotation.NonNull;
 
 import api.HomeServiceFactory;
 import cn.dankal.basiclib.bean.ProductClassifyBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.ToastUtils;
 
 public class ProductClassifyPresenter implements ProductClassifyContact.productPresenter {
 
@@ -25,6 +27,17 @@ public class ProductClassifyPresenter implements ProductClassifyContact.productP
             @Override
             public void onNext(ProductClassifyBean productClassifyBean) {
                 pcview.getDataSuccess(productClassifyBean);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                pcview.dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if (exception.getMsg().equals("网络错误")) {
+                        ToastUtils.showShort("Network error");
+                    }
+                }
             }
         });
     }

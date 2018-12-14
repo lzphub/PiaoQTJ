@@ -8,7 +8,9 @@ import cn.dankal.basiclib.base.BaseResult;
 import cn.dankal.basiclib.base.BaseView;
 import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.ToastUtils;
 
 public class ProductScreenPresenter implements ProductScreenContact.psPresenter {
 
@@ -29,6 +31,17 @@ public class ProductScreenPresenter implements ProductScreenContact.psPresenter 
             public void onNext(ProductHomeListBean productListBean) {
                 psView.getDataSuccess(productListBean);
             }
+
+            @Override
+            public void onError(Throwable e) {
+                psView.dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                     if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
+                    }
+                }
+            }
         });
     }
 
@@ -38,6 +51,17 @@ public class ProductScreenPresenter implements ProductScreenContact.psPresenter 
             @Override
             public void onNext(ProductHomeListBean productListBean) {
                 psView.upDataSuccess(productListBean);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                psView.dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
+                    }
+                }
             }
         });
     }

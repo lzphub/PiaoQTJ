@@ -47,6 +47,7 @@ import java.util.List;
 import cn.dankal.basiclib.adapter.OnlyImgRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.ProductDataBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.util.DisplayHelper;
 import cn.dankal.basiclib.util.Logger;
@@ -217,10 +218,13 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
     }
 
     @Override
-    public void getDataFail() {
+    public void getDataFail(LocalException exception) {
         allow=false;
         purchaseBtn.setBackgroundColor(Color.parseColor("#f6f6f6"));
         dismissLoadingDialog();
+        if (exception.getMsg().equals("网络错误")){
+            ToastUtils.showShort("NetWork error");
+        }
     }
 
 }

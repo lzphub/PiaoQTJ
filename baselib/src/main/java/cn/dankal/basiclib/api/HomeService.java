@@ -90,11 +90,25 @@ public interface HomeService {
     Observable<String> postCompletedDetail(@Field("project_uuid")String project_uuid,@Field("plan_uuid")String plan_uuid,@Field("cpl_detail")String cpl_detail,@Field("cpl_images[]")List<String> cpl_images);
 
     /**
+     *  重新提交完成工单
+     */
+    @POST("engineer/Me/updateCompletedDetail")
+    @FormUrlEncoded
+    Observable<String> updateCompletedDetail(@Field("plan_uuid") String plan_uuid,@Field("cpl_detail")String cpl_detail,@Field("cpl_images[]")List<String> cpl_images);
+
+    /**
      * 认领需求
      */
     @POST("engineer/home/postplan")
     @FormUrlEncoded
     Observable<String> postplan(@Field("project_uuid")String project_uuid, @Field("plan_detail")String plan_detail, @Field("plan_images[]")List<String> plan_images);
+
+    /**
+     * 重新认领需求
+     */
+    @POST("engineer/Home/updatePlan")
+    @FormUrlEncoded
+    Observable<String> rePostplan(@Field("plan_uuid")String plan_uuid,@Field("plan_detail")String plan_detail,@Field("plan_images[]")List<String> plan_images);
 
     /**
      *  发布创意

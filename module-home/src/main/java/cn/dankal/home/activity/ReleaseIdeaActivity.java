@@ -123,6 +123,9 @@ public class ReleaseIdeaActivity extends BaseActivity {
                         ToastUtils.showShort("方案详情不能为空");
                         return;
                     }
+                    else{
+                        ToastUtils.showShort(exception.getMsg());
+                    }
                 }
             }
         }));
@@ -165,6 +168,7 @@ public class ReleaseIdeaActivity extends BaseActivity {
                 imgList.setAdapter(imageRvAdapter);
                 imageRvAdapter.setOnClickListener(pos -> {
                     result.remove(pos);
+                    images.remove(pos);
                     imageRvAdapter.UpData(result);
                     addImg.setVisibility(View.VISIBLE);
                 });
@@ -187,7 +191,7 @@ public class ReleaseIdeaActivity extends BaseActivity {
             @Override
             public void onSucess(String localPath, String key) {
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("上传成功").create(1000);
+                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("图片添加成功").create(500);
                 dialog.show();
                 dialog.dismiss();
                 images.add(key);

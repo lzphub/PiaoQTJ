@@ -22,11 +22,9 @@ import cn.dankal.basiclib.base.recyclerview.del.BaseDelViewHolder;
 import cn.dankal.basiclib.bean.MyRequestBean;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.StateUtil;
+import cn.dankal.basiclib.util.StringUtil;
 
 public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.databean> {
-
-
-    private List<String> urllist = new ArrayList<>();
 
     @Override
     protected int getLayoutResId(int viewType) {
@@ -69,9 +67,13 @@ public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.da
             if(data.getStart_price()==null || data.getEnd_date()==null){
                 requectData.setText("");
             }else{
-                requectData.setText(data.getStart_date() + "~" + data.getEnd_date());
+                requectData.setText(data.getStart_date() + " ~ " + data.getEnd_date());
             }
-            requestPrice.setText("$" + data.getStart_price() + "~" + data.getEnd_price());
+            if(data.getStart_price()== null || data.getEnd_price()==null){
+                requestPrice.setText("");
+            }else{
+                requestPrice.setText("$" + StringUtil.isDigits(data.getStart_price()) + " ~ " + StringUtil.isDigits(data.getEnd_price()));
+            }
             stateText.setText(StateUtil.requestState(data.getStatus()));
 
             MyRequestBean.databean data2=data;

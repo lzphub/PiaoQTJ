@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.zhihu.matisse.Matisse;
@@ -78,7 +79,7 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
     private int size = 5;
     private List<Uri> result = new ArrayList<>();
     private ImageRvAdapter imageRvAdapter;
-    private static List<String> images=new ArrayList<>();
+    private static List<String> images = new ArrayList<>();
     final private static int KeyboardHeightLimit = 200;
     private RelativeLayout rlContent;
     private RelativeLayout rlOut;
@@ -109,14 +110,14 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                SpannableString spannableString=new SpannableString(titleEt.getText().toString().trim().length()+"/50");
+                SpannableString spannableString = new SpannableString(titleEt.getText().toString().trim().length() + "/50");
                 ForegroundColorSpan colorSpan;
-                if(titleEt.getText().toString().trim().length()>=50){
-                    colorSpan=new ForegroundColorSpan(getResources().getColor(R.color.colorFE3824));
-                }else{
-                    colorSpan=new ForegroundColorSpan(getResources().getColor(R.color.login_btn_bg));
+                if (titleEt.getText().toString().trim().length() >= 50) {
+                    colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.colorFE3824));
+                } else {
+                    colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.login_btn_bg));
                 }
-                spannableString.setSpan(colorSpan,0,titleSize.getText().length()-3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                spannableString.setSpan(colorSpan, 0, titleSize.getText().length() - 3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 titleSize.setText(spannableString);
             }
 
@@ -133,12 +134,12 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
             final int keyboardHeight = screenHeight - (r.bottom);
 
             if (keyboardHeight > KeyboardHeightLimit) {
-                FrameLayout.LayoutParams layoutParams= (FrameLayout.LayoutParams) rlOut.getLayoutParams();
-                layoutParams.setMargins(0,0,0,keyboardHeight);
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) rlOut.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, keyboardHeight);
                 rlOut.setLayoutParams(layoutParams);
-            }else{
-                FrameLayout.LayoutParams layoutParams= (FrameLayout.LayoutParams) rlOut.getLayoutParams();
-                layoutParams.setMargins(0,0,0,0);
+            } else {
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) rlOut.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, 0);
                 rlOut.setLayoutParams(layoutParams);
             }
         });
@@ -155,9 +156,9 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
                 TimeDialog timeDialog = new TimeDialog();
                 timeDialog.show(getSupportFragmentManager(), "timeDialog");
                 timeDialog.setListener(time -> {
-                    if(getTimeCompareSize(periodStart.getText().toString(),time)==1){
+                    if (getTimeCompareSize(periodStart.getText().toString(), time) == 1) {
                         ToastUtils.showShort("The end time should not be earlier than the start time");
-                    }else{
+                    } else {
                         periodEnd.setText(time);
                     }
                 });
@@ -172,12 +173,12 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
             TimeDialog timeDialog = new TimeDialog();
             timeDialog.show(getSupportFragmentManager(), "timeDialog");
             timeDialog.setListener(time -> {
-                        if(getTimeCompareSize(periodStart.getText().toString(),time)==1){
-                            ToastUtils.showShort("The end time should not be earlier than the start time");
-                        }else{
-                            periodEnd.setText(time);
-                        }
-                    });
+                if (getTimeCompareSize(periodStart.getText().toString(), time) == 1) {
+                    ToastUtils.showShort("The end time should not be earlier than the start time");
+                } else {
+                    periodEnd.setText(time);
+                }
+            });
         });
 
         addImg.setOnClickListener(v -> CheckImage.takePhotoPicker(PostRequstActivity.this, size - result.size()));
@@ -190,27 +191,68 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
         });
     }
 
-    private void post(){
+    private void post() {
         String title = titleEt.getText().toString().trim();
         String content = contentEt.getText().toString().trim();
         String start_price = priceMin.getText().toString().trim();
         String end_price = priceMax.getText().toString().trim();
         String start_date = periodStart.getText().toString().trim();
         String end_date = periodEnd.getText().toString().trim();
-        if (title == null || title.length()==0) {
+        if (title == null || title.length() == 0) {
             ToastUtils.showShort("Please fill in the title");
-        }else if(title.length()<4){
+        } else if (title.length() < 4) {
             ToastUtils.showShort("The length of title cannot be less than 4");
-        }else if (content.length() < 15) {
+        } else if (content.length() < 15) {
             ToastUtils.showShort("The length of description cannot be less than 15");
         } else {
-            postRequestPresenter=new PostRequestPresenter();
+            postRequestPresenter = new PostRequestPresenter();
             postRequestPresenter.attachView(this);
             PostRequestBean postRequestBean = new PostRequestBean();
             postRequestBean.setTitle(title);
             postRequestBean.setDescription(content);
+
+            if(!start_date.equals("")){
+                if(end_date.equals("")){
+                    ToastUtils.showShort("Please fill in the end date");
+                    return;
+                }
+            }
+
+            if(!end_date.equals("")){
+                if(start_date.equals("")){
+                    ToastUtils.showShort("Please fill in the start date");
+                    return;
+                }
+            }
+
             postRequestBean.setStart_date(start_date);
             postRequestBean.setEnd_date(end_date);
+
+            if(!start_price.equals("")){
+                if(end_price.equals("")){
+                    ToastUtils.showShort("Please fill in the maximum price");
+                    return;
+                }
+
+                if (Integer.valueOf(start_price) <= 0) {
+                    ToastUtils.showShort("The minimum price cannot be $0");
+                    return;
+                }
+
+                if (Integer.valueOf(start_price) >= Integer.valueOf(end_price)) {
+                    ToastUtils.showShort("The starting price should be less than the maximum price");
+                    return;
+                }
+
+            }
+
+            if(!end_price.equals("")){
+                if(start_price.equals("")){
+                    ToastUtils.showShort("Please fill in the minimum price");
+                    return;
+                }
+            }
+
             postRequestBean.setStart_price(start_price);
             postRequestBean.setEnd_price(end_price);
             postRequestBean.setImages(images);
@@ -250,9 +292,9 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
                 if (result.size() == size) {
                     addImg.setVisibility(View.INVISIBLE);
                 }
-                images=new ArrayList<>();
-                for(int i=0;i<result.size();i++){
-                    uploadQiniu(result.get(i),this);
+                images = new ArrayList<>();
+                for (int i = 0; i < result.size(); i++) {
+                    uploadQiniu(result.get(i), this);
                 }
                 imageRvAdapter = new ImageRvAdapter(this, result);
                 addImgRv.setAdapter(imageRvAdapter);
@@ -288,14 +330,12 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
     }
 
     //图片上传至七牛
-    public static void uploadQiniu(Uri uri,Context context){
+    public static void uploadQiniu(Uri uri, Context context) {
         final String[] path = {null};
         TipDialog loadingDialog;
 
         TipDialog.Builder builder = new TipDialog.Builder(context);
-        loadingDialog = builder
-                .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord("uploading").create();
+        loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("uploading").create();
         loadingDialog.show();
 
         boolean b = UriUtils.getPath(context, uri) == null;
@@ -304,9 +344,7 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
             @Override
             public void onSucess(String localPath, String key) {
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
-                        .setTipWord("Uploaded successfully")
-                        .create(2000);
+                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("Uploaded successfully").create(500);
                 dialog.show();
                 dialog.dismiss();
                 images.add(key);
@@ -322,9 +360,7 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
             public void onError(String string) {
                 ToastUtils.showLong(string);
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL)
-                        .setTipWord("上传失败")
-                        .create(2000);
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL).setTipWord("上传失败").create(2000);
                 dialog.show();
                 dialog.dismiss();
             }

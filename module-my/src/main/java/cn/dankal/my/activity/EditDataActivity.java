@@ -5,6 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import api.MyServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.PersonalData_EngineerPostBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.setting.R;
@@ -68,6 +69,19 @@ public class EditDataActivity extends BaseActivity {
             public void onNext(String s) {
                 ToastUtils.showShort("保存成功");
                 finish();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (e instanceof LocalException) {
+                    dismissLoadingDialog();
+                    LocalException exception = (LocalException) e;
+                    if (exception.getMsg().equals("competence长度不符合要求 3,32")) {
+                        ToastUtils.showShort("请输入至少3字内容");
+                    } else {
+                        super.onError(e);
+                    }
+                }
             }
         });
     }

@@ -47,7 +47,7 @@ public class SetPwdActivity extends BaseActivity {
             String email=getIntent().getStringExtra("emailAccount");
             String pwd=etPhoneNum.getText().toString().trim();
             String pwd2=etPasswd.getText().toString().trim();
-            if(pwd==null || pwd2==null){
+            if(pwd==null | pwd2==null){
                 ToastUtils.showShort("请输入密码");
                 return;
             }
@@ -66,10 +66,14 @@ public class SetPwdActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        dismissLoadingDialog();
                         if (e instanceof LocalException) {
                             LocalException exception = (LocalException) e;
-                            //401 重新获取access token , 如果还返回412 就是refresh token 也失效了。需要重新登录
-                                ToastUtils.showShort(((LocalException) e).getMsg());
+                                if(exception.getMsg().equals("password不能为空")){
+                                    ToastUtils.showShort("密码不能为空");
+                                }else{
+                                    ToastUtils.showShort(exception.getMsg());
+                                }
                         }
                     }
                 });
@@ -84,9 +88,14 @@ public class SetPwdActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        dismissLoadingDialog();
                         if (e instanceof LocalException) {
                             LocalException exception = (LocalException) e;
-                            ToastUtils.showShort((exception.getMsg()));
+                            if(exception.getMsg().equals("password不能为空")){
+                                ToastUtils.showShort("密码不能为空");
+                            }else{
+                                ToastUtils.showShort(exception.getMsg());
+                            }
                         }
                     }
                 });

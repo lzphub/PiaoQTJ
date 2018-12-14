@@ -16,6 +16,8 @@ import cn.dankal.basiclib.api.MyService;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.MyWorkListBean;
+import cn.dankal.basiclib.bean.ProjectDataBean;
+import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.StateUtil;
 import cn.dankal.basiclib.util.StringUtil;
@@ -55,21 +57,37 @@ public class MyWorkListRvAdapter extends BaseRecyclerViewAdapter<MyWorkListBean.
         @Override
         public void onBindData(MyWorkListBean.DataBean data, int position) {
             statusText.setText(StateUtil.WorkListState(data.getStatus()));
-            if (data.getStatus() == 5 || data.getStatus() == 8) {
-                statusText.setTextColor(Color.parseColor("#FE3824"));
-            }
             titleTv.setText(data.getName());
             contentTv.setText(data.getDesc());
             priceText.setText("$" + StringUtil.isDigits(data.getStart_price()) + " ~ " + StringUtil.isDigits(data.getEnd_price()));
-            if (data.getStatus() == 4) {
-                rlFinish.setVisibility(View.VISIBLE);
-            } else if (data.getStatus() == 6) {
+            if(data.getStatus()==3){ //认领审核中
+                statusText.setTextColor(Color.parseColor("#141414"));
                 rlFinish.setVisibility(View.GONE);
-            } else if (data.getStatus() == 8) {
+            }else if (data.getStatus() == 4) { //认领审核通过
+                statusText.setTextColor(Color.parseColor("#141414"));
+                rlFinish.setVisibility(View.VISIBLE);
+            } else if (data.getStatus() == 5) { //认领审核拒绝
+                statusText.setTextColor(Color.parseColor("#FE3824"));
+                rlFinish.setVisibility(View.VISIBLE);
+                btFinish.setText("重新认领");
+            } else if (data.getStatus() == 6) { //完成审核中
+                statusText.setTextColor(Color.parseColor("#141414"));
+                rlFinish.setVisibility(View.GONE);
+            } else if (data.getStatus() == 7) { //完成审核通过
+                statusText.setTextColor(Color.parseColor("#141414"));
+                rlFinish.setVisibility(View.GONE);
+            } else if (data.getStatus() == 8) { //完成审核拒绝
+                statusText.setTextColor(Color.parseColor("#FE3824"));
                 rlFinish.setVisibility(View.VISIBLE);
                 btFinish.setText("重新提交");
             }
-            btFinish.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.FINISHWORK).withString("project_uuid", data.getUuid()).withString("plan_uuid", data.getPlan_uuid()).navigation());
+            btFinish.setOnClickListener(v -> {
+                if(btFinish.getText().equals("重新提交") | btFinish.getText().equals("完成工单")){
+                    ARouter.getInstance().build(MyProtocol.FINISHWORK).withString("project_uuid", data.getUuid()).withString("plan_uuid", data.getPlan_uuid()).withInt("statusId", data.getStatus()).navigation();
+                }else if(btFinish.getText().equals("重新认领")){
+                    ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withString("project_uuid", data.getUuid()).withString("plan_uuid",data.getPlan_uuid()).navigation();
+                }
+            });
         }
     }
 }

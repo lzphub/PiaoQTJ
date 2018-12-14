@@ -69,6 +69,7 @@ public class RegistrCodeActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
+                dismissLoadingDialog();
                 if (e instanceof LocalException) {
                     LocalException exception = (LocalException) e;
                     ToastUtils.showShort((exception.getMsg()));

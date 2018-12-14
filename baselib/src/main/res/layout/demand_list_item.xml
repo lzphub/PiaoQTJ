@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="43dp"
             android:layout_marginTop="10dp"
-            android:text="$0~$260000"
             android:textColor="@color/color528e1a"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -35,7 +34,6 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_marginTop="13dp"
-            android:text="2018-01-21"
             android:textColor="@color/colorAE"
             android:textSize="12sp" />
 
@@ -47,7 +45,6 @@
             android:layout_marginTop="40dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="大型工厂照明需求解决"
             android:textColor="@color/color33"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -64,7 +61,6 @@
             android:layout_marginTop="5dp"
             android:maxLines="2"
             android:ellipsize="end"
-            android:text="新艺工厂，建筑面积600m2，现需要定制一套照明系统，大概600套"
             android:textColor="@color/color66"
             android:textSize="13sp" />
 </RelativeLayout>

@@ -23,6 +23,7 @@ import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
 import cn.dankal.basiclib.common.qiniu.QiniuUpload;
 import cn.dankal.basiclib.common.qiniu.UploadHelper;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.Logger;
@@ -301,6 +302,17 @@ public class PersonalData_EnActivity extends BaseActivity {
                     }
                 }
             }
+
+            @Override
+            public void onError(Throwable e) {
+                dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
+                    }
+                }
+            }
         });
     }
 
@@ -334,7 +346,7 @@ public class PersonalData_EnActivity extends BaseActivity {
             public void onError(String string) {
                 ToastUtils.showLong(string);
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL).setTipWord("上传失败").create(2000);
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL).setTipWord("Upload fail").create(2000);
                 dialog.show();
                 dialog.dismiss();
             }

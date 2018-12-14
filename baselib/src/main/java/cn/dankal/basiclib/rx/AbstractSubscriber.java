@@ -2,9 +2,12 @@ package cn.dankal.basiclib.rx;
 
 import android.util.Log;
 
+import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.base.BaseView;
 import cn.dankal.basiclib.domain.HttpStatusCode;
 import cn.dankal.basiclib.exception.LocalException;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
+import cn.dankal.basiclib.util.ToastUtils;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -16,6 +19,7 @@ import io.reactivex.disposables.Disposable;
 public abstract class AbstractSubscriber<T> implements Observer<T> {
 
     protected BaseView view;
+    private String type;
 
     public AbstractSubscriber(BaseView view) {
         this.view = view;
@@ -35,7 +39,7 @@ public abstract class AbstractSubscriber<T> implements Observer<T> {
             if (exception.getErrorCode() == HttpStatusCode.TOKEN_INVAILD||
                     exception.getErrorCode() == HttpStatusCode.UNAUTHORIZED) {
                 view.tokenInvalid();
-                view.showToast("登录信息失效");
+                ToastUtils.showShort(R.string.loginfailure);
             } else {
                 view.showToast(exception.getMsg());
             }

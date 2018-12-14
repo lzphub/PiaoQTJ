@@ -28,4 +28,5 @@
     <string name="cancel">取消</string>
     <string name="Refresh">刷新中</string>
     <string name="sendSuccess">发送成功</string>
+    <string name="loginfailure">登录信息失效</string>
 </resources>

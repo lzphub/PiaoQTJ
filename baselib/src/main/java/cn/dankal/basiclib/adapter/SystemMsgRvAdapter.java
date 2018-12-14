@@ -37,7 +37,7 @@ public class SystemMsgRvAdapter extends BaseRecyclerViewAdapter<SystemMsgBean.Da
 
         @Override
         public void onBindData(SystemMsgBean.DataBean data, int position) {
-            tvContent.setText(data.getContent());
+            tvContent.setText(data.getDescription());
             tvDate.setText(data.getPush_time());
             tvTitle.setText(data.getTitle());
         }

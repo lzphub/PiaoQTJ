@@ -37,7 +37,7 @@ public class UserSetPwdActivity extends BaseActivity {
     private EditText etPasswd;
     private Button bt_next;
     private TextView titleText;
-    private String type="";
+    private String type = "";
 
     @Override
     protected int getLayoutId() {
@@ -47,7 +47,7 @@ public class UserSetPwdActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        type=getIntent().getStringExtra("type");
+        type = getIntent().getStringExtra("type");
         titleText.setText("FAST REGISTEATION");
         tvPhoneNum.setText("PASSWORD");
         etPhoneNum.setHint("PLEASE WNTER YOUR PASSWORD");
@@ -56,24 +56,24 @@ public class UserSetPwdActivity extends BaseActivity {
         bt_next.setText("CONTINUE");
         backImg.setOnClickListener(v -> finish());
         bt_next.setOnClickListener(v -> {
-            if(etPhoneNum.getText().toString().trim()==null || etPasswd.getText().toString().trim()==null){
-               ToastUtils.showShort("PLEASE INPUT YOUR PASSWORD");
-            }else{
-                if(etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())&& StringUtil.isValid(etPhoneNum.getText().toString().trim())){
-                    if("change_pwd".equals(type)){
-                        changePwd(getIntent().getStringExtra("emailAccount"),etPhoneNum.getText().toString().trim());
-                    }else{
-                        setPasswd(getIntent().getStringExtra("emailAccount"),etPhoneNum.getText().toString().trim());
+            if (etPhoneNum.getText().toString().trim() == null || etPasswd.getText().toString().trim() == null) {
+                ToastUtils.showShort("PLEASE INPUT YOUR PASSWORD");
+            } else {
+                if (etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim()) && StringUtil.isValid(etPhoneNum.getText().toString().trim())) {
+                    if ("change_pwd".equals(type)) {
+                        changePwd(getIntent().getStringExtra("emailAccount"), etPhoneNum.getText().toString().trim());
+                    } else {
+                        setPasswd(getIntent().getStringExtra("emailAccount"), etPhoneNum.getText().toString().trim());
                     }
-                }else{
+                } else {
                     ToastUtils.showShort("PLEASE CONFIRM PASSWORD CONSISTENCY");
                 }
             }
         });
     }
 
-    private void changePwd(String email,String pwd){
-        UserServiceFactory.changePwd(email,pwd).safeSubscribe(new Observer<String>() {
+    private void changePwd(String email, String pwd) {
+        UserServiceFactory.changePwd(email, pwd).safeSubscribe(new Observer<String>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -88,7 +88,13 @@ public class UserSetPwdActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                Logger.d("changepwd",e);
+                dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if (exception.getMsg().equals("password不能为空")) {
+                        ToastUtils.showShort("PLEASE INPUT YOUR PASSWORD");
+                    }
+                }
             }
 
             @Override
@@ -99,9 +105,8 @@ public class UserSetPwdActivity extends BaseActivity {
     }
 
 
-    private void setPasswd(String email,String pwd){
-        UserServiceFactory.resetPassword(email,pwd)
-        .safeSubscribe(new Observer<String>() {
+    private void setPasswd(String email, String pwd) {
+        UserServiceFactory.resetPassword(email, pwd).safeSubscribe(new Observer<String>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -116,11 +121,15 @@ public class UserSetPwdActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
+                dismissLoadingDialog();
                 if (e instanceof LocalException) {
                     LocalException exception = (LocalException) e;
-                    //401 重新获取access token , 如果还返回412 就是refresh token 也失效了。需要重新登录
-                    if(exception.getMsg().equals("此邮箱已被注册")){
+                    if (exception.getMsg().equals("此邮箱已被注册")) {
                         ToastUtils.showShort("This email address has been registered");
+                    } else if (exception.getMsg().equals("password不能为空")) {
+                        ToastUtils.showShort("PLEASE INPUT YOUR PASSWORD");
+                    }else if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
                     }
                 }
             }

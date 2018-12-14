@@ -29,6 +29,7 @@ import cn.dankal.basiclib.bean.DemandListbean;
 import cn.dankal.basiclib.bean.ProjectDataBean;
 import cn.dankal.basiclib.common.qiniu.QiniuUpload;
 import cn.dankal.basiclib.common.qiniu.UploadHelper;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.StringUtil;
@@ -58,9 +59,10 @@ public class DemandClaimActivity extends BaseActivity {
     private List<Uri> result = new ArrayList<>();
     private int size = 5;
     private ImageRvAdapter imageRvAdapter;
-    private static List<String> images=new ArrayList<>();
+    private static List<String> images = new ArrayList<>();
     private ProjectDataBean dataBean;
     private String time;
+    private String plan_uuid="";
 
     @Override
     protected int getLayoutId() {
@@ -70,20 +72,69 @@ public class DemandClaimActivity extends BaseActivity {
     @Override
     public void initComponents() {
         initView();
-        dataBean= (ProjectDataBean) getIntent().getSerializableExtra("demandData");
-        time=getIntent().getStringExtra("time");
+        dataBean = (ProjectDataBean) getIntent().getSerializableExtra("demandData");
+        time = getIntent().getStringExtra("time");
+        plan_uuid = getIntent().getStringExtra("plan_uuid");
         demandTitle.setText(dataBean.getName());
         demand_content.setText(dataBean.getDesc());
-        demandPrice.setText("¥"+ StringUtil.isDigits(dataBean.getStart_price())+" ~ "+StringUtil.isDigits(dataBean.getEnd_price()));
+        demandPrice.setText("¥" + StringUtil.isDigits(dataBean.getStart_price()) + " ~ " + StringUtil.isDigits(dataBean.getEnd_price()));
         releaseTime.setText(time);
         backImg.setOnClickListener(v -> finish());
-        submitBtn.setOnClickListener(v -> HomeServiceFactory.postplan(dataBean.getUuid(),detailsEt.getText().toString().trim(),images).safeSubscribe(new AbstractDialogSubscriber<String>(DemandClaimActivity.this) {
+        submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNext(String s) {
-                ARouter.getInstance().build(HomeProtocol.SUBMITIDEA).withInt("type", 2).navigation();
-                finish();
+            public void onClick(View v) {
+                if (plan_uuid==null) {
+                    HomeServiceFactory.postplan(dataBean.getUuid(), detailsEt.getText().toString().trim(), images).safeSubscribe(new AbstractDialogSubscriber<String>(DemandClaimActivity.this) {
+                        @Override
+                        public void onNext(String s) {
+                            ARouter.getInstance().build(HomeProtocol.SUBMITIDEA).withInt("type", 2).navigation();
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            dismissLoadingDialog();
+                            if (e instanceof LocalException) {
+                                LocalException exception = (LocalException) e;
+                                if (exception.getMsg().equals("plan_detail不能为空")) {
+                                    ToastUtils.showShort("方案详情不能为空");
+                                } else if (exception.getMsg().equals("plan_detail长度不符合要求 15,20000")) {
+                                    ToastUtils.showShort("请至少填写15字以上描述");
+                                } else {
+                                    super.onError(e);
+                                }
+                            }
+                        }
+
+                    });
+                } else {
+                    HomeServiceFactory.rePostplan(plan_uuid, detailsEt.getText().toString().trim(), images).safeSubscribe(new AbstractDialogSubscriber<String>(DemandClaimActivity.this) {
+                        @Override
+                        public void onNext(String s) {
+                            ARouter.getInstance().build(HomeProtocol.SUBMITIDEA).withInt("type", 2).navigation();
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            if (e instanceof LocalException) {
+                                dismissLoadingDialog();
+                                LocalException exception = (LocalException) e;
+                                if (exception.getMsg().equals("plan_detail不能为空")) {
+                                    ToastUtils.showShort("方案详情不能为空");
+                                } else if (exception.getMsg().equals("plan_detail长度不符合要求15,20000")) {
+                                    ToastUtils.showShort("请至少填写15字以上描述");
+                                } else {
+                                    super.onError(e);
+                                }
+                            }
+                        }
+                    });
+                }
+
             }
-        }));
+        });
+
 
         addImg.setOnClickListener(v -> CheckImage.takePhotoPicker(DemandClaimActivity.this, 1));
         detailsEt.addTextChangedListener(new TextWatcher() {
@@ -117,7 +168,7 @@ public class DemandClaimActivity extends BaseActivity {
         imgList = findViewById(R.id.img_list);
         sizeDetails = findViewById(R.id.size_details);
         detailsEt = findViewById(R.id.details_et);
-        demand_content=findViewById(R.id.demand_content);
+        demand_content = findViewById(R.id.demand_content);
     }
 
     @Override
@@ -125,20 +176,21 @@ public class DemandClaimActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ResultCode.CheckImageCode) {
             if (data != null) {
-                for(int i=0;i<Matisse.obtainPathResult(data).size();i++){
-                    result .add( Matisse.obtainResult(data).get(i));
+                for (int i = 0; i < Matisse.obtainPathResult(data).size(); i++) {
+                    result.add(Matisse.obtainResult(data).get(i));
                 }
-                if(result.size()==size){
+                if (result.size() == size) {
                     addImg.setVisibility(View.INVISIBLE);
                 }
-                images=new ArrayList<>();
-                for(int i=0;i<result.size();i++){
-                    uploadQiniu(result.get(i),this);
+                images = new ArrayList<>();
+                for (int i = 0; i < result.size(); i++) {
+                    uploadQiniu(result.get(i), this);
                 }
-                imageRvAdapter=new ImageRvAdapter(this,result);
+                imageRvAdapter = new ImageRvAdapter(this, result);
                 imgList.setAdapter(imageRvAdapter);
                 imageRvAdapter.setOnClickListener(pos -> {
                     result.remove(pos);
+                    images.remove(pos);
                     imageRvAdapter.UpData(result);
                     addImg.setVisibility(View.VISIBLE);
                 });
@@ -148,14 +200,12 @@ public class DemandClaimActivity extends BaseActivity {
 
 
     //图片上传至七牛
-    public static void uploadQiniu(Uri uri,Context context){
+    public static void uploadQiniu(Uri uri, Context context) {
         final String[] path = {null};
         TipDialog loadingDialog;
 
         TipDialog.Builder builder = new TipDialog.Builder(context);
-        loadingDialog = builder
-                .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord("图片上传中").create();
+        loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("图片上传中").create();
         loadingDialog.show();
 
         boolean b = UriUtils.getPath(context, uri) == null;
@@ -164,9 +214,7 @@ public class DemandClaimActivity extends BaseActivity {
             @Override
             public void onSucess(String localPath, String key) {
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
-                        .setTipWord("上传成功")
-                        .create(1000);
+                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("图片添加成功").create(500);
                 dialog.show();
                 dialog.dismiss();
                 images.add(key);
@@ -182,9 +230,7 @@ public class DemandClaimActivity extends BaseActivity {
             public void onError(String string) {
                 ToastUtils.showLong(string);
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL)
-                        .setTipWord("上传失败")
-                        .create(2000);
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL).setTipWord("上传失败").create(2000);
                 dialog.show();
                 dialog.dismiss();
             }

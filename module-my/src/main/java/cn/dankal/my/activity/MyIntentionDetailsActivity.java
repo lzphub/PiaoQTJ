@@ -15,6 +15,7 @@ import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.IntentionDateBean;
 import cn.dankal.basiclib.protocol.ProductProtocol;
 import cn.dankal.basiclib.util.StateUtil;
+import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.my.presenter.IntentionDetailsContact;
 import cn.dankal.my.presenter.MyIntentionDetailsPresenter;
@@ -84,7 +85,7 @@ public class MyIntentionDetailsActivity extends BaseActivity implements Intentio
     @Override
     public void getDataSuccess(IntentionDateBean intentionDateBean) {
         intentionName.setText(intentionDateBean.getProduct_name());
-        intentionPrice.setText(intentionDateBean.getProduct_price());
+        intentionPrice.setText("$"+StringUtil.isDigits(intentionDateBean.getProduct_price()));
         intentionState.setText(StateUtil.intentionStatus(intentionDateBean.getStatus()));
         Glide.with(this).load(PicUtils.getUrl(intentionDateBean.getImages().get(0))).into(intentionImg);
         contactsName.setText(intentionDateBean.getContact_name());

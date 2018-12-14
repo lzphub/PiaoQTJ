@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -113,6 +114,10 @@ public class EnterIntentionActivity extends BaseActivity {
                     LocalException exception = (LocalException) e;
                     if(exception.getMsg().equals("email格式不符")){
                         ToastUtils.showShort("Email format mismatch");
+                    }else if(exception.getMsg().equals("contact_name长度不符合要求 3,64")){
+                        ToastUtils.showShort("Contact name requires at least three characters");
+                    }else if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
                     }
                 }
             }

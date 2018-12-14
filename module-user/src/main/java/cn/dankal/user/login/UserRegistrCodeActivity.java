@@ -78,10 +78,13 @@ public class UserRegistrCodeActivity extends BaseActivity {
 
                 @Override
                 public void onError(Throwable e) {
+                    dismissLoadingDialog();
                     if (e instanceof LocalException) {
                         LocalException exception = (LocalException) e;
                         if(exception.getMsg().equals("验证码错误")){
                             ToastUtils.showShort("CODE ERROR");
+                        }else if(exception.getMsg().equals("网络错误")){
+                            ToastUtils.showShort("Network error");
                         }
                     }
                 }

@@ -67,13 +67,13 @@ public class MyWorkListDataActivity extends BaseStateActivity implements WorkDat
     @BindView(R2.id.tv_plan_finish_details)
     TextView tvPlanFinishDetails;
     @BindView(R2.id.tv_plan_refused_details)
-    TextView tvPlanRefusedDetails;
+    WebView tvPlanRefusedDetails;
     @BindView(R2.id.tv_refused)
     TextView tvRefused;
     @BindView(R2.id.tv_claim_refused)
     TextView tvClaimRefused;
     @BindView(R2.id.tv_claim_refused_details)
-    TextView tvClaimRefusedDetails;
+    WebView tvClaimRefusedDetails;
     @BindView(R2.id.ll_finish)
     LinearLayout llFinish;
     @BindView(R2.id.tv_finish)
@@ -109,11 +109,11 @@ public class MyWorkListDataActivity extends BaseStateActivity implements WorkDat
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initSc() {
         scScroll.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY > oldScrollY && scrollY > 100 ) {
-                rlTitle.setElevation((float)25);
+            if (scrollY > oldScrollY && scrollY > 100) {
+                rlTitle.setElevation((float) 25);
                 tvTitleMain.setTextColor(Color.parseColor("#333333"));
-            } else if (scrollY < oldScrollY && scrollY < 100 ) {
-                rlTitle.setElevation((float)0);
+            } else if (scrollY < oldScrollY && scrollY < 100) {
+                rlTitle.setElevation((float) 0);
                 tvTitleMain.setTextColor(Color.parseColor("#00333333"));
             }
         });
@@ -150,7 +150,7 @@ public class MyWorkListDataActivity extends BaseStateActivity implements WorkDat
             }
         });
 
-        tvContent.loadDataWithBaseURL(null,myWorkDataBean.getProject().getDetail(), "text/html", "UTF-8", null);
+        tvContent.loadDataWithBaseURL(null, myWorkDataBean.getProject().getDetail(), "text/html", "UTF-8", null);
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -167,14 +167,15 @@ public class MyWorkListDataActivity extends BaseStateActivity implements WorkDat
         onlyImgRvAdapter.setRvitemClickListener(new OnRvItemClickListener() {
             @Override
             public void onItemClick(View v, int position, Object data) {
-                Intent intent=new Intent(MyWorkListDataActivity.this, BigPhotoActivity.class);
-                intent.putExtra("url",myWorkDataBean.getPlan().get(0).getPlan_images().get(position));
+                Intent intent = new Intent(MyWorkListDataActivity.this, BigPhotoActivity.class);
+                intent.putExtra("url", myWorkDataBean.getPlan().get(0).getPlan_images().get(position));
                 startActivity(intent);
             }
         });
 
+        tvFinish.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.FINISHWORK).withString("project_uuid", myWorkDataBean.getProject().getUuid()).withString("plan_uuid", myWorkDataBean.getPlan().get(0).getPlan_uuid()).withInt("statusId", statusId).navigation());
 
-
+        //完成审核拒绝
         if (statusId == 8) {
             llFinish.setVisibility(View.VISIBLE);
             tvFinish.setVisibility(View.VISIBLE);
@@ -188,17 +189,20 @@ public class MyWorkListDataActivity extends BaseStateActivity implements WorkDat
             onlyImgRvAdapter2.addMore(myWorkDataBean.getCpl().get(0).getCpl_images());
             rvPlanFinishImg.setAdapter(onlyImgRvAdapter2);
             tvPlanFinishDetails.setText(myWorkDataBean.getCpl().get(0).getCpl_detail());
-            tvRefused.setText(myWorkDataBean.getCpl().get(0).getRefuse_reason());
+            tvPlanRefusedDetails.loadDataWithBaseURL(null, myWorkDataBean.getCpl().get(0).getRefuse_reason(), "text/html", "UTF-8", null);
 
             onlyImgRvAdapter2.setRvitemClickListener(new OnRvItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position, Object data) {
-                    Intent intent=new Intent(MyWorkListDataActivity.this, BigPhotoActivity.class);
-                    intent.putExtra("url",myWorkDataBean.getCpl().get(0).getCpl_images().get(position));
+                    Intent intent = new Intent(MyWorkListDataActivity.this, BigPhotoActivity.class);
+                    intent.putExtra("url", myWorkDataBean.getCpl().get(0).getCpl_images().get(position));
                     startActivity(intent);
                 }
             });
+            return;
         }
+
+        //完成审核中或完成审核通过
         if (statusId == 6 || statusId == 7) {
             llFinish.setVisibility(View.VISIBLE);
             LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
@@ -212,21 +216,28 @@ public class MyWorkListDataActivity extends BaseStateActivity implements WorkDat
             onlyImgRvAdapter2.setRvitemClickListener(new OnRvItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position, Object data) {
-                    Intent intent=new Intent(MyWorkListDataActivity.this, BigPhotoActivity.class);
-                    intent.putExtra("url",myWorkDataBean.getCpl().get(0).getCpl_images().get(position));
+                    Intent intent = new Intent(MyWorkListDataActivity.this, BigPhotoActivity.class);
+                    intent.putExtra("url", myWorkDataBean.getCpl().get(0).getCpl_images().get(position));
                     startActivity(intent);
                 }
             });
+            return;
         }
+
+        //认领审核拒绝
         if (statusId == 5) {
             tvClaimRefused.setVisibility(View.VISIBLE);
             tvClaimRefusedDetails.setVisibility(View.VISIBLE);
-        }
-        if (statusId == 4) {
-            tvFinish.setVisibility(View.VISIBLE);
+            tvClaimRefusedDetails.loadDataWithBaseURL(null, myWorkDataBean.getPlan().get(0).getRefuse_reason(), "text/html", "UTF-8", null);
+            return;
         }
 
-        tvFinish.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.FINISHWORK).withString("project_uuid", myWorkDataBean.getProject().getUuid()).withString("plan_uuid", myWorkDataBean.getPlan().get(0).getPlan_uuid()).navigation());
+        //认领审核通过
+        if (statusId == 4) {
+            tvFinish.setVisibility(View.VISIBLE);
+            return;
+        }
+
     }
 
     private void imgReset(WebView webView) {

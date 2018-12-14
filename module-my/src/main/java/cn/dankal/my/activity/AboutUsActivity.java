@@ -20,8 +20,10 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import api.MyServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.AboutUsBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.setting.R;
 
@@ -62,6 +64,17 @@ public class AboutUsActivity extends BaseActivity {
             @Override
             public void onNext(AboutUsBean aboutUsBean) {
                 webContent.loadDataWithBaseURL(null, aboutUsBean.getValue(), "text/html", "UTF-8", null);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+               dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
+                    }
+                }
             }
         });
     }

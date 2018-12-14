@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import api.ProductServiceFactory;
 import cn.dankal.basiclib.bean.ProductDataBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.ToastUtils;
@@ -29,7 +30,7 @@ public class ProductDataPresenter implements ProductDataContact.pdPresenter {
 
             @Override
             public void onError(Throwable e) {
-                pdView.getDataFail();
+                pdView.getDataFail((LocalException) e);
             }
         });
     }
@@ -44,7 +45,12 @@ public class ProductDataPresenter implements ProductDataContact.pdPresenter {
 
             @Override
             public void onError(Throwable e) {
-                super.onError(e);
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Could not add");
+                    }
+                }
             }
         });
     }

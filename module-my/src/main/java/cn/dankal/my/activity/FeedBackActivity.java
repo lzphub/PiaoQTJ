@@ -30,6 +30,7 @@ import cn.dankal.basiclib.adapter.ImageRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.common.qiniu.QiniuUpload;
 import cn.dankal.basiclib.common.qiniu.UploadHelper;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
@@ -70,6 +71,7 @@ public class FeedBackActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
+        images = new ArrayList<>();
         identity = SharedPreferencesUtils.getString(this, "identity", "enterprise");
         if (identity.equals("user")) {
             titleText.setText("HELP AND FEEDBACK");
@@ -110,6 +112,17 @@ public class FeedBackActivity extends BaseActivity {
                         ARouter.getInstance().build(HomeProtocol.SUBMITINTENTION).withString("feedback", "feedback").navigation();
                         finish();
                     }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismissLoadingDialog();
+                        if (e instanceof LocalException) {
+                            LocalException exception = (LocalException) e;
+                            if(exception.getMsg().equals("网络错误")){
+                                ToastUtils.showShort("Network error");
+                            }
+                        }
+                    }
                 });
             } else {
                 MyServiceFactory.engPostFeedBack(etOpinion.getText().toString().trim(), images).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
@@ -141,6 +154,7 @@ public class FeedBackActivity extends BaseActivity {
                 imgList.setAdapter(imageRvAdapter);
                 imageRvAdapter.setOnClickListener(pos -> {
                     result.remove(pos);
+                    images.remove(pos);
                     imageRvAdapter.UpData(result);
                     addImg.setVisibility(View.VISIBLE);
                 });
@@ -183,7 +197,7 @@ public class FeedBackActivity extends BaseActivity {
                     dialog.show();
                     dialog.dismiss();
                 } else {
-                    TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("上传成功,请等待审核").create(2000);
+                    TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("图片添加成功").create(500);
                     dialog.show();
                     dialog.dismiss();
                 }
@@ -201,7 +215,7 @@ public class FeedBackActivity extends BaseActivity {
             public void onError(String string) {
                 ToastUtils.showLong(string);
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL).setTipWord("上传失败").create(2000);
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL).setTipWord("上传失败").create(1000);
                 dialog.show();
                 dialog.dismiss();
             }

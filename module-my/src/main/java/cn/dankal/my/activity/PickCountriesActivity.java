@@ -67,7 +67,6 @@ public class PickCountriesActivity extends BaseActivity {
         });
 
         lvContact.setOnItemClickListener((parent, view, position, id) -> {
-            ToastUtils.showShort(((ContactSortModel) adapter.getItem(position)).getName());
             Intent intent=new Intent();
             intent.putExtra("countries",((ContactSortModel) adapter.getItem(position)).getName());
             setResult(2,intent);

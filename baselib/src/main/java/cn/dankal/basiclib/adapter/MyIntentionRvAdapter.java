@@ -14,6 +14,7 @@ import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.MyIntentionBean;
 import cn.dankal.basiclib.util.StateUtil;
+import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.image.PicUtils;
 
 public class MyIntentionRvAdapter extends BaseRecyclerViewAdapter<MyIntentionBean.DataBean> {
@@ -47,7 +48,7 @@ public class MyIntentionRvAdapter extends BaseRecyclerViewAdapter<MyIntentionBea
         public void onBindData(MyIntentionBean.DataBean data, int position) {
             Glide.with(context).load(PicUtils.getUrl(data.getImages().get(0))).into(intentionImg);
             intentionName.setText(data.getProduct_name());
-            intentionPrice.setText("$"+data.getProduct_price());
+            intentionPrice.setText("$"+ StringUtil.isDigits(data.getProduct_price()));
             intentionState.setText(StateUtil.intentionStatus(data.getStatus()));
         }
     }

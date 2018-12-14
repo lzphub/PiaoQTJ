@@ -5,6 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import api.MyServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.setting.R;
@@ -86,8 +87,13 @@ public class EditDataEnActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                super.onError(e);
-                ToastUtils.showShort(e + "");
+                dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
+                    }
+                }
             }
         });
     }

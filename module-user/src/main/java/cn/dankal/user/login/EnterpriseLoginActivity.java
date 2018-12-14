@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import api.UserServiceFactory;
 import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.pojo.UserResponseBody;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.LoginProtocol;
@@ -49,40 +50,24 @@ public class EnterpriseLoginActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        usersLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(LoginProtocol.USERSLOGIN).navigation();
-                finish();
-            }
+        usersLogin.setOnClickListener(v -> {
+            ARouter.getInstance().build(LoginProtocol.USERSLOGIN).navigation();
+            finish();
         });
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(LoginProtocol.REGISTERENTEREMSIL).withString("type", "sign_up").navigation();
+        register.setOnClickListener(v -> ARouter.getInstance().build(LoginProtocol.REGISTERENTEREMSIL).withString("type", "sign_up").navigation());
+        forgetPassword.setOnClickListener(v -> ARouter.getInstance().build(LoginProtocol.REGISTERENTEREMSIL).withString("type", "change_pwd").navigation());
+        btLogin.setOnClickListener(v -> {
+            email = etPhoneNum.getText().toString().trim();
+            if (!StringUtil.checkEmail(email)) {
+                ToastUtils.showShort("账号或密码有误");
+                return;
             }
-        });
-        forgetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(LoginProtocol.REGISTERENTEREMSIL).withString("type", "change_pwd").navigation();
+            pwd = etPasswd.getText().toString().trim();
+            if (pwd == null) {
+                ToastUtils.showShort("账号或密码有误");
+                return;
             }
-        });
-        btLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                email = etPhoneNum.getText().toString().trim();
-                if (!StringUtil.checkEmail(email)) {
-                    ToastUtils.showShort("账号或密码有误");
-                    return;
-                }
-                pwd = etPasswd.getText().toString().trim();
-                if (pwd == null) {
-                    ToastUtils.showShort("账号或密码有误");
-                    return;
-                }
-                Login(email, pwd);
-            }
+            Login(email, pwd);
         });
     }
 
@@ -96,22 +81,33 @@ public class EnterpriseLoginActivity extends BaseActivity {
                 SharedPreferencesUtils.saveString(EnterpriseLoginActivity.this, "identity", "enterprise");
                 finish();
             }
+
+            @Override
+            public void onError(Throwable e) {
+                dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    ToastUtils.showShort((exception.getMsg()));
+                }else {
+                    super.onError(e);
+                }
+            }
         });
     }
 
     private void initView() {
-        login = (TextView) findViewById(R.id.login);
-        tvPhoneNum = (TextView) findViewById(R.id.tv_phone_num);
-        etPhoneNum = (EditText) findViewById(R.id.et_phone_num);
-        dividerPhone = (View) findViewById(R.id.divider_phone);
-        passwd = (TextView) findViewById(R.id.passwd);
-        etPasswd = (EditText) findViewById(R.id.et_passwd);
-        dividerPasswd = (View) findViewById(R.id.divider_passwd);
-        btLogin = (Button) findViewById(R.id.bt_login);
-        rl = (RelativeLayout) findViewById(R.id.rl);
-        usersLogin = (TextView) findViewById(R.id.users_login);
-        or = (TextView) findViewById(R.id.or);
-        register = (TextView) findViewById(R.id.register);
-        forgetPassword = (TextView) findViewById(R.id.forget_password);
+        or = findViewById(R.id.or);
+        rl = findViewById(R.id.rl);
+        login = findViewById(R.id.login);
+        passwd = findViewById(R.id.passwd);
+        btLogin = findViewById(R.id.bt_login);
+        register = findViewById(R.id.register);
+        etPasswd = findViewById(R.id.et_passwd);
+        usersLogin = findViewById(R.id.users_login);
+        tvPhoneNum = findViewById(R.id.tv_phone_num);
+        etPhoneNum = findViewById(R.id.et_phone_num);
+        dividerPhone = findViewById(R.id.divider_phone);
+        dividerPasswd = findViewById(R.id.divider_passwd);
+        forgetPassword = findViewById(R.id.forget_password);
     }
 }

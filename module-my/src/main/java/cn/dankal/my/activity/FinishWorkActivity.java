@@ -30,6 +30,7 @@ import cn.dankal.basiclib.adapter.ImageRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.common.qiniu.QiniuUpload;
 import cn.dankal.basiclib.common.qiniu.UploadHelper;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.ToastUtils;
@@ -66,8 +67,9 @@ public class FinishWorkActivity extends BaseActivity {
     private List<Uri> result = new ArrayList<>();
     private int size = 5;
     private ImageRvAdapter imageRvAdapter;
-    private static List<String> images=new ArrayList<>();
-    private String project_uuid,plan_uuid;
+    private static List<String> images = new ArrayList<>();
+    private String project_uuid, plan_uuid;
+    private int statusId;
 
     @Override
     protected int getLayoutId() {
@@ -77,8 +79,9 @@ public class FinishWorkActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         backImg.setOnClickListener(v -> finish());
-        project_uuid=getIntent().getStringExtra("project_uuid");
-        plan_uuid=getIntent().getStringExtra("plan_uuid");
+        project_uuid = getIntent().getStringExtra("project_uuid");
+        plan_uuid = getIntent().getStringExtra("plan_uuid");
+        statusId = getIntent().getIntExtra("statusId", 0);
         detailsEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -87,7 +90,7 @@ public class FinishWorkActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sizeDetails.setText(detailsEt.getText().toString().trim().length()+"/2000");
+                sizeDetails.setText(detailsEt.getText().toString().trim().length() + "/2000");
             }
 
             @Override
@@ -99,18 +102,53 @@ public class FinishWorkActivity extends BaseActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeServiceFactory.postCompletedDetail(project_uuid,plan_uuid,detailsEt.getText().toString().trim(),images).safeSubscribe(new AbstractDialogSubscriber<String>(FinishWorkActivity.this) {
-                    @Override
-                    public void onNext(String s) {
-                        ARouter.getInstance().build(HomeProtocol.SUBMITIDEA).withInt("type",3).navigation();
-                        finish();
-                    }
+                if (statusId == 4) {
+                    HomeServiceFactory.postCompletedDetail(project_uuid, plan_uuid, detailsEt.getText().toString().trim(), images).safeSubscribe(new AbstractDialogSubscriber<String>(FinishWorkActivity.this) {
+                        @Override
+                        public void onNext(String s) {
+                            ARouter.getInstance().build(HomeProtocol.SUBMITIDEA).withInt("type", 3).navigation();
+                            finish();
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                    }
-                });
+                        @Override
+                        public void onError(Throwable e) {
+                            if (e instanceof LocalException) {
+                                dismissLoadingDialog();
+                                LocalException exception = (LocalException) e;
+                                if (exception.getMsg().equals("cpl_detail不能为空")) {
+                                    ToastUtils.showShort("方案详情不能为空");
+                                }else if (exception.getMsg().equals("cpl_detail长度不符合要求 15,20000")) {
+                                    ToastUtils.showShort("方案详情至少为15个字符");
+                                } else {
+                                    super.onError(e);
+                                }
+                            }
+                        }
+                    });
+                } else if (statusId == 8) {
+                    HomeServiceFactory.updateCompletedDetail(plan_uuid, detailsEt.getText().toString().trim(), images).safeSubscribe(new AbstractDialogSubscriber<String>(FinishWorkActivity.this) {
+                        @Override
+                        public void onNext(String s) {
+                            ARouter.getInstance().build(HomeProtocol.SUBMITIDEA).withInt("type", 3).navigation();
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            if (e instanceof LocalException) {
+                                dismissLoadingDialog();
+                                LocalException exception = (LocalException) e;
+                                if (exception.getMsg().equals("cpl_detail不能为空")) {
+                                    ToastUtils.showShort("方案详情不能为空");
+                                } else if (exception.getMsg().equals("cpl_detail长度不符合要求 15,20000")) {
+                                    ToastUtils.showShort("方案详情至少为15个字符");
+                                } else {
+                                    super.onError(e);
+                                }
+                            }
+                        }
+                    });
+                }
             }
         });
 
@@ -127,25 +165,27 @@ public class FinishWorkActivity extends BaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ResultCode.CheckImageCode) {
             if (data != null) {
-                for(int i = 0; i< Matisse.obtainPathResult(data).size(); i++){
-                    result .add( Matisse.obtainResult(data).get(i));
+                for (int i = 0; i < Matisse.obtainPathResult(data).size(); i++) {
+                    result.add(Matisse.obtainResult(data).get(i));
                 }
-                if(result.size()==size){
+                if (result.size() == size) {
                     addImg.setVisibility(View.INVISIBLE);
                 }
-                images=new ArrayList<>();
-                for(int i=0;i<result.size();i++){
-                    uploadQiniu(result.get(i),this);
+                images = new ArrayList<>();
+                for (int i = 0; i < result.size(); i++) {
+                    uploadQiniu(result.get(i), this);
                 }
-                imageRvAdapter=new ImageRvAdapter(this,result);
+                imageRvAdapter = new ImageRvAdapter(this, result);
                 imgList.setAdapter(imageRvAdapter);
                 imageRvAdapter.setOnClickListener(pos -> {
                     result.remove(pos);
+                    images.remove(pos);
                     imageRvAdapter.UpData(result);
                     addImg.setVisibility(View.VISIBLE);
                 });
@@ -154,13 +194,11 @@ public class FinishWorkActivity extends BaseActivity {
     }
 
     //图片上传至七牛
-    public static void uploadQiniu(Uri uri,Context context){
+    public static void uploadQiniu(Uri uri, Context context) {
         TipDialog loadingDialog;
 
         TipDialog.Builder builder = new TipDialog.Builder(context);
-        loadingDialog = builder
-                .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord("上传图片中").create();
+        loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("上传图片中").create();
         loadingDialog.show();
 
         boolean b = UriUtils.getPath(context, uri) == null;
@@ -169,9 +207,7 @@ public class FinishWorkActivity extends BaseActivity {
             @Override
             public void onSucess(String localPath, String key) {
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS)
-                        .setTipWord("上传成功")
-                        .create(1000);
+                TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("上传成功").create(1000);
                 dialog.show();
                 dialog.dismiss();
                 images.add(key);
@@ -187,9 +223,7 @@ public class FinishWorkActivity extends BaseActivity {
             public void onError(String string) {
                 ToastUtils.showLong(string);
                 loadingDialog.dismiss();
-                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL)
-                        .setTipWord("上传失败")
-                        .create(2000);
+                TipDialog dialog = builder.setIconType(ICON_TYPE_FAIL).setTipWord("上传失败").create(2000);
                 dialog.show();
                 dialog.dismiss();
             }

@@ -112,7 +112,9 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
         tabLayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
+                productTabRvAdapter.getDatas().clear();
                 productTabRvAdapter.updateData(productClassBean.getRoot().get(position).getChildren());
+                productList.setAdapter(productTabRvAdapter);
                 li2stTitle.setText(productClassBean.getRoot().get(position).getName());
                 for(int i=0;i<tabLayout.getTabCount();i++){
                     tabLayout.getTabAt(i).setBackgroundColor(Color.parseColor("#F6F6F6"));

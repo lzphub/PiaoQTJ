@@ -4,9 +4,11 @@ import android.os.CountDownTimer;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,9 +17,12 @@ import api.MyServiceFactory;
 import cn.dankal.address.R;
 import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.bean.EventBusBean;
 import cn.dankal.basiclib.bean.HasNewBean;
+import cn.dankal.basiclib.eventbus.AppBus;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.home.fragment.Home_fragment;
 import cn.dankal.home.fragment.My_fragment;
@@ -35,9 +40,11 @@ public class HomeActivity extends BaseActivity {
     private FragmentTransaction transaction;
 
     private long exitTime = 0;
+    private AppBus appBus;
 
     @Override
     protected int getLayoutId() {
+        appBus=AppBus.getInstance();
         return R.layout.activity_home;
     }
 
@@ -81,6 +88,11 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         downTimer.cancel();
     }
 
@@ -97,8 +109,13 @@ public class HomeActivity extends BaseActivity {
                 @Override
                 public void onNext(HasNewBean hasNewBean) {
                     if(hasNewBean.getHas_new()==1){
-                        ToastUtils.showShort("有新消息了");
+                        appBus.post(new EventBusBean("1"));
+                        SharedPreferencesUtils.saveBoolean(HomeActivity.this,"engineerNewMsg",true);
                     }
+                }
+
+                @Override
+                public void onError(Throwable e) {
                 }
             });
         }

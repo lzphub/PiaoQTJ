@@ -12,18 +12,28 @@ import android.widget.ImageView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 
+
+import java.util.Observable;
+
 import api.MyServiceFactory;
 import cn.dankal.address.R;
 import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
+import cn.dankal.basiclib.bean.EventBusBean;
 import cn.dankal.basiclib.bean.PersonalData_EnBean;
 import cn.dankal.basiclib.bean.PersonalData_EngineerBean;
+import cn.dankal.basiclib.eventbus.AppBus;
+import cn.dankal.basiclib.eventbus.Subscribe;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.basiclib.widget.CircleImageView;
+
 
 public class My_fragment extends BaseFragment {
     private android.widget.ImageView myNews;
@@ -43,10 +53,21 @@ public class My_fragment extends BaseFragment {
     private TextView menuText4;
     private TextView menuText5;
     private String head_pic;
+    private View redDot;
+
+    private AppBus appBus;
 
     @Override
     protected int getLayoutId() {
+        appBus=AppBus.getInstance();
+        appBus.register(this);
         return R.layout.fragment_my;
+    }
+
+    @Override
+    public void onDestroy() {
+        appBus.unregister(this);
+        super.onDestroy();
     }
 
     @Override
@@ -54,11 +75,25 @@ public class My_fragment extends BaseFragment {
 
     }
 
+    @Subscribe
+    public  void eventBusMsg(EventBusBean event){
+        if(event.msg.equals("1")){
+            redDot.setVisibility(View.VISIBLE);
+        }
+    }
+
+
     @Override
     protected void initComponents(View view) {
         initView(view);
+
         type= SharedPreferencesUtils.getString(getContext(),"identity","user");
         if(type.equals("user")){
+            if(SharedPreferencesUtils.getBoolean(getContext(),"userNewMsg",false)){
+                redDot.setVisibility(View.VISIBLE);
+            }else{
+                redDot.setVisibility(View.GONE);
+            }
             getData();
             menuText.setText("MY \nREQUEST");
             menuText2.setText("MY \nINTENTION");
@@ -69,6 +104,11 @@ public class My_fragment extends BaseFragment {
             myPostion.setVisibility(View.INVISIBLE);
         }else{
             getEngineerData();
+            if(SharedPreferencesUtils.getBoolean(getContext(),"engineerNewMsg",false)){
+                redDot.setVisibility(View.VISIBLE);
+            }else{
+                redDot.setVisibility(View.GONE);
+            }
         }
 
         myWorklist.setOnClickListener(v -> {
@@ -108,8 +148,15 @@ public class My_fragment extends BaseFragment {
                 ARouter.getInstance().build(MyProtocol.PERSONALDATA).navigation();
             }
         });
-
-        customer.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.SERVICE).withString("head_pic",head_pic).navigation());
+        customer.setOnClickListener(v -> {
+            redDot.setVisibility(View.GONE);
+            if(type.equals("user")){
+                SharedPreferencesUtils.saveBoolean(getContext(),"userNewMsg",false);
+            }else{
+                SharedPreferencesUtils.saveBoolean(getContext(),"engineerNewMsg",false);
+            }
+            ARouter.getInstance().build(HomeProtocol.SERVICE).withString("head_pic",head_pic).navigation();
+        });
 
     }
 
@@ -129,6 +176,7 @@ public class My_fragment extends BaseFragment {
         menuText3 = view.findViewById(R.id.menu_text3);
         menuText4 = view.findViewById(R.id.menu_text4);
         menuText5 = view.findViewById(R.id.menu_text5);
+        redDot = view.findViewById(R.id.red_dot);
     }
 
     //获取用户信息
@@ -139,6 +187,17 @@ public class My_fragment extends BaseFragment {
                 myName.setText(personalData_enBean.getName());
                 PicUtils.loadAvatar(PicUtils.getUrl(personalData_enBean.getAvatar()),headPic);
                 head_pic=personalData_enBean.getAvatar();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if (exception.getMsg().equals("网络错误")) {
+                        ToastUtils.showShort("Network error");
+                    }
+                }
             }
         });
     }

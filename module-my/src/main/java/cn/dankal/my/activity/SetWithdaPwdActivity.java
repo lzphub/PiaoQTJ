@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import api.MyServiceFactory;
 import cn.dankal.basiclib.ResultCode;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.ActivityUtils;
@@ -81,6 +82,16 @@ public class SetWithdaPwdActivity extends BaseActivity {
                     }
                 });
                 dialog1.show();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if (exception.getMsg().equals("password不能为空")) {
+                        ToastUtils.showShort("密码不能为空");
+                    }
+                }
             }
         });
     }

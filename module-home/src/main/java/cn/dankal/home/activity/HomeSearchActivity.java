@@ -121,7 +121,7 @@ public class HomeSearchActivity extends BaseActivity implements ProductSearchCon
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s!=null){
+                if(s.length()>0){
                     searchLogo.setVisibility(View.GONE);
                     search_delete.setVisibility(View.VISIBLE);
                 }else{
@@ -220,12 +220,12 @@ public class HomeSearchActivity extends BaseActivity implements ProductSearchCon
     public void demandSearchSuccess(DemandListbean demandListbean) {
         ctlSearch.setVisibility(View.GONE);
         demandRvAdapter = new DemandRvAdapter();
-        demandRvAdapter.addMore(demandListbean.getData());
+        demandRvAdapter.updateData(demandListbean.getData());
         searchList.setAdapter(demandRvAdapter);
         demandRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<DemandListbean.DataBean>() {
             @Override
             public void onItemClick(View v, int position, DemandListbean.DataBean data) {
-                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withSerializable("demandData", data).navigation();
+                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withString("project_uuid", data.getUuid()).withString("time",data.getCreate_time()).navigation();
             }
         });
     }

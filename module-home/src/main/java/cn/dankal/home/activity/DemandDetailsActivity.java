@@ -29,7 +29,8 @@ public class DemandDetailsActivity extends BaseActivity implements ProjectDetaCo
     private DemandListbean.DataBean dataBean;
     private String project_uuid;
     private ProjectDetaPersenter projectDetaPersenter;
-    private String time;
+    private String time="";
+    private String plan_uuid="";
 
     @Override
     protected int getLayoutId() {
@@ -41,6 +42,7 @@ public class DemandDetailsActivity extends BaseActivity implements ProjectDetaCo
         initView();
         project_uuid=getIntent().getStringExtra("project_uuid");
         time=getIntent().getStringExtra("time");
+        plan_uuid=getIntent().getStringExtra("plan_uuid");
         projectDetaPersenter=new ProjectDetaPersenter();
         projectDetaPersenter.attachView(this);
         projectDetaPersenter.getProjectData(project_uuid);
@@ -77,7 +79,7 @@ public class DemandDetailsActivity extends BaseActivity implements ProjectDetaCo
         demandTime.setText("交付工期："+projectDataBean.getCpl_start_date()+" ~ "+projectDataBean.getCpl_end_date());
         demandData.loadDataWithBaseURL(null,projectDataBean.getDetail(), "text/html", "UTF-8", null);
 
-        claimBtn.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.CLAIMDEMAND).withSerializable("demandData", projectDataBean).withString("time",time).navigation());
+        claimBtn.setOnClickListener(v -> ARouter.getInstance().build(HomeProtocol.CLAIMDEMAND).withSerializable("demandData", projectDataBean).withString("time",time).withString("plan_uuid",plan_uuid).navigation());
 
     }
 }

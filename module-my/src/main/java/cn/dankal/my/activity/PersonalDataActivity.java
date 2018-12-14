@@ -236,7 +236,9 @@ public class PersonalDataActivity extends BaseActivity {
             public void onNext(PersonalData_EngineerBean personalData_engineerBean) {
                 nameText.setText(personalData_engineerBean.getName());
                 skillsText.setText(personalData_engineerBean.getCompetence());
-                addressText.setText(personalData_engineerBean.getProvince() + personalData_engineerBean.getCity());
+                if(personalData_engineerBean.getProvince()!=null && personalData_engineerBean.getCity()!=null){
+                    addressText.setText(personalData_engineerBean.getProvince() + personalData_engineerBean.getCity());
+                }
                 phoneText.setText(personalData_engineerBean.getMobile());
 
                 PicUtils.loadAvatar(personalData_engineerBean.getAvatar(), headPic);

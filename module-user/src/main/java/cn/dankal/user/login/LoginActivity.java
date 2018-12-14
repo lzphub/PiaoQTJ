@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSON;
 import api.UserServiceFactory;
 import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.pojo.UserResponseBody;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.LoginProtocol;
@@ -104,6 +105,21 @@ public class LoginActivity extends BaseActivity {
               ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
               SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "user");
               finish();
+          }
+
+          @Override
+          public void onError(Throwable e) {
+              dismissLoadingDialog();
+              if (e instanceof LocalException) {
+                  LocalException exception = (LocalException) e;
+                  if(exception.getMsg().equals("账号或密码错误")){
+                      ToastUtils.showShort("Wrong account or password");
+                  }else if(exception.getMsg().equals("网络错误")){
+                      ToastUtils.showShort("Network error");
+                  }else{
+                      super.onError(e);
+                  }
+              }
           }
       });
     }

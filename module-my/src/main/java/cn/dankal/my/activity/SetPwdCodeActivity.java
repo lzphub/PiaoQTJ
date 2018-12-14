@@ -18,6 +18,7 @@ import api.UserServiceFactory;
 import cn.dankal.basiclib.base.BaseView;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.PersonalData_EngineerBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.pojo.CheckCode;
 import cn.dankal.basiclib.protocol.LoginProtocol;
 import cn.dankal.basiclib.protocol.MyProtocol;
@@ -77,7 +78,7 @@ public class SetPwdCodeActivity extends BaseActivity implements BaseView {
         mBtCode.setEnabled(false);
         //倒计时
         mDisposable = Flowable.intervalRange(1, 600, 0, 1, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).doOnNext(aLong -> {
-            mBtCode.setText("OBTAIN(" + (600 - aLong) + ")");
+            mBtCode.setText("OBTAIN(" + (60 - aLong) + ")");
         }).doOnComplete(() -> {
             mBtCode.setEnabled(true);
             mBtCode.setText("GET CODE");
@@ -100,7 +101,11 @@ public class SetPwdCodeActivity extends BaseActivity implements BaseView {
 
                 @Override
                 public void onError(Throwable e) {
-                    ToastUtils.showShort(e + "");
+                    dismissLoadingDialog();
+                    if (e instanceof LocalException) {
+                        LocalException exception = (LocalException) e;
+                        ToastUtils.showShort(exception.getMsg());
+                    }
                 }
 
                 @Override
