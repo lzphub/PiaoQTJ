@@ -305,8 +305,15 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         count = 10;
         banner.setCurrentItem(count, false);
 
+//        downTimer2.start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         downTimer2.start();
     }
+
 
     //轮播图定时
     CountDownTimer downTimer2 = new CountDownTimer(1000000, 3000) {
@@ -331,6 +338,11 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         }
     };
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        downTimer2.cancel();
+    }
 
     @Override
     public void onStop() {
@@ -340,7 +352,6 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        downTimer2.cancel();
     }
 
     @Override

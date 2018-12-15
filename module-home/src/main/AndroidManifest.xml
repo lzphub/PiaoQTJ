@@ -16,7 +16,9 @@
         <activity android:name="cn.dankal.home.activity.DemandDetailsActivity" />
         <activity android:name="cn.dankal.home.activity.DemandClaimActivity" />
         <activity android:name="cn.dankal.home.activity.UserHomeActivity" />
-        <activity android:name="cn.dankal.home.activity.PostRequstActivity" />
+        <activity android:name="cn.dankal.home.activity.PostRequstActivity"
+            android:theme="@style/TransparentTheme"
+            />
         <activity android:name="cn.dankal.home.activity.EnterIntentionActivity" />
         <activity android:name="cn.dankal.home.activity.SubmitIntentionActivity" />
         <activity android:name="cn.dankal.home.activity.ServiceActivity"/>

@@ -182,27 +182,35 @@ public class ChangeAvatarImpl implements ChangeAvatar {
         }
     }
 
+
+
     @Override
     public void onChatPickPhoto(BaseView baseView, String pic, RecyclerView recyclerView, ServiceRvAdapter serviceRvAdapter, List<ChatBean.DataBean> serviceTextBeanList, int requestCode, int resultCode, Intent data) {
         ChatBean.DataBean serviceTextBean = new ChatBean.DataBean();
         switch (requestCode) {
             case RequestCodes.TAKE_PHOTO:
                 Uri takePath = CamerImageBean.getInstance().getPath();
-                serviceTextBean.setContent(takePath.toString());
+
+                serviceTextBean.setContent("/"+takePath.toString().substring(8));
                 serviceTextBean.setType(2);
                 uploadPic3(takePath, baseView);
+
+                serviceTextBeanList.add(serviceTextBean);
+                serviceRvAdapter.update(serviceTextBeanList, takePath.toString());
+                recyclerView.scrollToPosition(serviceTextBeanList.size() - 1);
                 break;
             case RequestCodes.PICK_PHOTO:
                 Uri pickpath = Uri.parse(ImagePathUtil.getImageAbsolutePath(context, data.getData()));
                 serviceTextBean.setContent(pickpath.toString());
                 serviceTextBean.setType(2);
                 uploadPic3(pickpath, baseView);
+
+                serviceTextBeanList.add(serviceTextBean);
+                serviceRvAdapter.update(serviceTextBeanList, pickpath.toString());
+                recyclerView.scrollToPosition(serviceTextBeanList.size() - 1);
                 break;
             default:
         }
-        serviceTextBeanList.add(serviceTextBean);
-        serviceRvAdapter.update(serviceTextBeanList, pic);
-        recyclerView.scrollToPosition(serviceTextBeanList.size() - 1);
     }
 
 
@@ -285,8 +293,15 @@ public class ChangeAvatarImpl implements ChangeAvatar {
     private void uploadPic3(Uri photoUris, BaseView baseView) {
         final File tempFile = new File(photoUris.getPath());
 
+        String type = SharedPreferencesUtils.getString(context, "identity", "user");
         TipDialog.Builder builder = new TipDialog.Builder(context);
-        loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("正在发送").create();
+        if (type.equals("user")) {
+
+            loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("Send...").create();
+        } else {
+
+            loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("正在发送").create();
+        }
         loadingDialog.show();
 
         boolean b = UriUtils.getPath(context, photoUris) == null;
@@ -296,7 +311,6 @@ public class ChangeAvatarImpl implements ChangeAvatar {
             public void onSucess(String localPath, String key) {
                 loadingDialog.dismiss();
 
-                String type = SharedPreferencesUtils.getString(context, "identity", "user");
                 if (type.equals("user")) {
                     MyServiceFactory.userServiceSendMsg(key, 2).safeSubscribe(new AbstractDialogSubscriber<String>(baseView) {
                         @Override

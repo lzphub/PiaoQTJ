@@ -14,6 +14,8 @@ import cn.dankal.basiclib.protocol.LoginProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
+import cn.dankal.basiclib.util.TitleBarUtils;
+import cn.dankal.basiclib.widget.statubar.QMUIStatusBarHelper;
 import cn.dankal.user.R;
 
 import static cn.dankal.basiclib.protocol.LoginProtocol.GUIDELOGIN;
@@ -27,6 +29,14 @@ public class GuideLoginActivity extends BaseActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_guide_login;
+    }
+
+    @Override
+    protected void initStatusBar() {
+        TitleBarUtils.compat(this, getResources().getColor(cn.dankal.basiclib.R.color.colorFF));
+        QMUIStatusBarHelper.setStatusBarDarkMode(this);
+        QMUIStatusBarHelper.translucent(this);
+        QMUIStatusBarHelper.setStatusBarDarkMode(this);
     }
 
     @Override
