@@ -72,7 +72,11 @@ public class RegistrCodeActivity extends BaseActivity {
                 dismissLoadingDialog();
                 if (e instanceof LocalException) {
                     LocalException exception = (LocalException) e;
-                    ToastUtils.showShort((exception.getMsg()));
+                    if(exception.getMsg().equals("code不能为空")) {
+                        ToastUtils.showShort("验证码不能为空");
+                    }else{
+                        ToastUtils.showShort((exception.getMsg()));
+                    }
                 }
             }
         }));

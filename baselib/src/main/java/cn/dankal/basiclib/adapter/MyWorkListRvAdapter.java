@@ -66,6 +66,7 @@ public class MyWorkListRvAdapter extends BaseRecyclerViewAdapter<MyWorkListBean.
             }else if (data.getStatus() == 4) { //认领审核通过
                 statusText.setTextColor(Color.parseColor("#141414"));
                 rlFinish.setVisibility(View.VISIBLE);
+                btFinish.setText("完成工单");
             } else if (data.getStatus() == 5) { //认领审核拒绝
                 statusText.setTextColor(Color.parseColor("#FE3824"));
                 rlFinish.setVisibility(View.VISIBLE);

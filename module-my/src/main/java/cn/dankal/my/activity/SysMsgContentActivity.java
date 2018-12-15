@@ -1,6 +1,7 @@
 package cn.dankal.my.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -39,6 +40,7 @@ public class SysMsgContentActivity extends BaseStateActivity {
 
     @Override
     protected void initComponents() {
+        backImg.setOnClickListener(v -> finish());
         if("user".equals(SharedPreferencesUtils.getString(this,"identity","user"))){
             titleText.setText("SYSTEM MESSAGES");
         }

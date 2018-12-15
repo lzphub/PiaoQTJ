@@ -54,23 +54,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        //自动登录
-        if("user".equals(SharedPreferencesUtils.getString(this, "identity", "user"))){
-            if(DKUserManager.isLogined()){
-                refreshToken();
-                ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
-                SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "user");
-                finish();
-            }
-        }else{
-            if(DKUserManager.isLogined()){
-//                engRefreshToken();
-                Logger.d("tokento",DKUserManager.getUserToken().getAccessToken());
-                ARouter.getInstance().build(HomeProtocol.HOMEACTIVITY).navigation();
-                SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "enterprise");
-                finish();
-            }
-        }
+
 
         enterpriseLogin.setOnClickListener(v -> {
             ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
@@ -124,26 +108,7 @@ public class LoginActivity extends BaseActivity {
       });
     }
 
-    /**
-     * 刷新token
-     */
-    private void refreshToken(){
-        UserServiceFactory.refreshtoken(DKUserManager.getUserToken().getRefreshToken()).safeSubscribe(new AbstractDialogSubscriber<UserResponseBody.TokenBean>(this) {
-            @Override
-            public void onNext(UserResponseBody.TokenBean tokenBean) {
-                DKUserManager.updateUserToken(tokenBean);
-                Logger.d("tokento",tokenBean.getAccessToken());
-            }
-        });
-    }
-    private void engRefreshToken(){
-        UserServiceFactory.engineerRefreshtoken(DKUserManager.getUserToken().getRefreshToken()).safeSubscribe(new AbstractDialogSubscriber<UserResponseBody.TokenBean>(this) {
-            @Override
-            public void onNext(UserResponseBody.TokenBean tokenBean) {
-                DKUserManager.updateUserToken(tokenBean);
-            }
-        });
-    }
+
 
     private void initView() {
         etPhoneNum = findViewById(R.id.et_phone_num);

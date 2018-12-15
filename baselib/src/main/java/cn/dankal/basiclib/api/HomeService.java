@@ -1,7 +1,6 @@
 package cn.dankal.basiclib.api;
 
 
-
 import java.util.List;
 
 import cn.dankal.basiclib.bean.DemandListbean;
@@ -41,10 +40,10 @@ public interface HomeService {
     Observable<ProductClassifyBean> getCatTree();
 
     /**
-     *最新产品
+     * 最新产品
      */
     @GET("customer/home/getproduct")
-    Observable<ProductHomeListBean> getProduct(@Query("page_index")int page_index, @Query(" page_size")int  page_size);
+    Observable<ProductHomeListBean> getProduct(@Query("page_index") int page_index, @Query(" page_size") int page_size);
 
     /**
      * 用户端轮播图
@@ -62,58 +61,58 @@ public interface HomeService {
      * 首页需求
      */
     @GET("engineer/home/getproject")
-    Observable<DemandListbean> getDemandList(@Query("page_index")int page_index,@Query(" page_size")int  page_size);
+    Observable<DemandListbean> getDemandList(@Query("page_index") int page_index, @Query("page_size") int page_size);
 
     /**
-     *  首页需求详情
+     * 首页需求详情
      */
     @GET("engineer/home/getprojectdetail/{project_uuid}")
-    Observable<ProjectDataBean> getDemandDeta(@Path("project_uuid")String project_uuid);
+    Observable<ProjectDataBean> getDemandDeta(@Path("project_uuid") String project_uuid);
 
     /**
      * 工单列表
      */
     @GET("engineer/me/getprojectlist")
-    Observable<MyWorkListBean> getWorkList(@Query("page_index")String page_index, @Query("page_size")String page_size, @Query("status")String status);
+    Observable<MyWorkListBean> getWorkList(@Query("page_index") String page_index, @Query("page_size") String page_size, @Query("status") String status);
 
     /**
      * 工单详情
      */
     @GET("engineer/me/getprojectdetail/{project_uuid}")
-    Observable<MyWorkDataBean> getWorkData(@Path("project_uuid")String project_uuid);
+    Observable<MyWorkDataBean> getWorkData(@Path("project_uuid") String project_uuid);
 
     /**
-     *  完成工单
+     * 完成工单
      */
     @POST("engineer/me/postCompletedDetail")
     @FormUrlEncoded
-    Observable<String> postCompletedDetail(@Field("project_uuid")String project_uuid,@Field("plan_uuid")String plan_uuid,@Field("cpl_detail")String cpl_detail,@Field("cpl_images[]")List<String> cpl_images);
+    Observable<String> postCompletedDetail(@Field("project_uuid") String project_uuid, @Field("plan_uuid") String plan_uuid, @Field("cpl_detail") String cpl_detail, @Field("cpl_images[]") List<String> cpl_images);
 
     /**
-     *  重新提交完成工单
+     * 重新提交完成工单
      */
     @POST("engineer/Me/updateCompletedDetail")
     @FormUrlEncoded
-    Observable<String> updateCompletedDetail(@Field("plan_uuid") String plan_uuid,@Field("cpl_detail")String cpl_detail,@Field("cpl_images[]")List<String> cpl_images);
+    Observable<String> updateCompletedDetail(@Field("plan_uuid") String plan_uuid, @Field("cpl_detail") String cpl_detail, @Field("cpl_images[]") List<String> cpl_images);
 
     /**
      * 认领需求
      */
     @POST("engineer/home/postplan")
     @FormUrlEncoded
-    Observable<String> postplan(@Field("project_uuid")String project_uuid, @Field("plan_detail")String plan_detail, @Field("plan_images[]")List<String> plan_images);
+    Observable<String> postplan(@Field("project_uuid") String project_uuid, @Field("plan_detail") String plan_detail, @Field("plan_images[]") List<String> plan_images);
 
     /**
      * 重新认领需求
      */
     @POST("engineer/Home/updatePlan")
     @FormUrlEncoded
-    Observable<String> rePostplan(@Field("plan_uuid")String plan_uuid,@Field("plan_detail")String plan_detail,@Field("plan_images[]")List<String> plan_images);
+    Observable<String> rePostplan(@Field("plan_uuid") String plan_uuid, @Field("plan_detail") String plan_detail, @Field("plan_images[]") List<String> plan_images);
 
     /**
-     *  发布创意
+     * 发布创意
      */
     @POST("engineer/home/postidea")
     @FormUrlEncoded
-    Observable<String> postidea(@Field("title")String title,@Field("detail")String detail,@Field("images[]")List<String> iamges);
+    Observable<String> postidea(@Field("title") String title, @Field("detail") String detail, @Field("images[]") List<String> iamges);
 }

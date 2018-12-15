@@ -27,6 +27,7 @@ import cn.dankal.basiclib.base.activity.BaseStateActivity;
 import cn.dankal.basiclib.base.activity.BigPhotoActivity;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.MyWorkDataBean;
+import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.StateUtil;
@@ -106,6 +107,18 @@ public class MyWorkListDataActivity extends BaseStateActivity implements WorkDat
         initSc();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        workDataPersenter.getWorkData(orderId);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initSc() {
         scScroll.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
@@ -173,7 +186,13 @@ public class MyWorkListDataActivity extends BaseStateActivity implements WorkDat
             }
         });
 
-        tvFinish.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.FINISHWORK).withString("project_uuid", myWorkDataBean.getProject().getUuid()).withString("plan_uuid", myWorkDataBean.getPlan().get(0).getPlan_uuid()).withInt("statusId", statusId).navigation());
+        tvFinish.setOnClickListener(v -> {
+            if(tvFinish.getText().equals("重新提交") | tvFinish.getText().equals("完成工单")){
+                ARouter.getInstance().build(MyProtocol.FINISHWORK).withString("project_uuid", myWorkDataBean.getProject().getUuid()).withString("plan_uuid",  myWorkDataBean.getPlan().get(0).getPlan_uuid()).withInt("statusId", statusId).navigation();
+            }else if(tvFinish.getText().equals("重新认领")){
+                ARouter.getInstance().build(HomeProtocol.DEMANDDETA).withString("project_uuid", myWorkDataBean.getProject().getUuid()).withString("plan_uuid", myWorkDataBean.getPlan().get(0).getPlan_uuid()).navigation();
+            }
+        });
 
         //完成审核拒绝
         if (statusId == 8) {
@@ -229,6 +248,8 @@ public class MyWorkListDataActivity extends BaseStateActivity implements WorkDat
             tvClaimRefused.setVisibility(View.VISIBLE);
             tvClaimRefusedDetails.setVisibility(View.VISIBLE);
             tvClaimRefusedDetails.loadDataWithBaseURL(null, myWorkDataBean.getPlan().get(0).getRefuse_reason(), "text/html", "UTF-8", null);
+            tvFinish.setVisibility(View.VISIBLE);
+            tvFinish.setText("重新认领");
             return;
         }
 
@@ -238,6 +259,13 @@ public class MyWorkListDataActivity extends BaseStateActivity implements WorkDat
             return;
         }
 
+        //认领审核中
+        if(statusId==3){
+            tvFinish.setVisibility(View.GONE);
+            tvClaimRefusedDetails.setVisibility(View.GONE);
+            tvClaimRefused.setVisibility(View.GONE);
+            return;
+        }
     }
 
     private void imgReset(WebView webView) {

@@ -17,4 +17,5 @@ dependencies {
 
     //垂直tablayout
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'
+    api project(path: ':module-my')
 }

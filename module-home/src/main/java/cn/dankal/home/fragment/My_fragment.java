@@ -88,7 +88,7 @@ public class My_fragment extends BaseFragment {
         initView(view);
 
         type= SharedPreferencesUtils.getString(getContext(),"identity","user");
-        if(type.equals("user")){
+        if("user".equals(type)){
             if(SharedPreferencesUtils.getBoolean(getContext(),"userNewMsg",false)){
                 redDot.setVisibility(View.VISIBLE);
             }else{

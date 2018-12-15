@@ -12,6 +12,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import cn.dankal.address.R;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.util.ActivityUtils;
+import cn.dankal.my.activity.MyWorkListDataActivity;
 
 import static cn.dankal.basiclib.protocol.HomeProtocol.SUBMITIDEA;
 
@@ -43,6 +44,9 @@ public class SubmitIdeaActivity extends BaseActivity {
             finish();
             if(ActivityUtils.isActivityExistsInStack(DemandDetailsActivity.class)){
                 ActivityUtils.finishActivity(DemandDetailsActivity.class);
+            }
+            if(ActivityUtils.isActivityExistsInStack(MyWorkListDataActivity.class)){
+                ActivityUtils.finishActivity(MyWorkListDataActivity.class);
             }
         });
     }

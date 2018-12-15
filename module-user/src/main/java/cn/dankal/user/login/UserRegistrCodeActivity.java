@@ -85,6 +85,8 @@ public class UserRegistrCodeActivity extends BaseActivity {
                             ToastUtils.showShort("CODE ERROR");
                         }else if(exception.getMsg().equals("网络错误")){
                             ToastUtils.showShort("Network error");
+                        }else if(exception.getMsg().equals("code不能为空")) {
+                            ToastUtils.showShort("The verification code cannot be empty");
                         }
                     }
                 }

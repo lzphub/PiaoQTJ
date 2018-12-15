@@ -13,6 +13,7 @@
         <activity android:name=".login.UserRegistrActivity" />
         <activity android:name=".login.UserRegistrCodeActivity" />
         <activity android:name=".login.UserSetPwdActivity" />
+        <activity android:name=".login.GuideLoginActivity"></activity>
     </application>
 
 </manifest>

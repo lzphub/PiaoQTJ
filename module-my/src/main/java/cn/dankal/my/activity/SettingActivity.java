@@ -58,11 +58,7 @@ public class SettingActivity extends BaseActivity {
         loginOut.setOnClickListener(v -> {
             DKUserManager.resetToken();
             DKUserManager.resetUserInfo();
-            if (type.equals("user")) {
-                ARouter.getInstance().build(LoginProtocol.USERSLOGIN).navigation();
-            } else {
-                ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
-            }
+            ARouter.getInstance().build(LoginProtocol.GUIDELOGIN).navigation();
             ActivityUtils.finishAllActivities();
         });
 
@@ -71,9 +67,9 @@ public class SettingActivity extends BaseActivity {
             CacheManager.cleanCache(SettingActivity.this, SDCacheDir.getInstance(SettingActivity.this).cachepath2);
             CacheManager.cleanCache(SettingActivity.this, SDCacheDir.getInstance(SettingActivity.this).filesDir);
             CacheManager.cleanCache(SettingActivity.this, SDCacheDir.getInstance(SettingActivity.this).filesDir2);
-            if(type.equals("user")){
+            if (type.equals("user")) {
                 ToastUtils.showShort("Clean Up");
-            }else{
+            } else {
                 ToastUtils.showShort("清理完成");
             }
         });

@@ -52,9 +52,9 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContac
     private android.widget.TextView allWith;
     private android.widget.Button withBtn;
 
-    private String cardNum = "6222600260001072444";
-    private String cashMoney = "100";
-    private String kBean;
+    private String cardNum = "";
+    private String cashMoney = "1";
+    private String kBean="0";
     private TextView bankCardText;
     private TextView rmbLogo;
     private TextView rmbLogo2;

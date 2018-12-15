@@ -56,7 +56,12 @@ public class SetWithdaPwdActivity extends BaseActivity {
         email = getIntent().getStringExtra("email");
         backImg.setOnClickListener(v -> finish());
         btNext.setOnClickListener(v -> {
+
             if (etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())) {
+                if(etPasswd.getText().toString().length()!=6){
+                    ToastUtils.showShort("请输入6位密码");
+                    return;
+                }
                 setPwd(etPasswd.getText().toString().trim());
             } else {
                 ToastUtils.showShort("两次输入不一致");

@@ -111,7 +111,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         identity = SharedPreferencesUtils.getString(getContext(), "identity", "enterprise");
         initRv();
         SpannableString spannableString = null;
-        if (identity.equals("enterprise")) {
+        if ("enterprise".equals(identity)) {
             spannableString = new SpannableString("最新需求");
             ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.home_green));
             spannableString.setSpan(colorSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -190,7 +190,7 @@ public class Home_fragment extends BaseFragment implements ProductHomeContact.ph
         demandList.setHasFixedSize(true);
         productHomePresenter = ProductHomePresenter.getPresenter();
         productHomePresenter.attachView(this);
-        if (identity.equals("enterprise")) {
+        if ("enterprise".equals(identity)) {
             productHomePresenter.getEngData(page, 3);
             productHomePresenter.getEngBanner();
             swipeToloadLayout.setOnRefreshListener(() -> {
