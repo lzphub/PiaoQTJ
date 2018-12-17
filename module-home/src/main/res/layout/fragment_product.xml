@@ -58,16 +58,23 @@
         android:background="@color/colorF6"
         android:orientation="vertical">
 
-        <q.rorbin.verticaltablayout.VerticalTabLayout
+        <cn.dankal.basiclib.widget.VerticalTablayout.VerticalTabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:indicator_color="@color/login_btn_bg"
-            app:indicator_gravity="left"
-            app:indicator_width="4dp"
-            app:tab_height="50dp"
-            app:tab_mode="scrollable"
-            app:tab_margin="5dp"/>
+            android:layout_height="match_parent"
+            android:background="@color/colorF6"
+            app:dividerColor="@color/colorE5"
+            app:dividerHeight="1px"
+            app:tabHeight="50dp"
+            app:tabIndicatorColor="@color/login_btn_bg"
+            app:tabIndicatorGravity="left"
+            app:tabIndicatorWidth="5dp"
+            app:tabSelectedTextColor="@color/login_btn_bg"
+            app:tabTextColor="@color/color99"
+            app:tabTextSize="13sp"
+            app:tabViewGravity="left"
+            app:unSelectBgColor="@color/colorF6"
+            app:selectBgColor="@color/colorFF"/>
 
     </LinearLayout>
 

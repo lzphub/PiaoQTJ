@@ -17,9 +17,6 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,16 +27,11 @@ import cn.dankal.basiclib.adapter.ProductTabRvAdapter;
 import cn.dankal.basiclib.base.fragment.BaseFragment;
 import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.bean.ProductClassifyBean;
-import cn.dankal.basiclib.bean.ProductTabBean;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.ProductProtocol;
-import cn.dankal.basiclib.util.DisplayHelper;
+import cn.dankal.basiclib.widget.VerticalTablayout.VerticalTabLayout;
 import cn.dankal.home.persenter.ProductClassifyContact;
 import cn.dankal.home.persenter.ProductClassifyPresenter;
-import q.rorbin.verticaltablayout.VerticalTabLayout;
-import q.rorbin.verticaltablayout.adapter.TabAdapter;
-import q.rorbin.verticaltablayout.widget.ITabView;
-import q.rorbin.verticaltablayout.widget.TabView;
 
 public class Product_fragment extends BaseFragment implements ProductClassifyContact.pcview {
     @BindView(R2.id.logo_img)
@@ -108,61 +100,29 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
                 ARouter.getInstance().build(ProductProtocol.SCREEN).withString("uuid", data.getUuid()).navigation();
             }
         });
+        for (int i = 0; i < productClassifyBean.getRoot().size(); i++) {
+            tabLayout.addTab(tabLayout.newTab().setText(productClassifyBean.getRoot().get(i).getName()));
+        }
+        if(productClassifyBean.getRoot()!=null){
+            tabLayout.setSelectedTab(0);
+            li2stTitle.setText(productClassBean.getRoot().get(0).getName());
+        }
 
-        tabLayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
+        tabLayout.setOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabView tab, int position) {
+            public void onTabSelected(VerticalTabLayout.Tab tab, int position) {
                 productTabRvAdapter.getDatas().clear();
                 productTabRvAdapter.updateData(productClassBean.getRoot().get(position).getChildren());
                 productList.setAdapter(productTabRvAdapter);
                 li2stTitle.setText(productClassBean.getRoot().get(position).getName());
-                for(int i=0;i<tabLayout.getTabCount();i++){
-                    tabLayout.getTabAt(i).setBackgroundColor(Color.parseColor("#F6F6F6"));
-                }
-                tab.setBackgroundColor(Color.WHITE);
             }
 
             @Override
-            public void onTabReselected(TabView tab, int position) {
+            public void onTabReleased(VerticalTabLayout.Tab tab, int position) {
 
             }
         });
 
-        tabLayout.setTabAdapter(new TabAdapter() {
-            @Override
-            public int getCount() {
-                return productClassifyBean.getRoot().size();
-            }
-
-            @Override
-            public ITabView.TabBadge getBadge(int position) {
-                return null;
-            }
-
-            @Override
-            public ITabView.TabIcon getIcon(int position) {
-                return null;
-            }
-
-            @Override
-            public ITabView.TabTitle getTitle(int position) {
-                return new ITabView.TabTitle.Builder()
-                        .setContent(productClassifyBean.getRoot().get(position).getName())
-                        .setTextColor(Color.parseColor("#6fba27"), Color.parseColor("#999999"))
-                        .setTextSize(13)
-                        .build();
-            }
-
-            @Override
-            public int getBackground(int position) {
-                return 0;
-            }
-        });
-
-        if(tabLayout!=null){
-            tabLayout.getTabAt(0).setBackgroundColor(Color.WHITE);
-            li2stTitle.setText(tabLayout.getTabAt(0).getTitle().getContent());
-        }
     }
 
     @Override

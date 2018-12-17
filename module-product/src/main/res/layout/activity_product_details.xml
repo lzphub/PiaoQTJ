@@ -96,14 +96,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.xuezj.cardbanner.CardBanner
-                android:id="@+id/banner"
+            <!--<com.xuezj.cardbanner.CardBanner-->
+                <!--android:id="@+id/banner"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="309dp"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--app:border_width="0dp"-->
+                <!--app:subtitle_title_text_color="#666666"-->
+                <!--app:subtitle_title_text_size="15sp" />-->
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="309dp"
-                android:layout_gravity="center_horizontal"
-                app:border_width="0dp"
-                app:subtitle_title_text_color="#666666"
-                app:subtitle_title_text_size="15sp" />
+                android:layout_height="309dp">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/tv_banner_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="1/2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="31dp"
+                    android:layout_marginRight="23dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/color66"/>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="350dp"

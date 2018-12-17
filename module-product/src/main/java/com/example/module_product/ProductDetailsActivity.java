@@ -8,9 +8,11 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,8 +20,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -41,10 +45,15 @@ import com.xuezj.cardbanner.CardBanner;
 import com.xuezj.cardbanner.ImageData;
 import com.xuezj.cardbanner.imageloader.CardImageLoader;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.dankal.basiclib.CardTransformer;
+import cn.dankal.basiclib.FixedSpeedScroller;
 import cn.dankal.basiclib.adapter.OnlyImgRvAdapter;
+import cn.dankal.basiclib.adapter.ProductBannerAdapter;
+import cn.dankal.basiclib.adapter.ViewPagerAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.ProductDataBean;
 import cn.dankal.basiclib.exception.LocalException;
@@ -68,7 +77,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
     private CheckBox collImg;
     private android.widget.Button serviceBtn;
     private android.widget.Button purchaseBtn;
-    private com.xuezj.cardbanner.CardBanner banner;
+    private ViewPager banner;
     private android.widget.TextView productPrice;
     private android.widget.TextView productName;
     private android.widget.TextView productContent;
@@ -81,6 +90,10 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
     private ProductDataPresenter productDataPresenter = ProductDataPresenter.getPSPresenter();
     private WebView tvDetail;
     private boolean allow = true;
+
+    private ProductBannerAdapter mAdapter;
+    private int count;
+    private TextView tvBannerNum;
 
 
     @Override
@@ -141,6 +154,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
                 imgReset(view);
             }
         });
+        tvBannerNum = findViewById(R.id.tv_banner_num);
     }
 
     private void imgReset(WebView webView) {
@@ -184,24 +198,74 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        banner.stopAutoPlay();
+        downTimer2.cancel();
     }
 
     @Override
     public void getDataSuccess(ProductDataBean productDataBean) {
-        List<ImageData> imgurl = new ArrayList<>();
-        for (int i = 0; i < productDataBean.getImages().size(); i++) {
-            ImageData img1 = new ImageData();
-            img1.setImage(PicUtils.getUrl(productDataBean.getImages().get(i)));
-            img1.setSubtitleTitle(i + 1 + "/" + productDataBean.getImages().size());
-            imgurl.add(img1);
+
+        banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tvBannerNum.setText((position%productDataBean.getImages().size())+1+"/"+productDataBean.getImages().size());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        List<ImageView> imageViews = new ArrayList<>();
+
+        for (int i = 0; i < 200 * productDataBean.getImages().size(); i++) {
+            ImageView imageView = new ImageView(this);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            Glide.with(this).load(PicUtils.getUrl( productDataBean.getImages().get(i %  productDataBean.getImages().size()))).into(imageView);
+            imageViews.add(imageView);
+            final int finalI = i;
         }
+        mAdapter = new ProductBannerAdapter(ProductDetailsActivity.this, productDataBean.getImages(), imageViews);
+
+
+        banner.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_MOVE:
+                    try {
+                        Field field = ViewPager.class.getDeclaredField("mScroller");
+                        field.setAccessible(true);
+                        FixedSpeedScroller scroller = new FixedSpeedScroller(banner.getContext(), new AccelerateInterpolator());
+                        field.set(banner, scroller);
+                        scroller.setmDuration(100);
+                    } catch (Exception e) {
+                    }
+                    break;
+            }
+            return false;
+        });
+
+        banner.setOffscreenPageLimit(4);
+        banner.setPageMargin(10);
+        banner.setAdapter(mAdapter);
+
+        count = productDataBean.getImages().size()*20;
+        banner.setCurrentItem(count, false);
+
+        if(productDataBean.getImages().size()>1){
+            downTimer2.start();
+        }
+
         if(productDataBean.getVedio()!=null){
             productVideo.setUp(PicUtils.getUrl(productDataBean.getVedio()), JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, productDataBean.getVedioname());
         }else{
             productVideo.setVisibility(View.GONE);
         }
-        banner.setDatas(imgurl).setPlay(true).setCardImageLoader((context, imageView, path) -> Glide.with(context).load(path).into(imageView)).start();
+
         productName.setText(productDataBean.getName());
 
         productPrice.setText("$"+ StringUtil.isDigits(productDataBean.getPrice()));
@@ -216,6 +280,29 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
             collImg.setChecked(false);
         }
     }
+
+    //轮播图定时
+    CountDownTimer downTimer2 = new CountDownTimer(1000000, 3000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            try {
+                Field field = ViewPager.class.getDeclaredField("mScroller");
+                field.setAccessible(true);
+                FixedSpeedScroller scroller = new FixedSpeedScroller(banner.getContext(), new AccelerateInterpolator());
+                field.set(banner, scroller);
+                scroller.setmDuration(1000);
+            } catch (Exception e) {
+
+            }
+            banner.setCurrentItem(count, true);
+            count++;
+        }
+
+        @Override
+        public void onFinish() {
+            downTimer2.start();
+        }
+    };
 
     @Override
     public void getDataFail(LocalException exception) {
