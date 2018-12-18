@@ -97,17 +97,14 @@ public class ServiceRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 break;
             case 3:
                 setImgMsg((MyImgHolder) holder, serviceTextBean);
+                ((MyImgHolder) holder).senimg.setOnClickListener(v -> mItemClickListener.onItemClick(v,serviceTextBeanList1.get(position).getType(),position));
                 break;
             case 4:
                 setImgMsg((MyImgHolder) holder, serviceTextBean);
+                ((MyImgHolder) holder).senimg.setOnClickListener(v -> mItemClickListener.onItemClick(v,serviceTextBeanList1.get(position).getType(),position));
                 break;
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mItemClickListener.onItemClick(v,serviceTextBeanList1.get(position).getType(),position);
-            }
-        });
+
     }
 
     @Override

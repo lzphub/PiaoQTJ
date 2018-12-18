@@ -83,6 +83,7 @@
                 android:textColorHint="@color/color99"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:textColor="@color/color99"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_size" />
@@ -279,6 +280,7 @@
                     android:layout_marginTop="67dp"
                     android:layout_marginRight="23dp"
                     android:background="@null"
+                    android:textColor="@color/color99"
                     android:hint="PLEASE FILL IN THE REQUIREMENT."
                     android:textSize="20sp"
                     android:textStyle="bold"/>

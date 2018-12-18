@@ -1,19 +1,31 @@
 package cn.dankal.home.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.*;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.zhihu.matisse.Matisse;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +50,7 @@ import static cn.dankal.basiclib.protocol.HomeProtocol.HOMERELEASE;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
 
 @Route(path = HOMERELEASE)
-public class ReleaseIdeaActivity extends BaseActivity {
+public class ReleaseIdeaActivity extends BaseActivity implements View.OnClickListener {
 
     private android.widget.Button submitBtn;
     private android.widget.ImageView backImg;
@@ -53,6 +65,11 @@ public class ReleaseIdeaActivity extends BaseActivity {
     private int size = 5;
     private ImageRvAdapter imageRvAdapter;
     private static List<String> images = new ArrayList<>();
+    private AlertDialog DIALOG;
+
+    private File cameraSavePath;//拍照照片路径
+    private Uri uri;//照片uri
+    private String photoPath;
 
     @Override
     protected int getLayoutId() {
@@ -130,7 +147,7 @@ public class ReleaseIdeaActivity extends BaseActivity {
             }
         }));
 
-        addImg.setOnClickListener(v -> CheckImage.takePhotoPicker(ReleaseIdeaActivity.this, size - result.size()));
+        addImg.setOnClickListener(v -> beginCameraDialog());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -149,21 +166,45 @@ public class ReleaseIdeaActivity extends BaseActivity {
         detailsEt = findViewById(R.id.details_et);
     }
 
+
+    public void beginCameraDialog() {
+
+        DIALOG = new AlertDialog.Builder(this).create();
+        DIALOG.show();
+        final Window window = DIALOG.getWindow();
+        if (window != null) {
+            window.setContentView(cn.dankal.basiclib.R.layout.dialog_photo_picker);
+            window.setGravity(Gravity.BOTTOM);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            //设置属性
+            final WindowManager.LayoutParams params = window.getAttributes();
+            params.width = WindowManager.LayoutParams.MATCH_PARENT;
+            //弹出一个窗口，让背后的窗口变暗一点
+            params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            //dialog背景层
+            params.dimAmount = 0.5f;
+            window.setAttributes(params);
+
+            AppCompatButton appCompatButton = window.findViewById(cn.dankal.basiclib.R.id.photodialog_btn_cancel);
+            AppCompatButton appCompatButton1 = window.findViewById(cn.dankal.basiclib.R.id.photodialog_btn_take);
+            AppCompatButton appCompatButton2 = window.findViewById(cn.dankal.basiclib.R.id.photodialog_btn_native);
+
+            appCompatButton.setOnClickListener(this);
+            appCompatButton1.setOnClickListener(this);
+            appCompatButton2.setOnClickListener(this);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ResultCode.CheckImageCode) {
             if (data != null) {
-                for (int i = 0; i < Matisse.obtainPathResult(data).size(); i++) {
-                    result.add(Matisse.obtainResult(data).get(i));
-                }
+                result.add(Matisse.obtainResult(data).get(0));
                 if (result.size() == size) {
                     addImg.setVisibility(View.INVISIBLE);
                 }
-                images = new ArrayList<>();
-                for (int i = 0; i < result.size(); i++) {
-                    uploadQiniu(result.get(i), this);
-                }
+                uploadQiniu(result.get(result.size() - 1), this);
                 imageRvAdapter = new ImageRvAdapter(this, result);
                 imgList.setAdapter(imageRvAdapter);
                 imageRvAdapter.setOnClickListener(pos -> {
@@ -173,7 +214,31 @@ public class ReleaseIdeaActivity extends BaseActivity {
                     addImg.setVisibility(View.VISIBLE);
                 });
             }
+            return;
         }
+
+        if(requestCode==ResultCode.TakeImageCode){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                photoPath = String.valueOf(cameraSavePath);
+            } else {
+                photoPath = uri.getEncodedPath();
+            }
+
+            result.add(Uri.parse("file:///" + photoPath));
+            if (result.size() == size) {
+                addImg.setVisibility(View.INVISIBLE);
+            }
+            uploadQiniu(result.get(result.size()-1), this);
+            imageRvAdapter = new ImageRvAdapter(this, result);
+            imgList.setAdapter(imageRvAdapter);
+            imageRvAdapter.setOnClickListener(pos -> {
+                result.remove(pos);
+                images.remove(pos);
+                imageRvAdapter.UpData(result);
+                addImg.setVisibility(View.VISIBLE);
+            });
+        }
+        return;
     }
 
     //图片上传至七牛
@@ -212,5 +277,35 @@ public class ReleaseIdeaActivity extends BaseActivity {
                 dialog.dismiss();
             }
         }, b ? uri.getPath() : UriUtils.getPath(context, uri));
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i=v.getId();
+        if(i==R.id.photodialog_btn_take){
+            goCamera();
+            DIALOG.cancel();
+        }else if(i==R.id.photodialog_btn_native){
+            CheckImage.takePhotoPicker(ReleaseIdeaActivity.this, size - result.size());
+            DIALOG.cancel();
+        }else if(i==R.id.photodialog_btn_cancel){
+            DIALOG.cancel();
+        }
+    }
+
+    //激活相机操作
+    private void goCamera() {
+        cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //第二个参数为 包名.fileprovider
+            uri = FileProvider.getUriForFile(ReleaseIdeaActivity.this, "cn.dankal.basiclib.fileprovider", cameraSavePath);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            uri = Uri.fromFile(cameraSavePath);
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        ReleaseIdeaActivity.this.startActivityForResult(intent, ResultCode.TakeImageCode);
     }
 }

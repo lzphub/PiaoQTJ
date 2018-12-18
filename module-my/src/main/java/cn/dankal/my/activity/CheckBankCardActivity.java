@@ -39,7 +39,6 @@ public class CheckBankCardActivity extends BaseActivity implements BankCardConta
     private android.widget.Button addBtn;
     private BankCardPersenter bankCardPersenter=BankCardPersenter.getBankCardPersenter();
     private CheckBankCarkAdapter checkBankCarkAdapter;
-    private BankCardListBean bankCardListBean2=new BankCardListBean();
 
     @Override
     protected int getLayoutId() {
@@ -74,7 +73,6 @@ public class CheckBankCardActivity extends BaseActivity implements BankCardConta
         cardList.setLayoutManager(linearLayoutManager);
         checkBankCarkAdapter=new CheckBankCarkAdapter(bankCardListBean);
         cardList.setAdapter(checkBankCarkAdapter);
-        bankCardListBean2=bankCardListBean;
         checkBankCarkAdapter.setOnItemClickLitener(new CheckBankCarkAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {

@@ -228,7 +228,6 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDataC
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             Glide.with(this).load(PicUtils.getUrl( productDataBean.getImages().get(i %  productDataBean.getImages().size()))).into(imageView);
             imageViews.add(imageView);
-            final int finalI = i;
         }
         mAdapter = new ProductBannerAdapter(ProductDetailsActivity.this, productDataBean.getImages(), imageViews);
 

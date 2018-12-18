@@ -22,11 +22,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.text.DecimalFormat;
 import java.util.List;
 
 import api.MyServiceFactory;
 import cn.dankal.basiclib.BuildConfig;
+import cn.dankal.basiclib.adapter.ImageRvAdapter;
 import cn.dankal.basiclib.adapter.ServiceRvAdapter;
 import cn.dankal.basiclib.base.BaseView;
 import cn.dankal.basiclib.base.callback.DKCallBack;
@@ -45,6 +48,9 @@ import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.util.UriUtils;
 import cn.dankal.basiclib.util.image.PicUtils;
 import cn.dankal.basiclib.widget.TipDialog;
+import top.zibin.luban.CompressionPredicate;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 import static cn.dankal.basiclib.common.camera.RequestCodes.PICTURE_CUT;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
@@ -108,12 +114,25 @@ public class ChangeAvatarImpl implements ChangeAvatar {
                 startPhotoZoom(temUri, 400, 400);
                 break;
             case RequestCodes.PICTURE_CUT:
-//                if (data.getData() == null) {
-//                    uri = CamerImageBean.getInstance().getPath();
-//                } else {
-//                    uri = Uri.parse(ImagePathUtil.getImageAbsolutePath(context, data.getData()));
-//                }
-                uploadPic(data.getData(), personalData_enBean);
+                Luban.with(context)
+                        .load(data.getData())
+                        .ignoreBy(100)
+                        .setCompressListener(new OnCompressListener() {
+                            @Override
+                            public void onStart() {
+
+                            }
+
+                            @Override
+                            public void onSuccess(File file) {
+                                uploadPic(Uri.parse(file.getPath()), personalData_enBean);
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+                        }).launch();
             default:
         }
     }
@@ -182,8 +201,30 @@ public class ChangeAvatarImpl implements ChangeAvatar {
         }
     }
 
+    private void luBanPhoto(Uri file,BaseView baseView){
+        Luban.with(context)
+                .load(file)
+                .ignoreBy(100)
+                .filter(path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif")))
+                .setCompressListener(new OnCompressListener() {
+                    @Override
+                    public void onStart() {
+                    }
+
+                    @Override
+                    public void onSuccess(File file) {
+                        uploadPic3(Uri.parse(file.getPath()), baseView);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                }).launch();
+    }
 
 
+    
     @Override
     public void onChatPickPhoto(BaseView baseView, String pic, RecyclerView recyclerView, ServiceRvAdapter serviceRvAdapter, List<ChatBean.DataBean> serviceTextBeanList, int requestCode, int resultCode, Intent data) {
         ChatBean.DataBean serviceTextBean = new ChatBean.DataBean();
@@ -193,7 +234,8 @@ public class ChangeAvatarImpl implements ChangeAvatar {
 
                 serviceTextBean.setContent("/"+takePath.toString().substring(8));
                 serviceTextBean.setType(2);
-                uploadPic3(takePath, baseView);
+                //进行图片压缩
+                luBanPhoto(takePath,baseView);
 
                 serviceTextBeanList.add(serviceTextBean);
                 serviceRvAdapter.update(serviceTextBeanList, takePath.toString());
@@ -203,7 +245,8 @@ public class ChangeAvatarImpl implements ChangeAvatar {
                 Uri pickpath = Uri.parse(ImagePathUtil.getImageAbsolutePath(context, data.getData()));
                 serviceTextBean.setContent(pickpath.toString());
                 serviceTextBean.setType(2);
-                uploadPic3(pickpath, baseView);
+                //进行图片压缩
+                luBanPhoto(Uri.parse("file:///"+pickpath),baseView);
 
                 serviceTextBeanList.add(serviceTextBean);
                 serviceRvAdapter.update(serviceTextBeanList, pickpath.toString());
@@ -214,6 +257,8 @@ public class ChangeAvatarImpl implements ChangeAvatar {
     }
 
 
+
+    //用户端头像
     private void uploadPic(Uri photoUris, PersonalData_EnBean personalData_enBean) {
         final File tempFile = new File(photoUris.getPath());
 
@@ -252,6 +297,7 @@ public class ChangeAvatarImpl implements ChangeAvatar {
 
     }
 
+    //工程师端头像
     private void uploadPic2(Uri photoUris, PersonalData_EngineerPostBean personalData_engineerPostBean) {
         final File tempFile = new File(photoUris.getPath());
 
@@ -290,13 +336,13 @@ public class ChangeAvatarImpl implements ChangeAvatar {
         }, b ? photoUris.getPath() : UriUtils.getPath(context, photoUris));
     }
 
+    //客服聊天图片上传
     private void uploadPic3(Uri photoUris, BaseView baseView) {
         final File tempFile = new File(photoUris.getPath());
 
         String type = SharedPreferencesUtils.getString(context, "identity", "user");
         TipDialog.Builder builder = new TipDialog.Builder(context);
         if (type.equals("user")) {
-
             loadingDialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_LOADING).setTipWord("Send...").create();
         } else {
 
@@ -315,7 +361,7 @@ public class ChangeAvatarImpl implements ChangeAvatar {
                     MyServiceFactory.userServiceSendMsg(key, 2).safeSubscribe(new AbstractDialogSubscriber<String>(baseView) {
                         @Override
                         public void onNext(String s) {
-                            TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("Send a success").create(1000);
+                            TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("Send a success").create(500);
                             dialog.show();
                             dialog.dismiss();
                         }
@@ -324,7 +370,7 @@ public class ChangeAvatarImpl implements ChangeAvatar {
                     MyServiceFactory.serviceSendMsg(key, 2).safeSubscribe(new AbstractDialogSubscriber<String>(baseView) {
                         @Override
                         public void onNext(String s) {
-                            TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("发送成功").create(1000);
+                            TipDialog dialog = builder.setIconType(TipDialog.Builder.ICON_TYPE_SUCCESS).setTipWord("发送成功").create(500);
                             dialog.show();
                             dialog.dismiss();
                         }
@@ -349,6 +395,7 @@ public class ChangeAvatarImpl implements ChangeAvatar {
         }, b ? photoUris.getPath() : UriUtils.getPath(context, photoUris));
 
     }
+
 
     @Override
     public void setIvHead(@NonNull ImageView mIvHead) {

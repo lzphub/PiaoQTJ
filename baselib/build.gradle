@@ -114,6 +114,9 @@ dependencies {
 
     //图片剪切
     implementation 'com.github.yalantis:ucrop:2.2.1'
+    //图片压缩 鲁班
+    implementation 'top.zibin:Luban:1.1.8'
+
     api deps.support.multidex
 
 

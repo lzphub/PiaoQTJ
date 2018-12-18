@@ -1,9 +1,13 @@
 package cn.dankal.basiclib.util.image;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -18,9 +22,13 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import cn.dankal.basiclib.DankalApplication;
 import cn.dankal.basiclib.ResultCode;
+import cn.dankal.basiclib.common.camera.CamerImageBean;
+import cn.dankal.basiclib.common.camera.RequestCodes;
 import cn.dankal.basiclib.common.qiniu.QiniuUpload;
 import cn.dankal.basiclib.common.qiniu.UploadHelper;
+import cn.dankal.basiclib.util.FileUtil;
 import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.util.UriUtils;

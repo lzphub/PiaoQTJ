@@ -1,8 +1,16 @@
 package cn.dankal.my.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -10,7 +18,10 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,6 +31,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.zhihu.matisse.Matisse;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +59,7 @@ import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
  * 意见反馈
  */
 @Route(path = OPINION)
-public class FeedBackActivity extends BaseActivity {
+public class FeedBackActivity extends BaseActivity implements View.OnClickListener {
 
     private android.widget.TextView title;
     private android.widget.ImageView addImg;
@@ -62,6 +74,12 @@ public class FeedBackActivity extends BaseActivity {
     private List<Uri> result = new ArrayList<>();
     private static String identity = null;
     private static List<String> images = new ArrayList<>();
+
+    private AlertDialog DIALOG;
+
+    private File cameraSavePath;//拍照照片路径
+    private Uri uri;//照片uri
+    private String photoPath;
 
     @Override
     protected int getLayoutId() {
@@ -99,7 +117,7 @@ public class FeedBackActivity extends BaseActivity {
 
             }
         });
-        addImg.setOnClickListener(v -> CheckImage.takePhotoPicker(FeedBackActivity.this, size - result.size()));
+        addImg.setOnClickListener(v -> beginCameraDialog());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         imgList.setLayoutManager(linearLayoutManager);
@@ -118,7 +136,7 @@ public class FeedBackActivity extends BaseActivity {
                         dismissLoadingDialog();
                         if (e instanceof LocalException) {
                             LocalException exception = (LocalException) e;
-                            if(exception.getMsg().equals("网络错误")){
+                            if (exception.getMsg().equals("网络错误")) {
                                 ToastUtils.showShort("Network error");
                             }
                         }
@@ -136,20 +154,50 @@ public class FeedBackActivity extends BaseActivity {
         });
     }
 
+    public void beginCameraDialog() {
+        DIALOG = new AlertDialog.Builder(this).create();
+        DIALOG.show();
+        final Window window = DIALOG.getWindow();
+        if (window != null) {
+            window.setContentView(cn.dankal.basiclib.R.layout.dialog_photo_picker);
+            window.setGravity(Gravity.BOTTOM);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            //设置属性
+            final WindowManager.LayoutParams params = window.getAttributes();
+            params.width = WindowManager.LayoutParams.MATCH_PARENT;
+            //弹出一个窗口，让背后的窗口变暗一点
+            params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            //dialog背景层
+            params.dimAmount = 0.5f;
+            window.setAttributes(params);
+
+            AppCompatButton appCompatButton = window.findViewById(cn.dankal.basiclib.R.id.photodialog_btn_cancel);
+            AppCompatButton appCompatButton1 = window.findViewById(cn.dankal.basiclib.R.id.photodialog_btn_take);
+            AppCompatButton appCompatButton2 = window.findViewById(cn.dankal.basiclib.R.id.photodialog_btn_native);
+
+            if ("user".equals(identity)) {
+                appCompatButton1.setText("PHOTOGRAPH");
+                appCompatButton2.setText("SELECT FROM ALBUM");
+                appCompatButton.setText("CANCEL");
+
+            }
+
+            appCompatButton.setOnClickListener(this);
+            appCompatButton1.setOnClickListener(this);
+            appCompatButton2.setOnClickListener(this);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ResultCode.CheckImageCode) {
             if (data != null) {
-                for (int i = 0; i < Matisse.obtainPathResult(data).size(); i++) {
-                    result.add(Matisse.obtainResult(data).get(i));
-                }
+                result.add(Matisse.obtainResult(data).get(0));
                 if (result.size() == size) {
                     addImg.setVisibility(View.INVISIBLE);
                 }
-                for (int i = 0; i < result.size(); i++) {
-                    uploadQiniu(result.get(i), this);
-                }
+                uploadQiniu(result.get(result.size() - 1), this);
                 imageRvAdapter = new ImageRvAdapter(this, result);
                 imgList.setAdapter(imageRvAdapter);
                 imageRvAdapter.setOnClickListener(pos -> {
@@ -159,7 +207,31 @@ public class FeedBackActivity extends BaseActivity {
                     addImg.setVisibility(View.VISIBLE);
                 });
             }
+            return;
         }
+
+        if (requestCode == ResultCode.TakeImageCode) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                photoPath = String.valueOf(cameraSavePath);
+            } else {
+                photoPath = uri.getEncodedPath();
+            }
+
+            result.add(Uri.parse("file:///" + photoPath));
+            if (result.size() == size) {
+                addImg.setVisibility(View.INVISIBLE);
+            }
+            uploadQiniu(result.get(result.size()-1), this);
+            imageRvAdapter = new ImageRvAdapter(this, result);
+            imgList.setAdapter(imageRvAdapter);
+            imageRvAdapter.setOnClickListener(pos -> {
+                result.remove(pos);
+                images.remove(pos);
+                imageRvAdapter.UpData(result);
+                addImg.setVisibility(View.VISIBLE);
+            });
+        }
+        return;
     }
 
     private void initView() {
@@ -220,5 +292,35 @@ public class FeedBackActivity extends BaseActivity {
                 dialog.dismiss();
             }
         }, b ? uri.getPath() : UriUtils.getPath(context, uri));
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.photodialog_btn_take) {
+            goCamera();
+            DIALOG.cancel();
+        } else if (i == R.id.photodialog_btn_native) {
+            CheckImage.takePhotoPicker(FeedBackActivity.this, size - result.size());
+            DIALOG.cancel();
+        } else if (i == R.id.photodialog_btn_cancel) {
+            DIALOG.cancel();
+        }
+    }
+
+    //激活相机操作
+    private void goCamera() {
+        cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + ".jpg");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //第二个参数为 包名.fileprovider
+            uri = FileProvider.getUriForFile(FeedBackActivity.this, "cn.dankal.basiclib.fileprovider", cameraSavePath);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            uri = Uri.fromFile(cameraSavePath);
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        FeedBackActivity.this.startActivityForResult(intent, ResultCode.TakeImageCode);
     }
 }
