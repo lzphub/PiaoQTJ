@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
@@ -51,6 +52,8 @@ import cn.dankal.basiclib.util.UriUtils;
 import cn.dankal.basiclib.util.image.CheckImage;
 import cn.dankal.basiclib.widget.TipDialog;
 import cn.dankal.setting.R;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.OPINION;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
@@ -221,7 +224,8 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
             if (result.size() == size) {
                 addImg.setVisibility(View.INVISIBLE);
             }
-            uploadQiniu(result.get(result.size()-1), this);
+
+            lubanPhoto(result.get(result.size() - 1));
             imageRvAdapter = new ImageRvAdapter(this, result);
             imgList.setAdapter(imageRvAdapter);
             imageRvAdapter.setOnClickListener(pos -> {
@@ -301,7 +305,7 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
             goCamera();
             DIALOG.cancel();
         } else if (i == R.id.photodialog_btn_native) {
-            CheckImage.takePhotoPicker(FeedBackActivity.this, size - result.size());
+            CheckImage.takePhotoPicker(FeedBackActivity.this, 1);
             DIALOG.cancel();
         } else if (i == R.id.photodialog_btn_cancel) {
             DIALOG.cancel();
@@ -322,5 +326,25 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         FeedBackActivity.this.startActivityForResult(intent, ResultCode.TakeImageCode);
+    }
+
+
+    public void lubanPhoto(Uri uri) {
+        Luban.with(FeedBackActivity.this).load(uri).ignoreBy(100).filter(path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"))).setCompressListener(new OnCompressListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(File file) {
+                uploadQiniu(Uri.parse(file.toString()), FeedBackActivity.this);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        }).launch();
     }
 }

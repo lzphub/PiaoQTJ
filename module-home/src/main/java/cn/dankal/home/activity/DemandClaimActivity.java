@@ -14,6 +14,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
@@ -50,6 +51,8 @@ import cn.dankal.basiclib.util.UriUtils;
 import cn.dankal.basiclib.util.image.CheckImage;
 import cn.dankal.basiclib.adapter.ImageRvAdapter;
 import cn.dankal.basiclib.widget.TipDialog;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 import static cn.dankal.basiclib.protocol.HomeProtocol.CLAIMDEMAND;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
@@ -90,6 +93,7 @@ public class DemandClaimActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void initComponents() {
         initView();
+        images = new ArrayList<>();
         dataBean = (ProjectDataBean) getIntent().getSerializableExtra("demandData");
         time = getIntent().getStringExtra("time");
         plan_uuid = getIntent().getStringExtra("plan_uuid");
@@ -101,6 +105,10 @@ public class DemandClaimActivity extends BaseActivity implements View.OnClickLis
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(images.size()==0){
+                    ToastUtils.showShort("请添加方案图片");
+                    return;
+                }
                 if (plan_uuid==null) {
                     HomeServiceFactory.postplan(dataBean.getUuid(), detailsEt.getText().toString().trim(), images).safeSubscribe(new AbstractDialogSubscriber<String>(DemandClaimActivity.this) {
                         @Override
@@ -251,7 +259,7 @@ public class DemandClaimActivity extends BaseActivity implements View.OnClickLis
             if (result.size() == size) {
                 addImg.setVisibility(View.INVISIBLE);
             }
-            uploadQiniu(result.get(result.size()-1), this);
+            lubanPhoto(result.get(result.size() - 1));
             imageRvAdapter = new ImageRvAdapter(this, result);
             imgList.setAdapter(imageRvAdapter);
             imageRvAdapter.setOnClickListener(pos -> {
@@ -332,5 +340,25 @@ public class DemandClaimActivity extends BaseActivity implements View.OnClickLis
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         DemandClaimActivity.this.startActivityForResult(intent, ResultCode.TakeImageCode);
+    }
+
+
+    public void lubanPhoto(Uri uri) {
+        Luban.with(DemandClaimActivity.this).load(uri).ignoreBy(100).filter(path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"))).setCompressListener(new OnCompressListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(File file) {
+                uploadQiniu(Uri.parse(file.toString()), DemandClaimActivity.this);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        }).launch();
     }
 }

@@ -82,12 +82,11 @@ public class BankCardActivity extends BaseActivity implements BankCardContact.bc
         ok_btn.setOnClickListener(v1 -> {
             dialog1.dismiss();
             finish();
-            ActivityUtils.finishActivity(WithdrawalActivity.class);
-            ARouter.getInstance().build(MyProtocol.WITHDRAWAL).navigation();
         });
 
         dialog1.show();
     }
+
 
     @Override
     public void bindCardFail() {

@@ -12,14 +12,13 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.*;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -39,12 +38,13 @@ import cn.dankal.basiclib.common.qiniu.UploadHelper;
 import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
-import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.util.UriUtils;
 import cn.dankal.basiclib.util.image.CheckImage;
 import cn.dankal.basiclib.adapter.ImageRvAdapter;
 import cn.dankal.basiclib.widget.TipDialog;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 import static cn.dankal.basiclib.protocol.HomeProtocol.HOMERELEASE;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
@@ -79,6 +79,7 @@ public class ReleaseIdeaActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initComponents() {
         initView();
+        images = new ArrayList<>();
         backImg.setOnClickListener(v -> finish());
         titleEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -139,8 +140,7 @@ public class ReleaseIdeaActivity extends BaseActivity implements View.OnClickLis
                     if (exception.getMsg().equals("detail不能为空")) {
                         ToastUtils.showShort("方案详情不能为空");
                         return;
-                    }
-                    else{
+                    } else {
                         ToastUtils.showShort(exception.getMsg());
                     }
                 }
@@ -200,7 +200,9 @@ public class ReleaseIdeaActivity extends BaseActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ResultCode.CheckImageCode) {
             if (data != null) {
+
                 result.add(Matisse.obtainResult(data).get(0));
+
                 if (result.size() == size) {
                     addImg.setVisibility(View.INVISIBLE);
                 }
@@ -217,7 +219,7 @@ public class ReleaseIdeaActivity extends BaseActivity implements View.OnClickLis
             return;
         }
 
-        if(requestCode==ResultCode.TakeImageCode){
+        if (requestCode == ResultCode.TakeImageCode) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 photoPath = String.valueOf(cameraSavePath);
             } else {
@@ -228,7 +230,7 @@ public class ReleaseIdeaActivity extends BaseActivity implements View.OnClickLis
             if (result.size() == size) {
                 addImg.setVisibility(View.INVISIBLE);
             }
-            uploadQiniu(result.get(result.size()-1), this);
+            lubanPhoto(result.get(result.size() - 1));
             imageRvAdapter = new ImageRvAdapter(this, result);
             imgList.setAdapter(imageRvAdapter);
             imageRvAdapter.setOnClickListener(pos -> {
@@ -281,14 +283,14 @@ public class ReleaseIdeaActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        int i=v.getId();
-        if(i==R.id.photodialog_btn_take){
+        int i = v.getId();
+        if (i == R.id.photodialog_btn_take) {
             goCamera();
             DIALOG.cancel();
-        }else if(i==R.id.photodialog_btn_native){
-            CheckImage.takePhotoPicker(ReleaseIdeaActivity.this, size - result.size());
+        } else if (i == R.id.photodialog_btn_native) {
+            CheckImage.takePhotoPicker(ReleaseIdeaActivity.this, 1);
             DIALOG.cancel();
-        }else if(i==R.id.photodialog_btn_cancel){
+        } else if (i == R.id.photodialog_btn_cancel) {
             DIALOG.cancel();
         }
     }
@@ -307,5 +309,24 @@ public class ReleaseIdeaActivity extends BaseActivity implements View.OnClickLis
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         ReleaseIdeaActivity.this.startActivityForResult(intent, ResultCode.TakeImageCode);
+    }
+
+    public void lubanPhoto(Uri uri) {
+        Luban.with(ReleaseIdeaActivity.this).load(uri).ignoreBy(100).filter(path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"))).setCompressListener(new OnCompressListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(File file) {
+                uploadQiniu(Uri.parse(file.toString()), ReleaseIdeaActivity.this);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        }).launch();
     }
 }

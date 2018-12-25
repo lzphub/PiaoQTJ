@@ -67,7 +67,7 @@ public class StateUtil {
                 state="创意申请完成";
                 break;
             case 5:
-                state="创意供应验证";
+                state="产品供应验证";
                 break;
             case 6:
                 state="产品推广中";

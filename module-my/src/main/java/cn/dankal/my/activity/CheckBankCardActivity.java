@@ -1,5 +1,6 @@
 package cn.dankal.my.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,12 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.io.Serializable;
 
+import cn.dankal.basiclib.ResultCode;
 import cn.dankal.basiclib.adapter.CheckBankCarkAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.recyclerview.del.DeleteRecyclerView;
@@ -21,7 +24,10 @@ import cn.dankal.basiclib.base.recyclerview.del.OnDelItemClickListener;
 import cn.dankal.basiclib.bean.BankCardListBean;
 import cn.dankal.basiclib.bean.ContactSortModel;
 import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.util.ActivityUtils;
+import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.ToastUtils;
+import cn.dankal.basiclib.widget.GenDialog;
 import cn.dankal.my.presenter.BankCardContact;
 import cn.dankal.my.presenter.BankCardPersenter;
 import cn.dankal.setting.R;
@@ -48,8 +54,7 @@ public class CheckBankCardActivity extends BaseActivity implements BankCardConta
     @Override
     protected void initComponents() {
         initView();
-        bankCardPersenter.attachView(this);
-        bankCardPersenter.getBankCardList();
+//        bankCardPersenter.getBankCardList();
         backImg.setOnClickListener(v -> finish());
         addBtn.setOnClickListener(v -> ARouter.getInstance().build(MyProtocol.BINDCARD).navigation());
     }
@@ -57,7 +62,21 @@ public class CheckBankCardActivity extends BaseActivity implements BankCardConta
     @Override
     protected void onRestart() {
         super.onRestart();
+        Logger.d("smmmmm","onrestart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bankCardPersenter.attachView(this);
         bankCardPersenter.getBankCardList();
+        Logger.d("smmmmm","onResume");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Logger.d("smmmmm","onStart");
     }
 
     private void initView() {
@@ -71,7 +90,8 @@ public class CheckBankCardActivity extends BaseActivity implements BankCardConta
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         cardList.setLayoutManager(linearLayoutManager);
-        checkBankCarkAdapter=new CheckBankCarkAdapter(bankCardListBean);
+        checkBankCarkAdapter=new CheckBankCarkAdapter();
+        checkBankCarkAdapter.updata(bankCardListBean);
         cardList.setAdapter(checkBankCarkAdapter);
         checkBankCarkAdapter.setOnItemClickLitener(new CheckBankCarkAdapter.OnItemClickLitener() {
             @Override
@@ -85,9 +105,24 @@ public class CheckBankCardActivity extends BaseActivity implements BankCardConta
 
             @Override
             public void onLongClick(View view, int position) {
-                    bankCardPersenter.deleteCard(bankCardListBean.getCards().get(position).getCard_number());
+                showDeleteDialog(bankCardListBean.getCards().get(position).getCard_number());
             }
         });
+    }
+
+    private void showDeleteDialog(String number){
+        GenDialog.CustomBuilder2 customBuilder2 = new GenDialog.CustomBuilder2(CheckBankCardActivity.this);
+        customBuilder2.setContent(R.layout.dialog_delete_bankcard);
+        Dialog dialog1 = customBuilder2.create();
+        TextView ok_btn = dialog1.findViewById(R.id.tv_submit);
+        ok_btn.setOnClickListener(v -> {
+            bankCardPersenter.deleteCard(number);
+            dialog1.dismiss();
+        });
+        TextView tv_cancel=dialog1.findViewById(R.id.tv_cancel);
+        tv_cancel.setOnClickListener(v -> dialog1.dismiss());
+
+        dialog1.show();
     }
 
     @Override

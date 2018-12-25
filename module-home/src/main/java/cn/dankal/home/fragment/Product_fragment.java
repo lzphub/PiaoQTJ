@@ -111,7 +111,6 @@ public class Product_fragment extends BaseFragment implements ProductClassifyCon
         tabLayout.setOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(VerticalTabLayout.Tab tab, int position) {
-                productTabRvAdapter.getDatas().clear();
                 productTabRvAdapter.updateData(productClassBean.getRoot().get(position).getChildren());
                 productList.setAdapter(productTabRvAdapter);
                 li2stTitle.setText(productClassBean.getRoot().get(position).getName());

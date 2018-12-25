@@ -22,6 +22,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -79,6 +80,8 @@ import cn.dankal.home.persenter.PostRequestPresenter;
 import cn.dankal.my.activity.PersonalData_EnActivity;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 import static cn.dankal.basiclib.protocol.HomeProtocol.POSTREQUEST;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
@@ -382,7 +385,7 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
             if (result.size() == size) {
                 addImg.setVisibility(View.INVISIBLE);
             }
-            uploadQiniu(result.get(result.size()-1), this);
+            lubanPhoto(result.get(result.size() - 1));
             imageRvAdapter = new ImageRvAdapter(this, result);
             addImgRv.setAdapter(imageRvAdapter);
             imageRvAdapter.setOnClickListener(pos -> {
@@ -489,5 +492,25 @@ public class PostRequstActivity extends BaseActivity implements PostRequestConta
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         PostRequstActivity.this.startActivityForResult(intent, ResultCode.TakeImageCode);
+    }
+
+
+    public void lubanPhoto(Uri uri) {
+        Luban.with(PostRequstActivity.this).load(uri).ignoreBy(100).filter(path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"))).setCompressListener(new OnCompressListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(File file) {
+                uploadQiniu(Uri.parse(file.toString()), PostRequstActivity.this);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        }).launch();
     }
 }

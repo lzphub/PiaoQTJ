@@ -265,7 +265,6 @@ public class ServiceActivity extends BaseActivity implements ServiceContact.pcvi
         chatRv.setAdapter(serviceRvAdapter);
         serviceRvAdapter.setItemClickListener((view, type, position) -> {
             if(type==2){
-                Logger.d("bitPhoto",serviceRvAdapter.getPicurl(position));
                 Intent intent=new Intent(this, BigPhotoActivity.class);
                 intent.putExtra("url",serviceRvAdapter.getPicurl(position));
                 startActivity(intent);

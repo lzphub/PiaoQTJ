@@ -18,8 +18,13 @@ public class CheckBankCarkAdapter extends RecyclerView.Adapter {
 
     private int selected = -1;
 
-    public CheckBankCarkAdapter(BankCardListBean datas) {
-        this.datas = datas;
+//    public CheckBankCarkAdapter(BankCardListBean datas) {
+//        this.datas = datas;
+//    }
+
+    public void updata(BankCardListBean datas){
+        this.datas=datas;
+        notifyDataSetChanged();
     }
 
     public interface OnItemClickLitener {

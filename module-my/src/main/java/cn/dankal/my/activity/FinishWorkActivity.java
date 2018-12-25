@@ -15,6 +15,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
@@ -51,6 +52,8 @@ import cn.dankal.basiclib.util.image.CheckImage;
 import cn.dankal.basiclib.widget.TipDialog;
 import cn.dankal.setting.R;
 import cn.dankal.setting.R2;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.FINISHWORK;
 import static cn.dankal.basiclib.widget.TipDialog.Builder.ICON_TYPE_FAIL;
@@ -96,6 +99,7 @@ public class FinishWorkActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initComponents() {
+        images = new ArrayList<>();
         backImg.setOnClickListener(v -> finish());
         project_uuid = getIntent().getStringExtra("project_uuid");
         plan_uuid = getIntent().getStringExtra("plan_uuid");
@@ -120,6 +124,10 @@ public class FinishWorkActivity extends BaseActivity implements View.OnClickList
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (images.size() == 0) {
+                    ToastUtils.showShort("请添加方案图片");
+                    return;
+                }
                 if (statusId == 4) {
                     HomeServiceFactory.postCompletedDetail(project_uuid, plan_uuid, detailsEt.getText().toString().trim(), images).safeSubscribe(new AbstractDialogSubscriber<String>(FinishWorkActivity.this) {
                         @Override
@@ -135,7 +143,7 @@ public class FinishWorkActivity extends BaseActivity implements View.OnClickList
                                 LocalException exception = (LocalException) e;
                                 if (exception.getMsg().equals("cpl_detail不能为空")) {
                                     ToastUtils.showShort("方案详情不能为空");
-                                }else if (exception.getMsg().equals("cpl_detail长度不符合要求 15,20000")) {
+                                } else if (exception.getMsg().equals("cpl_detail长度不符合要求 15,20000")) {
                                     ToastUtils.showShort("方案详情至少为15个字符");
                                 } else {
                                     super.onError(e);
@@ -170,7 +178,7 @@ public class FinishWorkActivity extends BaseActivity implements View.OnClickList
             }
         });
 
-        addImg.setOnClickListener(v -> CheckImage.takePhotoPicker(FinishWorkActivity.this, size - result.size()));
+        addImg.setOnClickListener(v -> beginCameraDialog());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -221,7 +229,7 @@ public class FinishWorkActivity extends BaseActivity implements View.OnClickList
                 if (result.size() == size) {
                     addImg.setVisibility(View.INVISIBLE);
                 }
-                uploadQiniu(result.get(result.size()-1), this);
+                uploadQiniu(result.get(result.size() - 1), this);
                 imageRvAdapter = new ImageRvAdapter(this, result);
                 imgList.setAdapter(imageRvAdapter);
                 imageRvAdapter.setOnClickListener(pos -> {
@@ -234,7 +242,7 @@ public class FinishWorkActivity extends BaseActivity implements View.OnClickList
             return;
         }
 
-        if(requestCode==ResultCode.TakeImageCode){
+        if (requestCode == ResultCode.TakeImageCode) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 photoPath = String.valueOf(cameraSavePath);
             } else {
@@ -245,7 +253,7 @@ public class FinishWorkActivity extends BaseActivity implements View.OnClickList
             if (result.size() == size) {
                 addImg.setVisibility(View.INVISIBLE);
             }
-            uploadQiniu(result.get(result.size()-1), this);
+            lubanPhoto(result.get(result.size() - 1));
             imageRvAdapter = new ImageRvAdapter(this, result);
             imgList.setAdapter(imageRvAdapter);
             imageRvAdapter.setOnClickListener(pos -> {
@@ -298,14 +306,14 @@ public class FinishWorkActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        int i=v.getId();
-        if(i==R.id.photodialog_btn_take){
+        int i = v.getId();
+        if (i == R.id.photodialog_btn_take) {
             goCamera();
             DIALOG.cancel();
-        }else if(i==R.id.photodialog_btn_native){
-            CheckImage.takePhotoPicker(FinishWorkActivity.this,1);
+        } else if (i == R.id.photodialog_btn_native) {
+            CheckImage.takePhotoPicker(FinishWorkActivity.this, 1);
             DIALOG.cancel();
-        }else if(i==R.id.photodialog_btn_cancel){
+        } else if (i == R.id.photodialog_btn_cancel) {
             DIALOG.cancel();
         }
     }
@@ -324,5 +332,25 @@ public class FinishWorkActivity extends BaseActivity implements View.OnClickList
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         FinishWorkActivity.this.startActivityForResult(intent, ResultCode.TakeImageCode);
+    }
+
+
+    public void lubanPhoto(Uri uri) {
+        Luban.with(FinishWorkActivity.this).load(uri).ignoreBy(100).filter(path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"))).setCompressListener(new OnCompressListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(File file) {
+                uploadQiniu(Uri.parse(file.toString()), FinishWorkActivity.this);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        }).launch();
     }
 }

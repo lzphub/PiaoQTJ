@@ -16,4 +16,8 @@ dependencies {
     implementation 'com.android.support:support-v4:26.1.0'
 
     api project(path: ':module-my')
+
+
+    //图片压缩 鲁班
+    implementation 'top.zibin:Luban:1.1.8'
 }

@@ -53,7 +53,7 @@ public class BankCardPersenter implements BankCardContact.idPresenter,SmsCode{
 
             @Override
             public void onError(Throwable e) {
-                super.onError(e);
+                bcView.dismissLoadingDialog();
                 bcView.bindCardFail();
             }
         });
@@ -102,12 +102,12 @@ public class BankCardPersenter implements BankCardContact.idPresenter,SmsCode{
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(aLong -> {
                     mBtCode.setText("获取验证码(" + (60 - aLong) + ")");
-                    mBtCode.setBackgroundColor(Color.parseColor("#CFCFCF"));
+                    mBtCode.setTextColor(Color.parseColor("#CFCFCF"));
                 })
                 .doOnComplete(() -> {
                     mBtCode.setEnabled(true);
                     mBtCode.setText("获取验证码");
-                    mBtCode.setBackgroundColor(Color.parseColor("#6FBA27"));
+                    mBtCode.setTextColor(Color.parseColor("#6FBA27"));
                 }).subscribe();
     }
 
