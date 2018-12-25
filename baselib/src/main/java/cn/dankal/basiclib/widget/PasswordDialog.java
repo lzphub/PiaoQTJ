@@ -1,14 +1,20 @@
 package cn.dankal.basiclib.widget;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import cn.dankal.basiclib.R;
+import cn.dankal.basiclib.adapter.CheckBankCarkAdapter;
 import cn.dankal.basiclib.base.callback.DKCallBackBooleanObject;
+import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.SoftKeyboardUtil;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.widget.passwordview.GridPasswordView;
@@ -93,7 +99,8 @@ public class PasswordDialog extends DialogFragment {
 //        });
 
         mDialog.findViewById(R.id.ll_card).setOnClickListener(v -> {
-            dkCallBackBoolean.action(0,null);
+//            dkCallBackBoolean.action(0,null);
+            mOnItemClickLitener.onItemClick();
             dismiss();
         });
         return mDialog;
@@ -103,6 +110,15 @@ public class PasswordDialog extends DialogFragment {
         this.dkCallBackBoolean = dkCallBackBooleanObject;
     }
 
+    public interface OnItemClickLitener {
+        void onItemClick();
+    }
+
+    private OnItemClickLitener mOnItemClickLitener;
+
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
+        this.mOnItemClickLitener = mOnItemClickLitener;
+    }
 
 }
 

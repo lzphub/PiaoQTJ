@@ -14,6 +14,7 @@ import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.base.BaseView;
 import cn.dankal.basiclib.util.ActivityUtils;
 import cn.dankal.basiclib.util.DKHandler;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.TitleBarUtils;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.widget.TipDialog;
@@ -51,7 +52,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
     protected void initStatusBar() {
         TitleBarUtils.compat(this, getResources().getColor(R.color.color00));
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
         QMUIStatusBarHelper.translucent(this);
         QMUIStatusBarHelper.setStatusBarLightMode(this);
     }
@@ -103,10 +103,18 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             loadingDialog.dismiss();
             loadingDialog = null;
         }
-        loadingDialog = new TipDialog.Builder(this)
-                .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord("正在加载")
-                .create();
+        if("user".equals(SharedPreferencesUtils.getString(this,"identity","user"))){
+            loadingDialog = new TipDialog.Builder(this)
+                    .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
+                    .setTipWord("Loading")
+                    .create();
+        }else{
+            loadingDialog = new TipDialog.Builder(this)
+                    .setIconType(TipDialog.Builder.ICON_TYPE_LOADING)
+                    .setTipWord("正在加载")
+                    .create();
+        }
+
         loadingDialog.show();
     }
 

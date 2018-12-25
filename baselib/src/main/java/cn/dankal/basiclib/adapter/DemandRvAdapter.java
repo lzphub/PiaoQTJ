@@ -10,8 +10,9 @@ import cn.dankal.basiclib.R2;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.DemandListbean;
+import cn.dankal.basiclib.util.StringUtil;
 
-public class DemandRvAdapter extends BaseRecyclerViewAdapter<DemandListbean> {
+public class DemandRvAdapter extends BaseRecyclerViewAdapter<DemandListbean.DataBean> {
 
 
 
@@ -25,7 +26,7 @@ public class DemandRvAdapter extends BaseRecyclerViewAdapter<DemandListbean> {
         return new MyViewHolder(rootView);
     }
 
-    class MyViewHolder extends BaseRecyclerViewHolder<DemandListbean> {
+    class MyViewHolder extends BaseRecyclerViewHolder<DemandListbean.DataBean> {
 
         @BindView(R2.id.demand_price)
         TextView demandPrice;
@@ -42,11 +43,11 @@ public class DemandRvAdapter extends BaseRecyclerViewAdapter<DemandListbean> {
 
 
         @Override
-        public void onBindData(DemandListbean data, int position) {
-            demandPrice.setText(data.getPriceRange());
-            reDate.setText(data.getDate());
-            demandTitle.setText(data.getTitle());
-            demandContent.setText(data.getContent());
+        public void onBindData(DemandListbean.DataBean data, int position) {
+            demandPrice.setText("¥"+ StringUtil.isDigits(data.getStart_price())+" ~ "+StringUtil.isDigits(data.getEnd_price()));
+            reDate.setText(data.getCreate_time());
+            demandTitle.setText(data.getName());
+            demandContent.setText(data.getDesc());
         }
     }
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import cn.dankal.basiclib.base.BaseStateView;
 import cn.dankal.basiclib.widget.loadsir.EmptyCallback;
+import cn.dankal.basiclib.widget.loadsir.EmptyEnCallback;
 import cn.dankal.basiclib.widget.loadsir.LoadingCallback;
 import cn.dankal.basiclib.widget.loadsir.RetryCallback;
 import cn.dankal.basiclib.widget.loadsir.callback.Callback;
@@ -30,19 +31,23 @@ public abstract class BaseStateFragment extends BaseFragment implements BaseStat
     @Nullable
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        super.onViewCreated(view, savedInstanceState);
+        obtainData();
+    }
+
+    public void initLoadServer(){
         Object targetView;
         if (contentView() instanceof Fragment) {
             targetView = mContentView;
         } else {
             targetView = contentView();
         }
-//        loadService = LoadSir.getDefault().register(targetView, (Callback.OnReloadListener) v -> {
+        loadService = LoadSir.getDefault().register(targetView, (Callback.OnReloadListener) v -> {
 //            loadService.showCallback(LoadingCallback.class);
 //            obtainData();
-//        });
-        super.onViewCreated(view, savedInstanceState);
+        });
     }
-
 
     @Override
     public void showRetry() {
@@ -66,5 +71,11 @@ public abstract class BaseStateFragment extends BaseFragment implements BaseStat
     public void showLoading() {
         if (loadService != null)
             loadService.showCallback(LoadingCallback.class);
+    }
+
+    @Override
+    public void showEnEmpty() {
+        if (loadService != null)
+            loadService.showCallback(EmptyEnCallback.class);
     }
 }

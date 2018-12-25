@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout android:id="@id/swipe_toload_layout"
+<cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/swipe_toload_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     app:load_more_complete_delay_duration="250"
-    app:refresh_complete_delay_duration="250"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    app:refresh_complete_delay_duration="250">
 
-        <include
-            android:id="@+id/swipe_refresh_header"
-            layout="@layout/layout_classic_header" />
+    <include
+        android:id="@+id/swipe_refresh_header"
+        layout="@layout/layout_classic_header" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@id/swipe_target"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never"
-            android:scrollbars="none"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/swipe_target"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
 
-        <include
-            android:id="@id/swipe_load_more_footer"
-            layout="@layout/layout_classic_footer" />
+    <include
+        android:id="@id/swipe_load_more_footer"
+        layout="@layout/layout_classic_footer" />
 
-    </cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout>
+</cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout>
 
 

@@ -15,9 +15,11 @@ import cn.dankal.basiclib.util.AppUtils;
 import cn.dankal.basiclib.util.DensityAdaptationUtils;
 import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.widget.loadsir.EmptyCallback;
+import cn.dankal.basiclib.widget.loadsir.EmptyEnCallback;
 import cn.dankal.basiclib.widget.loadsir.LoadingCallback;
 import cn.dankal.basiclib.widget.loadsir.RetryCallback;
 import cn.dankal.basiclib.widget.loadsir.core.LoadSir;
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -43,6 +45,10 @@ public class DankalApplication extends Application {
         //适配方案
         DensityAdaptationUtils.setDensity(context, 375);
         AppUtils.init(context);
+
+        //初始化极光推送
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
     /**
      * 初始化阿里路由
@@ -61,6 +67,7 @@ public class DankalApplication extends Application {
                 .addCallback(new RetryCallback())
                 .addCallback(new EmptyCallback())
                 .addCallback(new LoadingCallback())
+                .addCallback(new EmptyEnCallback())
 //                .setDefaultCallback(LoadingCallback.class)
                 .commit();
     }

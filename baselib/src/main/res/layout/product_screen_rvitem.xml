@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="157dp"
     android:layout_height="242dp"
+    android:layout_marginTop="10dp"
     android:orientation="vertical"
     android:layout_gravity="center"
     android:background="@drawable/product_screen_item_r5">
@@ -21,10 +22,12 @@
 
     <TextView
         android:id="@+id/product_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="TOLB 886"
         android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textColor="@color/color33"
         android:textSize="15sp"
         android:layout_marginLeft="10dp"

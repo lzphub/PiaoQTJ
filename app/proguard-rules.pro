@@ -22,7 +22,11 @@
 -keep public class * extends android.preference.Preference
 -keep public class * extends android.view.View
 -keep public class com.android.vending.licensing.ILicensingService
+-keep public class * extends android.support.annotation.**
 -keep class android.support.** {*;}
+-keepattributes*Annotation*,InnerClasses
+-keep class * extends java.lang.annotation.Annotation{*;}
+-dontwarn java.lang.annotation.Annotation
 
 -keep public class * extends android.view.View{
     *** get*();
@@ -261,7 +265,6 @@
  -keepclasseswithmembernames class * {
  @butterknife.* <methods>;
  }
-
 
 #AndFix
 -keep class * extends java.lang.annotation.Annotation

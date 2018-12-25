@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/guidelogin"
+    tools:context=".login.GuideLoginActivity">
+
+    <Button
+        android:id="@+id/bt_UserLogin"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="148dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="19dp"
+        android:background="@color/login_btn_bg"
+        android:text="BUYER(国外买家)LOGIN"
+        android:textColor="@color/colorFF"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/bt_EngineerLogin"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="72dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="19dp"
+        android:background="@color/colorFF"
+        android:text="工程师(ENGINEER)登陆"
+        android:textColor="@color/color14"
+        android:textSize="16sp"/>
+
+</RelativeLayout>

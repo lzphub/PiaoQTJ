@@ -4,15 +4,18 @@ import java.util.List;
 
 import cn.dankal.basiclib.base.BasePresenter;
 import cn.dankal.basiclib.base.BaseView;
+import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 
 public interface ProductScreenContact {
 
     interface psView extends BaseView{
-        void getDataSuccess(ProductListBean productListBean);
+        void getDataSuccess(ProductHomeListBean productListBean);
+        void upDataSuccess(ProductHomeListBean productHomeListBean);
     }
 
     interface psPresenter extends BasePresenter<psView>{
-        void getData(String keyword,String uuid);
+        void getData(String keyword,String uuid,String tag);
+        void upData(String keyword,String uuid,String tag);
     }
 }

@@ -88,7 +88,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="39dp"
-                android:text="12345678910"
                 android:textColor="@color/color33"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
@@ -131,7 +130,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="39dp"
-                android:text="宋皓皓"
                 android:textColor="@color/color33"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
@@ -175,7 +173,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="39dp"
-                android:text="安装配送"
                 android:textColor="@color/color33"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
@@ -218,7 +215,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="39dp"
-                android:text="广东省深圳市"
                 android:textColor="@color/color33"
                 android:textSize="14sp"
                 android:textStyle="bold"/>

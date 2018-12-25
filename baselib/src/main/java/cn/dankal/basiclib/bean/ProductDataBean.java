@@ -20,6 +20,33 @@ public class ProductDataBean {
     private String description;
     private String detail;
     private List<String> images;
+    private int is_favourite;
+    private String vedio;
+    private String vedioname;
+
+    public String getVedioname() {
+        return vedioname;
+    }
+
+    public void setVedioname(String vedioname) {
+        this.vedioname = vedioname;
+    }
+
+    public String getVedio() {
+        return vedio;
+    }
+
+    public void setVedio(String vedio) {
+        this.vedio = vedio;
+    }
+
+    public int getIs_favourite() {
+        return is_favourite;
+    }
+
+    public void setIs_favourite(int is_favourite) {
+        this.is_favourite = is_favourite;
+    }
 
     public String getUuid() {
         return uuid;

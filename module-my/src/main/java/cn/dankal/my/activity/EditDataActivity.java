@@ -1,24 +1,20 @@
 package cn.dankal.my.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 
+import api.MyServiceFactory;
 import cn.dankal.basiclib.base.activity.BaseActivity;
-import cn.dankal.basiclib.protocol.MyProtocol;
-import cn.dankal.basiclib.util.ActivityUtils;
-import cn.dankal.basiclib.util.StringUtil;
+import cn.dankal.basiclib.bean.PersonalData_EngineerPostBean;
+import cn.dankal.basiclib.exception.LocalException;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.EDITDATA;
 
+/**
+ * 工程师编辑个人信息
+ */
 @Route(path = EDITDATA)
 public class EditDataActivity extends BaseActivity {
 
@@ -26,6 +22,7 @@ public class EditDataActivity extends BaseActivity {
     private android.widget.EditText etName;
     private android.widget.Button submitBtn;
     private int type;
+    private PersonalData_EngineerPostBean personalData_engineerPostBean=new PersonalData_EngineerPostBean();
 
     @Override
     protected int getLayoutId() {
@@ -36,40 +33,56 @@ public class EditDataActivity extends BaseActivity {
     protected void initComponents() {
         initView();
         type=getIntent().getIntExtra("datatype",1);
+        personalData_engineerPostBean= (PersonalData_EngineerPostBean) getIntent().getSerializableExtra("data");
         if(type==2){
             etName.setHint(R.string.hiht);
+        }else if(type==3){
+            etName.setHint("请输入您的手机号");
         }
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        backImg.setOnClickListener(v -> finish());
+        submitBtn.setOnClickListener(v -> {
+            switch (type){
+                case 1:
+                    personalData_engineerPostBean.setName(etName.getText().toString().trim());
+                    break;
+                case 2:
+                    personalData_engineerPostBean.setCompetence(etName.getText().toString().trim());
+                    break;
+                case 3:
+                    personalData_engineerPostBean.setMobile(etName.getText().toString().trim());
+                    break;
             }
-        });
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(StringUtil.isValid(etName.getText().toString().trim())){
-                    if(type==1){
-                        ARouter.getInstance().build(MyProtocol.PERSONALDATA).withString("name",etName.getText().toString().trim()).navigation();
-                    }else{
-                        ARouter.getInstance().build(MyProtocol.PERSONALDATA).withString("skills",etName.getText().toString().trim()).navigation();
-                    }
-                    finish();
-                    ActivityUtils.finishActivity(PersonalDataActivity.class);
-                }else{
-                    if(type==1){
-                        ToastUtils.showShort("姓名不能为空");
-                    }else{
-                        ToastUtils.showShort("技能不能为空");
-                    }
-                }
-            }
+            postEngineerData();
         });
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        etName = (EditText) findViewById(R.id.et_name);
-        submitBtn = (Button) findViewById(R.id.submit_btn);
+        etName = findViewById(R.id.et_name);
+        backImg = findViewById(R.id.back_img);
+        submitBtn = findViewById(R.id.submit_btn);
+    }
+
+    //更新个人信息
+    private void postEngineerData(){
+        MyServiceFactory.engineerUpdateInfo(personalData_engineerPostBean).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
+            @Override
+            public void onNext(String s) {
+                ToastUtils.showShort("保存成功");
+                finish();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (e instanceof LocalException) {
+                    dismissLoadingDialog();
+                    LocalException exception = (LocalException) e;
+                    if (exception.getMsg().equals("competence长度不符合要求 3,32")) {
+                        ToastUtils.showShort("请输入至少3字内容");
+                    } else {
+                        super.onError(e);
+                    }
+                }
+            }
+        });
     }
 }

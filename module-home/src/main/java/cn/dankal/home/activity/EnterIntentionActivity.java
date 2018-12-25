@@ -2,12 +2,16 @@ package cn.dankal.home.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -18,6 +22,7 @@ import api.ProductServiceFactory;
 import cn.dankal.address.R;
 import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.ToastUtils;
@@ -34,6 +39,7 @@ public class EnterIntentionActivity extends BaseActivity {
     private android.widget.EditText emailEt;
     private android.widget.EditText intentionEt;
     private String uuid;
+    private TextView titleText;
 
     @Override
     protected int getLayoutId() {
@@ -52,6 +58,8 @@ public class EnterIntentionActivity extends BaseActivity {
             String email= emailEt.getText().toString().trim();
             String content=intentionEt.getText().toString().trim();
 
+
+
             if(name.isEmpty()){
                 ToastUtils.showShort("The name cannot be empty");
                 return;
@@ -65,7 +73,6 @@ public class EnterIntentionActivity extends BaseActivity {
                 ToastUtils.showShort("The email cannot be empty");
                 return;
             }
-
 
             if(content.isEmpty()){
                 ToastUtils.showShort("The detailed intention cannot be empty");
@@ -83,8 +90,12 @@ public class EnterIntentionActivity extends BaseActivity {
         contactsNameEt = findViewById(R.id.contacts_name_et);
         emailEt =  findViewById(R.id.email_et);
         intentionEt = findViewById(R.id.intention_et);
+        titleText = findViewById(R.id.title_text);
 
-        contactsNameEt.setText(DKUserManager.getUserInfo().getName());
+        SpannableString spannableString = new SpannableString("POST REQUEST");
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.home_green));
+        spannableString.setSpan(colorSpan, 0, 5, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        titleText.setText(spannableString);
     }
 
 
@@ -98,8 +109,17 @@ public class EnterIntentionActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                super.onError(e);
-                ToastUtils.showShort(e.getMessage());
+                dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if(exception.getMsg().equals("email格式不符")){
+                        ToastUtils.showShort("Email format mismatch");
+                    }else if(exception.getMsg().equals("contact_name长度不符合要求 3,64")){
+                        ToastUtils.showShort("Contact name requires at least three characters");
+                    }else if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
+                    }
+                }
             }
         });
     }

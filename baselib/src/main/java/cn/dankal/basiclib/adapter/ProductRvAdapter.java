@@ -13,9 +13,12 @@ import cn.dankal.basiclib.R2;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.DemandListbean;
+import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
+import cn.dankal.basiclib.util.StringUtil;
+import cn.dankal.basiclib.util.image.PicUtils;
 
-public class ProductRvAdapter extends BaseRecyclerViewAdapter<ProductListBean.DataBean> {
+public class ProductRvAdapter extends BaseRecyclerViewAdapter<ProductHomeListBean.DataBean> {
 
 
     @Override
@@ -28,7 +31,7 @@ public class ProductRvAdapter extends BaseRecyclerViewAdapter<ProductListBean.Da
         return new MyViewHolder(rootView);
     }
 
-    class MyViewHolder extends BaseRecyclerViewHolder<ProductListBean.DataBean> {
+    class MyViewHolder extends BaseRecyclerViewHolder<ProductHomeListBean.DataBean> {
         @BindView(R2.id.product_img)
         ImageView productImg;
         @BindView(R2.id.product_price)
@@ -45,11 +48,11 @@ public class ProductRvAdapter extends BaseRecyclerViewAdapter<ProductListBean.Da
 
 
         @Override
-        public void onBindData(ProductListBean.DataBean data, int position) {
-            Glide.with(context).load(data.getImages().get(0)).into(productImg);
-            productPrice.setText(data.getPrice());
+        public void onBindData(ProductHomeListBean.DataBean data, int position) {
+            Glide.with(context).load(PicUtils.getUrl(data.getImages().get(0))).into(productImg);
+            productPrice.setText("$"+StringUtil.isDigits(data.getPrice()));
             productName.setText(data.getName());
-//            productContent.setText(data.get);
+            productContent.setText(data.getDescription());
         }
     }
 }

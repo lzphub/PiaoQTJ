@@ -1,5 +1,11 @@
 package cn.dankal.user.login;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,14 +18,19 @@ import com.alibaba.fastjson.JSON;
 import api.UserServiceFactory;
 import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.pojo.UserResponseBody;
 import cn.dankal.basiclib.protocol.HomeProtocol;
 import cn.dankal.basiclib.protocol.LoginProtocol;
+import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.ActivityUtils;
+import cn.dankal.basiclib.util.Logger;
 import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.util.StringUtil;
 import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.user.R;
+import cn.jpush.android.api.JPushInterface;
 
 import static cn.dankal.basiclib.protocol.LoginProtocol.USERSLOGIN;
 
@@ -43,22 +54,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        //自动登录
-        if("user".equals(SharedPreferencesUtils.getString(this, "identity", "user"))){
-            if(DKUserManager.isLogined()){
-                refreshToken();
-                ARouter.getInstance().build(HomeProtocol.USERHOME).navigation();
-                SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "user");
-                finish();
-            }
-        }else{
-            if(DKUserManager.isLogined()){
-                engRefreshToken();
-                ARouter.getInstance().build(HomeProtocol.HOMEACTIVITY).navigation();
-                SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "enterprise");
-                finish();
-            }
-        }
+
 
         enterpriseLogin.setOnClickListener(v -> {
             ARouter.getInstance().build(LoginProtocol.ENTERPRISELOGIN).navigation();
@@ -66,12 +62,8 @@ public class LoginActivity extends BaseActivity {
         });
         btLogin.setOnClickListener(v -> {
            email=etPhoneNum.getText().toString().trim();
-           if(!StringUtil.checkEmail(email)){
-               ToastUtils.showShort("Wrong account number or password");
-               return;
-           }
-           pwd=etPasswd.getText().toString().trim();
-           if(pwd==null){
+            pwd=etPasswd.getText().toString().trim();
+            if(!StringUtil.checkEmail(email) || pwd==null){
                ToastUtils.showShort("Wrong account number or password");
                return;
            }
@@ -98,28 +90,25 @@ public class LoginActivity extends BaseActivity {
               SharedPreferencesUtils.saveString(LoginActivity.this, "identity", "user");
               finish();
           }
+
+          @Override
+          public void onError(Throwable e) {
+              dismissLoadingDialog();
+              if (e instanceof LocalException) {
+                  LocalException exception = (LocalException) e;
+                  if(exception.getMsg().equals("账号或密码错误")){
+                      ToastUtils.showShort("Wrong account or password");
+                  }else if(exception.getMsg().equals("网络错误")){
+                      ToastUtils.showShort("Network error");
+                  }else{
+                      super.onError(e);
+                  }
+              }
+          }
       });
     }
 
-    /**
-     * 刷新token
-     */
-    private void refreshToken(){
-        UserServiceFactory.refreshtoken(DKUserManager.getUserToken().getRefreshToken()).safeSubscribe(new AbstractDialogSubscriber<UserResponseBody.TokenBean>(this) {
-            @Override
-            public void onNext(UserResponseBody.TokenBean tokenBean) {
-                DKUserManager.updateUserToken(tokenBean);
-            }
-        });
-    }
-    private void engRefreshToken(){
-        UserServiceFactory.engineerRefreshtoken(DKUserManager.getUserToken().getRefreshToken()).safeSubscribe(new AbstractDialogSubscriber<UserResponseBody.TokenBean>(this) {
-            @Override
-            public void onNext(UserResponseBody.TokenBean tokenBean) {
-                DKUserManager.updateUserToken(tokenBean);
-            }
-        });
-    }
+
 
     private void initView() {
         etPhoneNum = findViewById(R.id.et_phone_num);
@@ -130,4 +119,5 @@ public class LoginActivity extends BaseActivity {
         register = findViewById(R.id.register);
         forgetPassword = findViewById(R.id.forget_password);
     }
+
 }

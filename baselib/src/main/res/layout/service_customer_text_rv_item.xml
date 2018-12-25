@@ -10,7 +10,7 @@
         android:id="@+id/head_pic"
         android:layout_width="37dp"
         android:layout_height="37dp"
-        android:src="@mipmap/ic_customerservice_addto" />
+        android:src="@drawable/service_pic" />
 
     <TextView
         android:id="@+id/send_text"
@@ -19,11 +19,11 @@
         app:layout_constraintLeft_toRightOf="@id/head_pic"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingRight="11dp"
-        android:layout_marginTop="9dp"
         android:layout_marginLeft="19dp"
         android:text="Customer send"
         android:textColor="@color/color33"
         android:textStyle="bold"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:background="@drawable/pic_customer_service_dialog_box_2"/>
 
 </android.support.constraint.ConstraintLayout>

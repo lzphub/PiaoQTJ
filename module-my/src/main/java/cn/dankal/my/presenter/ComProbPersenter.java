@@ -6,7 +6,9 @@ import java.util.List;
 import api.MyServiceFactory;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.bean.ComProbBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.ToastUtils;
 
 public class ComProbPersenter extends BaseRecyclerViewPresenter<ComProbBean.DataBean> {
 
@@ -18,6 +20,17 @@ public class ComProbPersenter extends BaseRecyclerViewPresenter<ComProbBean.Data
             @Override
             public void onNext(ComProbBean comProbBean) {
                 mView.render(comProbBean.getData());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
+                    }
+                }
             }
         });
     }

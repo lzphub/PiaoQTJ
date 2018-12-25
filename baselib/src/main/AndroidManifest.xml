@@ -7,17 +7,21 @@
     <application>
         <activity android:name=".base.activity.BigPhotoActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!--7.0相机权限-->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="cn.dankal.address.fileprovider"
+            android:authorities="cn.dankal.basiclib.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths_public">
-            </meta-data>
+                android:resource="@xml/file_paths_public"/>
         </provider>
-
     </application>
 
 </manifest>

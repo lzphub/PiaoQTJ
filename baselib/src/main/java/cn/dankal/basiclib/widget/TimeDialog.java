@@ -166,9 +166,23 @@ public class TimeDialog extends DialogFragment {
 
     private String getTime() {
         StringBuffer sb = new StringBuffer();
+        String day="";
+        String month="";
+
+        if((wvMonth.getCurrentItem()+1)<10){
+            month="0"+(wvMonth.getCurrentItem()+1);
+        }else {
+            month=wvMonth.getCurrentItem()+1+"";
+        }
+
+        if((wvDay.getCurrentItem() + 1)<10){
+            day="0"+(wvDay.getCurrentItem()+1);
+        }else{
+            day=wvDay.getCurrentItem()+1+"";
+        }
         sb.append((wvYear.getCurrentItem() + START_YEAR)).append("-")
-                .append((wvMonth.getCurrentItem() + 1)).append("-")
-                .append((wvDay.getCurrentItem() + 1));
+                .append(month).append("-")
+                .append(day);
         return sb.toString();
     }
 

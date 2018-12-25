@@ -28,12 +28,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="user send"
-                android:textColor="@color/color33"
+                android:textColor="@color/colorFF"
                 android:textSize="14sp"
+                android:background="@drawable/pic_customer_service_dialog_box_1"
                 android:textStyle="bold"
                 android:layout_alignParentRight="true"
-                android:layout_marginLeft="11dp"
-                android:layout_marginTop="9dp" />
+                android:layout_marginLeft="11dp" />
 
         </RelativeLayout>
     </android.support.constraint.ConstraintLayout>

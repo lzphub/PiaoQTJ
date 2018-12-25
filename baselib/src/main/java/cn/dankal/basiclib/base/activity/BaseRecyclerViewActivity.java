@@ -11,7 +11,10 @@ import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewContract;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.common.OnFinishLoadDataListener;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
+
+import static cn.dankal.basiclib.Constants.PAGE_SIZE;
 
 /**
  * @author Dankal Android Developer
@@ -29,10 +32,12 @@ public abstract class BaseRecyclerViewActivity<M> extends BaseStateActivity impl
     private int pageIndex = 1;
     private boolean isUpdateList = false;
     private boolean isRefresh = true;
+    private String type;
 
     @Override
     protected void initComponents() {
         mPresenter = getPresenter();
+        type= SharedPreferencesUtils.getString(this, "identity", "user");
         if (mPresenter != null) mPresenter.attachView(this);
 
         mAdapter = getAdapter();
@@ -70,6 +75,9 @@ public abstract class BaseRecyclerViewActivity<M> extends BaseStateActivity impl
     public void render(List<M> t) {
         showContent();
         //不能同时结束刷新和加载更多，界面会不和谐
+        if(t != null &&t.size()<Integer.valueOf(PAGE_SIZE)){
+            swipeToLoadLayout.setLoadMoreEnabled(false);
+        }
         if (isRefresh) {
             onFinishLoadDataListener.finishRefresh();
             if (t != null && t.size() > 0) {
@@ -80,6 +88,7 @@ public abstract class BaseRecyclerViewActivity<M> extends BaseStateActivity impl
             } else {
                 if (mAdapter != null)
                     mAdapter.clearData();
+
             }
         } else {
             onFinishLoadDataListener.finishLoadMore();
@@ -89,7 +98,12 @@ public abstract class BaseRecyclerViewActivity<M> extends BaseStateActivity impl
             }
         }
         if (mAdapter != null && mAdapter.isEmpty()) {
-            showEmpty();
+            initLoadService();
+            if("user".equals(type)){
+                showEnEmpty();
+            }else{
+                showEmpty();
+            }
         }
     }
 

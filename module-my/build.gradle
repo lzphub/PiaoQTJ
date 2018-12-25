@@ -16,4 +16,10 @@ dependencies {
     implementation "com.zhihu.android:matisse:0.5.2-beta3"
     implementation 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
     implementation project(path: ':module-product')
+    //图片剪切
+    implementation 'com.github.yalantis:ucrop:2.2.1'
+
+
+    //图片压缩 鲁班
+    implementation 'top.zibin:Luban:1.1.8'
 }

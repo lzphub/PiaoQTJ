@@ -7,7 +7,7 @@ android {
     defaultConfig {
         multiDexEnabled true
 
-        applicationId 'cn.dankal.zm'
+        applicationId "cn.dankal.zm"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1
@@ -19,38 +19,38 @@ android {
         }
         manifestPlaceholders = [
                 //MTA
-//                MTA_APPKEY   : "xx",
-//                MTA_CHANNEL  : "xx",
+                MTA_APPKEY   : "xx",
+                MTA_CHANNEL  : "xx",
 
                 //极光推送
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "xx", //JPush上注册的包名对应的appkey.
+                JPUSH_APPKEY : "0d555ae25049f728325d93b7", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "xx-default", //暂时填写默认值即可.
         ]
 
     }
-//
-//    signingConfigs {
-//        Properties properties = new Properties()
-//        if (rootProject.file("local.properties").exists()) {
-//            properties.load(rootProject.file("local.properties").newDataInputStream())
-//        }
-//
-//        jenkins {
-////            storeFile file(System.getProperty('StoreFilePath') ?: properties.get("STOREFILE"))
-//            storePassword System.getProperty('StorePassword') ?: properties.get("STOREPASSWORD")
-//            keyAlias System.getProperty('KeyAlias') ?: properties.get("KEYALIAS")
-//            keyPassword System.getProperty('KeyPassword') ?: properties.get("KEYPASSWORD")
-//        }
-//
-//    }
+
+    signingConfigs {
+        Properties properties = new Properties()
+        if (rootProject.file("local.properties").exists()) {
+            properties.load(rootProject.file("local.properties").newDataInputStream())
+        }
+
+        jenkins {
+            storeFile file(System.getProperty('StoreFilePath') ?: properties.get("STOREFILE"))
+            storePassword System.getProperty('StorePassword') ?: properties.get("STOREPASSWORD")
+            keyAlias System.getProperty('KeyAlias') ?: properties.get("KEYALIAS")
+            keyPassword System.getProperty('KeyPassword') ?: properties.get("KEYPASSWORD")
+        }
+
+    }
     buildTypes {
         debug {
 //            zipAlignEnabled true
 //            minifyEnabled true
 //            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//          signingConfig signingConfigs.jenkins
+            signingConfig signingConfigs.jenkins
         }
     }
     compileOptions {
@@ -58,8 +58,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildToolsVersion '27.0.3'
-    productFlavors {
-    }
 }
 //指定编译的编码
 tasks.withType(JavaCompile){
@@ -78,4 +76,6 @@ dependencies {
     api project(':module-product')
     api project(':baselib')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+
 }

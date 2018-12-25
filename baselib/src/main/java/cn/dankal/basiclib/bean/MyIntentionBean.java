@@ -4,12 +4,13 @@ import java.util.List;
 
 public class MyIntentionBean {
 
+
     /**
-     * total : 75
-     * per_page : 59
-     * current_page : 20
-     * last_page : 42
-     * data : [{"intention_id":"mock","product_name":"mock","product_price":"mock","images":["1","2","3","4","5"],"status":97}]
+     * total : 3
+     * per_page : 20
+     * current_page : 1
+     * last_page : 1
+     * data : [{"intention_id":"2018112813555423","product_name":"范鼎的蛋蛋","product_price":"9.90","images":["FngLrTlf3dIXi_uIwbVrV9yWEP-p","FuhRfAk-WNjdLudqw--zGOk-jti2","FhOPEH6Ia41tWD4zQARHVKUnXPhG","FvCuNd9kMK_VP0xHv-B9vONThLwl"],"status":1,"product_uuid":"7da4bfded9611eba30fee52db91d848e"},{"intention_id":"2018112831305087","product_name":"范鼎的蛋蛋","product_price":"9.90","images":["FngLrTlf3dIXi_uIwbVrV9yWEP-p","FuhRfAk-WNjdLudqw--zGOk-jti2","FhOPEH6Ia41tWD4zQARHVKUnXPhG","FvCuNd9kMK_VP0xHv-B9vONThLwl"],"status":1,"product_uuid":"7da4bfded9611eba30fee52db91d848e"},{"intention_id":"2018112863158386","product_name":"范鼎的蛋蛋","product_price":"9.90","images":["FngLrTlf3dIXi_uIwbVrV9yWEP-p","FuhRfAk-WNjdLudqw--zGOk-jti2","FhOPEH6Ia41tWD4zQARHVKUnXPhG","FvCuNd9kMK_VP0xHv-B9vONThLwl"],"status":1,"product_uuid":"7da4bfded9611eba30fee52db91d848e"}]
      */
 
     private int total;
@@ -60,17 +61,19 @@ public class MyIntentionBean {
 
     public static class DataBean {
         /**
-         * intention_id : mock
-         * product_name : mock
-         * product_price : mock
-         * images : ["1","2","3","4","5"]
-         * status : 97
+         * intention_id : 2018112813555423
+         * product_name : 范鼎的蛋蛋
+         * product_price : 9.90
+         * images : ["FngLrTlf3dIXi_uIwbVrV9yWEP-p","FuhRfAk-WNjdLudqw--zGOk-jti2","FhOPEH6Ia41tWD4zQARHVKUnXPhG","FvCuNd9kMK_VP0xHv-B9vONThLwl"]
+         * status : 1
+         * product_uuid : 7da4bfded9611eba30fee52db91d848e
          */
 
         private String intention_id;
         private String product_name;
         private String product_price;
         private int status;
+        private String product_uuid;
         private List<String> images;
 
         public String getIntention_id() {
@@ -103,6 +106,14 @@ public class MyIntentionBean {
 
         public void setStatus(int status) {
             this.status = status;
+        }
+
+        public String getProduct_uuid() {
+            return product_uuid;
+        }
+
+        public void setProduct_uuid(String product_uuid) {
+            this.product_uuid = product_uuid;
         }
 
         public List<String> getImages() {

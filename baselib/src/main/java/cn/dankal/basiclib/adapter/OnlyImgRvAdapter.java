@@ -14,6 +14,7 @@ import cn.dankal.basiclib.R2;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.image.PicUtils;
 
 public class OnlyImgRvAdapter extends BaseRecyclerViewAdapter<String> {
 
@@ -39,7 +40,7 @@ public class OnlyImgRvAdapter extends BaseRecyclerViewAdapter<String> {
 
         @Override
         public void onBindData(String url, int position) {
-            Glide.with(context).load(url).into(contentImg);
+            Glide.with(context).load(PicUtils.getUrl(url)).into(contentImg);
         }
     }
 }

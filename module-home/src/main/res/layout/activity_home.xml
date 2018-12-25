@@ -10,61 +10,67 @@
         android:id="@+id/tab_rg"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:elevation="12dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/colorFF"
-        android:layout_alignParentBottom="true">
+        android:elevation="12dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/home_rbtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/home_tab_selector"
-            android:text="首页"
-            android:gravity="center"
-            android:textSize="11sp"
-            android:drawablePadding="3dp"
-            android:layout_marginTop="9dp"
             android:layout_marginBottom="4dp"
+            android:layout_marginTop="9dp"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:button="@null"
             android:checked="true"
-            android:textColor="@drawable/tab_home_textcolor_selector"/>
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/home_tab_selector"
+            android:gravity="center"
+            android:text="首页"
+            android:textColor="@drawable/tab_home_textcolor_selector"
+            android:textSize="11sp" />
+
         <TextView
             android:id="@+id/release_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="9dp"
             android:layout_weight="1"
             android:button="@null"
-            android:text="发布"
+            android:drawablePadding="3dp"
             android:drawableTop="@mipmap/ic_tab_release_dark"
             android:gravity="center"
-            android:textSize="11sp"
-            android:drawablePadding="3dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginBottom="4dp"
-            android:textColor="@color/color66"/>
+            android:text="发布"
+            android:textColor="@color/color66"
+            android:textSize="11sp" />
+
         <RadioButton
             android:id="@+id/my_rbtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/home_tab_wd_selector"
-            android:text="我的"
-            android:gravity="center"
-            android:textSize="11sp"
-            android:drawablePadding="3dp"
-            android:layout_marginTop="9dp"
             android:layout_marginBottom="4dp"
-            android:textColor="@drawable/tab_home_textcolor_selector"/>
+            android:layout_marginTop="9dp"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:button="@null"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/home_tab_wd_selector"
+            android:gravity="center"
+            android:text="我的"
+            android:textColor="@drawable/tab_home_textcolor_selector"
+            android:textSize="11sp" />
 
     </RadioGroup>
+
     <FrameLayout
         android:id="@+id/home_fra"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tab_rg"></FrameLayout>
+        android:layout_above="@id/tab_rg"
+        android:clipChildren="false"></FrameLayout>
 
 </RelativeLayout>

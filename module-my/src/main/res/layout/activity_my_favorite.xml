@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorFF">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -39,17 +40,18 @@
 
         <include
             android:id="@+id/swipe_refresh_header"
-            layout="@layout/layout_classic_header" />
+            layout="@layout/layout_classic_en_header" />
 
 
         <cn.dankal.basiclib.base.recyclerview.del.DeleteRecyclerView
             android:id="@+id/swipe_target"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"/>
 
         <include
             android:id="@id/swipe_load_more_footer"
-            layout="@layout/layout_classic_footer" />
+            layout="@layout/layout_classic_en_footer" />
     </cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout>
 
 </LinearLayout>

@@ -46,6 +46,8 @@ android {
         res.srcDirs += 'src/support/personal_res'
     }
 
+
+
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
@@ -109,6 +111,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation deps.kotlin.anko
     implementation "com.zhihu.android:matisse:0.5.2-beta3"
+
+    //图片剪切
+    implementation 'com.github.yalantis:ucrop:2.2.1'
+    //图片压缩 鲁班
+    implementation 'top.zibin:Luban:1.1.8'
+
     api deps.support.multidex
 
 

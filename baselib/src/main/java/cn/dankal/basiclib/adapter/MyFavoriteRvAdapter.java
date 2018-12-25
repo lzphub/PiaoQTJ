@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import butterknife.BindView;
 import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.R2;
@@ -14,6 +16,7 @@ import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.base.recyclerview.del.BaseDelViewHolder;
 import cn.dankal.basiclib.bean.MyRequestBean;
 import cn.dankal.basiclib.bean.ProductListBean;
+import cn.dankal.basiclib.util.image.PicUtils;
 
 public class MyFavoriteRvAdapter extends BaseRecyclerViewAdapter<ProductListBean.DataBean> {
 
@@ -48,6 +51,7 @@ public class MyFavoriteRvAdapter extends BaseRecyclerViewAdapter<ProductListBean
             productName.setText(dataBean.getName());
             productPrice.setText("$"+dataBean.getPrice());
             productContent.setText(dataBean.getDescription());
+            Glide.with(context).load(PicUtils.getUrl(dataBean.getImages().get(0))).into(productImg);
         }
     }
 

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">module-setting</string>
     <string name="hiht">请输入您的技能</string>
+    <string name="title_activity_my_idea_data">MyIdeaDataActivity</string>
 </resources>

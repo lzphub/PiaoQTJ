@@ -4,7 +4,9 @@ import android.support.annotation.NonNull;
 
 import api.MyServiceFactory;
 import cn.dankal.basiclib.bean.IntentionDateBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.ToastUtils;
 
 public class MyIntentionDetailsPresenter implements IntentionDetailsContact.idPresenter {
     private IntentionDetailsContact.idView idView;
@@ -23,6 +25,17 @@ public class MyIntentionDetailsPresenter implements IntentionDetailsContact.idPr
             @Override
             public void onNext(IntentionDateBean intentionDateBean) {
                 idView.getDataSuccess(intentionDateBean);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                idView.dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
+                    }
+                }
             }
         });
     }

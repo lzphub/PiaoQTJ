@@ -11,6 +11,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.dankal.basiclib.DankalApplication;
+import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -31,6 +33,12 @@ public class JpushReceiver extends BroadcastReceiver {
             if (bundle != null) {
                 String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
                 Log.d(TAG, "JPush-onReceive: 用户点击了通知：" + extras);
+                String type2= SharedPreferencesUtils.getString(context, "identity", "user");
+                if(type2.equals("user")){
+                    ARouter.getInstance().build(MyProtocol.SYSTEMNEWS).navigation();
+                }else{
+                    ARouter.getInstance().build(MyProtocol.ENGSYSTEMNEWS).navigation();
+                }
                 try {
                     //{"content":"用户接收到了通知","type":1,"uuid":"3dd74716505e513aa54dec3bd79c3acd"}
 

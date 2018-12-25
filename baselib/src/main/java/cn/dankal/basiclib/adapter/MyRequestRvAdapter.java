@@ -6,20 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.dankal.basiclib.DankalApplication;
 import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.R2;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
+import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
 import cn.dankal.basiclib.base.recyclerview.del.BaseDelViewHolder;
 import cn.dankal.basiclib.bean.MyRequestBean;
+import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.util.StateUtil;
+import cn.dankal.basiclib.util.StringUtil;
 
 public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.databean> {
-
-    private List<String> urllist = new ArrayList<>();
 
     @Override
     protected int getLayoutResId(int viewType) {
@@ -40,6 +45,8 @@ public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.da
         TextView requestPrice;
         @BindView(R2.id.requect_data)
         TextView requectData;
+        @BindView(R2.id.state_text)
+        TextView stateText;
         private InternalImgRvAdapter internalImgRvAdapter;
 
         public MyViewHolder(View itemView) {
@@ -47,16 +54,36 @@ public class MyRequestRvAdapter extends BaseRecyclerViewAdapter<MyRequestBean.da
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             beAddImage.setLayoutManager(linearLayoutManager);
+            beAddImage.setNestedScrollingEnabled(false);
+            beAddImage.setHasFixedSize(true);
         }
 
         @Override
         public void onBindData(MyRequestBean.databean data, int position) {
-            internalImgRvAdapter =new InternalImgRvAdapter();
+            internalImgRvAdapter = new InternalImgRvAdapter();
             beAddImage.setAdapter(internalImgRvAdapter);
             internalImgRvAdapter.updateData(data.getImages());
             requestName.setText(data.getTitle());
-            requectData.setText(data.getStart_date() + "~" + data.getEnd_date());
-            requestPrice.setText("$" + data.getStart_price() + "~" + data.getEnd_price());
+            if(data.getStart_price()==null || data.getEnd_date()==null){
+                requectData.setText("");
+            }else{
+                requectData.setText(data.getStart_date() + " ~ " + data.getEnd_date());
+            }
+            if(data.getStart_price()== null || data.getEnd_price()==null){
+                requestPrice.setText("");
+            }else{
+                requestPrice.setText("$" + StringUtil.isDigits(data.getStart_price()) + " ~ " + StringUtil.isDigits(data.getEnd_price()));
+            }
+            stateText.setText(StateUtil.requestState(data.getStatus()));
+
+            MyRequestBean.databean data2=data;
+
+            internalImgRvAdapter.setOnRvItemClickListener(new OnRvItemClickListener<String>() {
+                @Override
+                public void onItemClick(View v, int position, String data) {
+                    ARouter.getInstance().build(MyProtocol.MYREQUESTDETA).withString("demand_id",data2.getDemand_id()).navigation();
+                }
+            });
         }
     }
 

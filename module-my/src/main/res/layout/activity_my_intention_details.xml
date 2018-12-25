@@ -27,6 +27,7 @@
 
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -57,7 +58,6 @@
                 android:id="@+id/contacts_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="JAY HHH"
                 android:textSize="20sp"
                 android:textColor="@color/color99"
                 android:textStyle="bold"
@@ -78,7 +78,6 @@
                 android:id="@+id/contacts_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="138 8808 9898"
                 android:textSize="20sp"
                 android:textColor="@color/color99"
                 android:textStyle="bold"
@@ -99,7 +98,6 @@
                 android:id="@+id/contacts_mail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="123456677@QQ.COM"
                 android:textSize="20sp"
                 android:textColor="@color/color99"
                 android:textStyle="bold"
@@ -120,7 +118,6 @@
                 android:id="@+id/intention_deta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Xinyi factory, with a building area of 600m2, now needs to customize a lighting system, about 600 sets"
                 android:textSize="20sp"
                 android:textColor="@color/color99"
                 android:textStyle="bold"

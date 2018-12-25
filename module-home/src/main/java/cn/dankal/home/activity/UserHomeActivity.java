@@ -2,11 +2,13 @@ package cn.dankal.home.activity;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -19,18 +21,31 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import api.MyServiceFactory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.dankal.address.R;
 import cn.dankal.address.R2;
+import cn.dankal.basiclib.DKUserManager;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.bean.EventBusBean;
+import cn.dankal.basiclib.bean.HasNewBean;
+import cn.dankal.basiclib.eventbus.AppBus;
 import cn.dankal.basiclib.protocol.HomeProtocol;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.Logger;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.widget.GenDialog;
 import cn.dankal.basiclib.widget.TimeDialog;
 import cn.dankal.home.fragment.Home_fragment;
 import cn.dankal.home.fragment.My_fragment;
 import cn.dankal.home.fragment.Product_fragment;
+import cn.jpush.android.api.JPushInterface;
 
 import static cn.dankal.basiclib.protocol.HomeProtocol.USERHOME;
 /*
@@ -53,49 +68,49 @@ public class UserHomeActivity extends BaseActivity {
     @BindView(R2.id.home_fra)
     FrameLayout homeFra;
 
+    private long exitTime = 0;
 
     private FragmentManager manager;
     private FragmentTransaction transaction;
+    private AppBus appBus;
 
     @Override
     protected int getLayoutId() {
+        setAlias();
+        appBus=AppBus.getInstance();
         return R.layout.activity_user_home;
     }
 
     @Override
     protected void initComponents() {
-        manager=getSupportFragmentManager();
-        transaction=manager.beginTransaction();
-        Home_fragment homeFragment=new Home_fragment();
-        transaction.replace(R.id.home_fra,homeFragment).commit();
-        homeRbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    transaction=manager.beginTransaction();
-                    Home_fragment homeFragment=new Home_fragment();
-                    transaction.replace(R.id.home_fra,homeFragment).commit();
-                }
+        manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        Home_fragment homeFragment = new Home_fragment();
+        transaction.replace(R.id.home_fra, homeFragment).commit();
+        homeRbtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                transaction = manager.beginTransaction();
+                Home_fragment homeFragment1 = new Home_fragment();
+                transaction.replace(R.id.home_fra, homeFragment1).commit();
             }
         });
-        myRbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    transaction=manager.beginTransaction();
-                    My_fragment my_fragment=new My_fragment();
-                    transaction.replace(R.id.home_fra,my_fragment).commit();
-                }
+        myRbtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                transaction = manager.beginTransaction();
+                My_fragment my_fragment = new My_fragment();
+                transaction.replace(R.id.home_fra, my_fragment).commit();
             }
         });
-        productRbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                transaction=manager.beginTransaction();
-                Product_fragment product_fragment=new Product_fragment();
-                transaction.replace(R.id.home_fra,product_fragment).commit();
-            }
+        productRbtn.setOnClickListener(v -> {
+            transaction = manager.beginTransaction();
+            Product_fragment product_fragment = new Product_fragment();
+            transaction.replace(R.id.home_fra, product_fragment).commit();
         });
+    }
+
+    @Override
+    public void showLoadingDialog() {
+
     }
 
     @Override
@@ -105,7 +120,7 @@ public class UserHomeActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick( R2.id.release_text)
+    @OnClick(R2.id.release_text)
     public void onViewClicked(View view) {
         int i = view.getId();
         if (i == R.id.release_text) {
@@ -113,4 +128,73 @@ public class UserHomeActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        downTimer.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        downTimer.cancel();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        downTimer.cancel();
+    }
+
+    //十秒获取一次是否有新消息
+    CountDownTimer downTimer=new CountDownTimer(1000000,10000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            MyServiceFactory.getHasNew().safeSubscribe(new AbstractDialogSubscriber<HasNewBean>(UserHomeActivity.this) {
+                @Override
+                public void onNext(HasNewBean hasNewBean) {
+                    if(hasNewBean.getHas_new()==1){
+                        appBus.post(new EventBusBean("1"));
+                        SharedPreferencesUtils.saveBoolean(UserHomeActivity.this,"UserNewMsg",true);
+                    }
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                }
+            });
+        }
+
+        @Override
+        public void onFinish() {
+            downTimer.start();
+        }
+    };
+
+    //注册极光推送别名
+    private void setAlias() {
+        JPushInterface.setAlias(this, 10, DKUserManager.getUserInfo().getUuid());
+        Set<String> tags = new HashSet<>();
+        tags.add("customer");
+        JPushInterface.setTags(this, 10, tags);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            ToastUtils.showShort("Press exit again");
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
 }

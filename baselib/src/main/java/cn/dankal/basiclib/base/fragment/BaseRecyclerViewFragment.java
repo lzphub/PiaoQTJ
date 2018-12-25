@@ -18,7 +18,10 @@ import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewContract;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
 import cn.dankal.basiclib.common.OnFinishLoadDataListener;
 import cn.dankal.basiclib.util.AppUtils;
+import cn.dankal.basiclib.util.SharedPreferencesUtils;
 import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
+
+import static cn.dankal.basiclib.Constants.PAGE_SIZE;
 
 
 /**
@@ -41,14 +44,16 @@ public abstract class BaseRecyclerViewFragment<M> extends BaseLazyLoadFragment
 
     private List<M> mData = new ArrayList<>();
     private int pageIndex = 1;
+    private int pageSize=20;
     private boolean isUpdateList = false;
     private boolean isRefresh = true;
-    public static final String PAGE_SIZE="20";
+    private String type;
 
 
     @Override
     public void initComponents() {
         mPresenter = getPresenter();
+        type= SharedPreferencesUtils.getString(getActivity(), "identity", "user");
         if (mPresenter != null) mPresenter.attachView(this);
 
         mAdapter = getAdapter();
@@ -136,14 +141,24 @@ public abstract class BaseRecyclerViewFragment<M> extends BaseLazyLoadFragment
     @Override
     public void render(List<M> t) {
         showContent();
+        if(t != null &&t.size()<Integer.valueOf(PAGE_SIZE)){
+            ((SwipeToLoadLayout) mContentView.findViewById(R.id.swipe_toload_layout))
+                    .setLoadMoreEnabled(false);
+        }
         if (isRefresh) {
-            if (onFinishLoadDataListener != null)
+            if (onFinishLoadDataListener != null){
                 onFinishLoadDataListener.finishRefresh();
+            }
+
             if (t != null && t.size() > 0) {
                 if (mAdapter != null) {
                     mData = t;
                     mAdapter.updateData(mData);
                 }
+                if(t.size()<pageSize){
+                    swipeToLoadLayout.setLoadMoreEnabled(false);
+                }
+
             } else {
                 if (mAdapter != null)
                     mAdapter.clearData();
@@ -157,7 +172,12 @@ public abstract class BaseRecyclerViewFragment<M> extends BaseLazyLoadFragment
             }
         }
         if (mAdapter != null && mAdapter.isEmpty()) {
-            showEmpty();
+            initLoadServer();
+            if("user".equals(type)){
+                showEnEmpty();
+            }else{
+                showEmpty();
+            }
         }
     }
 

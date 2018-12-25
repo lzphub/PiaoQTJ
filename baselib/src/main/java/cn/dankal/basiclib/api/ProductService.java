@@ -3,7 +3,9 @@ package cn.dankal.basiclib.api;
 
 import cn.dankal.annotations.ApiFactory;
 import cn.dankal.basiclib.base.BaseResult;
+import cn.dankal.basiclib.bean.DemandListbean;
 import cn.dankal.basiclib.bean.ProductDataBean;
+import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -20,10 +22,16 @@ import retrofit2.http.Query;
 public interface ProductService {
 
     /**
-     * 商品列表
+     * 商品列表和搜索
      */
     @GET("customer/product")
-    Observable<ProductListBean> getProductlist(@Query("keyword")String keyword,@Query("category_uuid") String category_uuid);
+    Observable<ProductHomeListBean> getProductlist(@Query("keyword")String keyword, @Query("category_uuid") String category_uuid,@Query("tag")String tag);
+
+    /**
+     * 需求搜索
+     */
+    @GET("engineer/home/search")
+    Observable<DemandListbean> searchDemandList(@Query("keyword")String keyword);
 
     /**
      * 商品详情

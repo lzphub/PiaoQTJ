@@ -26,6 +26,7 @@ public class SubmitIntentionActivity extends BaseActivity {
     private android.widget.LinearLayout tohomeLl;
     private String feedback="";
     private android.widget.TextView content;
+    private TextView returnText;
 
     @Override
     protected int getLayoutId() {
@@ -36,14 +37,21 @@ public class SubmitIntentionActivity extends BaseActivity {
     protected void initComponents() {
         initView();
         feedback= getIntent().getStringExtra("feedback");
-        if(feedback.equals("feedback")){
-            content.setText("Feedback success");
+        if("feedback".equals(feedback)){
+            if("user".equals(SharedPreferencesUtils.getString(this, "identity", "enterprise"))) {
+                content.setText("Feedback success");
+            }else{
+                content.setText("反馈成功");
+                returnText.setText("返回首页");
+
+            }
         }
         backImg.setOnClickListener(v -> finish());
-        tohomeLl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              ActivityUtils.finishOtherActivities(UserHomeActivity.class);
+        tohomeLl.setOnClickListener(v -> {
+            if("user".equals(SharedPreferencesUtils.getString(SubmitIntentionActivity.this, "identity", "enterprise"))){
+                ActivityUtils.finishOtherActivities(UserHomeActivity.class);
+            }else{
+                ActivityUtils.finishOtherActivities(HomeActivity.class);
             }
         });
     }
@@ -52,5 +60,6 @@ public class SubmitIntentionActivity extends BaseActivity {
         backImg = findViewById(R.id.back_img);
         tohomeLl =  findViewById(R.id.tohome_ll);
         content = findViewById(R.id.content);
+        returnText = findViewById(R.id.return_text);
     }
 }

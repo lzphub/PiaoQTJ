@@ -214,6 +214,7 @@ public class DeleteRecyclerView extends RecyclerView {
         try {
             if (mVelocityTracker!=null){
                 mVelocityTracker.recycle();
+                mVelocityTracker=null;
             }
         }catch (Error error){
 

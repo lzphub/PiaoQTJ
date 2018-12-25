@@ -1,5 +1,6 @@
 package cn.dankal.user.presenter;
 
+import android.graphics.Color;
 import android.widget.Button;
 
 import java.util.concurrent.TimeUnit;
@@ -32,7 +33,7 @@ public class UserRegisterPresenter implements SmsCode {
                     .subscribe(new AbstractDialogSubscriber<String>(baseView) {
                         @Override
                         public void onNext(String s) {
-                            sendCodeSuccess(mBtCode);
+                            sendEngCodeSuccess(mBtCode);
                         }
                     });
         } else {
@@ -44,14 +45,16 @@ public class UserRegisterPresenter implements SmsCode {
     public void sendCodeSuccess(Button mBtCode) {
         mBtCode.setEnabled(false);
         //倒计时
-        mDisposable = Flowable.intervalRange(1, 600, 0, 1, TimeUnit.SECONDS)
+        mDisposable = Flowable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(aLong -> {
-                    mBtCode.setText("OBTAIN(" + (600 - aLong) + ")");
+                    mBtCode.setText("获取验证码(" + (60 - aLong) + ")");
+                    mBtCode.setBackgroundColor(Color.parseColor("#CFCFCF"));
                 })
                 .doOnComplete(() -> {
                     mBtCode.setEnabled(true);
-                    mBtCode.setText("GET CODE");
+                    mBtCode.setText("获取验证码");
+                    mBtCode.setBackgroundColor(Color.parseColor("#6FBA27"));
                 }).subscribe();
     }
 
@@ -70,6 +73,28 @@ public class UserRegisterPresenter implements SmsCode {
                     }
                 });
             }
+    }
+
+    public void sendEngCodeSuccess(Button mBtCode) {
+        mBtCode.setEnabled(false);
+        //倒计时
+        mDisposable = Flowable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(aLong -> {
+                    mBtCode.setText("GET CODE(" + (60 - aLong) + ")");
+                    mBtCode.setBackgroundColor(Color.parseColor("#CFCFCF"));
+                })
+                .doOnComplete(() -> {
+                    mBtCode.setEnabled(true);
+                    mBtCode.setText("GET CODE");
+                    mBtCode.setBackgroundColor(Color.parseColor("#6FBA27"));
+                }).subscribe();
+    }
+
+
+    @Override
+    public void bankCardCode(String phone, Button mBtCode, String type) {
+
     }
 
 

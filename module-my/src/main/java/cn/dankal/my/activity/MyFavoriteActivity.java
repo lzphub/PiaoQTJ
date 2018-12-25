@@ -1,8 +1,5 @@
 package cn.dankal.my.activity;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,29 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.dankal.basiclib.adapter.MyFavoriteRvAdapter;
-import cn.dankal.basiclib.adapter.ProductRvAdapter;
-import cn.dankal.basiclib.base.BaseRvActivity;
-import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.base.activity.BaseStateActivity;
-import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
-import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewPresenter;
-import cn.dankal.basiclib.base.recyclerview.OnRvItemClickListener;
-import cn.dankal.basiclib.base.recyclerview.OnRvItemLongClickListener;
-import cn.dankal.basiclib.base.recyclerview.del.DeleteRecyclerView;
 import cn.dankal.basiclib.base.recyclerview.del.OnDelItemClickListener;
 import cn.dankal.basiclib.bean.ProductListBean;
 import cn.dankal.basiclib.protocol.ProductProtocol;
-import cn.dankal.basiclib.util.Logger;
-import cn.dankal.basiclib.util.ToastUtils;
-import cn.dankal.basiclib.widget.swipetoloadlayout.OnLoadMoreListener;
-import cn.dankal.basiclib.widget.swipetoloadlayout.OnRefreshListener;
-import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
 import cn.dankal.my.presenter.MyFavoriteContact;
 import cn.dankal.my.presenter.MyFavoritePresenter;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYFAVORITE;
 
+/**
+ * 我的收藏
+ */
 @Route(path = MYFAVORITE)
 public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteContact.fcView{
 
@@ -47,7 +34,6 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
     private MyFavoriteRvAdapter myFavoriteRvAdapter=new MyFavoriteRvAdapter();
     private List<ProductListBean.DataBean> dataBeanList=new ArrayList<>();
     private int pageIndex = 1;
-    private boolean isUpdateList = false;
     private boolean isRefresh = true;
 
     @Override
@@ -91,7 +77,7 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
     @Override
     protected void onRestart() {
         super.onRestart();
-        myFavoritePresenter.getData(1,10);
+        myFavoritePresenter.getData(1,20);
     }
 
     private void initView() {
@@ -102,7 +88,7 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
 
     @Override
     public Object contentView() {
-        return R.id.swipe_toload_layout;
+        return swipeToloadLayout;
     }
 
     @Override
@@ -118,6 +104,10 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
 
     @Override
     public void getDataSuccess(ProductListBean productListBean) {
+        if(productListBean.getData().size()==0){
+            initLoadService();
+            showEnEmpty();
+        }
         if (dataBeanList != null) {
             dataBeanList.clear();
         }
@@ -129,6 +119,14 @@ public class MyFavoriteActivity extends BaseStateActivity implements MyFavoriteC
         }
         dataBeanList.addAll(productListBean.getData());
         myFavoriteRvAdapter.addMore(dataBeanList);
+        if(productListBean.getData().size()<20){
+            swipeToloadLayout.setLoadMoreEnabled(false);
+        }
+    }
+
+    @Override
+    public void getDataFail() {
+
     }
 
     @Override

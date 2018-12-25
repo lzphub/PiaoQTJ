@@ -1,10 +1,6 @@
 package cn.dankal.my.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,14 +10,18 @@ import cn.dankal.basiclib.adapter.InternalImgRvAdapter;
 import cn.dankal.basiclib.base.activity.BaseActivity;
 import cn.dankal.basiclib.bean.MyRequestBean;
 import cn.dankal.basiclib.bean.RequestDataBean;
+import cn.dankal.basiclib.util.StateUtil;
 import cn.dankal.my.presenter.MyRequestPresenter;
 import cn.dankal.my.presenter.RequestContact;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYREQUESTDETA;
 
+/**
+ * 我的需求详情
+ */
 @Route(path = MYREQUESTDETA)
-public class MyRequestDetaActivity extends BaseActivity implements RequestContact.RequestView {
+public class  MyRequestDetaActivity extends BaseActivity implements RequestContact.RequestView {
 
     private android.widget.ImageView backImg;
     private android.widget.TextView requestTitle;
@@ -32,6 +32,8 @@ public class MyRequestDetaActivity extends BaseActivity implements RequestContac
     private MyRequestPresenter myRequestPresenter=MyRequestPresenter.getPSPresenter();
     private String demandid;
     private InternalImgRvAdapter internalImgRvAdapter;
+    private ImageView ivState;
+    private TextView tvState;
 
     @Override
     protected int getLayoutId() {
@@ -57,6 +59,8 @@ public class MyRequestDetaActivity extends BaseActivity implements RequestContac
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         addImgRv.setLayoutManager(linearLayoutManager);
+        ivState = findViewById(R.id.iv_state);
+        tvState = findViewById(R.id.tv_state);
     }
 
     @Override
@@ -76,6 +80,11 @@ public class MyRequestDetaActivity extends BaseActivity implements RequestContac
         requestPeriod.setText(databean.getStart_date()+"~"+databean.getEnd_date());
         internalImgRvAdapter =new InternalImgRvAdapter();
         addImgRv.setAdapter(internalImgRvAdapter);
+        addImgRv.setHasFixedSize(true);
+        addImgRv.setNestedScrollingEnabled(false);
         internalImgRvAdapter.updateData(databean.getImages());
+        ivState.setImageResource(StateUtil.requestStateImg(databean.getStatus()));
+        tvState.setText(StateUtil.requestState(databean.getStatus()));
+        requestContent.setText(databean.getDescription());
     }
 }

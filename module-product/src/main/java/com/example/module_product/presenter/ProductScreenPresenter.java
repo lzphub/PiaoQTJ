@@ -6,8 +6,11 @@ import api.ProductServiceFactory;
 import cn.dankal.basiclib.api.ProductService;
 import cn.dankal.basiclib.base.BaseResult;
 import cn.dankal.basiclib.base.BaseView;
+import cn.dankal.basiclib.bean.ProductHomeListBean;
 import cn.dankal.basiclib.bean.ProductListBean;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
+import cn.dankal.basiclib.util.ToastUtils;
 
 public class ProductScreenPresenter implements ProductScreenContact.psPresenter {
 
@@ -22,11 +25,43 @@ public class ProductScreenPresenter implements ProductScreenContact.psPresenter 
     }
 
     @Override
-    public void getData(String keyword,String uuid) {
-        ProductServiceFactory.getProductlist(keyword,uuid).safeSubscribe(new AbstractDialogSubscriber<ProductListBean>(psView) {
+    public void getData(String keyword,String uuid,String tag) {
+        ProductServiceFactory.getProductlist(keyword,uuid,tag).safeSubscribe(new AbstractDialogSubscriber<ProductHomeListBean>(psView) {
             @Override
-            public void onNext(ProductListBean productListBean) {
+            public void onNext(ProductHomeListBean productListBean) {
                 psView.getDataSuccess(productListBean);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                psView.dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                     if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void upData(String keyword, String uuid, String tag) {
+        ProductServiceFactory.getProductlist(keyword,uuid,tag).safeSubscribe(new AbstractDialogSubscriber<ProductHomeListBean>(psView) {
+            @Override
+            public void onNext(ProductHomeListBean productListBean) {
+                psView.upDataSuccess(productListBean);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                psView.dismissLoadingDialog();
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if(exception.getMsg().equals("网络错误")){
+                        ToastUtils.showShort("Network error");
+                    }
+                }
             }
         });
     }

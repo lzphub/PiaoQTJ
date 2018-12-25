@@ -25,6 +25,7 @@ import cn.dankal.basiclib.R;
 import cn.dankal.basiclib.R2;
 import cn.dankal.basiclib.util.TitleBarUtils;
 import cn.dankal.basiclib.util.image.PicUtils;
+import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 import static cn.dankal.basiclib.util.image.PicUtils.DEFAULT_AVATAR_ERRORHOLDER_RESID;
@@ -85,13 +86,12 @@ public class BigPhotoActivity extends BaseActivity {
 
 
     private ImageView loadImageVIew(String url) {
-        if (!url.contains("http")) {
+        if (!url.substring(0,1).equals("/")) {
             url = PicUtils.QINIU_DOMAIN + url;
         }
 
-        ImageView imageView =new ImageView(this);
-        PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(imageView);
-        photoViewAttacher.setOnViewTapListener((view, x, y) -> finish());
+        PhotoView imageView =new PhotoView(this);
+
         progressBar.setVisibility(View.VISIBLE);
 
         RequestOptions requestOptions = new RequestOptions();
@@ -108,7 +108,8 @@ public class BigPhotoActivity extends BaseActivity {
             public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target,
                                            DataSource dataSource, boolean isFirstResource) {
                 progressBar.setVisibility(View.GONE);
-                photoViewAttacher.update();
+                PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(imageView);
+                photoViewAttacher.setOnViewTapListener((view, x, y) -> finish());
                 return false;
             }
         }).into(imageView);

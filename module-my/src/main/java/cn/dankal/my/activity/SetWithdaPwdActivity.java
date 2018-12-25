@@ -15,15 +15,22 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import api.MyServiceFactory;
 import cn.dankal.basiclib.ResultCode;
 import cn.dankal.basiclib.base.activity.BaseActivity;
+import cn.dankal.basiclib.exception.LocalException;
 import cn.dankal.basiclib.protocol.MyProtocol;
+import cn.dankal.basiclib.rx.AbstractDialogSubscriber;
 import cn.dankal.basiclib.util.ActivityUtils;
+import cn.dankal.basiclib.util.ToastUtils;
 import cn.dankal.basiclib.widget.GenDialog;
 import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.SETWITHPWD;
 
+/**
+ * 设置提现密码
+ */
 @Route(path = SETWITHPWD)
 public class SetWithdaPwdActivity extends BaseActivity {
 
@@ -34,6 +41,8 @@ public class SetWithdaPwdActivity extends BaseActivity {
     private android.widget.TextView passwd;
     private android.widget.EditText etPasswd;
     private android.widget.Button btNext;
+    private String email;
+    private int code;
 
     @Override
     protected int getLayoutId() {
@@ -43,43 +52,62 @@ public class SetWithdaPwdActivity extends BaseActivity {
     @Override
     protected void initComponents() {
         initView();
-        int code=getIntent().getIntExtra("type",0);
-        backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        code = getIntent().getIntExtra("type", 0);
+        email = getIntent().getStringExtra("email");
+        backImg.setOnClickListener(v -> finish());
+        btNext.setOnClickListener(v -> {
+
+            if (etPhoneNum.getText().toString().trim().equals(etPasswd.getText().toString().trim())) {
+                if(etPasswd.getText().toString().length()!=6){
+                    ToastUtils.showShort("请输入6位密码");
+                    return;
+                }
+                setPwd(etPasswd.getText().toString().trim());
+            } else {
+                ToastUtils.showShort("两次输入不一致");
             }
+
         });
-        btNext.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void setPwd(String pwd) {
+        MyServiceFactory.setWithPwd(pwd).safeSubscribe(new AbstractDialogSubscriber<String>(this) {
             @Override
-            public void onClick(View v) {
+            public void onNext(String s) {
                 GenDialog.CustomBuilder2 customBuilder2 = new GenDialog.CustomBuilder2(SetWithdaPwdActivity.this);
                 customBuilder2.setContent(R.layout.finish_dialog);
                 Dialog dialog1 = customBuilder2.create();
-                Button ok_btn=dialog1.findViewById(R.id.ok_btn);
-                ok_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog1.dismiss();
-                        ActivityUtils.finishActivity(SetPwdCodeActivity.class);
-                        ActivityUtils.finishActivity(SetWithdaPwdActivity.class);
-                        if(code== ResultCode.myEarCode){
-                            ARouter.getInstance().build(MyProtocol.WITHDRAWAL).navigation();
-                        }
+                Button ok_btn = dialog1.findViewById(R.id.ok_btn);
+                ok_btn.setOnClickListener(v -> {
+                    dialog1.dismiss();
+                    ActivityUtils.finishActivity(SetPwdCodeActivity.class);
+                    ActivityUtils.finishActivity(SetWithdaPwdActivity.class);
+                    if (code == ResultCode.myEarCode) {
+                        ARouter.getInstance().build(MyProtocol.WITHDRAWAL).navigation();
                     }
                 });
                 dialog1.show();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (e instanceof LocalException) {
+                    LocalException exception = (LocalException) e;
+                    if (exception.getMsg().equals("password不能为空")) {
+                        ToastUtils.showShort("密码不能为空");
+                    }
+                }
             }
         });
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
-        titleText = (TextView) findViewById(R.id.title_text);
-        tvPhoneNum = (TextView) findViewById(R.id.tv_phone_num);
-        etPhoneNum = (EditText) findViewById(R.id.et_phone_num);
-        passwd = (TextView) findViewById(R.id.passwd);
-        etPasswd = (EditText) findViewById(R.id.et_passwd);
-        btNext = (Button) findViewById(R.id.bt_next);
+        passwd = findViewById(R.id.passwd);
+        btNext = findViewById(R.id.bt_next);
+        backImg = findViewById(R.id.back_img);
+        etPasswd = findViewById(R.id.et_passwd);
+        titleText = findViewById(R.id.title_text);
+        tvPhoneNum = findViewById(R.id.tv_phone_num);
+        etPhoneNum = findViewById(R.id.et_phone_num);
     }
 }

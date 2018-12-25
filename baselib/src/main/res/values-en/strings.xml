@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Lighting Master</string>
+	<string name="login_activity_path">cn.dankal.user.login.LoginActivity</string>
+	<string name="registr">Register an account</string>
+	<string name="account">account number</string>
+	<string name="emailaccount">email address</string>
+	<string name="enterEmail">Please enter your email account</string>
+	<string name="next">Next step</string>
+	<string name="pleaseEnterEmail">Please enter your email account number as</string>
+	<string name="DVerificationCode">Verification code</string>
+	<string name="VerificationCode">Verification code</string>
+	<string name="getVerificationCode">get verification code</string>
+	<string name="enterVeCode">please enter verification code</string>
+	<string name="pwd">password</string>
+	<string name="enterPwd">please enter your password</string>
+	<string name="confirmPwd">confirm password</string>
+	<string name="againEnterPwd">Please enter your password again</string>
+	<string name="forgetpwd">forget password</string>
+	<string name="setpwdOk">Password setting is successful</string>
+	<string name="setWithPwd">Set the withdrawal password</string>
+	<string name="submit">determine</string>
+	<string name="withPwdSetOk">The withdrawal password is set successfully.</string>
+	<string name="Commonproblems">common problem</string>
+	<string name="takephoto">PHOTOGRAPH</string>
+	<string name="pickphoto">SELECT FROM ALBUM</string>
+	<string name="cancel">CANCEL</string>
+	<string name="Refresh">Refresh</string>
+	<string name="sendSuccess">Send a success</string>
+	<string name="loginfailure">Login information invalid</string>
+</resources>

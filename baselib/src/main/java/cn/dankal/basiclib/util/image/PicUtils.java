@@ -2,7 +2,10 @@ package cn.dankal.basiclib.util.image;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -10,6 +13,9 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import cn.dankal.basiclib.GlideApp;
 import cn.dankal.basiclib.GlideRequest;
@@ -26,7 +32,7 @@ public class PicUtils {
     private static final String HTTPS_PREFIX = "https://";
 
     //private static final String QINIU_DEBUG_DOMAIN = "http://phpzt6pty.bkt.clouddn.com/";
-    private static final String QINIU_DEBUG_DOMAIN = "http://phpzt6pty.bkt.clouddn.com/";
+    private static final String QINIU_DEBUG_DOMAIN = "http://lighting.dankal.cn/";
     public static final String QINIU_DOMAIN = QINIU_DEBUG_DOMAIN;
 
     /**
@@ -195,4 +201,29 @@ public class PicUtils {
         return QINIU_DOMAIN + imgPath;
     }
 
+
+    /**
+     * 连接网络获得相对应的图片
+     * @param imageUrl
+     * @return
+     */
+    public static Drawable getImageNetwork(String imageUrl) {
+        URL myFileUrl = null;
+        Drawable drawable = null;
+        try {
+            myFileUrl = new URL(imageUrl);
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            // 在这一步最好先将图片进行压缩，避免消耗内存过多
+            Bitmap bitmap = BitmapFactory.decodeStream(is);
+            drawable = new BitmapDrawable(bitmap);
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return drawable;
+    }
 }

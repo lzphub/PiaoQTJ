@@ -3,18 +3,13 @@ package cn.dankal.my.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.flyco.tablayout.CommonTabLayout;
-import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
@@ -28,10 +23,6 @@ import cn.dankal.basiclib.bean.MyRequestBean;
 import cn.dankal.basiclib.bean.RequestDataBean;
 import cn.dankal.basiclib.protocol.MyProtocol;
 import cn.dankal.basiclib.util.ToastUtils;
-import cn.dankal.basiclib.widget.swipetoloadlayout.OnLoadMoreListener;
-import cn.dankal.basiclib.widget.swipetoloadlayout.OnRefreshListener;
-import cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout;
-import cn.dankal.my.entity.TabEntity;
 import cn.dankal.my.fragment.MyRequestFragment;
 import cn.dankal.my.presenter.MyRequestPresenter;
 import cn.dankal.my.presenter.RequestContact;
@@ -39,6 +30,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.MYREQUEST;
 
+/**
+ * 我的需求
+ */
 @Route(path = MYREQUEST)
 public class MyRequestActivity extends BaseStateActivity implements RequestContact.RequestView {
 
@@ -49,12 +43,14 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
     private List<MyRequestBean.databean> myRequestBeans = new ArrayList<>();
     private cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout swipeToloadLayout;
     private int pageIndex = 1;
-    private boolean isUpdateList = false;
     private boolean isRefresh = true;
     private String[] tab_titel2={"FINISH","SUBMITTED","IN PROGRESS","RECEIVED","UNDELIVERED"};
+    private String[] statusId={"5","1","3","2","4"};
+    private String state="5";
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private com.flyco.tablayout.SlidingTabLayout tabTitle;
     private android.support.v4.view.ViewPager tabViewpager;
+    private int pageSize=20;
 
     @Override
     protected int getLayoutId() {
@@ -74,7 +70,10 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
         tabTitle.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-
+                state=statusId[position];
+                myRequestPresenter.detachView();
+                myRequestPresenter.attachView(MyRequestActivity.this);
+                myRequestPresenter.getData(state,pageIndex, pageSize);
             }
 
             @Override
@@ -93,29 +92,33 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
 
             @Override
             public void onDeleteClick(int position) {
-                myRequestPresenter.delete(myRequestRvAdapter.getDatas().get(position).getDemand_id());
+                if(myRequestRvAdapter.getDatas().get(position).getStatus()==1){
+                    myRequestPresenter.delete(state,myRequestRvAdapter.getDatas().get(position).getDemand_id());
+                }else{
+                    ToastUtils.showShort("This state cannot be deleted");
+                }
             }
         });
         swipeToloadLayout.setOnLoadMoreListener(() -> {
             pageIndex++;
             isRefresh = false;
-            myRequestPresenter.getData(pageIndex, 10);
+            myRequestPresenter.getData(state,pageIndex, 10);
         });
         swipeToloadLayout.setOnRefreshListener(() -> {
             pageIndex = 1;
             isRefresh = true;
-            myRequestPresenter.getData(pageIndex, 10);
+            myRequestPresenter.getData(state,pageIndex, 10);
         });
 
-        myRequestPresenter.getData(pageIndex, 10);
+        myRequestPresenter.getData(state,pageIndex, 10);
 
     }
 
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.back_img);
+        backImg = findViewById(R.id.back_img);
 
-        tabTitle = (SlidingTabLayout) findViewById(R.id.tab_title);
-        tabViewpager = (ViewPager) findViewById(R.id.tab_viewpager);
+        tabTitle = findViewById(R.id.tab_title);
+        tabViewpager = findViewById(R.id.tab_viewpager);
         swipeToloadLayout = findViewById(R.id.swipe_toload_layout);
         swipeTarget = findViewById(R.id.swipe_target);
 
@@ -136,7 +139,7 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
 
     @Override
     public Object contentView() {
-        return R.id.swipe_toload_layout;
+        return swipeToloadLayout;
     }
 
     @Override
@@ -152,6 +155,9 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
         }
         myRequestBeans.addAll(myRequestBean.getData());
         myRequestRvAdapter.addMore(myRequestBeans);
+        if(myRequestBean.getData().size()<pageSize){
+            swipeToloadLayout.setLoadMoreEnabled(false);
+        }
     }
 
     @Override
@@ -161,6 +167,9 @@ public class MyRequestActivity extends BaseStateActivity implements RequestConta
         }
         myRequestBeans.addAll(myRequestBean.getData());
         myRequestRvAdapter.updateData(myRequestBeans);
+        if(myRequestBean.getData().size()<pageSize){
+            swipeToloadLayout.setLoadMoreEnabled(false);
+        }
     }
 
     @Override

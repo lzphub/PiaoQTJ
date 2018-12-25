@@ -4,21 +4,26 @@ import java.util.List;
 
 public class RequestDataBean {
 
+
     /**
-     * title : Hhdnndn
-     * images : null
-     * start_price : 9.00
-     * end_price : 69669.00
-     * start_date : 2018-11-24
-     * end_date : 2018-11-26
+     * title : Text8
+     * images : ["zm_1542420461151.png"]
+     * start_price : 25.00
+     * end_price : 36.00
+     * start_date : 2018-11-17
+     * end_date : 2018-11-23
+     * status : 2
+     * description : Jdhhdhhdhdhddhhdhdhshshuhdbudhdhdhvywujnxb
      */
 
     private String title;
-    private List<String> images;
     private String start_price;
     private String end_price;
     private String start_date;
     private String end_date;
+    private int status;
+    private String description;
+    private List<String> images;
 
     public String getTitle() {
         return title;
@@ -26,14 +31,6 @@ public class RequestDataBean {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
     }
 
     public String getStart_price() {
@@ -66,5 +63,29 @@ public class RequestDataBean {
 
     public void setEnd_date(String end_date) {
         this.end_date = end_date;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

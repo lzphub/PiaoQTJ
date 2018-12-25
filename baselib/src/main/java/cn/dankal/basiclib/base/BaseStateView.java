@@ -33,4 +33,8 @@ public interface BaseStateView extends BaseView {
     void showLoading();
 
 
+    /**
+     * 加载英文版空数据界面
+     */
+    void showEnEmpty();
 }

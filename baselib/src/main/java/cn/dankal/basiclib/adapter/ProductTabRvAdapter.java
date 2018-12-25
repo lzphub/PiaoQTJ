@@ -12,6 +12,7 @@ import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewAdapter;
 import cn.dankal.basiclib.base.recyclerview.BaseRecyclerViewHolder;
 import cn.dankal.basiclib.bean.ProductClassifyBean;
 import cn.dankal.basiclib.bean.ProductTabBean;
+import cn.dankal.basiclib.util.image.PicUtils;
 
 public class ProductTabRvAdapter extends BaseRecyclerViewAdapter<ProductClassifyBean.RootBean.ChildrenBean> {
     private ImageView productImg;
@@ -31,13 +32,13 @@ public class ProductTabRvAdapter extends BaseRecyclerViewAdapter<ProductClassify
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            productImg = (ImageView) itemView.findViewById(R.id.product_img);
-            productName = (TextView) itemView.findViewById(R.id.product_name);
+            productImg = itemView.findViewById(R.id.product_img);
+            productName = itemView.findViewById(R.id.product_name);
         }
 
         @Override
         public void onBindData(ProductClassifyBean.RootBean.ChildrenBean data, int position) {
-            Glide.with(context).load(data.getImage()).into(productImg);
+            Glide.with(context).load(PicUtils.getUrl(data.getImage())).into(productImg);
             productName.setText(data.getName());
         }
     }

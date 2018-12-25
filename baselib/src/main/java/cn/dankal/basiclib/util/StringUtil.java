@@ -243,5 +243,17 @@ public class StringUtil {
         return Arrays.asList(split);
     }
 
+    /**
+     * 去除价格后的 .00
+     * @param str
+     * @return
+     */
+    public static String isDigits(String str) {
+        String s=str.substring(str.indexOf(".")+1);
+        if(Integer.valueOf(s)==0){
+            return str.substring(0,str.indexOf("."));
+        }
+        return str;
+    }
 
 }

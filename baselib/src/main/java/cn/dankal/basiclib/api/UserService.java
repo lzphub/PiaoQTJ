@@ -90,7 +90,7 @@ public interface UserService {
     @FormUrlEncoded
     Observable<UserResponseBody> engineerLogin(@Field("email") String email, @Field("password") String password);
     /**
-     * 更新TOKEN
+     * 用户端更新TOKEN
      */
     @POST("customer/login/refreshtoken")
     @FormUrlEncoded

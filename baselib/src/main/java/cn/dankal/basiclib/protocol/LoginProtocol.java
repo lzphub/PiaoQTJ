@@ -3,6 +3,8 @@ package cn.dankal.basiclib.protocol;
 public interface LoginProtocol extends BaseRouteProtocol {
     String PART = "/login/";
 
+    String GUIDELOGIN=PART+"guideLogin";
+
     String USERSLOGIN=PART+"login";
 
     String ENTERPRISELOGIN=PART+"enterpriselogin";
@@ -12,12 +14,6 @@ public interface LoginProtocol extends BaseRouteProtocol {
     String REGISTERVECODE=PART+"vecode";
 
     String SETPWD=PART+"setpwd";
-
-    String FORGETPWD=PART+"forgetPwd";
-
-    String FORGETPWDCODE=PART+"forgetPwdCode";
-
-    String FORGETPWDSET=PART+"forgetPwdSet";
 
     String REGISTERUSER=PART+"registeruser";
 

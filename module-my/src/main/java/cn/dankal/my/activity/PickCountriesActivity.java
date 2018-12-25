@@ -25,6 +25,9 @@ import cn.dankal.setting.R;
 
 import static cn.dankal.basiclib.protocol.MyProtocol.PICKCOUNTRIES;
 
+/**
+ * 选择国家
+ */
 @Route(path = PICKCOUNTRIES)
 public class PickCountriesActivity extends BaseActivity {
 
@@ -48,9 +51,9 @@ public class PickCountriesActivity extends BaseActivity {
     }
 
     private void initView() {
-        lvContact = findViewById(R.id.lv_contact);
         sidrbar = findViewById(R.id.sidrbar);
         backImg = findViewById(R.id.back_img);
+        lvContact = findViewById(R.id.lv_contact);
     }
 
     private void initEvents() {
@@ -63,15 +66,11 @@ public class PickCountriesActivity extends BaseActivity {
             }
         });
 
-        lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtils.showShort(((ContactSortModel) adapter.getItem(position)).getName());
-                Intent intent=new Intent();
-                intent.putExtra("countries",((ContactSortModel) adapter.getItem(position)).getName());
-                setResult(2,intent);
-                finish();
-            }
+        lvContact.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent=new Intent();
+            intent.putExtra("countries",((ContactSortModel) adapter.getItem(position)).getName());
+            setResult(2,intent);
+            finish();
         });
     }
 

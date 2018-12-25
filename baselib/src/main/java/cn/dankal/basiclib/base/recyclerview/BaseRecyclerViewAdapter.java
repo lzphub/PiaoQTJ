@@ -118,11 +118,11 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     }
 
     public void updateData(List<T> datas) {
-        if (this.datas != null && datas != null) {
+        if (datas != null) {
             this.datas.clear();
             this.datas.addAll(datas);
         } else {
-            this.datas = datas;
+            this.datas.clear();
         }
         notifyDataSetChanged();
     }

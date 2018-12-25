@@ -109,4 +109,29 @@
         <attr name="gifViewStyle" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="TabItem">
+
+        <attr name="text" format="string" />
+
+        <attr name="bg" format="reference"/>
+
+        <attr name="iconGravity" format="enum">
+
+            <enum name="left" value="3" />
+
+            <enum name="right" value="5" />
+
+            <enum name="bottom" value="80" />
+
+            <enum name="top" value="48" />
+
+        </attr>
+
+        <attr name="icon" format="reference" />
+
+        <attr name="iconWidth" format="dimension" />
+
+        <attr name="iconHeight" format="dimension" />
+    </declare-styleable>
+
 </resources>
