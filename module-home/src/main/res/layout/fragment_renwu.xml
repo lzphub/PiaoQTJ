@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@drawable/title_bg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/title_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="任务中心"
+            android:textColor="@color/colorfe"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:clipChildren="false" />
+
+                <com.shizhefei.view.indicator.FixedIndicatorView
+                    android:id="@+id/singleTab_scrollIndicatorView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="5dp"
+                    android:fillViewport="false" />
+
+            </RelativeLayout>
+
+
+            <ImageView
+                android:id="@+id/iv_renwudat"
+                android:layout_width="345dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/renwudating"
+                android:layout_gravity="center_horizontal"/>
+
+            <ImageView
+                android:id="@+id/iv_tijiaorenwu"
+                android:layout_width="345dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/tijiaorenwu"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_renwujilu"
+                android:layout_width="345dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/renwujilu"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

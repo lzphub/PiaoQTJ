@@ -66,23 +66,18 @@ dependencies {
     api deps.support.design
     api deps.support.cardview
     api deps.support.constraint_layout
-
     api deps.rxjava2
     api deps.rxAndroid
     api deps.rxjavaAdapter
     api deps.and_permission
     api deps.rxpermissions
-
     api deps.glide.runtime
     api deps.glide.okhttp3
-
     api deps.widgets.photoview
     api deps.butterknife.butterknife
-
     api deps.alibaba.arouter_api
     api deps.alibaba.fastjson
     api deps.alibaba.converter_fastjson
-
     api deps.retrofit.runtime
     api deps.facebook.stetho
     api deps.facebook.stetho_okhttp3
@@ -90,37 +85,33 @@ dependencies {
     annotationProcessor deps.butterknife.butterknife_compiler
     annotationProcessor project(':component-compiler')
     annotationProcessor deps.alibaba.arouter_compiler
-
-//    kapt deps.glide.compiler
-//    kapt deps.butterknife.butterknife_compiler
-//    kapt project(':component-compiler')
-//    kapt deps.alibaba.arouter_compiler
-
+    //    kapt deps.glide.compiler
+    //    kapt deps.butterknife.butterknife_compiler
+    //    kapt project(':component-compiler')
+    //    kapt deps.alibaba.arouter_compiler
     //mta 3.4.7 稳定版
     //mid jar包 必须添加
-//    api deps.tencent.mta
-//    api deps.tencent.mid
-
-//    api project(':component-zxing')
+    //    api deps.tencent.mta
+    //    api deps.tencent.mid
+    //    api project(':component-zxing')
     api project(':component-annotations')
-//    api project(':component-easeui')
-
+    //    api project(':component-easeui')
     implementation 'org.aspectj:aspectjrt:1.8.9'
     implementation files('libs/happy-dns-0.2.13.jar')
     implementation files('libs/qiniu-android-sdk-7.3.12.jar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation deps.kotlin.anko
-    implementation "com.zhihu.android:matisse:0.5.2-beta3"
-
+    //    implementation "com.zhihu.android:matisse:0.5.2-beta3"
+    implementation 'com.zhihu.android:matisse:0.5.2-beta2'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     //图片剪切
     implementation 'com.github.yalantis:ucrop:2.2.1'
     //图片压缩 鲁班
     implementation 'top.zibin:Luban:1.1.8'
-
     api deps.support.multidex
-
-
-    api deps.push.jgsdk_jpush
-    api deps.push.jgsdk_jcore
-
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
+    implementation 'com.github.yuzhiqiang1993:zxing:2.0.0'
+    //    api deps.push.jgsdk_jpush
+    //    api deps.push.jgsdk_jcore
 }

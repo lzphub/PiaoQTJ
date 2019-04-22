@@ -7,7 +7,7 @@ android {
     defaultConfig {
         multiDexEnabled true
 
-        applicationId "cn.dankal.zm"
+        applicationId "cn.xunzi.pqtj"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1
@@ -24,24 +24,24 @@ android {
 
                 //极光推送
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "0d555ae25049f728325d93b7", //JPush上注册的包名对应的appkey.
+                JPUSH_APPKEY : "", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "xx-default", //暂时填写默认值即可.
         ]
 
     }
 
     signingConfigs {
-        Properties properties = new Properties()
-        if (rootProject.file("local.properties").exists()) {
-            properties.load(rootProject.file("local.properties").newDataInputStream())
-        }
+//        Properties properties = new Properties()
+//        if (rootProject.file("local.properties").exists()) {
+//            properties.load(rootProject.file("local.properties").newDataInputStream())
+//        }
 
-        jenkins {
-            storeFile file(System.getProperty('StoreFilePath') ?: properties.get("STOREFILE"))
-            storePassword System.getProperty('StorePassword') ?: properties.get("STOREPASSWORD")
-            keyAlias System.getProperty('KeyAlias') ?: properties.get("KEYALIAS")
-            keyPassword System.getProperty('KeyPassword') ?: properties.get("KEYPASSWORD")
-        }
+//        jenkins {
+//            storeFile file(System.getProperty('StoreFilePath') ?: properties.get("STOREFILE"))
+//            storePassword System.getProperty('StorePassword') ?: properties.get("STOREPASSWORD")
+//            keyAlias System.getProperty('KeyAlias') ?: properties.get("KEYALIAS")
+//            keyPassword System.getProperty('KeyPassword') ?: properties.get("KEYPASSWORD")
+//        }
 
     }
     buildTypes {
@@ -50,7 +50,7 @@ android {
 //            minifyEnabled true
 //            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.jenkins
+//            signingConfig signingConfigs.jenkins
         }
     }
     compileOptions {
@@ -70,12 +70,10 @@ dependencies {
     annotationProcessor deps.glide.compiler
     annotationProcessor deps.butterknife.butterknife_compiler
     annotationProcessor deps.alibaba.arouter_compiler
-    api project(':module-user')
+    api project(':module-login')
     api project(':module-home')
     api project(':module-my')
-    api project(':module-product')
+    api project(':module-task')
     api project(':baselib')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-
 }

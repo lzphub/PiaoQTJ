@@ -15,8 +15,7 @@
             android:gravity="center"
             android:paddingLeft="19dp"
             android:paddingRight="19dp"
-            android:text="CANCEL"
-            android:textStyle="bold"
+            android:text="取消"
             android:textColor="#4A4A4A"
             android:textSize="14sp" />
 
@@ -25,8 +24,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="SELECTION TIME"
-            android:textStyle="bold"
+            android:text="选择时间"
             android:textColor="@color/color14"
             android:textSize="18sp" />
 
@@ -37,9 +35,8 @@
             android:gravity="center"
             android:paddingLeft="19dp"
             android:paddingRight="19dp"
-            android:text="OK"
-            android:textStyle="bold"
-            android:textColor="@color/login_btn_bg"
+            android:text="完成"
+            android:textColor="@color/colorAccent"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -52,19 +49,19 @@
         android:layout_width="match_parent"
         android:layout_height="149dp">
 
-        <cn.dankal.basiclib.widget.wheelview.WheelView
+        <cn.xunzi.basiclib.widget.wheelview.WheelView
             android:id="@+id/wv_year"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <cn.dankal.basiclib.widget.wheelview.WheelView
+        <cn.xunzi.basiclib.widget.wheelview.WheelView
             android:id="@+id/wv_month"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <cn.dankal.basiclib.widget.wheelview.WheelView
+        <cn.xunzi.basiclib.widget.wheelview.WheelView
             android:id="@+id/wv_day"
             android:layout_width="0dp"
             android:layout_height="match_parent"

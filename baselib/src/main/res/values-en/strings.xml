@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Lighting Master</string>
-	<string name="login_activity_path">cn.dankal.user.login.LoginActivity</string>
+	<string name="app_name">票圈淘金</string>
+	<string name="login_activity_path">cn.xunzi.user.login.LoginActivity</string>
 	<string name="registr">Register an account</string>
 	<string name="account">account number</string>
 	<string name="emailaccount">email address</string>
@@ -28,4 +28,5 @@
 	<string name="Refresh">Refresh</string>
 	<string name="sendSuccess">Send a success</string>
 	<string name="loginfailure">Login information invalid</string>
+	<string name="pwds">0123456789zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP</string>
 </resources>

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.dankal.basiclib" >
+    package="cn.xunzi.basiclib" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -15,7 +15,7 @@
         <!--7.0相机权限-->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="cn.dankal.basiclib.fileprovider"
+            android:authorities="cn.xunzi.basiclib.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

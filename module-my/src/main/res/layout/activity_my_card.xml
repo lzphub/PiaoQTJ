@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.xunzi.my.activity.MyCardActivity">
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@drawable/title_bg"/>
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/view"
+        android:background="@drawable/title_bg">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/fanhui"
+            android:scaleType="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的银行卡"
+            android:textColor="@color/colorfe"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/tianjiabai"
+            android:scaleType="center"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/bank_rec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:overScrollMode="never"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="您还未绑定银行卡"
+        android:textSize="15sp"
+        android:textColor="@color/color33"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/title"
+        android:layout_marginTop="82dp"/>
+
+    <Button
+        android:id="@+id/bt_add"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/login_btn_bg"
+        android:layout_below="@id/tv_tip"
+        android:layout_marginTop="79dp"
+        android:layout_marginRight="63dp"
+        android:layout_marginLeft="63dp"
+        android:text="去添加"
+        android:elevation="9dp"
+        android:textColor="@color/colorFF"
+        android:textSize="18sp"/>
+    
+</RelativeLayout>

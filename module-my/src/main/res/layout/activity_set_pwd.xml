@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cn.xunzi.my.activity.SetPwdActivity">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@drawable/title_bg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/title_bg">
+
+        <ImageView
+            android:id="@+id/im_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@mipmap/fanhui" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="修改登录密码"
+            android:textColor="@color/colorfe"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
+        android:orientation="vertical"
+        android:background="@color/colorFF">
+
+        <EditText
+            android:id="@+id/et_oldpwd"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/login_edit_bg"
+            android:digits="@string/pwds"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:hint="输入原始密码"
+            android:password="true"
+            android:textSize="15sp"
+            android:textColor="@color/color78"
+            android:paddingLeft="11dp"/>
+        <EditText
+            android:id="@+id/et_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/login_edit_bg"
+            android:digits="@string/pwds"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:hint="请输入6-18位新密码"
+            android:textSize="15sp"
+            android:password="true"
+            android:textColor="@color/color78"
+            android:paddingLeft="11dp"/>
+        <EditText
+            android:id="@+id/et_subpwd"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/login_edit_bg"
+            android:digits="@string/pwds"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:hint="请输入确认密码"
+            android:password="true"
+            android:textSize="15sp"
+            android:textColor="@color/color78"
+            android:paddingLeft="11dp"/>
+
+        <Button
+            android:id="@+id/bt_submit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/login_btn_bg"
+            android:layout_marginLeft="64dp"
+            android:layout_marginRight="64dp"
+            android:layout_marginTop="67dp"
+            android:text="提交"
+            android:elevation="9dp"
+            android:textColor="@color/colorFF"
+            android:textSize="18sp"/>
+    </LinearLayout>
+    
+</LinearLayout>

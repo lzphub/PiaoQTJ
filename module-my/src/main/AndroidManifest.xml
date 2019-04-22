@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.dankal.setting">
+    package="cn.xunzi.setting">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application>
-        <activity android:name="cn.dankal.my.activity.MyWorkListActivity" />
-        <activity android:name="cn.dankal.my.activity.MyIdeaActivity" />
-        <activity android:name="cn.dankal.my.activity.MyEarningsActivity" />
-        <activity android:name="cn.dankal.my.activity.TransactionRecordsActivity" />
-        <activity android:name="cn.dankal.my.activity.SettingActivity" />
-        <activity android:name="cn.dankal.my.activity.NewsActivity" />
-        <activity android:name="cn.dankal.my.activity.PersonalDataActivity" />
-        <activity android:name="cn.dankal.my.activity.EditDataActivity" />
-        <activity android:name="cn.dankal.my.activity.WithdrawalActivity" />
-        <activity android:name="cn.dankal.my.activity.AboutUsActivity" />
-        <activity android:name="cn.dankal.my.activity.FeedBackActivity" />
-        <activity android:name="cn.dankal.my.activity.SetWithdaPwdActivity" />
-        <activity android:name="cn.dankal.my.activity.SetPwdCodeActivity" />
-        <activity android:name="cn.dankal.my.activity.ComProbActivity" />
-        <activity android:name="cn.dankal.my.activity.ComPorDataActivity" />
-        <activity android:name="cn.dankal.my.activity.BankCardActivity" />
-        <activity android:name="cn.dankal.my.activity.CheckBankCardActivity" />
-        <activity android:name="cn.dankal.my.activity.PersonalData_EnActivity" />
-        <activity android:name="cn.dankal.my.activity.MyIntentionActivity" />
-        <activity android:name="cn.dankal.my.activity.MyFavoriteActivity" />
-        <activity android:name="cn.dankal.my.activity.MyRequestActivity" />
-        <activity android:name="cn.dankal.my.activity.PickCountriesActivity" />
-        <activity android:name="cn.dankal.my.activity.MyIntentionDetailsActivity" />
-        <activity android:name="cn.dankal.my.activity.MyRequestDetaActivity" />
-        <activity android:name="cn.dankal.my.activity.EditDataEnActivity" />
         <activity
-            android:name="cn.dankal.my.activity.MyIdeaDataActivity"
-            android:label="@string/title_activity_my_idea_data"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="cn.dankal.my.activity.MyWorkListDataActivity" />
-        <activity android:name="cn.dankal.my.activity.EngineerNewsActivity" />
-        <activity android:name="cn.dankal.my.activity.FinishWorkActivity" />
-        <activity android:name="cn.dankal.my.activity.SysMsgContentActivity"></activity>
+            android:name="cn.xunzi.my.activity.MyTeamActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.my.activity.MyCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.my.activity.WithActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.my.activity.SetPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.my.activity.AddBankCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.my.activity.MyTeamListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.my.activity.WithDetaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.my.activity.SetUserNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.my.activity.ChangeWithPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.my.activity.ChoicePwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.my.activity.SetWithPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.my.activity.PickCityActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

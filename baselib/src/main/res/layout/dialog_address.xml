@@ -50,19 +50,19 @@
         android:layout_width="match_parent"
         android:layout_height="149dp">
 
-        <cn.dankal.basiclib.widget.wheelview.WheelView
+        <cn.xunzi.basiclib.widget.wheelview.WheelView
             android:id="@+id/wv_province"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <cn.dankal.basiclib.widget.wheelview.WheelView
+        <cn.xunzi.basiclib.widget.wheelview.WheelView
             android:id="@+id/wv_city"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <cn.dankal.basiclib.widget.wheelview.WheelView
+        <cn.xunzi.basiclib.widget.wheelview.WheelView
             android:id="@+id/wv_district"
             android:layout_width="0dp"
             android:layout_height="match_parent"

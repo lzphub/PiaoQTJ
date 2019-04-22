@@ -1,183 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context="cn.dankal.home.activity.ServiceActivity">
+    android:orientation="vertical"
+    tools:context="cn.xunzi.home.activity.ServiceActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@drawable/title_bg"/>
 
     <RelativeLayout
-        android:id="@+id/title_rl"
         android:layout_width="match_parent"
-        android:layout_height="69dp">
+        android:layout_height="40dp"
+        android:background="@drawable/title_bg">
 
         <ImageView
-            android:id="@+id/back_img"
-            android:layout_width="50dp"
-            android:layout_height="49dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="13dp"
-            android:scaleType="center"
-            android:src="@mipmap/ic_my_worklist_return" />
+            android:id="@+id/iv_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/fanhui"
+            android:scaleType="center"/>
 
         <TextView
-            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="11dp"
-            android:text="SERVICE"
-            android:textColor="@color/color33"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
+            android:text="联系客服"
+            android:textColor="@color/colorfe"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tips_text"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_below="@id/title_rl"
-        android:background="@color/colorfff8dc"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:maxLines="2"
-        android:paddingLeft="23dp"
-        android:paddingRight="23dp"
-        android:text="Due to the delay of the manual reply, please contact 1071277 364 if you have urgent needs"
-        android:textColor="@color/color14"
-        android:textSize="13sp"
-        android:textStyle="bold" />
 
     <RelativeLayout
-        android:id="@+id/et_rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="55dp"
         android:background="@color/colorFF">
 
-        <RelativeLayout
-            android:id="@+id/et_text_rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/content_et"
-                android:layout_width="283dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="23dp"
-                android:layout_marginTop="7dp"
-                android:background="@color/colorF6"
-                android:hint="PLEASE ENTER QUESTIONS"
-                android:paddingBottom="8dp"
-                android:paddingLeft="18dp"
-                android:paddingRight="18dp"
-                android:paddingTop="7dp"
-                android:imeOptions="actionSend"
-                android:textColorHint="@color/colorC1"
-                android:textColor="@color/color33"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:imeActionLabel="发送"
-                android:maxLines="6"/>
-
-            <ImageView
-                android:id="@+id/add_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="23dp"
-                android:src="@mipmap/ic_customerservice_addto" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/add_to_ll"
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="76dp"
-            android:layout_below="@id/et_text_rl"
-            android:layout_marginLeft="23dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            android:text="平台客服"
+            android:textSize="15sp"
+            android:textColor="@color/color32"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"/>
 
-            <LinearLayout
-                android:id="@+id/add_to_camera"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_call"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="0755-1234567"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="#44A0e7"
+            android:layout_marginRight="15dp"/>
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/rect_whiteff_solid_s1r10"
-                    android:scaleType="center"
-                    android:src="@mipmap/ic_customerservice_addto_camera" />
-
-                <TextView
-                    android:id="@+id/tv_photograph"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:text="PHOTOGRAPH"
-                    android:textColor="@color/color99"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/add_to_album"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/rect_whiteff_solid_s1r10"
-                    android:scaleType="center"
-                    android:src="@mipmap/ic_customerservice_addto_album" />
-
-                <TextView
-                    android:id="@+id/tv_album"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:text="ALBUM"
-                    android:textColor="@color/color99"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-        </LinearLayout>
     </RelativeLayout>
-
-<cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout
-    android:id="@id/swipe_toload_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:load_more_complete_delay_duration="250"
-    app:refresh_complete_delay_duration="250"
-    android:layout_above="@id/et_rl"
-    android:layout_below="@id/tips_text">
-
-    <include
-        android:id="@+id/swipe_refresh_header"
-        layout="@layout/layout_addmore_header" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@id/swipe_target"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
-</cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout>
-</RelativeLayout>
+        android:layout_height="55dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/colorFF">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="值班热线"
+            android:textSize="15sp"
+            android:textColor="@color/color32"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="18576460701"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="#44A0e7"
+            android:layout_marginRight="15dp"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/colorFF">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客服微信"
+            android:textSize="15sp"
+            android:textColor="@color/color32"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/tv_wx"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="VX123456"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="#44A0e7"
+            android:layout_marginRight="15dp"/>
+
+    </RelativeLayout>
+</LinearLayout>

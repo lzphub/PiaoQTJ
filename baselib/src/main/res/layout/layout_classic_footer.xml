@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cn.dankal.basiclib.widget.swipetoloadlayout.SwipeLoadMoreFooterLayout
+<cn.xunzi.basiclib.widget.swipetoloadlayout.SwipeLoadMoreFooterLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -38,4 +38,4 @@
 
     </RelativeLayout>
 
-</cn.dankal.basiclib.widget.swipetoloadlayout.SwipeLoadMoreFooterLayout>
+</cn.xunzi.basiclib.widget.swipetoloadlayout.SwipeLoadMoreFooterLayout>

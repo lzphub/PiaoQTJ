@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">照明大师</string>
+    <string name="app_name">玩美闺蜜</string>
 
-    <string name="login_activity_path">cn.dankal.user.login.LoginActivity</string>
+    <string name="login_activity_path">cn.xunzi.user.login.LoginActivity</string>
     <string name="registr">注册账号</string>
     <string name="account">账号</string>
     <string name="emailaccount">邮箱账号</string>
@@ -29,4 +29,5 @@
     <string name="Refresh">刷新中</string>
     <string name="sendSuccess">发送成功</string>
     <string name="loginfailure">登录信息失效</string>
+    <string name="pwds">0123456789zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP</string>
 </resources>

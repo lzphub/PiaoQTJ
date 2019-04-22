@@ -1,179 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scroll"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/colorFF"
-    android:orientation="vertical"
-    app:load_more_complete_delay_duration="250"
-    app:refresh_complete_delay_duration="250">
+    android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@drawable/title_bg" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginBottom="10dp">
+        android:layout_height="40dp"
+        android:background="@drawable/title_bg">
 
-        <ImageView
-            android:id="@+id/logo_img"
-            android:layout_width="120dp"
-            android:layout_height="36dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginTop="46dp"
-            android:src="@mipmap/logo_1"/>
-
-        <ImageView
-            android:id="@+id/search_img"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="55dp"
-            android:src="@mipmap/ic_home_search"
-            android:layout_alignParentRight="true"/>
+            android:layout_centerInParent="true"
+            android:text="首页"
+            android:textColor="@color/colorfe"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-        <LinearLayout
-            android:id="@+id/release_ll"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_toLeftOf="@id/search_img"
-            android:layout_toRightOf="@id/logo_img"
-            android:layout_marginTop="48dp"
-            android:layout_marginLeft="45dp"
-            android:layout_marginRight="19dp"
-            android:background="@drawable/release_home_bg"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/res_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/ic_home_release"
-                android:drawablePadding="7dp"
-                android:text="发布"
-                android:textSize="15sp"
-                android:textColor="@color/colorE5"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/release_ll2"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_toLeftOf="@id/search_img"
-            android:layout_toRightOf="@id/logo_img"
-            android:layout_marginTop="48dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="17dp"
-            android:background="@drawable/release_home_bg"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/res_text2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/ic_home_release"
-                android:drawablePadding="7dp"
-                android:text="PUBLISH A REQUEST"
-                android:textColor="@color/colorE5"
-                android:textSize="11sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
     </RelativeLayout>
 
-    <cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout
-        android:id="@+id/swipe_toload_layout"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:clipChildren="false" />
+
+        <com.shizhefei.view.indicator.FixedIndicatorView
+            android:id="@+id/singleTab_scrollIndicatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_alignParentBottom="true"
+            android:fillViewport="false" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/home_rec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipChildren="false">
+        android:layout_marginTop="15dp"
+        android:background="@color/colorFF"
+        android:overScrollMode="never" />
 
-        <include
-            android:id="@+id/swipe_refresh_header"
-            layout="@layout/layout_classic_en_header" />
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@id/swipe_target"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            android:clipChildren="false">
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:clipChildren="false">
-
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/banner"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_centerHorizontal="true"
-                    android:clipChildren="false"/>
-                <com.shizhefei.view.indicator.FixedIndicatorView
-                    android:id="@+id/singleTab_scrollIndicatorView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fillViewport="false"
-                    android:layout_marginTop="20dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/banner"/>
-
-                <TextView
-                    android:id="@+id/new_demand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="23dp"
-                    android:layout_marginTop="25dp"
-                    android:text="最新需求"
-                    android:textColor="@color/color33"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:layout_below="@id/singleTab_scrollIndicatorView" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/demand_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="21dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/new_demand"/>
-
-                <TextView
-                    android:id="@+id/load_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:drawablePadding="7dp"
-                    android:drawableRight="@mipmap/ic_home_more"
-                    android:text="查看更多"
-                    android:textColor="@color/color33"
-                    android:textSize="15sp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/demand_list" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="24dp"
-                    android:layout_below="@id/load_more"></View>
-
-
-            </RelativeLayout>
-        </android.support.v4.widget.NestedScrollView>
-
-        <include
-            android:id="@id/swipe_load_more_footer"
-            layout="@layout/layout_classic_en_footer" />
-    </cn.dankal.basiclib.widget.swipetoloadlayout.SwipeToLoadLayout>
 </LinearLayout>

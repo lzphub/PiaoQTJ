@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-en-rCA_values-en-rCA.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-en-rCA_values-en-rCA.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-en-rCA/values-en-rCA.xml",
@@ -33,7 +33,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-af_values-af.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-af_values-af.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-af/values-af.xml",
@@ -65,7 +65,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-hu_values-hu.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-hu_values-hu.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-hu/values-hu.xml",
@@ -97,7 +97,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-lv_values-lv.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-lv_values-lv.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-lv/values-lv.xml",
@@ -129,7 +129,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-v21_values-v21.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-v21_values-v21.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-v21/values-v21.xml",
@@ -172,7 +172,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-zu_values-zu.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-zu_values-zu.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-zu/values-zu.xml",
@@ -204,7 +204,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-km_values-km.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-km_values-km.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-km/values-km.xml",
@@ -236,7 +236,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-watch-v20_values-watch-v20.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-watch-v20_values-watch-v20.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-watch-v20/values-watch-v20.xml",
@@ -252,7 +252,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-en-rXC_values-en-rXC.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-en-rXC_values-en-rXC.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-en-rXC/values-en-rXC.xml",
@@ -284,7 +284,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-or_values-or.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-or_values-or.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-or/values-or.xml",
@@ -316,7 +316,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-mr_values-mr.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-mr_values-mr.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-mr/values-mr.xml",
@@ -348,7 +348,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ne_values-ne.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ne_values-ne.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-ne/values-ne.xml",
@@ -380,7 +380,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-es-rUS_values-es-rUS.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-es-rUS_values-es-rUS.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-es-rUS/values-es-rUS.xml",
@@ -412,7 +412,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-uk_values-uk.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-uk_values-uk.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-uk/values-uk.xml",
@@ -444,7 +444,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-v25_values-v25.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-v25_values-v25.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-v25/values-v25.xml",
@@ -460,7 +460,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-et_values-et.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-et_values-et.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-et/values-et.xml",
@@ -492,7 +492,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-gl_values-gl.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-gl_values-gl.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-gl/values-gl.xml",
@@ -524,7 +524,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-sw_values-sw.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-sw_values-sw.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-sw/values-sw.xml",
@@ -556,7 +556,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-eu_values-eu.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-eu_values-eu.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-eu/values-eu.xml",
@@ -588,7 +588,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-en-rIN_values-en-rIN.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-en-rIN_values-en-rIN.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-en-rIN/values-en-rIN.xml",
@@ -620,7 +620,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-sk_values-sk.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-sk_values-sk.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-sk/values-sk.xml",
@@ -652,7 +652,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-port_values-port.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-port_values-port.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-port/values-port.xml",
@@ -667,7 +667,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-b+sr+Latn_values-b+sr+Latn.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-b+sr+Latn_values-b+sr+Latn.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-b+sr+Latn/values-b+sr+Latn.xml",
@@ -699,7 +699,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-en-rAU_values-en-rAU.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-en-rAU_values-en-rAU.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-en-rAU/values-en-rAU.xml",
@@ -731,7 +731,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-gu_values-gu.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-gu_values-gu.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-gu/values-gu.xml",
@@ -763,7 +763,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-pa_values-pa.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-pa_values-pa.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-pa/values-pa.xml",
@@ -795,7 +795,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-pt-rBR_values-pt-rBR.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-pt-rBR_values-pt-rBR.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-pt-rBR/values-pt-rBR.xml",
@@ -827,7 +827,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-zh-rCN_values-zh-rCN.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-zh-rCN_values-zh-rCN.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-zh-rCN/values-zh-rCN.xml",
@@ -859,7 +859,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-bn_values-bn.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-bn_values-bn.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-bn/values-bn.xml",
@@ -891,7 +891,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-kn_values-kn.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-kn_values-kn.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-kn/values-kn.xml",
@@ -923,7 +923,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-hdpi-v4_values-hdpi-v4.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-hdpi-v4_values-hdpi-v4.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-hdpi-v4/values-hdpi-v4.xml",
@@ -939,7 +939,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-da_values-da.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-da_values-da.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-da/values-da.xml",
@@ -971,7 +971,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-si_values-si.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-si_values-si.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-si/values-si.xml",
@@ -1003,7 +1003,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-tr_values-tr.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-tr_values-tr.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-tr/values-tr.xml",
@@ -1035,7 +1035,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-en-rGB_values-en-rGB.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-en-rGB_values-en-rGB.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-en-rGB/values-en-rGB.xml",
@@ -1067,7 +1067,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-tl_values-tl.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-tl_values-tl.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-tl/values-tl.xml",
@@ -1099,7 +1099,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-nl_values-nl.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-nl_values-nl.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-nl/values-nl.xml",
@@ -1131,7 +1131,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-be_values-be.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-be_values-be.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-be/values-be.xml",
@@ -1163,7 +1163,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ms_values-ms.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ms_values-ms.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-ms/values-ms.xml",
@@ -1195,7 +1195,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-el_values-el.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-el_values-el.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-el/values-el.xml",
@@ -1227,7 +1227,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-hy_values-hy.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-hy_values-hy.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-hy/values-hy.xml",
@@ -1259,7 +1259,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-night-v8_values-night-v8.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-night-v8_values-night-v8.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-night-v8/values-night-v8.xml",
@@ -1274,7 +1274,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-de_values-de.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-de_values-de.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-de/values-de.xml",
@@ -1306,7 +1306,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-iw_values-iw.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-iw_values-iw.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-iw/values-iw.xml",
@@ -1338,7 +1338,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ja_values-ja.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ja_values-ja.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-ja/values-ja.xml",
@@ -1370,7 +1370,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values_values.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values_values.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values/values.xml",
@@ -1392,7 +1392,7 @@
                     }
                 },
                 {
-                    "source": "/Users/fred/AndroidStudioProjects/zm/module_product/src/main/res/values/styles.xml",
+                    "source": "/Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/res/values/styles.xml",
                     "from": {
                         "startLines": "3",
                         "startColumns": "4",
@@ -1430,7 +1430,7 @@
                     }
                 },
                 {
-                    "source": "/Users/fred/AndroidStudioProjects/zm/module_product/src/main/res/values/colors.xml",
+                    "source": "/Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/res/values/colors.xml",
                     "from": {
                         "startLines": "4,2,3",
                         "startColumns": "4,4,4",
@@ -1485,7 +1485,7 @@
                     }
                 },
                 {
-                    "source": "/Users/fred/AndroidStudioProjects/zm/module_product/src/main/res/values/strings.xml",
+                    "source": "/Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/res/values/strings.xml",
                     "from": {
                         "startLines": "1",
                         "startColumns": "4",
@@ -1504,7 +1504,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-mn_values-mn.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-mn_values-mn.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-mn/values-mn.xml",
@@ -1536,7 +1536,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-pt-rPT_values-pt-rPT.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-pt-rPT_values-pt-rPT.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-pt-rPT/values-pt-rPT.xml",
@@ -1568,7 +1568,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-watch-v21_values-watch-v21.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-watch-v21_values-watch-v21.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-watch-v21/values-watch-v21.xml",
@@ -1584,7 +1584,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-pl_values-pl.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-pl_values-pl.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-pl/values-pl.xml",
@@ -1616,7 +1616,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-nb_values-nb.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-nb_values-nb.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-nb/values-nb.xml",
@@ -1648,7 +1648,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-bs_values-bs.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-bs_values-bs.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-bs/values-bs.xml",
@@ -1680,7 +1680,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-zh-rTW_values-zh-rTW.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-zh-rTW_values-zh-rTW.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-zh-rTW/values-zh-rTW.xml",
@@ -1712,7 +1712,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-v17_values-v17.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-v17_values-v17.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-v17/values-v17.xml",
@@ -1728,7 +1728,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-az_values-az.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-az_values-az.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-az/values-az.xml",
@@ -1760,7 +1760,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-is_values-is.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-is_values-is.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-is/values-is.xml",
@@ -1792,7 +1792,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-v23_values-v23.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-v23_values-v23.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-v23/values-v23.xml",
@@ -1808,7 +1808,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-sq_values-sq.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-sq_values-sq.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-sq/values-sq.xml",
@@ -1840,7 +1840,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ko_values-ko.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ko_values-ko.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-ko/values-ko.xml",
@@ -1872,7 +1872,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-mk_values-mk.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-mk_values-mk.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-mk/values-mk.xml",
@@ -1904,7 +1904,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-th_values-th.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-th_values-th.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-th/values-th.xml",
@@ -1936,7 +1936,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-lo_values-lo.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-lo_values-lo.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-lo/values-lo.xml",
@@ -1968,7 +1968,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-lt_values-lt.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-lt_values-lt.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-lt/values-lt.xml",
@@ -2000,7 +2000,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-fr_values-fr.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-fr_values-fr.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-fr/values-fr.xml",
@@ -2032,7 +2032,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ru_values-ru.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ru_values-ru.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-ru/values-ru.xml",
@@ -2064,7 +2064,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-fa_values-fa.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-fa_values-fa.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-fa/values-fa.xml",
@@ -2096,7 +2096,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-my_values-my.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-my_values-my.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-my/values-my.xml",
@@ -2128,7 +2128,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-in_values-in.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-in_values-in.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-in/values-in.xml",
@@ -2160,7 +2160,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-pt_values-pt.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-pt_values-pt.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-pt/values-pt.xml",
@@ -2192,7 +2192,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-fi_values-fi.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-fi_values-fi.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-fi/values-fi.xml",
@@ -2224,7 +2224,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-land_values-land.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-land_values-land.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-land/values-land.xml",
@@ -2239,7 +2239,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-am_values-am.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-am_values-am.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-am/values-am.xml",
@@ -2271,7 +2271,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-vi_values-vi.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-vi_values-vi.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-vi/values-vi.xml",
@@ -2303,7 +2303,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-hi_values-hi.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-hi_values-hi.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-hi/values-hi.xml",
@@ -2335,7 +2335,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-uz_values-uz.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-uz_values-uz.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-uz/values-uz.xml",
@@ -2367,7 +2367,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-h720dp-v13_values-h720dp-v13.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-h720dp-v13_values-h720dp-v13.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-h720dp-v13/values-h720dp-v13.xml",
@@ -2382,7 +2382,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-xlarge-v4_values-xlarge-v4.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-xlarge-v4_values-xlarge-v4.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-xlarge-v4/values-xlarge-v4.xml",
@@ -2397,7 +2397,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-v24_values-v24.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-v24_values-v24.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-v24/values-v24.xml",
@@ -2412,7 +2412,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ca_values-ca.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ca_values-ca.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-ca/values-ca.xml",
@@ -2444,7 +2444,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-v22_values-v22.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-v22_values-v22.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-v22/values-v22.xml",
@@ -2460,7 +2460,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-large-v4_values-large-v4.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-large-v4_values-large-v4.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-large-v4/values-large-v4.xml",
@@ -2475,7 +2475,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ldltr-v21_values-ldltr-v21.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ldltr-v21_values-ldltr-v21.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-ldltr-v21/values-ldltr-v21.xml",
@@ -2490,7 +2490,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ky_values-ky.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ky_values-ky.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-ky/values-ky.xml",
@@ -2522,7 +2522,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-te_values-te.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-te_values-te.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-te/values-te.xml",
@@ -2554,7 +2554,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-sr_values-sr.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-sr_values-sr.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-sr/values-sr.xml",
@@ -2586,7 +2586,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-v28_values-v28.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-v28_values-v28.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-v28/values-v28.xml",
@@ -2602,7 +2602,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-sw600dp-v13_values-sw600dp-v13.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-sw600dp-v13_values-sw600dp-v13.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-sw600dp-v13/values-sw600dp-v13.xml",
@@ -2617,7 +2617,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ar_values-ar.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ar_values-ar.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-ar/values-ar.xml",
@@ -2649,7 +2649,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-es_values-es.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-es_values-es.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-es/values-es.xml",
@@ -2681,7 +2681,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-hr_values-hr.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-hr_values-hr.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-hr/values-hr.xml",
@@ -2713,7 +2713,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ml_values-ml.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ml_values-ml.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-ml/values-ml.xml",
@@ -2745,7 +2745,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-v26_values-v26.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-v26_values-v26.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-v26/values-v26.xml",
@@ -2761,7 +2761,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ur_values-ur.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ur_values-ur.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-ur/values-ur.xml",
@@ -2793,7 +2793,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ro_values-ro.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ro_values-ro.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-ro/values-ro.xml",
@@ -2825,7 +2825,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ta_values-ta.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ta_values-ta.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-ta/values-ta.xml",
@@ -2857,7 +2857,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-sv_values-sv.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-sv_values-sv.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-sv/values-sv.xml",
@@ -2889,7 +2889,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-as_values-as.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-as_values-as.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-as/values-as.xml",
@@ -2921,7 +2921,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-ka_values-ka.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-ka_values-ka.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-ka/values-ka.xml",
@@ -2953,7 +2953,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-sl_values-sl.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-sl_values-sl.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-sl/values-sl.xml",
@@ -2985,7 +2985,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-cs_values-cs.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-cs_values-cs.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-cs/values-cs.xml",
@@ -3017,7 +3017,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-it_values-it.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-it_values-it.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-it/values-it.xml",
@@ -3049,7 +3049,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-zh-rHK_values-zh-rHK.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-zh-rHK_values-zh-rHK.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-zh-rHK/values-zh-rHK.xml",
@@ -3081,7 +3081,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-v18_values-v18.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-v18_values-v18.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-v18/values-v18.xml",
@@ -3096,7 +3096,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-kk_values-kk.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-kk_values-kk.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-kk/values-kk.xml",
@@ -3128,7 +3128,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-bg_values-bg.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-bg_values-bg.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/res/values-bg/values-bg.xml",
@@ -3160,7 +3160,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-fr-rCA_values-fr-rCA.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-fr-rCA_values-fr-rCA.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-fr-rCA/values-fr-rCA.xml",
@@ -3192,7 +3192,7 @@
             ]
         },
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/res/merged/debug/values-v16_values-v16.arsc.flat",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/res/merged/debug/values-v16_values-v16.arsc.flat",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-v16/values-v16.xml",

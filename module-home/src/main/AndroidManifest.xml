@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.dankal.address">
+    package="cn.xunzi.address">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -8,21 +8,46 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application>
-        <activity android:name="cn.dankal.home.activity.HomeActivity" />
-        <activity android:name="cn.dankal.home.activity.DemandListActivity" />
-        <activity android:name="cn.dankal.home.activity.HomeSearchActivity" />
-        <activity android:name="cn.dankal.home.activity.ReleaseIdeaActivity" />
-        <activity android:name="cn.dankal.home.activity.SubmitIdeaActivity" />
-        <activity android:name="cn.dankal.home.activity.DemandDetailsActivity" />
-        <activity android:name="cn.dankal.home.activity.DemandClaimActivity" />
-        <activity android:name="cn.dankal.home.activity.UserHomeActivity" />
-        <activity android:name="cn.dankal.home.activity.PostRequstActivity"
-            android:theme="@style/TransparentTheme"
-            />
-        <activity android:name="cn.dankal.home.activity.EnterIntentionActivity" />
-        <activity android:name="cn.dankal.home.activity.SubmitIntentionActivity" />
-        <activity android:name="cn.dankal.home.activity.ServiceActivity"/>
-
+        <activity
+            android:name="cn.xunzi.home.activity.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.ZhuangYongActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.TuiGuangActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.ServiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.ShenQingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.OneMoneyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.PayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.MessageListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.SystemMsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.PayDataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.AddressListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.xunzi.home.activity.AddressAddActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

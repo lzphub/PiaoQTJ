@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:2:1-12:12
-INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:2:1-12:12
-INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:2:1-12:12
-INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:2:1-12:12
+ADDED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:2:1-12:12
+INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:2:1-12:12
+INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:2:1-12:12
+INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:2:1-12:12
 MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/fred/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/cd2e25cc589d746dd8312f7855d1c68e/AndroidManifest.xml:2:1-11:12
 MERGED from [com.android.support:support-fragment:28.0.0] /Users/fred/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/1186d33bb68f83d0a13e1483001f83f2/AndroidManifest.xml:17:1-22:12
@@ -31,25 +31,25 @@ MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/fred/.gradle/caches/t
 MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/fred/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/a9dcd1c18c2660bdcf81199e910ed0ce/AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.core:runtime:1.1.1] /Users/fred/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/f65288d841323471a522b390aad8723e/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:interpolator:28.0.0] /Users/fred/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/7eb15569608182a0223ec90e53ebba93/AndroidManifest.xml:17:1-22:12
-INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:2:1-12:12
-INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:2:1-12:12
-INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:2:1-12:12
+INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:2:1-12:12
+INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:2:1-12:12
+INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:2:1-12:12
 	package
-		ADDED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:3:5-41
-		INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
-		INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
+		ADDED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:3:5-41
+		INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
+		INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
 	android:versionName
-		INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
-		ADDED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:2:1-12:12
-		INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
+		INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
+		ADDED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:2:1-12:12
+		INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
 	android:versionCode
-		INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
-		ADDED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:2:1-12:12
-		INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
+		INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
+		ADDED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:2:1-12:12
+		INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:2:11-69
+		ADDED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:2:11-69
 application
-ADDED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:5:5-9:19
+ADDED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:5:5-9:19
 MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/fred/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/cd2e25cc589d746dd8312f7855d1c68e/AndroidManifest.xml:9:5-20
 MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/fred/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/cd2e25cc589d746dd8312f7855d1c68e/AndroidManifest.xml:9:5-20
 MERGED from [com.android.support:support-compat:28.0.0] /Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/AndroidManifest.xml:22:5-94
@@ -59,15 +59,15 @@ MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/fred/.gradle
 	android:appComponentFactory
 		ADDED from [com.android.support:support-compat:28.0.0] /Users/fred/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/3b241cd6a71923a4e9e0f96918e224d7/AndroidManifest.xml:22:18-91
 activity#com.example.module_product.MainActivity
-ADDED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:6:9-8:52
+ADDED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:6:9-8:52
 	android:screenOrientation
-		ADDED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:8:13-49
+		ADDED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:8:13-49
 	android:name
-		ADDED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml:7:13-41
+		ADDED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml:7:13-41
 uses-sdk
-INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
-INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
+INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
+INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
 MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/fred/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/cd2e25cc589d746dd8312f7855d1c68e/AndroidManifest.xml:5:5-7:41
@@ -122,13 +122,13 @@ MERGED from [android.arch.core:runtime:1.1.1] /Users/fred/.gradle/caches/transfo
 MERGED from [android.arch.core:runtime:1.1.1] /Users/fred/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/f65288d841323471a522b390aad8723e/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:interpolator:28.0.0] /Users/fred/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/7eb15569608182a0223ec90e53ebba93/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:interpolator:28.0.0] /Users/fred/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/7eb15569608182a0223ec90e53ebba93/AndroidManifest.xml:20:5-44
-INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
-INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
+INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
+INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
-		ADDED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
-		INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
+		INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
+		ADDED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
+		INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
-		ADDED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
-		INJECTED from /Users/fred/AndroidStudioProjects/zm/module_product/src/main/AndroidManifest.xml
+		INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
+		ADDED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml
+		INJECTED from /Users/fred/AndroidStudioProjects/pqtj/module_product/src/main/AndroidManifest.xml

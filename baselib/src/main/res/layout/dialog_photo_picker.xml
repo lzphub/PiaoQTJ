@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@android:color/transparent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/photodialog_btn_take"
@@ -12,9 +13,8 @@
         android:layout_height="50dp"
         android:background="@color/colorFF"
         android:gravity="center"
-        android:text="@string/takephoto"
-        android:textColor="@color/color33"
-        android:textSize="14sp" />
+        android:text="拍照"
+        android:textColor="#2A71F6" />
 
     <View
         android:layout_width="match_parent"
@@ -28,13 +28,12 @@
         android:layout_gravity="center"
         android:background="@color/colorFF"
         android:gravity="center"
-        android:text="@string/pickphoto"
-        android:textColor="@color/color33"
-        android:textSize="14sp"/>
+        android:text="相册"
+        android:textColor="#2A71F6" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="10dp"
         android:layout_gravity="center"
         android:background="@android:color/transparent"
         android:gravity="center" />
@@ -46,8 +45,7 @@
         android:layout_gravity="center"
         android:background="@color/colorFF"
         android:gravity="center"
-        android:text="@string/cancel"
-        android:textColor="@color/color33"
-        android:textSize="14sp" />
+        android:text="取消"
+        android:textColor="#2A71F6" />
 
 </android.support.v7.widget.LinearLayoutCompat>

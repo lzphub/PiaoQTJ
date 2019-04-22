@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="78dp"
+    android:background="@color/colorff"
+    android:layout_marginBottom="1dp">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@mipmap/xinshourenwu"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_task_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="票圈面膜"
+        android:layout_toRightOf="@id/iv_logo"
+        android:layout_alignTop="@id/iv_logo"
+        android:layout_marginLeft="8dp"
+        android:textColor="@color/color32"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/tv_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥ 2元"
+        android:textSize="12sp"
+        android:textColor="@color/colorff5000"
+        android:layout_toRightOf="@id/iv_logo"
+        android:layout_below="@id/tv_task_name"
+        android:layout_marginLeft="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2018/12/22  15:23:45"
+        android:textColor="#b3b3b3"
+        android:layout_toRightOf="@id/iv_logo"
+        android:layout_below="@id/tv_money"
+        android:layout_marginLeft="8dp"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="待上传"
+        android:textSize="14sp"
+        android:textColor="#969696"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="35dp"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.NewbieTaskActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:src="@mipmap/bannertask"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@drawable/title_bg"/>
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/view"
+        android:background="@drawable/title_bg">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/fanhui"
+            android:scaleType="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新手任务"
+            android:textColor="@color/colorfe"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/baibg"
+        android:layout_below="@id/title"
+        android:layout_marginTop="139dp">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@mipmap/erweimakuang2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="87dp"/>
+
+        <ImageView
+            android:id="@+id/iv_erweima"
+            android:layout_width="123dp"
+            android:layout_height="116dp"
+            android:src="@mipmap/erweima"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="130dp"/>
+        <TextView
+            android:id="@+id/bt_saoma"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@id/iv_erweima"
+            android:layout_marginTop="83dp"
+            android:layout_centerHorizontal="true"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:background="@drawable/saoma_btn_bg"
+            android:gravity="center"
+            android:text="微信扫码开始抢红包"
+            android:textSize="22sp"
+            android:textColor="@color/colorFF"/>
+    </RelativeLayout>
+    
+</RelativeLayout>

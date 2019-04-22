@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/fred/AndroidStudioProjects/zm/module_product/build/intermediates/incremental/mergeDebugResources/merged.dir/values-port/values-port.xml",
+            "outputFile": "/Users/fred/AndroidStudioProjects/pqtj/module_product/build/intermediates/incremental/mergeDebugResources/merged.dir/values-port/values-port.xml",
             "map": [
                 {
                     "source": "/Users/fred/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/f5bbfafc376c2af8970ea3b88b47a0db/res/values-port/values-port.xml",

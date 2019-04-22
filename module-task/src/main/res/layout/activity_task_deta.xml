@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.TaskDetaActivity">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@drawable/title_bg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/title_bg">
+
+        <ImageView
+            android:id="@+id/im_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@mipmap/fanhui" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="任务详情"
+            android:textColor="@color/colorfe"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="发布时间："
+                android:textColor="@color/color78"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="2018/21/12 20:58:06"
+                android:textColor="@color/color32"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="任务名称："
+                android:textColor="@color/color78"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="票圈面膜"
+                android:textColor="@color/color32"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="任务金额："
+                android:textColor="@color/color78"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="¥20"
+                android:textColor="@color/colorff5000"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:background="@drawable/login_edit_bg">
+
+            <TextView
+                android:id="@+id/tv_taskdeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="把面膜纸抽出来，发现整个面膜纸也比一般的面膜纸要厚，摸在手上，还有点软，面膜纸自带一点弹性，显然上面的精华含量也比一般的精华含量要高，精华滴在手上，有一点黏黏的感觉，却一点都不腻，把面膜敷在脸上15分钟，轻轻撕开，皮肤喝饱了水，水润Q弹。" />
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+        <Button
+            android:id="@+id/bt_copy"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/login_btn_bg_ff8f00"
+            android:text="点击复制"
+            android:textColor="@color/colorff"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/iv_img"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:layout_marginLeft="15dp"/>
+
+
+    <Button
+        android:id="@+id/bt_preimage"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/login_btn_bg_ff8f00"
+        android:text="保存图片"
+        android:textColor="@color/colorff"
+        android:textSize="18sp" />
+    <Button
+        android:id="@+id/bt_getTask"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/login_btn_bg_ff8f00"
+        android:text="领取任务"
+        android:textColor="@color/colorff"
+        android:textSize="18sp" />
+</LinearLayout>

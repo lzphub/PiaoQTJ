@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cn.xunzi.home.activity.ShenQingActivity">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@drawable/title_bg"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/title_bg">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/fanhui"
+            android:scaleType="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="消息"
+            android:textColor="@color/colorfe"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_msg"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="@color/colorFF">
+
+        <ImageView
+            android:id="@+id/iv_msglogo"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/gerenxiaoxi"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="个人消息"
+            android:textSize="15sp"
+            android:layout_marginLeft="15dp"
+            android:layout_alignTop="@id/iv_msglogo"
+            android:layout_toRightOf="@id/iv_msglogo"
+            android:textColor="@color/color32"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="消息提醒"
+            android:textColor="@color/colorb3"
+            android:layout_toRightOf="@id/iv_msglogo"
+            android:layout_alignBottom="@id/iv_msglogo"
+            android:layout_marginLeft="15dp"
+            android:textSize="10sp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/xiayibu"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_sysmsg"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/colorFF">
+
+        <ImageView
+            android:id="@+id/iv_sysmsglogo"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/xitongxiaoxi"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="系统消息"
+            android:textSize="15sp"
+            android:layout_marginLeft="15dp"
+            android:layout_alignTop="@id/iv_sysmsglogo"
+            android:layout_toRightOf="@id/iv_sysmsglogo"
+            android:textColor="@color/color32"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="消息提醒"
+            android:textColor="@color/colorb3"
+            android:layout_toRightOf="@id/iv_sysmsglogo"
+            android:layout_alignBottom="@id/iv_sysmsglogo"
+            android:layout_marginLeft="15dp"
+            android:textSize="10sp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/xiayibu"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"/>
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/msg_bage"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:gravity="center"
+            android:textColor="@color/colorFF"/>
+
+    </RelativeLayout>
+</LinearLayout>

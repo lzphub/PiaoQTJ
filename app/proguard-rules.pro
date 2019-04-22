@@ -94,7 +94,7 @@
 #---------------------------------------------------------------------------------------------------
 #---------------------------------实体类---------------------------------
 
--keep class cn.dankal.basiclib.pojo.** { *; }
+-keep class cn.xunzi.basiclib.pojo.** { *; }
 
 #---------------------------------第三方包-------------------------------
 
@@ -236,7 +236,7 @@
 
 -keep class im.yixin.sdk.api.YXMessage {*;}
 -keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
--keep public class cn.dankal.zm.R$*{
+-keep public class cn.xunzi.pqtj.R$*{
     public static final int *;
 }
 -keepclassmembers class * {
@@ -427,7 +427,7 @@ public void xxxxxx(**);
 #---------------------------------与js互相调用的类------------------------
 
 #---------------------------------自定义View的类------------------------
--keep class cn.dankal.basiclib.widget.** { *; }
+-keep class cn.xunzi.basiclib.widget.** { *; }
 
 
 
